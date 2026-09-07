@@ -185,11 +185,12 @@ table.rows td.mu{color:var(--mut);font-size:12px;text-align:right}
 textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:8px;font-size:12px;font-family:ui-monospace,Menlo,monospace;resize:vertical}
 
 /* detail */
-#detail .top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-#detail .top h2{font-size:20px;flex:1}
-#detail .top h2 small{color:var(--mut);font-weight:400;font-size:14px;margin-right:6px}
-#detail input.sname{border:0;border-bottom:1px solid var(--line);background:none;font-size:20px;font-weight:600;flex:1;min-width:0}
-.back{color:var(--mut);font-size:14px}
+#detail .top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+#detail h2{display:flex;align-items:baseline;gap:8px;font-size:20px;margin-bottom:4px}
+#detail h2 small{color:var(--mut);font-weight:400;font-size:14px;font-variant-numeric:tabular-nums;flex:none}
+#detail input.sname{border:0;border-bottom:1px solid var(--line);background:none;font-size:20px;font-weight:600;flex:1;min-width:0;padding:2px 0}
+#dStatus{-webkit-appearance:none;appearance:none;border:1px solid var(--line);background:var(--soft);color:var(--ink);border-radius:999px;padding:5px 26px 5px 12px;font-size:13px;font-weight:600;background-image:linear-gradient(45deg,transparent 50%,var(--mut) 50%),linear-gradient(135deg,var(--mut) 50%,transparent 50%);background-position:calc(100% - 15px) 55%,calc(100% - 10px) 55%;background-size:5px 5px;background-repeat:no-repeat}
+.back{color:var(--mut);font-size:14px;white-space:nowrap;flex:none;padding:6px 8px 6px 0}
 .smemo{width:100%;border:1px dashed var(--line);border-radius:8px;background:var(--sur);padding:8px 10px;font-size:14px;resize:vertical;min-height:44px;margin:8px 0}
 
 /* settings */
@@ -217,16 +218,20 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 </nav>
 
 <section id="cap">
-  <textarea id="capText" placeholder="メモ"></textarea>
-  <div class="caprow">
-    <input id="capCode" placeholder="コード" maxlength="5" autocomplete="off">
+  <div class="caprow" style="margin:0 0 8px">
+    <input id="capCode" placeholder="コード" maxlength="5" autocomplete="off" inputmode="text">
     <input id="capName" placeholder="銘柄名（自動）" autocomplete="off">
-    <span id="quickTags" class="chips"></span>
   </div>
+  <textarea id="capText" placeholder="メモ"></textarea>
+  <div class="caprow"><span id="quickTags" class="chips"></span></div>
   <div class="capfoot">
     <select id="tpl"><option value="">テンプレ…</option></select>
     <span class="hint"></span>
-    <span><button id="cancelEdit" class="hide">やめる</button><button id="save">保存</button></span>
+    <span><button id="cancelEdit" class="hide">やめる</button><button id="aiBtn" class="chip" style="margin-right:8px">AIで整理</button><button id="save">保存</button></span>
+  </div>
+  <div id="aiPrev" class="hide" style="margin-top:10px;border-top:1px solid var(--line);padding-top:10px">
+    <div id="aiPrevBody" style="font-size:13px"></div>
+    <div class="row" style="display:flex;gap:8px;margin-top:8px;justify-content:flex-end"><button class="chip" id="aiNo">やめる</button><button id="aiYes" class="chip on">取り込む</button></div>
   </div>
 </section>
 
@@ -236,12 +241,13 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 </section>
 
 <section id="vStocks" class="hide">
-  <div class="bar"><input id="qStocks" type="search" placeholder="銘柄を検索"><button class="chip" id="stView">行</button><select id="stSort"><option value="status">ステータス順</option><option value="rank">ランク順</option><option value="upd">更新順</option><option value="sector">セクター別</option></select><div id="stFilter" class="chips"></div></div>
+  <div class="bar"><input id="qStocks" type="search" placeholder="銘柄を検索"><button class="chip" id="stView">行</button><button class="chip" id="stDir" aria-label="昇順・降順">↓</button><select id="stSort"><option value="status">ステータス順</option><option value="rank">ランク順</option><option value="upd">更新順</option><option value="sector">セクター別</option></select><div id="stFilter" class="chips"></div></div>
   <div id="stockList"></div>
 </section>
 
 <section id="detail" class="hide">
-  <div class="top"><button class="back" id="backBtn">‹ 銘柄一覧</button><h2 id="dTitle"></h2><select id="dStatus"></select></div>
+  <div class="top"><button class="back" id="backBtn">‹ 銘柄一覧</button><span style="flex:1"></span><select id="dStatus"></select></div>
+<h2 id="dTitle"></h2>
   <div class="drow"><input id="dSector" list="secList" placeholder="セクター／グループ"><datalist id="secList"></datalist><span class="rank" id="dRank"></span></div>
 <div class="links" id="dLinks"></div>
   <textarea class="smemo" id="dMemo" placeholder="この銘柄の固定メモ（建値・シナリオ・損切りラインなど）"></textarea>
@@ -290,7 +296,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
     <button class="btn" id="syncNow">今すぐ同期</button><button class="btn" id="fillNames">銘柄名を一括補完</button></div>
     <p class="hint" id="syncStat" style="margin-top:8px">URLを入れると、保存のたびに自動で同期します（マージ式・新しい方が勝ち）。銘柄名はJ-Quantsの上場一覧から自動で引きます。</p></div>
   <div class="set"><h3>AI取り込み</h3>
-    <p class="hint" style="margin-bottom:8px">Claudeに話した内容を取り込み用プロンプトで整形させ、返ってきたJSONを貼って取り込みます。</p>
+    <p class="hint" style="margin-bottom:8px">入力欄の「AIで整理」でその場で取り込めます（GASにANTHROPIC_API_KEYの設定が必要）。手動の場合は、Claudeに取り込み用プロンプトで整形させ、返ってきたJSONをここに貼ります。</p>
     <div class="row" style="margin-bottom:8px"><button class="btn" id="copyPrompt">取り込み用プロンプトをコピー</button></div>
     <textarea class="aiin" id="aiIn" placeholder='{"stocks":[…],"notes":[…]}'></textarea>
     <div class="row" style="margin-top:8px"><button class="btn" id="aiImport">取り込む</button><span class="hint" id="aiStat"></span></div></div>
@@ -307,10 +313,10 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 (function(){
 "use strict";
 const KEY="invnote_v1";
-const STATUS_DEFAULT=["気になる","監視","候補","保有","売却済","見送り"];
-const STATUS_COLOR={"保有":"var(--up)","候補":"var(--amb)","監視":"var(--blu)","売却済":"var(--dn)"};
+const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
+const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="1.9";
+const VER="2.1";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TPL={
 "エントリーチェック":`【エントリーチェック】
@@ -428,7 +434,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ---------- notes view ---------- */
-let tagSel=null,stSel=null;
+let tagSel=null,stSel=null,stDesc=true;
 function noteCard(n,showStock=true){
   const t=n.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("");
   const sk=showStock&&n.code?`<span class="sk" data-open="${n.code}"><b>${n.code}</b>${esc(nm(n.code))||"（名前未設定）"}</span>`:"";
@@ -478,12 +484,13 @@ function renderStocks(){
   else if(mode==="upd")rows.sort((a,b)=>b.last-a.last);
   else if(mode==="sector")rows.sort((a,b)=>(a.st.sector||"～").localeCompare(b.st.sector||"～","ja")||((b.st.rank||0)-(a.st.rank||0))||byStatus(a,b));
   else rows.sort(byStatus);
+  if(!stDesc)rows.reverse();
   if(!rows.length&&mode!=="sector"){$("#stockList").innerHTML=`<div class="empty">まだ銘柄がありません</div>`;return}
   const rowView=S.stockView==="row";$("#stView").textContent=rowView?"カード":"行";
   const secHead=g=>{const m=(S.sectors[g]||{}).memo||"";const n=rows.filter(x=>(x.st.sector||"未分類")===g).length;return `<div class="grp"><b>${esc(g)}</b>${n}銘柄<span class="m">${esc(m)}</span>${g==="未分類"?"":`<button data-secmemo="${esc(g)}">メモ</button>`}</div>`};
   const tr=r=>`<tr data-open="${r.code}"><td class="st"><i style="background:${STATUS_COLOR[r.st.status]||"var(--line)"}"></i></td><td class="cd">${r.code}</td><td class="nm">${esc(r.st.name)||"（名前未設定）"}</td><td class="mu">${r.st.sector&&mode!=="sector"?esc(r.st.sector):""}</td><td class="mu">${r.st.rank?stars(r.st.rank):""}</td><td class="mu">${r.st.status}</td><td class="mu">${r.ns.length}</td></tr>`;
   let html="",lastG=null;
-  if(mode==="sector"){Object.keys(S.sectors).forEach(g=>{if(!rows.some(r=>r.st.sector===g)&&(!q||g.toLowerCase().includes(q))&&!stSel)rows.push({code:null,st:{sector:g,status:""},ns:[],last:0,ghost:true})});rows.sort((a,b)=>(a.st.sector||"～").localeCompare(b.st.sector||"～","ja"))}
+  if(mode==="sector"){Object.keys(S.sectors).forEach(g=>{if(!rows.some(r=>r.st.sector===g)&&(!q||g.toLowerCase().includes(q))&&!stSel)rows.push({code:null,st:{sector:g,status:""},ns:[],last:0,ghost:true})});rows.sort((a,b)=>(a.st.sector||"～").localeCompare(b.st.sector||"～","ja")*(stDesc?1:-1))}
   rows.forEach(r=>{
     if(mode==="sector"){const g=r.st.sector||"未分類";if(g!==lastG){if(rowView&&lastG!==null)html+="</table>";html+=secHead(g);if(rowView)html+='<table class="rows">';lastG=g}}
     else if(rowView&&!html)html='<table class="rows">';
@@ -493,6 +500,7 @@ function renderStocks(){
   if(mode==="sector")html+=`<div class="grp"><button id="secAdd">＋ 気になるセクターを追加</button></div>`;
   $("#stockList").innerHTML=html;
 }
+$("#stDir").addEventListener("click",()=>{stDesc=!stDesc;$("#stDir").textContent=stDesc?"↓":"↑";renderStocks()});
 $("#stView").addEventListener("click",()=>{S.stockView=S.stockView==="row"?"card":"row";editingSync=true;save();editingSync=false;renderStocks()});
 $("#stockList").addEventListener("click",e=>{
   const b=e.target.closest("[data-secmemo]");if(b){const g=b.dataset.secmemo;const m=prompt(`「${g}」のメモ（見ているテーマ・きっかけ・関連銘柄など）`,(S.sectors[g]||{}).memo||"");if(m===null)return;S.sectors[g]={memo:m,upd:Date.now()};save();renderStocks();return}
@@ -500,7 +508,7 @@ $("#stockList").addEventListener("click",e=>{
 });
 function stockCard(r){return `<div class="stk" data-s="${r.st.status}" style="border-left-color:${STATUS_COLOR[r.st.status]||"var(--line)"}">
     <div class="shead"><span class="code">${r.code}</span><span class="name" data-open="${r.code}">${esc(r.st.name)||"（名前未設定）"}</span>${r.st.sector?`<span class="sec">${esc(r.st.sector)}</span>`:""}${r.st.rank?stars(r.st.rank):""}<span class="cnt">${r.ns.length}件</span>
-    <select data-st="${r.code}">${STATUS.map(s=>`<option${s===r.st.status?" selected":""}>${s}</option>`).join("")}</select></div>
+    <select data-st="${r.code}">${[...STATUS,...(STATUS.includes(r.st.status)?[]:[r.st.status])].map(s=>`<option${s===r.st.status?" selected":""}>${s}</option>`).join("")}</select></div>
     ${r.st.memo?`<div class="slast">📌 ${esc(r.st.memo.split("\n")[0])}</div>`:""}
     ${r.ns[0]?`<div class="slast">${dstr(r.ns[0].ts)}　${esc(r.ns[0].text.split("\n")[0])}</div>`:""}
     <div class="links">${LINKS(r.code).map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join("")}</div></div>`}
@@ -513,7 +521,7 @@ document.addEventListener("change",e=>{const s=e.target.closest("[data-st]");if(
 function openDetail(code){
   curCode=code;const st=stock(code);
   $("#dTitle").innerHTML=`<small>${code}</small><input class="sname" id="dName" value="${esc(st.name)}" placeholder="銘柄名を入力">`;
-  $("#dStatus").innerHTML=STATUS.map(s=>`<option${s===st.status?" selected":""}>${s}</option>`).join("");
+  $("#dStatus").innerHTML=[...STATUS,...(STATUS.includes(st.status)?[]:[st.status])].map(s=>`<option${s===st.status?" selected":""}>${s}</option>`).join("");
   $("#dLinks").innerHTML=LINKS(code).map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join("");
   $("#dMemo").value=st.memo||"";
   if(!st.name)lookup(code).then(d=>{if(d&&curCode===code){applyLookup(code,d);const i=$("#dName");if(i&&!i.value){i.value=st.name}$("#dSector").value=st.sector||""}});
@@ -587,20 +595,20 @@ $("#impFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)retu
 }).catch(()=>toast("読み込めませんでした（JSON形式を確認）"))});
 
 /* ---------- AI import ---------- */
-const AI_PROMPT=`あなたは投資ノートアプリ「Invnote」の取り込み係です。以下の私の発言・メモ・分析結果を読み、次のJSONだけを出力してください（説明文・コードフェンス不要）。
+const AI_PROMPT=()=>`あなたは投資ノートアプリ「Invnote」の取り込み係です。以下の私の発言・メモ・分析結果を読み、次のJSONだけを出力してください（説明文・コードフェンス不要）。
 
-{"stocks":[{"code":"4桁コード","name":"銘柄名","status":"気になる|監視|候補|保有|売却済|見送り のいずれか。不明なら省略","sector":"セクターやグループ名。不明なら省略","rank":1〜5の自己評価。言及がなければ省略,"memo":"建値・シナリオ・損切りラインなど固定で持ちたい情報。なければ省略"}],
-"notes":[{"code":"4桁コード。銘柄に紐づかなければ省略","text":"メモ本文。私の言葉をなるべく残し、箇条書きは「- 」で","tags":["注目|仮説|懸念|決算|執行|検証 から該当するもの"],"date":"YYYY-MM-DD。言及がなければ省略"}]}
+{"stocks":[{"code":"4桁コード","name":"銘柄名","status":"${STATUS.join("|")} のいずれか。不明なら省略","sector":"セクターやグループ名。不明なら省略","rank":1〜5の自己評価。言及がなければ省略,"memo":"建値・シナリオ・損切りラインなど固定で持ちたい情報。なければ省略"}],
+"notes":[{"code":"4桁コード。銘柄に紐づかなければ省略","text":"メモ本文。私の言葉をなるべく残し、箇条書きは「- 」で","tags":["${quick().join("|")} から該当するもの"],"date":"YYYY-MM-DD。言及がなければ省略"}],
+"diary":[{"date":"YYYY-MM-DD（今日は${dstr(Date.now())}）","text":"その日の振り返り・相場観・感情など、日記に書くべき内容。なければ配列を空に"}],
+"events":[{"date":"YYYY-MM-DD","title":"決算・IR・売買予定などの予定","code":"4桁コード。なければ省略"}]}
 
-ルール：推測で数値や事実を足さない。コードが分からない銘柄は name だけ入れて code を省略する。一つの発言に複数の銘柄が出たら銘柄ごとに notes を分ける。
+ルール：推測で数値や事実を足さない。コードが分からない銘柄は name だけ入れて code を省略する。一つの発言に複数の銘柄が出たら銘柄ごとに notes を分ける。特定銘柄の話は notes、その日全体の振り返り・反省・相場観は diary、日付のある予定は events に振り分ける。
 
 --- 私の発言 ---
 `;
-$("#copyPrompt").addEventListener("click",()=>navigator.clipboard.writeText(AI_PROMPT).then(()=>toast("プロンプトをコピーしました")));
-$("#aiImport").addEventListener("click",()=>{
-  let t=$("#aiIn").value.trim().replace(/^```(?:json)?\s*|```$/g,"").trim();if(!t)return;
-  let d;try{d=JSON.parse(t)}catch(e){$("#aiStat").textContent="JSONとして読めません";return}
-  let ns=0,ss=0,pending=[];
+$("#copyPrompt").addEventListener("click",()=>navigator.clipboard.writeText(AI_PROMPT()).then(()=>toast("プロンプトをコピーしました")));
+function importParsed(d){
+  let ns=0,ss=0,ds=0,es=0,pending=[];
   (d.stocks||[]).forEach(x=>{
     const code=String(x.code||"").trim().toUpperCase();if(!code){if(x.name)pending.push(x.name);return}
     const st=stock(code);if(x.name)st.name=x.name;if(x.status&&STATUS.includes(x.status))st.status=x.status;if(x.sector)st.sector=x.sector;
@@ -611,9 +619,40 @@ $("#aiImport").addEventListener("click",()=>{
     let ts=Date.now();if(x.date&&/^\d{4}-\d{2}-\d{2}$/.test(x.date)){const dd=new Date(x.date+"T12:00:00");if(!isNaN(dd))ts=dd.getTime()}
     S.notes.push({id:uid(),ts,code,text:String(x.text).trim(),tags:Array.isArray(x.tags)?x.tags.filter(Boolean):[],pinned:false,ai:true});ns++;
   });
-  S.notes.sort((a,b)=>b.ts-a.ts);save();render();$("#aiIn").value="";
-  $("#aiStat").textContent=`メモ${ns}件・銘柄${ss}件を取り込みました`+(pending.length?`　／コード不明：${pending.join("、")}`:"");toast("取り込みました");
+  (d.diary||[]).forEach(x=>{if(!x.text)return;const k=/^\d{4}-\d{2}-\d{2}$/.test(x.date||"")?x.date:dstr(Date.now());const cur=(S.diary[k]||{}).t||"";S.diary[k]={t:cur?cur.trimEnd()+"\n\n"+String(x.text).trim():String(x.text).trim(),upd:Date.now()};ds++});
+  (d.events||[]).forEach(x=>{if(x.date&&x.title&&addEvent(String(x.date),String(x.title)+(x.code?" "+x.code:"")))es++});
+  S.notes.sort((a,b)=>b.ts-a.ts);save();render();
+  return {msg:`メモ${ns}・銘柄${ss}・日記${ds}・予定${es} を取り込みました`+(pending.length?`　／コード不明：${pending.join("、")}`:"")};
+}
+function parseAiJson(t){t=t.trim().replace(/^```(?:json)?\s*|```$/g,"").trim();const i=t.indexOf("{"),j=t.lastIndexOf("}");if(i>=0&&j>i)t=t.slice(i,j+1);return JSON.parse(t)}
+$("#aiImport").addEventListener("click",()=>{
+  let d;try{d=parseAiJson($("#aiIn").value)}catch(e){$("#aiStat").textContent="JSONとして読めません";return}
+  const r=importParsed(d);$("#aiIn").value="";$("#aiStat").textContent=r.msg;toast("取り込みました");
 });
+/* in-app AI (via GAS) */
+let aiParsed=null;
+function aiPreview(d){
+  const li=[];
+  (d.stocks||[]).forEach(x=>li.push(`銘柄　${x.code||"?"} ${x.name||""}${x.status?"（"+x.status+"）":""}${x.sector?" ・"+x.sector:""}${x.rank?" ★"+x.rank:""}`));
+  (d.notes||[]).forEach(x=>li.push(`メモ　${x.code?x.code+" ":""}${String(x.text).split("\n")[0]}${x.tags&&x.tags.length?"　#"+x.tags.join(" #"):""}`));
+  (d.diary||[]).forEach(x=>li.push(`日記　${x.date||dstr(Date.now())}：${String(x.text).split("\n")[0]}`));
+  (d.events||[]).forEach(x=>li.push(`予定　${x.date} ${x.title}${x.code?" "+x.code:""}`));
+  $("#aiPrevBody").innerHTML=li.length?li.map(l=>`<div style="padding:3px 0;border-bottom:1px solid var(--line)">${esc(l)}</div>`).join(""):`<div class="hint">取り込めるものが見つかりませんでした</div>`;
+  $("#aiPrev").classList.remove("hide");
+}
+$("#aiBtn").addEventListener("click",async()=>{
+  const text=ta.value.trim();if(!text){ta.focus();return}
+  if(!S.gas){toast("設定でGAS同期のURLを入れてください");return}
+  const b=$("#aiBtn");b.disabled=true;b.textContent="整理中…";
+  try{
+    const r=await fetch(S.gas,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"ai",text,today:dstr(Date.now()),statuses:STATUS,tags:quick(),code:$("#capCode").value.trim().toUpperCase()||null})});
+    const res=await r.json();if(!res.ok)throw new Error(res.error||"failed");
+    aiParsed=parseAiJson(res.text);aiPreview(aiParsed);
+  }catch(e){toast("AI整理に失敗："+(e.message||e))}
+  b.disabled=false;b.textContent="AIで整理";
+});
+$("#aiNo").addEventListener("click",()=>{$("#aiPrev").classList.add("hide");aiParsed=null});
+$("#aiYes").addEventListener("click",()=>{if(!aiParsed)return;const r=importParsed(aiParsed);$("#aiPrev").classList.add("hide");aiParsed=null;resetCap();toast(r.msg)});
 
 /* ---------- diary ---------- */
 let dCur=dstr(Date.now()),dT=null;
