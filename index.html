@@ -89,8 +89,10 @@ nav#tabs button.on{color:var(--ink);font-weight:600;border-bottom-color:var(--in
 .grid .wd{text-align:center;font-size:11px;color:var(--mut);padding:2px 0 4px}
 .grid .dc{min-height:52px;border-radius:6px;padding:3px 4px;font-size:12px;font-variant-numeric:tabular-nums;color:var(--mut);cursor:pointer;position:relative}
 .grid .dc.out{opacity:.3}
-.grid .dc.today{color:var(--up);font-weight:600}
-.grid .dc.sel{background:var(--soft);color:var(--ink)}
+.grid .dc.today{color:var(--up);font-weight:700;box-shadow:inset 0 0 0 1.5px var(--up)}
+.grid .dc.sel{background:var(--ink);color:var(--sur)!important}
+.grid.mini .dc{min-height:30px;text-align:center;padding:4px 0;border-radius:15px;font-size:12.5px}
+.grid.mini .dc.has:not(.sel){color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--amb);text-underline-offset:3px;text-decoration-thickness:2px}
 .grid .dc.sun{color:var(--up)}.grid .dc.sat{color:var(--blu)}
 .grid .dc .e{display:block;font-size:10px;line-height:1.3;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
 .grid .dc .e.sq{color:var(--mut)}
@@ -215,7 +217,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 </nav>
 
 <section id="cap">
-  <textarea id="capText" placeholder="6136 出来高が枯れたあと2日連続で増加。5MA抜けを待つ"></textarea>
+  <textarea id="capText" placeholder="メモ"></textarea>
   <div class="caprow">
     <input id="capCode" placeholder="コード" maxlength="5" autocomplete="off">
     <input id="capName" placeholder="銘柄名（自動）" autocomplete="off">
@@ -223,7 +225,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
   </div>
   <div class="capfoot">
     <select id="tpl"><option value="">テンプレ…</option></select>
-    <span class="hint">⌘/Ctrl+Enter で保存</span>
+    <span class="hint"></span>
     <span><button id="cancelEdit" class="hide">やめる</button><button id="save">保存</button></span>
   </div>
 </section>
@@ -250,8 +252,9 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
   <div class="mnav" style="justify-content:flex-end"><span class="seg" id="diarySeg"><button data-m="write" class="on">書く</button><button data-m="table">一覧</button></span></div>
   <div id="diaryWrite">
   <div class="dnav"><button id="dPrev">‹</button><span class="dd" id="dDate"></span><input type="date" id="dPick"><button id="dNext">›</button></div>
+  <div id="diaryGrid" class="grid mini" style="margin-bottom:10px"></div>
   <div class="diary" id="diaryBox"><textarea id="diaryText" placeholder="相場環境／今日の売買と理由／うまくいったこと・反省／明日見ること"></textarea>
-    <div class="dfoot"><span class="hint" id="diaryStat"></span><span class="hint">左右スワイプで前後の日</span></div></div>
+    <div class="dfoot"><span class="hint" id="diaryStat"></span><span></span></div></div>
   <div class="sub">最近の日記</div><div class="dlist" id="diaryList"></div>
   </div>
   <div id="diaryTable" class="hide">
@@ -307,7 +310,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","保有","売却済","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","候補":"var(--amb)","監視":"var(--blu)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="1.8";
+const VER="1.9";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TPL={
 "エントリーチェック":`【エントリーチェック】
@@ -441,7 +444,7 @@ function renderNotes(){
     if(!q)return true;const hay=(n.text+" "+(n.code||"")+" "+nm(n.code||"")+" "+n.tags.join(" ")).toLowerCase();return hay.includes(q);
   });
   list=[...list.filter(n=>n.pinned),...list.filter(n=>!n.pinned)];
-  if(!list.length){$("#noteList").innerHTML=`<div class="empty">${S.notes.length?"該当なし":"上の欄に「コード＋ひとこと」を書いて保存。<br>コードは自動で拾います（例：6136 底練り成熟 #仮説）"}</div>`;return}
+  if(!list.length){$("#noteList").innerHTML=`<div class="empty">${S.notes.length?"該当なし":"まだメモはありません"}</div>`;return}
   let html="",last=null;
   list.forEach(n=>{const k=n.pinned?"ピン留め":dayLabel(n.ts);if(k!==last){html+=`<div class="day">${k}</div>`;last=k}html+=noteCard(n)});
   $("#noteList").innerHTML=html;
@@ -534,7 +537,7 @@ $("#backBtn").addEventListener("click",()=>{curCode=null;resetCap();show("vStock
 /* ---------- nav ---------- */
 function show(v){
   view=v;["vNotes","vStocks","vSet","detail","vDiary","vCal","vRules"].forEach(x=>$("#"+x).classList.toggle("hide",x!==v));
-  $("#cap").classList.toggle("hide",!["vNotes","vStocks","detail"].includes(v));
+  $("#cap").classList.toggle("hide",!["vNotes","detail"].includes(v));
   document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v===v||(v==="detail"&&b.dataset.v==="vStocks")));
   render();
 }
@@ -615,16 +618,28 @@ $("#aiImport").addEventListener("click",()=>{
 /* ---------- diary ---------- */
 let dCur=dstr(Date.now()),dT=null;
 const shiftDay=(k,n)=>{const d=new Date(k+"T12:00:00");d.setDate(d.getDate()+n);return dstr(d)};
+function renderDiaryGrid(){
+  const m=dCur.slice(0,7);const d=ym(m);const today=dstr(Date.now());const first=d.getDay();const days=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
+  let html="日月火水木金土".split("").map(w=>`<div class="wd">${w}</div>`).join("");
+  for(let i=0;i<first;i++)html+=`<div class="dc out"></div>`;
+  for(let i=1;i<=days;i++){const k=`${m}-${pad(i)}`;const w=(first+i-1)%7;const has=!!((S.diary[k]||{}).t);
+    html+=`<div class="dc${k===today?" today":""}${k===dCur?" sel":""}${has?" has":""}${w===0?" sun":w===6?" sat":""}" data-day="${k}">${i}</div>`}
+  $("#diaryGrid").innerHTML=html;
+}
+$("#diaryGrid").addEventListener("click",e=>{const c=e.target.closest("[data-day]");if(!c)return;clearTimeout(dT);diarySave();dCur=c.dataset.day;renderDiary();$("#diaryText").focus()});
 function renderDiary(){
   const d=new Date(dCur+"T12:00:00");$("#dDate").textContent=`${dCur}（${"日月火水木金土"[d.getDay()]}）`+(dCur===dstr(Date.now())?"　今日":"");
-  $("#dPick").value=dCur;const e=S.diary[dCur];$("#diaryText").value=e?e.t:"";$("#diaryStat").textContent=e?`保存 ${tstr(e.upd)}`:"";
+  $("#dPick").value=dCur;const e=S.diary[dCur];if(document.activeElement!==$("#diaryText")||$("#diaryText").dataset.day!==dCur){$("#diaryText").value=e?e.t:""}$("#diaryText").dataset.day=dCur;$("#diaryStat").textContent=e?`保存 ${tstr(e.upd)}`:"";renderDiaryGrid();
   const keys=Object.keys(S.diary).filter(k=>S.diary[k].t&&k!==dCur).sort().reverse().slice(0,14);
   $("#diaryList").innerHTML=keys.length?keys.map(k=>`<div class="note" data-day="${k}"><div class="nhead"><span class="sk">${k}</span></div><div class="slast">${esc(S.diary[k].t.split("\n")[0])}</div></div>`).join(""):`<div class="empty">まだ日記がありません</div>`;
 }
-$("#diaryText").addEventListener("input",()=>{clearTimeout(dT);dT=setTimeout(()=>{const t=$("#diaryText").value;if(!t.trim()&&!S.diary[dCur])return;S.diary[dCur]={t,upd:Date.now()};save();$("#diaryStat").textContent=`保存 ${tstr(Date.now())}`},600)});
-$("#dPrev").addEventListener("click",()=>{dCur=shiftDay(dCur,-1);renderDiary()});
-$("#dNext").addEventListener("click",()=>{dCur=shiftDay(dCur,1);renderDiary()});
-$("#dPick").addEventListener("change",e=>{if(e.target.value){dCur=e.target.value;renderDiary()}});
+function diarySave(){const day=$("#diaryText").dataset.day||dCur;const t=$("#diaryText").value;if(!t.trim()&&!S.diary[day])return;if(S.diary[day]&&S.diary[day].t===t)return;S.diary[day]={t,upd:Date.now()};save();$("#diaryStat").textContent=`保存 ${tstr(Date.now())}`;renderDiaryGrid()}
+$("#diaryText").addEventListener("input",()=>{clearTimeout(dT);dT=setTimeout(diarySave,800)});
+$("#diaryText").addEventListener("blur",()=>{clearTimeout(dT);diarySave()});
+$("#diaryText").addEventListener("compositionstart",()=>clearTimeout(dT));
+$("#dPrev").addEventListener("click",()=>{clearTimeout(dT);diarySave();dCur=shiftDay(dCur,-1);renderDiary()});
+$("#dNext").addEventListener("click",()=>{clearTimeout(dT);diarySave();dCur=shiftDay(dCur,1);renderDiary()});
+$("#dPick").addEventListener("change",e=>{if(e.target.value){clearTimeout(dT);diarySave();dCur=e.target.value;renderDiary()}});
 $("#diaryList").addEventListener("click",e=>{const b=e.target.closest("[data-day]");if(b){dCur=b.dataset.day;renderDiary();window.scrollTo(0,0)}});
 
 /* ---------- diary table ---------- */
@@ -702,7 +717,7 @@ const ORDER=["vNotes","vStocks","vDiary","vCal","vRules","vSet"];
 let sx=0,sy=0,sw=false;
 document.addEventListener("touchstart",e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;sw=!e.target.closest("input,select,.chips,nav#tabs")&&!(e.target.closest("textarea")&&!e.target.closest("#diaryBox"))},{passive:true});
 document.addEventListener("touchend",e=>{if(!sw)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(Math.abs(dx)<70||Math.abs(dy)>50)return;
-  if(view==="vDiary"&&e.target.closest("#diaryBox,.dnav")){dCur=shiftDay(dCur,dx<0?1:-1);renderDiary();return}
+  if(view==="vDiary"&&e.target.closest("#diaryBox,.dnav,#diaryGrid")){clearTimeout(dT);diarySave();dCur=shiftDay(dCur,dx<0?1:-1);renderDiary();return}
   if(view==="vDiary"&&e.target.closest("#diaryTable")){dtM=shiftM(dtM,dx<0?1:-1);renderDiaryTable();return}
   if(view==="vCal"&&e.target.closest("#calGrid")){calM=shiftM(calM,dx<0?1:-1);renderCal();return}
   const cur=view==="detail"?"vStocks":view;const i=ORDER.indexOf(cur)+(dx<0?1:-1);if(i<0||i>=ORDER.length)return;curCode=null;resetCap();show(ORDER[i]);document.querySelector(`#tabs [data-v=${ORDER[i]}]`).scrollIntoView({inline:"center",block:"nearest"});
@@ -739,7 +754,7 @@ async function syncNow(quiet){
     if(d&&d.notes)mergeIn(d);
     const p=await fetch(S.gas,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:payload()});
     const res=await p.json();if(!res.ok)throw new Error(res.error||"save failed");
-    S.lastSync=Date.now();editingSync=true;save();editingSync=false;render();
+    S.lastSync=Date.now();editingSync=true;save();editingSync=false;const ae=document.activeElement;if(!(ae&&(ae.tagName==="TEXTAREA"||ae.tagName==="INPUT")))render();
     st.textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(!quiet)toast("同期しました");
   }catch(e){st.textContent="同期に失敗："+(e.message||e);if(!quiet)toast("同期に失敗しました")}
   syncing=false;
