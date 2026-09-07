@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#12171C">
+<meta name="apple-mobile-web-app-title" content="Invnote">
+<link rel="apple-touch-icon" href="invnote-icon.png">
+<link rel="icon" href="invnote-icon.svg" type="image/svg+xml">
+<title>Invnote</title>
+<style>
+:root{
+  --bg:#F1F3F5; --sur:#FFFFFF; --ink:#1C2733; --mut:#6B7785; --line:#D9DEE3; --soft:#E9EDF0;
+  --up:#C8322B; --dn:#2E7D67; --amb:#B7791F; --blu:#2F5F9E;
+  --r:10px; --sans:-apple-system,"Hiragino Sans","Noto Sans JP","Yu Gothic UI",system-ui,sans-serif;
+  --mincho:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+}
+[data-theme=dark]{
+  --bg:#12171C; --sur:#1B2229; --ink:#E6EAEE; --mut:#8A96A3; --line:#2B343D; --soft:#232C35;
+  --up:#E4574F; --dn:#4FB394; --amb:#D9A441; --blu:#6E9BD6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+a{color:var(--blu);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--blu);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+#app{max-width:760px;margin:0 auto;padding:8px 12px 40px;overflow-x:hidden}
+header{display:flex;align-items:center;gap:10px;padding:4px 4px 10px}
+header h1{font:600 15px/1 var(--sans);letter-spacing:-.01em}
+header h1 small{font-size:11px;font-weight:500;color:var(--mut);margin-left:6px;font-variant-numeric:tabular-nums}
+#stat{font-size:11px;color:var(--mut);flex:1;font-variant-numeric:tabular-nums}
+#themeBtn{font-size:12px;padding:2px 9px}
+
+/* capture */
+#cap{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px 10px;margin-bottom:14px}
+#cap textarea{width:100%;min-height:72px;resize:none;border:0;background:none;line-height:1.6;font-size:16px;padding:2px;outline:0}
+#cap textarea::placeholder{color:var(--mut)}
+.caprow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+.caprow input{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 8px;font-size:14px}
+#capCode{width:76px;font-variant-numeric:tabular-nums}
+#capName{flex:1;min-width:120px}
+.chip{border:1px solid transparent;border-radius:6px;padding:3px 9px;font-size:12.5px;color:var(--mut);background:var(--soft);white-space:nowrap;letter-spacing:.01em}
+.chip.on{background:var(--ink);color:var(--sur);border-color:var(--ink)}
+.chip:hover{color:var(--ink)}
+.capfoot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:8px}
+.capfoot select{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 8px;font-size:13px;color:var(--mut)}
+#save{background:var(--ink);color:var(--sur);border-radius:8px;padding:8px 18px;font-weight:600}
+#save.editing{background:var(--amb)}
+#cancelEdit{color:var(--mut);font-size:13px;margin-right:6px}
+.hint{font-size:12px;color:var(--mut)}
+
+/* tabs */
+nav#tabs{display:flex;gap:2px;overflow-x:auto;margin:0 -12px 12px;padding:0 12px;border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch;scrollbar-width:none}
+nav#tabs::-webkit-scrollbar{display:none}
+nav#tabs button{padding:8px 12px 9px;color:var(--mut);font-size:14px;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px}
+nav#tabs button.on{color:var(--ink);font-weight:600;border-bottom-color:var(--ink)}
+#toast{bottom:auto;top:14px}
+/* diary */
+.dnav{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.dnav button{color:var(--mut);font-size:18px;padding:2px 10px}
+.dnav .dd{font-weight:600;font-size:16px;flex:1;text-align:center}
+.dnav input[type=date]{border:1px solid var(--line);background:var(--sur);border-radius:6px;padding:3px 6px;font-size:13px;color:var(--mut)}
+.diary{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.diary textarea{width:100%;min-height:220px;border:0;background:none;outline:0;font-size:16px;line-height:1.7;resize:none}
+.dfoot{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.dlist .note{cursor:pointer}
+/* calendar */
+.ev{display:flex;gap:10px;align-items:baseline;padding:7px 4px;border-bottom:1px solid var(--line)}
+.ev .d{width:86px;font-variant-numeric:tabular-nums;color:var(--mut);font-size:13px;flex:none}
+.ev .d.today{color:var(--up);font-weight:600}
+.ev .t{flex:1}
+.ev .t.sq{color:var(--mut)}
+.ev .x{color:var(--mut);font-size:12px;padding:0 6px}
+.evadd{display:flex;gap:6px;margin:8px 0 14px;flex-wrap:wrap}
+.evadd input{border:1px solid var(--line);background:var(--sur);border-radius:6px;padding:6px 8px;font-size:14px}
+.evadd input.tt{flex:1;min-width:140px}
+.sub{font-size:13px;font-weight:600;color:var(--mut);margin:16px 4px 4px}
+/* rules */
+.rules{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.rules textarea{width:100%;min-height:320px;border:0;background:none;outline:0;font-size:15px;line-height:1.7;resize:vertical}
+.rules .body{font-size:15px;line-height:1.75}
+.rhead{display:flex;justify-content:flex-end;margin-bottom:6px}
+
+/* toolbar */
+.bar{display:flex;gap:6px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.bar input[type=search]{flex:1;min-width:150px;border:1px solid var(--line);background:var(--sur);border-radius:8px;padding:7px 10px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+
+/* notes */
+.day{font-size:12px;color:var(--mut);margin:14px 4px 6px;letter-spacing:.04em}
+.note{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin-bottom:8px;position:relative}
+.note.pin{border-left:3px solid var(--amb)}
+.nhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.sk{font-size:13px;font-weight:600;padding:1px 8px;border-radius:6px;background:var(--soft)}
+.sk b{font-variant-numeric:tabular-nums;color:var(--mut);font-weight:500;margin-right:5px}
+.tag{font-size:12px;color:var(--mut)}
+.tag:before{content:"#"}
+.tm{font-size:12px;color:var(--mut);margin-left:auto;font-variant-numeric:tabular-nums}
+.body{white-space:pre-wrap;word-break:break-word;font-size:15px}
+.body code{background:var(--soft);padding:0 4px;border-radius:4px;font-size:13px}
+.body .cb{display:inline-block;width:1.15em;height:1.15em;border:1.5px solid var(--mut);border-radius:4px;vertical-align:-3px;margin-right:6px;text-align:center;line-height:1.05em;font-size:12px;cursor:pointer}
+.body .cb.x{background:var(--dn);border-color:var(--dn);color:#fff}
+.body .ul{padding-left:1.2em}
+.nact{display:flex;gap:2px;margin-top:6px;justify-content:flex-end}
+.nact button{font-size:12px;color:var(--mut);padding:2px 8px;border-radius:6px}
+.nact button:hover{background:var(--soft);color:var(--ink)}
+
+/* stocks */
+.stk{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin-bottom:8px;border-left:4px solid var(--line)}
+.stk[data-s=保有]{border-left-color:var(--up)}
+.stk[data-s=候補]{border-left-color:var(--amb)}
+.stk[data-s=監視]{border-left-color:var(--blu)}
+.stk[data-s=売却済]{border-left-color:var(--dn)}
+.stk[data-s=見送り]{opacity:.6}
+.shead{display:flex;align-items:center;gap:10px}
+.shead .code{font-variant-numeric:tabular-nums;color:var(--mut);font-size:13px}
+.shead .name{font-weight:600;font-size:16px;flex:1;cursor:pointer}
+.shead select{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:3px 6px;font-size:13px}
+.slast{font-size:13px;color:var(--mut);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.links{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.links a{font-size:12px;padding:2px 9px;border:1px solid var(--line);border-radius:999px;color:var(--mut)}
+.links a:hover{color:var(--blu);border-color:var(--blu);text-decoration:none}
+.cnt{font-size:12px;color:var(--mut)}
+.sec{font-size:11px;color:var(--mut);background:var(--soft);border-radius:4px;padding:0 6px}
+.stars{color:var(--amb);font-size:12px;letter-spacing:1px}
+.stars i{font-style:normal;opacity:.25}
+.grp{font-size:12px;color:var(--mut);margin:14px 4px 6px;display:flex;gap:8px;align-items:baseline}
+.grp b{font-size:14px;color:var(--ink);font-weight:600}
+.drow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.drow input{border:1px solid var(--line);background:var(--sur);border-radius:6px;padding:4px 8px;font-size:13px;width:160px}
+.rank button{font-size:20px;color:var(--amb);padding:0 2px;line-height:1}
+.rank button.off{opacity:.25}
+.bar select{border:1px solid var(--line);background:var(--sur);border-radius:8px;padding:6px 8px;font-size:13px;color:var(--mut)}
+textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:8px;font-size:12px;font-family:ui-monospace,Menlo,monospace;resize:vertical}
+
+/* detail */
+#detail .top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+#detail .top h2{font-size:20px;flex:1}
+#detail .top h2 small{color:var(--mut);font-weight:400;font-size:14px;margin-right:6px}
+#detail input.sname{border:0;border-bottom:1px solid var(--line);background:none;font-size:20px;font-weight:600;flex:1;min-width:0}
+.back{color:var(--mut);font-size:14px}
+.smemo{width:100%;border:1px dashed var(--line);border-radius:8px;background:var(--sur);padding:8px 10px;font-size:14px;resize:vertical;min-height:44px;margin:8px 0}
+
+/* settings */
+.set{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:12px;margin-bottom:10px}
+.set h3{font-size:14px;margin-bottom:8px}
+.set .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:14px;background:var(--bg)}
+.btn.danger{color:var(--up);border-color:var(--up)}
+.empty{text-align:center;color:var(--mut);padding:40px 10px;font-size:14px}
+#toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:var(--ink);color:var(--sur);padding:7px 14px;border-radius:999px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}
+#toast.show{opacity:1}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<div id="app">
+<header><h1>Invnote<small id="ver"></small></h1><span id="stat"></span><button id="themeBtn" class="chip">☾</button></header>
+<nav id="tabs">
+  <button data-v="vNotes" class="on">ノート</button>
+  <button data-v="vStocks">銘柄</button>
+  <button data-v="vDiary">日記</button>
+  <button data-v="vCal">カレンダー</button>
+  <button data-v="vRules">ルール</button>
+  <button data-v="vSet">設定</button>
+</nav>
+
+<section id="cap">
+  <textarea id="capText" placeholder="6136 出来高が枯れたあと2日連続で増加。5MA抜けを待つ"></textarea>
+  <div class="caprow">
+    <input id="capCode" placeholder="コード" maxlength="5" autocomplete="off">
+    <input id="capName" placeholder="銘柄名（初回だけ入力）" autocomplete="off">
+    <span id="quickTags" class="chips"></span>
+  </div>
+  <div class="capfoot">
+    <select id="tpl"><option value="">テンプレ…</option></select>
+    <span class="hint">⌘/Ctrl+Enter で保存</span>
+    <span><button id="cancelEdit" class="hide">やめる</button><button id="save">保存</button></span>
+  </div>
+</section>
+
+<section id="vNotes">
+  <div class="bar"><input id="qNotes" type="search" placeholder="本文・銘柄・タグを検索"><div id="tagFilter" class="chips"></div></div>
+  <div id="noteList"></div>
+</section>
+
+<section id="vStocks" class="hide">
+  <div class="bar"><input id="qStocks" type="search" placeholder="銘柄を検索"><select id="stSort"><option value="status">ステータス順</option><option value="rank">ランク順</option><option value="upd">更新順</option><option value="sector">セクター別</option></select><div id="stFilter" class="chips"></div></div>
+  <div id="stockList"></div>
+</section>
+
+<section id="detail" class="hide">
+  <div class="top"><button class="back" id="backBtn">‹ 銘柄一覧</button><h2 id="dTitle"></h2><select id="dStatus"></select></div>
+  <div class="drow"><input id="dSector" list="secList" placeholder="セクター／グループ"><datalist id="secList"></datalist><span class="rank" id="dRank"></span></div>
+<div class="links" id="dLinks"></div>
+  <textarea class="smemo" id="dMemo" placeholder="この銘柄の固定メモ（建値・シナリオ・損切りラインなど）"></textarea>
+  <div id="dNotes"></div>
+</section>
+
+<section id="vDiary" class="hide">
+  <div class="dnav"><button id="dPrev">‹</button><span class="dd" id="dDate"></span><input type="date" id="dPick"><button id="dNext">›</button></div>
+  <div class="diary" id="diaryBox"><textarea id="diaryText" placeholder="相場環境／今日の売買と理由／うまくいったこと・反省／明日見ること"></textarea>
+    <div class="dfoot"><span class="hint" id="diaryStat"></span><span class="hint">左右スワイプで前後の日</span></div></div>
+  <div class="sub">最近の日記</div><div class="dlist" id="diaryList"></div>
+</section>
+
+<section id="vCal" class="hide">
+  <div class="evadd"><input type="date" id="evDate"><input class="tt" id="evTitle" placeholder="内容（コードを含めると銘柄に紐づく）"><button class="btn" id="evAdd">追加</button></div>
+  <div id="evList"></div>
+  <div class="set" style="margin-top:18px"><h3>まとめて取り込む</h3>
+    <p class="hint" style="margin-bottom:6px">1行1件。「2026/10/30 決算 6136 OSG」「10月30日 OSG決算」「10/30 日銀会合」など日付は自動判定。</p>
+    <textarea class="aiin" id="evBulk" placeholder="2026/10/30 決算 6136 OSG&#10;11/6 決算 7013 IHI"></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn" id="evImport">取り込む</button><button class="btn" id="evPrompt">お願い文をコピー</button><span class="hint" id="evStat"></span></div></div>
+</section>
+
+<section id="vRules" class="hide">
+  <div class="rules"><div class="rhead"><button class="chip" id="rulesEdit">編集</button></div><div class="body" id="rulesView"></div><textarea id="rulesText" class="hide"></textarea></div>
+</section>
+
+<section id="vSet" class="hide">
+  <div class="set"><h3>データ</h3><div class="row">
+    <button class="btn" id="expJson">JSONを書き出す</button>
+    <button class="btn" id="impJson">JSONを読み込む</button>
+    <button class="btn" id="expMd">Markdownを書き出す（Notion用）</button>
+    <input type="file" id="impFile" accept=".json" class="hide">
+  </div><p class="hint" style="margin-top:8px">JSONはブラウザ内（localStorage）にも自動保存されます。端末をまたぐ時は書き出し→読み込み（読み込みは追加・上書きで、既存は消えません）。</p></div>
+  <div class="set"><h3>GAS同期</h3><div class="row" style="width:100%">
+    <input id="gasUrl" placeholder="GASウェブアプリのURL（https://script.google.com/macros/s/…/exec）" style="flex:1;min-width:200px;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:6px 8px;font-size:13px">
+    <button class="btn" id="syncNow">今すぐ同期</button></div>
+    <p class="hint" id="syncStat" style="margin-top:8px">URLを入れると、保存のたびに自動で同期します（マージ式・新しい方が勝ち）。</p></div>
+  <div class="set"><h3>AI取り込み</h3>
+    <p class="hint" style="margin-bottom:8px">Claudeに話した内容を取り込み用プロンプトで整形させ、返ってきたJSONを貼って取り込みます。</p>
+    <div class="row" style="margin-bottom:8px"><button class="btn" id="copyPrompt">取り込み用プロンプトをコピー</button></div>
+    <textarea class="aiin" id="aiIn" placeholder='{"stocks":[…],"notes":[…]}'></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn" id="aiImport">取り込む</button><span class="hint" id="aiStat"></span></div></div>
+  <div class="set"><h3>クイックタグ</h3><div class="row">
+    <input id="quickEdit" placeholder="注目, 仮説, 懸念, 決算, 執行, 検証" style="flex:1;min-width:200px;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:6px 8px;font-size:13px"></div>
+    <p class="hint" style="margin-top:8px">カンマ区切り。入力欄の下に並ぶボタンになります（空にすると初期値に戻ります）。</p></div>
+  <div class="set"><h3>表示</h3><div class="row"><button class="btn" id="themeBtn2">ダーク／ライト切替</button></div></div>
+  <div class="set"><h3>危険な操作</h3><div class="row"><button class="btn danger" id="wipe">すべて削除</button></div></div>
+</section>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+const KEY="invnote_v1";
+const STATUS=["気になる","監視","候補","保有","売却済","見送り"];
+const VER="1.5";
+const QUICK=["注目","仮説","懸念","決算","執行","検証"];
+const TPL={
+"エントリーチェック":`【エントリーチェック】
+モード：順張り／回復初動／逆張り
+- [ ] 200MA 上向き
+- [ ] 25MA・5MA 上向き
+- [ ] 陽線が5MAを突き抜け
+- [ ] SQZMOM ドット 黒→グレー
+- [ ] 出来高：枯れ→急増（2日連続？）
+- [ ] 損切り幅 ≤ 2.0ATR（順張り）／底練り成熟度（逆張り）
+- [ ] 支持線・抵抗線／日柄
+結論：`,
+"ファンダ確認":`【ファンダ確認】
+一言：買い増し検討／可もなく不可もなく／地雷あり注意
+伸びしろ：◎○△×　下支え：◎○△×
+事業内容：
+業績YoY・会社予想（増額／据置／減額）：
+伸びしろ（TAM・テーマ）：
+下支え／クッション：
+割安割高：
+赤信号：`,
+"売買記録":`【売買】買い／売り　株数：　単価：
+理由：
+損切りライン：
+シナリオ：`,
+"決算メモ":`【決算】期：
+売上／営業利益 YoY：
+会社予想：増額／据置／減額
+サプライズ点：
+翌日の値動きメモ：`
+};
+const LINKS=c=>[
+ ["株探",`https://kabutan.jp/stock/?code=${c}`],
+ ["チャート",`https://kabutan.jp/stock/chart?code=${c}`],
+ ["ニュース",`https://kabutan.jp/stock/news?code=${c}`],
+ ["四季報",`https://shikiho.toyokeizai.net/stocks/${c}`],
+ ["TradingView",`https://jp.tradingview.com/chart/?symbol=TSE%3A${c}`],
+ ["Yahoo",`https://finance.yahoo.co.jp/quote/${c}.T`]
+];
+
+let S={notes:[],stocks:{},theme:"dark",gas:"",lastSync:0,quick:null,diary:{},events:[],rules:{text:"",upd:0}};
+const RULES_DEFAULT=`【執行】
+- 5MAを陽線が突き抜けたら執行。200MAの向きで順張り／逆張りを決める
+- 順張り：200・25・5MAが上向き、損切り幅 ≤ 2.0ATR
+- 逆張り：底練りの長さと出来高（枯れ→2日連続増）を最優先
+
+【ポジション】
+- 現物は9銘柄まで。超える分は信用
+- ナンピンは下支え型S2（配当≥3%・自己資本比率≥50%・5年減配なし）の現物のみ
+
+【やらないこと】
+- 上がりきったところ（ATR4.0超）を拾わない
+- 一過性利益で膨らんだ決算を伸びしろと見ない`;
+let mem=null;
+function load(){try{const j=localStorage.getItem(KEY);if(j)S=Object.assign(S,JSON.parse(j));}catch(e){mem=true;}S.diary=S.diary||{};S.events=S.events||[];S.rules=S.rules||{text:"",upd:0}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}scheduleSync()}
+const $=s=>document.querySelector(s);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const esc=s=>s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad=n=>String(n).padStart(2,"0");
+const dstr=t=>{const d=new Date(t);return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`};
+const tstr=t=>{const d=new Date(t);return `${pad(d.getHours())}:${pad(d.getMinutes())}`};
+function dayLabel(t){const a=dstr(t),n=Date.now();if(a===dstr(n))return"今日";if(a===dstr(n-864e5))return"昨日";const d=new Date(t);return `${a}（${"日月火水木金土"[d.getDay()]}）`}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove("show"),1600)}
+const CODE_RE=/(?:^|[\s（(：:])(\d{4}|\d{3}[A-Z])(?=$|[\s）)：:、。,.])/;
+const nm=c=>(S.stocks[c]&&S.stocks[c].name)||"";
+function stock(c){if(!S.stocks[c])S.stocks[c]={name:"",status:"気になる",memo:"",sector:"",rank:0,upd:0};return S.stocks[c]}
+function touch(c){stock(c).upd=Date.now()}
+
+/* ---------- capture ---------- */
+let editing=null,capTags=new Set(),view="vNotes",curCode=null;
+const ta=$("#capText");
+ta.addEventListener("input",()=>{autoGrow();const m=ta.value.match(CODE_RE);if(m&&!$("#capCode").value){$("#capCode").value=m[1];$("#capName").value=nm(m[1])}});
+$("#capCode").addEventListener("input",e=>{const c=e.target.value.trim().toUpperCase();e.target.value=c;if(nm(c))$("#capName").value=nm(c)});
+function autoGrow(){ta.style.height="auto";ta.style.height=Math.max(78,ta.scrollHeight)+"px"}
+const quick=()=>(S.quick&&S.quick.length?S.quick:QUICK);
+function renderQuick(){$("#quickTags").innerHTML=quick().map(t=>`<button class="chip${capTags.has(t)?" on":""}" data-t="${t}">${t}</button>`).join("")}
+$("#quickTags").addEventListener("click",e=>{const b=e.target.closest("[data-t]");if(!b)return;const t=b.dataset.t;capTags.has(t)?capTags.delete(t):capTags.add(t);renderQuick()});
+$("#tpl").innerHTML+=Object.keys(TPL).map(k=>`<option>${k}</option>`).join("");
+$("#tpl").addEventListener("change",e=>{if(!e.target.value)return;ta.value=(ta.value.trim()?ta.value.trimEnd()+"\n":"")+TPL[e.target.value];e.target.value="";autoGrow();ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length)});
+ta.addEventListener("keydown",e=>{if((e.metaKey||e.ctrlKey)&&e.key==="Enter")doSave()});
+$("#save").addEventListener("click",doSave);
+$("#cancelEdit").addEventListener("click",resetCap);
+function doSave(){
+  let text=ta.value.trim();if(!text){ta.focus();return}
+  let code=$("#capCode").value.trim().toUpperCase();
+  const tags=new Set(capTags);
+  text=text.replace(/(^|\s)#([^\s#]+)/g,(m,p,t)=>{tags.add(t);return p}).trim();
+  if(code){const st=stock(code);const n=$("#capName").value.trim();if(n&&n!==st.name){st.name=n;touch(code)}}
+  if(editing){const n=S.notes.find(x=>x.id===editing);if(n){n.text=text;n.code=code||null;n.tags=[...tags];n.edited=Date.now()}toast("更新しました")}
+  else{S.notes.unshift({id:uid(),ts:Date.now(),code:code||null,text,tags:[...tags],pinned:false});toast(code?`${code} ${nm(code)} に保存`:"保存しました")}
+  save();resetCap();render();
+}
+function resetCap(){editing=null;ta.value="";$("#capCode").value=curCode||"";$("#capName").value=curCode?nm(curCode):"";capTags.clear();renderQuick();autoGrow();$("#save").textContent="保存";$("#save").classList.remove("editing");$("#cancelEdit").classList.add("hide")}
+function startEdit(id){const n=S.notes.find(x=>x.id===id);if(!n)return;editing=id;ta.value=n.text;$("#capCode").value=n.code||"";$("#capName").value=n.code?nm(n.code):"";capTags=new Set(n.tags);renderQuick();autoGrow();$("#save").textContent="更新";$("#save").classList.add("editing");$("#cancelEdit").classList.remove("hide");window.scrollTo({top:0,behavior:"smooth"});ta.focus()}
+
+/* ---------- render body (markdown-lite) ---------- */
+function md(text,id){
+  const lines=text.split("\n");let out=[],inUl=false;
+  const inline=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/`([^`]+)`/g,"<code>$1</code>").replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>');
+  lines.forEach((l,i)=>{
+    let m;
+    if((m=l.match(/^\s*- \[( |x)\] ?(.*)$/))){if(inUl){out.push("</div>");inUl=false}out.push(`<div><span class="cb${m[1]==="x"?" x":""}" data-cb="${id}:${i}">${m[1]==="x"?"✓":""}</span>${inline(m[2])}</div>`);return}
+    if((m=l.match(/^\s*[-・] (.*)$/))){if(!inUl){out.push('<div class="ul">');inUl=true}out.push(`<div>• ${inline(m[1])}</div>`);return}
+    if(inUl){out.push("</div>");inUl=false}
+    out.push(`<div>${inline(l)||"&nbsp;"}</div>`);
+  });
+  if(inUl)out.push("</div>");
+  return out.join("");
+}
+document.addEventListener("click",e=>{
+  const cb=e.target.closest("[data-cb]");if(!cb)return;
+  const [id,li]=cb.dataset.cb.split(":");const n=S.notes.find(x=>x.id===id);if(!n)return;
+  const ls=n.text.split("\n");ls[+li]=ls[+li].replace(/\[( |x)\]/,(m,c)=>c==="x"?"[ ]":"[x]");n.text=ls.join("\n");save();render();
+});
+
+/* ---------- notes view ---------- */
+let tagSel=null,stSel=null;
+function noteCard(n,showStock=true){
+  const t=n.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("");
+  const sk=showStock&&n.code?`<span class="sk" data-open="${n.code}"><b>${n.code}</b>${esc(nm(n.code))||"（名前未設定）"}</span>`:"";
+  return `<div class="note${n.pinned?" pin":""}" data-id="${n.id}"><div class="nhead">${sk}${t}<span class="tm">${tstr(n.ts)}${n.edited?" ✎":""}</span></div><div class="body">${md(n.text,n.id)}</div>
+  <div class="nact"><button data-a="pin">${n.pinned?"ピン解除":"ピン"}</button><button data-a="copy">コピー</button><button data-a="edit">編集</button><button data-a="del">削除</button></div></div>`;
+}
+function renderNotes(){
+  const q=$("#qNotes").value.trim().toLowerCase();
+  const tags=[...new Set(S.notes.flatMap(n=>n.tags))];
+  $("#tagFilter").innerHTML=[`<button class="chip${tagSel==="_pin"?" on":""}" data-f="_pin">ピン留め</button>`].concat(tags.map(t=>`<button class="chip${tagSel===t?" on":""}" data-f="${esc(t)}">#${esc(t)}</button>`)).join("");
+  let list=S.notes.filter(n=>{
+    if(tagSel==="_pin"&&!n.pinned)return false;if(tagSel&&tagSel!=="_pin"&&!n.tags.includes(tagSel))return false;
+    if(!q)return true;const hay=(n.text+" "+(n.code||"")+" "+nm(n.code||"")+" "+n.tags.join(" ")).toLowerCase();return hay.includes(q);
+  });
+  list=[...list.filter(n=>n.pinned),...list.filter(n=>!n.pinned)];
+  if(!list.length){$("#noteList").innerHTML=`<div class="empty">${S.notes.length?"該当なし":"上の欄に「コード＋ひとこと」を書いて保存。<br>コードは自動で拾います（例：6136 底練り成熟 #仮説）"}</div>`;return}
+  let html="",last=null;
+  list.forEach(n=>{const k=n.pinned?"ピン留め":dayLabel(n.ts);if(k!==last){html+=`<div class="day">${k}</div>`;last=k}html+=noteCard(n)});
+  $("#noteList").innerHTML=html;
+}
+$("#qNotes").addEventListener("input",renderNotes);
+$("#tagFilter").addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;tagSel=tagSel===b.dataset.f?null:b.dataset.f;renderNotes()});
+document.addEventListener("click",e=>{
+  const o=e.target.closest("[data-open]");if(o){openDetail(o.dataset.open);return}
+  const b=e.target.closest("[data-a]");if(!b)return;const id=b.closest("[data-id]").dataset.id;const n=S.notes.find(x=>x.id===id);if(!n)return;
+  const a=b.dataset.a;
+  if(a==="pin"){n.pinned=!n.pinned;save();render()}
+  else if(a==="edit")startEdit(id);
+  else if(a==="del"){if(confirm("このメモを削除しますか？")){S.notes=S.notes.filter(x=>x.id!==id);(S.deleted=S.deleted||[]).push(id);save();render()}}
+  else if(a==="copy"){navigator.clipboard.writeText(noteMd(n)).then(()=>toast("コピーしました"))}
+});
+const noteMd=n=>`- ${dstr(n.ts)} ${tstr(n.ts)}${n.code?` [${n.code} ${nm(n.code)}]`:""}${n.tags.length?" "+n.tags.map(t=>"#"+t).join(" "):""}\n${n.text.split("\n").map(l=>"  "+l).join("\n")}`;
+
+/* ---------- stocks view ---------- */
+function stockRows(){
+  const by={};S.notes.forEach(n=>{if(n.code){(by[n.code]=by[n.code]||[]).push(n)}});
+  Object.keys(S.stocks).forEach(c=>{by[c]=by[c]||[]});
+  return Object.entries(by).map(([code,ns])=>({code,st:stock(code),ns,last:ns[0]?Math.max(ns[0].ts,ns[0].edited||0):0}));
+}
+const stars=r=>`<span class="stars">${"★".repeat(r||0)}<i>${"★".repeat(5-(r||0))}</i></span>`;
+function renderStocks(){
+  const q=$("#qStocks").value.trim().toLowerCase();const mode=$("#stSort").value;
+  $("#stFilter").innerHTML=STATUS.map(s=>`<button class="chip${stSel===s?" on":""}" data-f="${s}">${s}</button>`).join("");
+  let rows=stockRows().filter(r=>(!stSel||r.st.status===stSel)&&(!q||(r.code+" "+r.st.name).toLowerCase().includes(q)));
+  const byStatus=(a,b)=>(STATUS.indexOf(a.st.status)-STATUS.indexOf(b.st.status))||(b.last-a.last);
+  if(mode==="rank")rows.sort((a,b)=>((b.st.rank||0)-(a.st.rank||0))||byStatus(a,b));
+  else if(mode==="upd")rows.sort((a,b)=>b.last-a.last);
+  else if(mode==="sector")rows.sort((a,b)=>(a.st.sector||"～").localeCompare(b.st.sector||"～","ja")||((b.st.rank||0)-(a.st.rank||0))||byStatus(a,b));
+  else rows.sort(byStatus);
+  if(!rows.length){$("#stockList").innerHTML=`<div class="empty">まだ銘柄がありません</div>`;return}
+  let html="",lastG=null;
+  rows.forEach(r=>{
+    if(mode==="sector"){const g=r.st.sector||"未分類";if(g!==lastG){const n=rows.filter(x=>(x.st.sector||"未分類")===g).length;html+=`<div class="grp"><b>${esc(g)}</b>${n}銘柄</div>`;lastG=g}}
+    html+=stockCard(r);
+  });
+  $("#stockList").innerHTML=html;
+}
+function stockCard(r){return `<div class="stk" data-s="${r.st.status}">
+    <div class="shead"><span class="code">${r.code}</span><span class="name" data-open="${r.code}">${esc(r.st.name)||"（名前未設定）"}</span>${r.st.sector?`<span class="sec">${esc(r.st.sector)}</span>`:""}${r.st.rank?stars(r.st.rank):""}<span class="cnt">${r.ns.length}件</span>
+    <select data-st="${r.code}">${STATUS.map(s=>`<option${s===r.st.status?" selected":""}>${s}</option>`).join("")}</select></div>
+    ${r.st.memo?`<div class="slast">📌 ${esc(r.st.memo.split("\n")[0])}</div>`:""}
+    ${r.ns[0]?`<div class="slast">${dstr(r.ns[0].ts)}　${esc(r.ns[0].text.split("\n")[0])}</div>`:""}
+    <div class="links">${LINKS(r.code).map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join("")}</div></div>`}
+$("#stSort").addEventListener("change",renderStocks);
+$("#qStocks").addEventListener("input",renderStocks);
+$("#stFilter").addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;stSel=stSel===b.dataset.f?null:b.dataset.f;renderStocks()});
+document.addEventListener("change",e=>{const s=e.target.closest("[data-st]");if(!s)return;stock(s.dataset.st).status=s.value;touch(s.dataset.st);save();renderStocks();toast(`${s.dataset.st} → ${s.value}`)});
+
+/* ---------- detail ---------- */
+function openDetail(code){
+  curCode=code;const st=stock(code);
+  $("#dTitle").innerHTML=`<small>${code}</small><input class="sname" id="dName" value="${esc(st.name)}" placeholder="銘柄名を入力">`;
+  $("#dStatus").innerHTML=STATUS.map(s=>`<option${s===st.status?" selected":""}>${s}</option>`).join("");
+  $("#dLinks").innerHTML=LINKS(code).map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join("");
+  $("#dMemo").value=st.memo||"";
+  $("#dSector").value=st.sector||"";$("#secList").innerHTML=[...new Set(Object.values(S.stocks).map(x=>x.sector).filter(Boolean))].map(x=>`<option value="${esc(x)}">`).join("");
+  renderRank();
+  renderDetailNotes();
+  show("detail");resetCap();window.scrollTo(0,0);
+}
+function renderDetailNotes(){
+  const ns=S.notes.filter(n=>n.code===curCode);
+  $("#dNotes").innerHTML=ns.length?ns.map(n=>`<div class="day">${dayLabel(n.ts)}</div>`+noteCard(n,false)).join(""):`<div class="empty">この銘柄のメモはまだありません。上の欄に書くとこの銘柄に紐づきます</div>`;
+}
+function renderRank(){const r=stock(curCode).rank||0;$("#dRank").innerHTML=[1,2,3,4,5].map(i=>`<button data-r="${i}" class="${i<=r?"":"off"}" aria-label="ランク${i}">★</button>`).join("")}
+$("#dRank").addEventListener("click",e=>{const b=e.target.closest("[data-r]");if(!b)return;const st=stock(curCode);const v=+b.dataset.r;st.rank=st.rank===v?0:v;touch(curCode);save();renderRank()});
+$("#dSector").addEventListener("change",e=>{stock(curCode).sector=e.target.value.trim();touch(curCode);save();toast("セクターを保存")});
+$("#dStatus").addEventListener("change",e=>{stock(curCode).status=e.target.value;touch(curCode);save();toast(`${curCode} → ${e.target.value}`)});
+$("#dMemo").addEventListener("change",e=>{stock(curCode).memo=e.target.value;touch(curCode);save();toast("固定メモを保存")});
+document.addEventListener("change",e=>{if(e.target.id==="dName"){stock(curCode).name=e.target.value.trim();touch(curCode);save();$("#capName").value=stock(curCode).name;toast("銘柄名を保存")}});
+$("#backBtn").addEventListener("click",()=>{curCode=null;resetCap();show("vStocks")});
+
+/* ---------- nav ---------- */
+function show(v){
+  view=v;["vNotes","vStocks","vSet","detail","vDiary","vCal","vRules"].forEach(x=>$("#"+x).classList.toggle("hide",x!==v));
+  $("#cap").classList.toggle("hide",!["vNotes","vStocks","detail"].includes(v));
+  document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v===v||(v==="detail"&&b.dataset.v==="vStocks")));
+  render();
+}
+$("#tabs").addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(!b)return;curCode=null;resetCap();show(b.dataset.v)});
+function render(){
+  $("#stat").textContent=`${S.notes.length}メモ／${Object.keys(S.stocks).length}銘柄`;
+  if(view==="vNotes")renderNotes();else if(view==="vStocks")renderStocks();else if(view==="detail")renderDetailNotes();else if(view==="vDiary")renderDiary();else if(view==="vCal")renderCal();else if(view==="vRules")renderRules();
+}
+
+/* ---------- theme / settings ---------- */
+function applyTheme(){document.documentElement.dataset.theme=S.theme;$("#themeBtn").textContent=S.theme==="dark"?"☀":"☾";document.querySelector('meta[name=theme-color]').content=S.theme==="dark"?"#12171C":"#F1F3F5"}
+const flipTheme=()=>{S.theme=S.theme==="dark"?"light":"dark";save();applyTheme()};
+$("#quickEdit").addEventListener("change",e=>{const a=e.target.value.split(/[,、，\s]+/).map(x=>x.trim()).filter(Boolean);S.quick=a.length?[...new Set(a)]:null;capTags.clear();editingSync=true;save();editingSync=false;renderQuick();e.target.value=quick().join(", ");toast("クイックタグを更新")});
+$("#themeBtn").addEventListener("click",flipTheme);$("#themeBtn2").addEventListener("click",flipTheme);
+function dl(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+$("#expJson").addEventListener("click",()=>dl(`invnote_${dstr(Date.now())}.json`,JSON.stringify(S,null,1),"application/json"));
+$("#impJson").addEventListener("click",()=>$("#impFile").click());
+function mergeIn(d){
+  const ids=new Set(S.notes.map(n=>n.id));let add=0;const del=new Set(S.deleted||[]);
+  (d.deleted||[]).forEach(id=>del.add(id));
+  (d.notes||[]).forEach(n=>{if(del.has(n.id))return;if(!ids.has(n.id)){S.notes.push(n);add++}else{const i=S.notes.findIndex(x=>x.id===n.id);if((n.edited||n.ts)>(S.notes[i].edited||S.notes[i].ts))S.notes[i]=n}});
+  S.notes=S.notes.filter(n=>!del.has(n.id));S.deleted=[...del].slice(-500);
+  Object.entries(d.stocks||{}).forEach(([c,s])=>{const cur=stock(c);if((s.upd||0)>=(cur.upd||0)){Object.assign(cur,s)}else{Object.keys(s).forEach(k=>{if(s[k]&&!cur[k])cur[k]=s[k]})}});
+  Object.entries(d.diary||{}).forEach(([k,v])=>{if(!S.diary[k]||(v.upd||0)>(S.diary[k].upd||0))S.diary[k]=v});
+  const eids=new Set((S.events||[]).map(e=>e.id));(d.events||[]).forEach(e=>{if(!del.has(e.id)&&!eids.has(e.id))S.events.push(e)});S.events=S.events.filter(e=>!del.has(e.id));
+  if(d.rules&&(d.rules.upd||0)>(S.rules.upd||0))S.rules=d.rules;
+  S.notes.sort((a,b)=>b.ts-a.ts);return add;
+}
+$("#impFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{
+  const add=mergeIn(JSON.parse(t));save();render();toast(`${add}件を追加しました`);e.target.value="";
+}).catch(()=>toast("読み込めませんでした（JSON形式を確認）"))});
+
+/* ---------- AI import ---------- */
+const AI_PROMPT=`あなたは投資ノートアプリ「Invnote」の取り込み係です。以下の私の発言・メモ・分析結果を読み、次のJSONだけを出力してください（説明文・コードフェンス不要）。
+
+{"stocks":[{"code":"4桁コード","name":"銘柄名","status":"気になる|監視|候補|保有|売却済|見送り のいずれか。不明なら省略","sector":"セクターやグループ名。不明なら省略","rank":1〜5の自己評価。言及がなければ省略,"memo":"建値・シナリオ・損切りラインなど固定で持ちたい情報。なければ省略"}],
+"notes":[{"code":"4桁コード。銘柄に紐づかなければ省略","text":"メモ本文。私の言葉をなるべく残し、箇条書きは「- 」で","tags":["注目|仮説|懸念|決算|執行|検証 から該当するもの"],"date":"YYYY-MM-DD。言及がなければ省略"}]}
+
+ルール：推測で数値や事実を足さない。コードが分からない銘柄は name だけ入れて code を省略する。一つの発言に複数の銘柄が出たら銘柄ごとに notes を分ける。
+
+--- 私の発言 ---
+`;
+$("#copyPrompt").addEventListener("click",()=>navigator.clipboard.writeText(AI_PROMPT).then(()=>toast("プロンプトをコピーしました")));
+$("#aiImport").addEventListener("click",()=>{
+  let t=$("#aiIn").value.trim().replace(/^```(?:json)?\s*|```$/g,"").trim();if(!t)return;
+  let d;try{d=JSON.parse(t)}catch(e){$("#aiStat").textContent="JSONとして読めません";return}
+  let ns=0,ss=0,pending=[];
+  (d.stocks||[]).forEach(x=>{
+    const code=String(x.code||"").trim().toUpperCase();if(!code){if(x.name)pending.push(x.name);return}
+    const st=stock(code);if(x.name)st.name=x.name;if(x.status&&STATUS.includes(x.status))st.status=x.status;if(x.sector)st.sector=x.sector;
+    if(x.rank)st.rank=Math.min(5,Math.max(1,+x.rank))||st.rank;if(x.memo)st.memo=st.memo?st.memo+"\n"+x.memo:x.memo;touch(code);ss++;
+  });
+  (d.notes||[]).forEach(x=>{
+    if(!x.text)return;const code=x.code?String(x.code).trim().toUpperCase():null;if(code)stock(code);
+    let ts=Date.now();if(x.date&&/^\d{4}-\d{2}-\d{2}$/.test(x.date)){const dd=new Date(x.date+"T12:00:00");if(!isNaN(dd))ts=dd.getTime()}
+    S.notes.push({id:uid(),ts,code,text:String(x.text).trim(),tags:Array.isArray(x.tags)?x.tags.filter(Boolean):[],pinned:false,ai:true});ns++;
+  });
+  S.notes.sort((a,b)=>b.ts-a.ts);save();render();$("#aiIn").value="";
+  $("#aiStat").textContent=`メモ${ns}件・銘柄${ss}件を取り込みました`+(pending.length?`　／コード不明：${pending.join("、")}`:"");toast("取り込みました");
+});
+
+/* ---------- diary ---------- */
+let dCur=dstr(Date.now()),dT=null;
+const shiftDay=(k,n)=>{const d=new Date(k+"T12:00:00");d.setDate(d.getDate()+n);return dstr(d)};
+function renderDiary(){
+  const d=new Date(dCur+"T12:00:00");$("#dDate").textContent=`${dCur}（${"日月火水木金土"[d.getDay()]}）`+(dCur===dstr(Date.now())?"　今日":"");
+  $("#dPick").value=dCur;const e=S.diary[dCur];$("#diaryText").value=e?e.t:"";$("#diaryStat").textContent=e?`保存 ${tstr(e.upd)}`:"";
+  const keys=Object.keys(S.diary).filter(k=>S.diary[k].t&&k!==dCur).sort().reverse().slice(0,14);
+  $("#diaryList").innerHTML=keys.length?keys.map(k=>`<div class="note" data-day="${k}"><div class="nhead"><span class="sk">${k}</span></div><div class="slast">${esc(S.diary[k].t.split("\n")[0])}</div></div>`).join(""):`<div class="empty">まだ日記がありません</div>`;
+}
+$("#diaryText").addEventListener("input",()=>{clearTimeout(dT);dT=setTimeout(()=>{const t=$("#diaryText").value;if(!t.trim()&&!S.diary[dCur])return;S.diary[dCur]={t,upd:Date.now()};save();$("#diaryStat").textContent=`保存 ${tstr(Date.now())}`},600)});
+$("#dPrev").addEventListener("click",()=>{dCur=shiftDay(dCur,-1);renderDiary()});
+$("#dNext").addEventListener("click",()=>{dCur=shiftDay(dCur,1);renderDiary()});
+$("#dPick").addEventListener("change",e=>{if(e.target.value){dCur=e.target.value;renderDiary()}});
+$("#diaryList").addEventListener("click",e=>{const b=e.target.closest("[data-day]");if(b){dCur=b.dataset.day;renderDiary();window.scrollTo(0,0)}});
+
+/* ---------- calendar ---------- */
+const sqDates=()=>{const out=[];const now=new Date();for(let m=-1;m<=8;m++){const d=new Date(now.getFullYear(),now.getMonth()+m,1);let fri=0;for(let i=1;i<=31;i++){const x=new Date(d.getFullYear(),d.getMonth(),i);if(x.getMonth()!==d.getMonth())break;if(x.getDay()===5&&++fri===2){const mj=[2,5,8,11].includes(x.getMonth());out.push({id:"sq"+dstr(x),date:dstr(x),title:mj?"メジャーSQ":"SQ",sq:true});break}}}return out};
+function parseDate(str){
+  const y0=new Date().getFullYear();let m;
+  if((m=str.match(/(\d{4})[\/\-年.](\d{1,2})[\/\-月.](\d{1,2})日?/)))return {d:`${m[1]}-${pad(m[2])}-${pad(m[3])}`,rest:str.replace(m[0],"")};
+  if((m=str.match(/(?:^|[^\d])(\d{1,2})[\/月](\d{1,2})日?/))){let y=y0;const cand=new Date(y,m[1]-1,m[2]);if(cand<Date.now()-180*864e5)y++;return {d:`${y}-${pad(m[1])}-${pad(m[2])}`,rest:str.replace(m[0],m[0].match(/^[^\d]/)?m[0][0]:"")}}
+  return null;
+}
+function addEvent(date,title){title=title.replace(/[（(][日月火水木金土][）)]/g,"").replace(/\s+/g," ").trim();if(!date||!title)return false;const cm=title.match(CODE_RE);S.events.push({id:uid(),date,title,code:cm?cm[1]:null});if(cm)stock(cm[1]);return true}
+function renderCal(){
+  if(!$("#evDate").value)$("#evDate").value=dstr(Date.now());
+  const today=dstr(Date.now()),y=shiftDay(today,-1),lim=shiftDay(today,-7);
+  const all=[...S.events,...sqDates()].filter(e=>e.date>=lim).sort((a,b)=>a.date.localeCompare(b.date)||(a.sq?1:-1));
+  const row=e=>{const d=new Date(e.date+"T12:00:00");const lab=e.date===today?"今日":e.date===y?"昨日":`${e.date.slice(5).replace("-","/")}（${"日月火水木金土"[d.getDay()]}）`;
+    return `<div class="ev"><span class="d${e.date===today?" today":""}">${lab}</span><span class="t${e.sq?" sq":""}">${esc(e.title)}${e.code?` <span class="sk" data-open="${e.code}"><b>${e.code}</b>${esc(nm(e.code))}</span>`:""}</span>${e.sq?"":`<button class="x" data-ev="${e.id}">削除</button>`}</div>`};
+  const past=all.filter(e=>e.date<y),near=all.filter(e=>e.date>=y&&e.date<=today),fut=all.filter(e=>e.date>today);
+  $("#evList").innerHTML=(near.length?`<div class="sub">昨日・今日</div>`+near.map(row).join(""):"")+`<div class="sub">今後</div>`+(fut.length?fut.map(row).join(""):`<div class="empty">予定はまだありません</div>`)+(past.length?`<div class="sub">過去7日</div>`+past.map(row).join(""):"");
+}
+$("#evAdd").addEventListener("click",()=>{if(addEvent($("#evDate").value,$("#evTitle").value)){$("#evTitle").value="";save();renderCal();toast("追加しました")}});
+$("#evTitle").addEventListener("keydown",e=>{if(e.key==="Enter")$("#evAdd").click()});
+$("#evList").addEventListener("click",e=>{const b=e.target.closest("[data-ev]");if(!b)return;S.events=S.events.filter(x=>x.id!==b.dataset.ev);(S.deleted=S.deleted||[]).push(b.dataset.ev);save();renderCal()});
+$("#evImport").addEventListener("click",()=>{let n=0,bad=[];$("#evBulk").value.split("\n").forEach(l=>{l=l.trim();if(!l)return;const p=parseDate(l);if(p&&addEvent(p.d,p.rest))n++;else bad.push(l)});save();renderCal();$("#evBulk").value=bad.join("\n");$("#evStat").textContent=`${n}件を取り込み`+(bad.length?`（${bad.length}行は日付が読めず残しました）`:"");});
+const EV_PROMPT=()=>{const hold=stockRows().filter(r=>["保有","候補","監視"].includes(r.st.status)).map(r=>`${r.code} ${r.st.name}`).join("、");
+return `次の銘柄について、直近の決算発表予定日（株探の「決算発表予定日」）と、株価に関わる重要イベント（権利確定日・IR説明会など分かるもの）を調べ、1行1件で「YYYY/MM/DD 内容 コード 銘柄名」の形式だけで出力してください。分からない日付は推測せず「未定」と書いてください。説明文は不要です。
+
+対象：${hold||"（銘柄を書く）"}
+
+あわせて、今後3か月の日銀金融政策決定会合・FOMC・米雇用統計の日程も同じ形式で末尾に付けてください。`};
+$("#evPrompt").addEventListener("click",()=>navigator.clipboard.writeText(EV_PROMPT()).then(()=>toast("お願い文をコピーしました")));
+
+/* ---------- rules ---------- */
+let rulesEditing=false;
+function renderRules(){const t=S.rules.text||RULES_DEFAULT;$("#rulesView").innerHTML=md(t,"rules");$("#rulesText").value=t;$("#rulesView").classList.toggle("hide",rulesEditing);$("#rulesText").classList.toggle("hide",!rulesEditing);$("#rulesEdit").textContent=rulesEditing?"完了":"編集"}
+$("#rulesEdit").addEventListener("click",()=>{if(rulesEditing){const t=$("#rulesText").value;if(t!==(S.rules.text||RULES_DEFAULT)){S.rules={text:t,upd:Date.now()};save()}}rulesEditing=!rulesEditing;renderRules();if(rulesEditing)$("#rulesText").focus()});
+
+/* ---------- swipe ---------- */
+const ORDER=["vNotes","vStocks","vDiary","vCal","vRules","vSet"];
+let sx=0,sy=0,sw=false;
+document.addEventListener("touchstart",e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;sw=!e.target.closest("input,select,.chips,nav#tabs")&&!(e.target.closest("textarea")&&!e.target.closest("#diaryBox"))},{passive:true});
+document.addEventListener("touchend",e=>{if(!sw)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(Math.abs(dx)<70||Math.abs(dy)>50)return;
+  if(view==="vDiary"&&e.target.closest("#diaryBox,.dnav")){dCur=shiftDay(dCur,dx<0?1:-1);renderDiary();return}
+  const cur=view==="detail"?"vStocks":view;const i=ORDER.indexOf(cur)+(dx<0?1:-1);if(i<0||i>=ORDER.length)return;curCode=null;resetCap();show(ORDER[i]);document.querySelector(`#tabs [data-v=${ORDER[i]}]`).scrollIntoView({inline:"center",block:"nearest"});
+},{passive:true});
+
+/* ---------- GAS sync ---------- */
+let syncT=null,syncing=false;
+const payload=()=>JSON.stringify({notes:S.notes,stocks:S.stocks,deleted:S.deleted||[],diary:S.diary,events:S.events,rules:S.rules});
+function scheduleSync(){if(!S.gas||editingSync)return;clearTimeout(syncT);syncT=setTimeout(()=>syncNow(true),1500)}
+let editingSync=false;
+async function syncNow(quiet){
+  if(!S.gas||syncing)return;syncing=true;const st=$("#syncStat");if(!quiet)st.textContent="同期中…";
+  try{
+    const r=await fetch(S.gas+"?action=load&sess="+Date.now());const d=await r.json();
+    if(d&&d.notes)mergeIn(d);
+    const p=await fetch(S.gas,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:payload()});
+    const res=await p.json();if(!res.ok)throw new Error(res.error||"save failed");
+    S.lastSync=Date.now();editingSync=true;save();editingSync=false;render();
+    st.textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(!quiet)toast("同期しました");
+  }catch(e){st.textContent="同期に失敗："+(e.message||e);if(!quiet)toast("同期に失敗しました")}
+  syncing=false;
+}
+$("#gasUrl").addEventListener("change",e=>{S.gas=e.target.value.trim();editingSync=true;save();editingSync=false;if(S.gas)syncNow(false)});
+$("#syncNow").addEventListener("click",()=>syncNow(false));
+$("#expMd").addEventListener("click",()=>{
+  let out=`# Invnote v${VER}（${dstr(Date.now())}）\n\n`;
+  stockRows().sort((a,b)=>STATUS.indexOf(a.st.status)-STATUS.indexOf(b.st.status)).forEach(r=>{
+    out+=`## ${r.code} ${r.st.name}　〔${r.st.status}〕${r.st.sector?"　"+r.st.sector:""}${r.st.rank?"　"+"★".repeat(r.st.rank):""}\n`;if(r.st.memo)out+=`> ${r.st.memo.replace(/\n/g,"\n> ")}\n`;out+="\n";
+    r.ns.forEach(n=>out+=noteMd(n)+"\n");out+="\n";
+  });
+  const dk=Object.keys(S.diary).filter(k=>S.diary[k].t).sort().reverse();if(dk.length){out+="## 日記\n\n";dk.forEach(k=>out+=`### ${k}\n${S.diary[k].t}\n\n`)}
+  const free=S.notes.filter(n=>!n.code);if(free.length){out+="## 銘柄なしのメモ\n\n";free.forEach(n=>out+=noteMd(n)+"\n")}
+  dl(`invnote_${dstr(Date.now())}.md`,out,"text/markdown");
+});
+$("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()}};save();render();toast("削除しました")}});
+
+/* ---------- init ---------- */
+$("#ver").textContent="v"+VER;load();applyTheme();renderQuick();autoGrow();render();$("#gasUrl").value=S.gas||"";$("#quickEdit").value=quick().join(", ");if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
+if(mem)toast("この環境では保存できません（GitHub Pagesで開くと保存されます）");
+})();
+</script>
+</body>
+</html>
