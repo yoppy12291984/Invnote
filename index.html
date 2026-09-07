@@ -107,6 +107,22 @@ table.dtab td.d{white-space:nowrap;color:var(--mut);font-variant-numeric:tabular
 table.dtab td.d.sun{color:var(--up)}table.dtab td.d.sat{color:var(--blu)}
 table.dtab td.x{white-space:normal;word-break:break-word}
 table.dtab td.x.none{color:var(--line)}
+/* portfolio */
+.pf{display:flex;align-items:center;gap:8px;padding:8px 4px;border-bottom:1px solid var(--line)}
+.pf .nm{flex:1;min-width:0}.pf .nm b{font-variant-numeric:tabular-nums;color:var(--mut);font-weight:500;margin-right:6px;font-size:13px}
+.pf .nm small{display:block;color:var(--mut);font-size:12px;font-variant-numeric:tabular-nums}
+.pf .val{text-align:right;font-variant-numeric:tabular-nums;font-size:14px}
+.pf .val small{display:block;font-size:12px}
+.pf .pl.up{color:var(--up)}.pf .pl.dn{color:var(--dn)}
+.pf .x{color:var(--mut);font-size:12px;padding:0 4px}
+#pfSum b{font-size:20px;font-variant-numeric:tabular-nums}#pfSum span{font-size:12px;color:var(--mut)}
+#pfSum .up{color:var(--up)}#pfSum .dn{color:var(--dn)}
+/* themes */
+.th{font-size:11px;color:var(--blu);background:color-mix(in srgb,var(--blu) 14%,transparent);border-radius:4px;padding:0 6px;margin-right:3px}
+.thpick{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0}
+.rel{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}
+.rel .sk{cursor:pointer}
+.rel .sk small{color:var(--mut);font-weight:400;margin-left:4px}
 /* rules */
 .rules{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
 .rules textarea{width:100%;min-height:320px;border:0;background:none;outline:0;font-size:15px;line-height:1.7;resize:vertical}
@@ -211,6 +227,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 <nav id="tabs">
   <button data-v="vNotes" class="on">ノート</button>
   <button data-v="vStocks">銘柄</button>
+  <button data-v="vPf">ポートフォリオ</button>
   <button data-v="vDiary">日記</button>
   <button data-v="vCal">カレンダー</button>
   <button data-v="vRules">ルール</button>
@@ -227,7 +244,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
   <div class="capfoot">
     <select id="tpl"><option value="">テンプレ…</option></select>
     <span class="hint"></span>
-    <span><button id="cancelEdit" class="hide">やめる</button><button id="aiBtn" class="chip" style="margin-right:8px">AIで整理</button><button id="save">保存</button></span>
+    <span><button id="cancelEdit" class="hide">やめる</button><button id="aiBtn" class="chip hide" style="margin-right:8px">AIで整理</button><button id="save">保存</button></span>
   </div>
   <div id="aiPrev" class="hide" style="margin-top:10px;border-top:1px solid var(--line);padding-top:10px">
     <div id="aiPrevBody" style="font-size:13px"></div>
@@ -241,7 +258,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 </section>
 
 <section id="vStocks" class="hide">
-  <div class="bar"><input id="qStocks" type="search" placeholder="銘柄を検索"><button class="chip" id="stView">行</button><button class="chip" id="stDir" aria-label="昇順・降順">↓</button><select id="stSort"><option value="status">ステータス順</option><option value="rank">ランク順</option><option value="upd">更新順</option><option value="sector">セクター別</option></select><div id="stFilter" class="chips"></div></div>
+  <div class="bar"><input id="qStocks" type="search" placeholder="銘柄を検索"><button class="chip" id="stView">行</button><button class="chip" id="stDir" aria-label="昇順・降順">↓</button><select id="stSort"><option value="status">ステータス順</option><option value="rank">ランク順</option><option value="upd">更新順</option><option value="sector">セクター別</option></select><div id="stFilter" class="chips"></div><div id="thFilter" class="chips" style="width:100%"></div></div>
   <div id="stockList"></div>
 </section>
 
@@ -249,9 +266,19 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
   <div class="top"><button class="back" id="backBtn">‹ 銘柄一覧</button><span style="flex:1"></span><select id="dStatus"></select></div>
 <h2 id="dTitle"></h2>
   <div class="drow"><input id="dSector" list="secList" placeholder="セクター／グループ"><datalist id="secList"></datalist><span class="rank" id="dRank"></span></div>
+<div class="thpick" id="dThemes"></div>
 <div class="links" id="dLinks"></div>
+<div class="sub" id="dRelH" style="margin-top:12px">関連銘柄</div><div class="rel" id="dRel"></div>
   <textarea class="smemo" id="dMemo" placeholder="この銘柄の固定メモ（建値・シナリオ・損切りラインなど）"></textarea>
   <div id="dNotes"></div>
+</section>
+
+<section id="vPf" class="hide">
+  <div id="pfSum" class="set" style="display:flex;gap:16px;flex-wrap:wrap;align-items:baseline"></div>
+  <div class="sub" style="display:flex;align-items:center;gap:10px">保有<span style="flex:1"></span><span class="hint" id="pfDate"></span><button class="chip" id="pfRefresh">株価を更新</button></div><div id="pfList"></div>
+  <div class="evadd" style="margin-top:8px"><input id="pfCode" placeholder="コード" style="width:76px"><input id="pfShares" placeholder="株数" inputmode="numeric" style="width:80px"><input id="pfAvg" placeholder="取得単価" inputmode="decimal" style="width:96px"><input id="pfPrice" placeholder="現在値" inputmode="decimal" style="width:90px"><button class="btn" id="pfAdd">追加</button></div>
+  <p class="hint">証券アプリのスクショをClaudeのInvnoteプロジェクトに見せると、保有一覧のJSONが返ります（設定 → AI取り込み）。</p>
+  <div class="sub" style="margin-top:18px">監視・候補</div><div id="pfWatch"></div>
 </section>
 
 <section id="vDiary" class="hide">
@@ -296,11 +323,12 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
     <button class="btn" id="syncNow">今すぐ同期</button><button class="btn" id="fillNames">銘柄名を一括補完</button></div>
     <p class="hint" id="syncStat" style="margin-top:8px">URLを入れると、保存のたびに自動で同期します（マージ式・新しい方が勝ち）。銘柄名はJ-Quantsの上場一覧から自動で引きます。</p></div>
   <div class="set"><h3>AI取り込み</h3>
-    <p class="hint" style="margin-bottom:8px">入力欄の「AIで整理」でその場で取り込めます（GASにANTHROPIC_API_KEYの設定が必要）。手動の場合は、Claudeに取り込み用プロンプトで整形させ、返ってきたJSONをここに貼ります。</p>
+    <p class="hint" style="margin-bottom:8px">ClaudeのInvnoteプロジェクトで話して、返ってきたJSONをここに貼ります。</p>
     <div class="row" style="margin-bottom:8px"><button class="btn" id="copyPrompt">取り込み用プロンプトをコピー</button></div>
     <textarea class="aiin" id="aiIn" placeholder='{"stocks":[…],"notes":[…]}'></textarea>
     <div class="row" style="margin-top:8px"><button class="btn" id="aiImport">取り込む</button><span class="hint" id="aiStat"></span></div></div>
   <div class="set"><h3>クイックタグ</h3><div class="led" id="quickLed"></div><p class="hint" style="margin-top:8px">入力欄の下に並ぶボタン。名前は直接書き換え、↑↓で並び替え。</p></div>
+  <div class="set"><h3>テーマ</h3><div class="led" id="themeLed"></div><p class="hint" style="margin-top:8px">銘柄に付ける関連テーマ（複数可）。同じテーマ・同じセクターの銘柄が「関連銘柄」として出ます。</p></div>
   <div class="set"><h3>ステータス</h3><div class="led" id="statusLed"></div><p class="hint" style="margin-top:8px">銘柄の状態。名前を変えると既存の銘柄にも反映されます。</p></div>
   <div class="set"><h3>表示</h3><div class="row"><button class="btn" id="themeBtn2">ダーク／ライト切替</button></div></div>
   <div class="set"><h3>危険な操作</h3><div class="row"><button class="btn danger" id="wipe">すべて削除</button></div></div>
@@ -316,7 +344,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="2.1";
+const VER="2.5";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TPL={
 "エントリーチェック":`【エントリーチェック】
@@ -357,7 +385,9 @@ const LINKS=c=>[
  ["Yahoo",`https://finance.yahoo.co.jp/quote/${c}.T`]
 ];
 
-let S={notes:[],stocks:{},theme:"dark",gas:"",lastSync:0,quick:null,status:null,sectors:{},stockView:"card",diary:{},events:[],rules:{text:"",upd:0}};
+let S={notes:[],stocks:{},theme:"dark",gas:"",lastSync:0,quick:null,status:null,themes:null,sectors:{},holdings:{},stockView:"card",diary:{},events:[],rules:{text:"",upd:0}};
+const THEMES_DEFAULT=["AI関連","データセンター","半導体","防衛","円安メリット","円高メリット","金利上昇メリット","インバウンド","高配当","再エネ"];
+const themes=()=>(S.themes&&S.themes.length?S.themes:THEMES_DEFAULT);
 const RULES_DEFAULT=`【執行】
 - 5MAを陽線が突き抜けたら執行。200MAの向きで順張り／逆張りを決める
 - 順張り：200・25・5MAが上向き、損切り幅 ≤ 2.0ATR
@@ -371,7 +401,7 @@ const RULES_DEFAULT=`【執行】
 - 上がりきったところ（ATR4.0超）を拾わない
 - 一過性利益で膨らんだ決算を伸びしろと見ない`;
 let mem=null;
-function load(){try{const j=localStorage.getItem(KEY);if(j)S=Object.assign(S,JSON.parse(j));}catch(e){mem=true;}S.diary=S.diary||{};S.events=S.events||[];S.rules=S.rules||{text:"",upd:0};S.sectors=S.sectors||{}}
+function load(){try{const j=localStorage.getItem(KEY);if(j)S=Object.assign(S,JSON.parse(j));}catch(e){mem=true;}S.diary=S.diary||{};S.events=S.events||[];S.rules=S.rules||{text:"",upd:0};S.sectors=S.sectors||{};S.holdings=S.holdings||{}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}scheduleSync()}
 const $=s=>document.querySelector(s);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
@@ -383,7 +413,7 @@ function dayLabel(t){const a=dstr(t),n=Date.now();if(a===dstr(n))return"今日";
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove("show"),1600)}
 const CODE_RE=/(?:^|[\s（(：:])(\d{4}|\d{3}[A-Z])(?=$|[\s）)：:、。,.])/;
 const nm=c=>(S.stocks[c]&&S.stocks[c].name)||"";
-function stock(c){if(!S.stocks[c])S.stocks[c]={name:"",status:STATUS[0],memo:"",sector:"",rank:0,upd:0};return S.stocks[c]}
+function stock(c){if(!S.stocks[c])S.stocks[c]={name:"",status:STATUS[0],memo:"",sector:"",rank:0,themes:[],upd:0};return S.stocks[c]}
 function touch(c){stock(c).upd=Date.now()}
 
 /* ---------- capture ---------- */
@@ -434,7 +464,7 @@ document.addEventListener("click",e=>{
 });
 
 /* ---------- notes view ---------- */
-let tagSel=null,stSel=null,stDesc=true;
+let tagSel=null,stSel=null,thSel=null,stDesc=true;
 function noteCard(n,showStock=true){
   const t=n.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("");
   const sk=showStock&&n.code?`<span class="sk" data-open="${n.code}"><b>${n.code}</b>${esc(nm(n.code))||"（名前未設定）"}</span>`:"";
@@ -478,7 +508,9 @@ const stars=r=>`<span class="stars">${"★".repeat(r||0)}<i>${"★".repeat(5-(r|
 function renderStocks(){
   const q=$("#qStocks").value.trim().toLowerCase();const mode=$("#stSort").value;
   $("#stFilter").innerHTML=STATUS.map(s=>`<button class="chip${stSel===s?" on":""}" data-f="${s}">${s}</button>`).join("");
-  let rows=stockRows().filter(r=>(!stSel||r.st.status===stSel)&&(!q||(r.code+" "+r.st.name).toLowerCase().includes(q)));
+  const used=[...new Set([...themes(),...Object.values(S.stocks).flatMap(x=>x.themes||[])])].filter(t=>Object.values(S.stocks).some(x=>(x.themes||[]).includes(t)));
+  $("#thFilter").innerHTML=used.map(t=>`<button class="chip${thSel===t?" on":""}" data-th="${esc(t)}">${esc(t)}</button>`).join("");
+  let rows=stockRows().filter(r=>(!stSel||r.st.status===stSel)&&(!thSel||(r.st.themes||[]).includes(thSel))&&(!q||(r.code+" "+r.st.name+" "+(r.st.themes||[]).join(" ")).toLowerCase().includes(q)));
   const byStatus=(a,b)=>(STATUS.indexOf(a.st.status)-STATUS.indexOf(b.st.status))||(b.last-a.last);
   if(mode==="rank")rows.sort((a,b)=>((b.st.rank||0)-(a.st.rank||0))||byStatus(a,b));
   else if(mode==="upd")rows.sort((a,b)=>b.last-a.last);
@@ -488,7 +520,7 @@ function renderStocks(){
   if(!rows.length&&mode!=="sector"){$("#stockList").innerHTML=`<div class="empty">まだ銘柄がありません</div>`;return}
   const rowView=S.stockView==="row";$("#stView").textContent=rowView?"カード":"行";
   const secHead=g=>{const m=(S.sectors[g]||{}).memo||"";const n=rows.filter(x=>(x.st.sector||"未分類")===g).length;return `<div class="grp"><b>${esc(g)}</b>${n}銘柄<span class="m">${esc(m)}</span>${g==="未分類"?"":`<button data-secmemo="${esc(g)}">メモ</button>`}</div>`};
-  const tr=r=>`<tr data-open="${r.code}"><td class="st"><i style="background:${STATUS_COLOR[r.st.status]||"var(--line)"}"></i></td><td class="cd">${r.code}</td><td class="nm">${esc(r.st.name)||"（名前未設定）"}</td><td class="mu">${r.st.sector&&mode!=="sector"?esc(r.st.sector):""}</td><td class="mu">${r.st.rank?stars(r.st.rank):""}</td><td class="mu">${r.st.status}</td><td class="mu">${r.ns.length}</td></tr>`;
+  const tr=r=>`<tr data-open="${r.code}"><td class="st"><i style="background:${STATUS_COLOR[r.st.status]||"var(--line)"}"></i></td><td class="cd">${r.code}</td><td class="nm">${esc(r.st.name)||"（名前未設定）"}${(r.st.themes||[]).length?`<div>${r.st.themes.map(t=>`<span class="th">${esc(t)}</span>`).join("")}</div>`:""}</td><td class="mu">${r.st.sector&&mode!=="sector"?esc(r.st.sector):""}</td><td class="mu">${r.st.rank?stars(r.st.rank):""}</td><td class="mu">${r.st.status}</td><td class="mu">${r.ns.length}</td></tr>`;
   let html="",lastG=null;
   if(mode==="sector"){Object.keys(S.sectors).forEach(g=>{if(!rows.some(r=>r.st.sector===g)&&(!q||g.toLowerCase().includes(q))&&!stSel)rows.push({code:null,st:{sector:g,status:""},ns:[],last:0,ghost:true})});rows.sort((a,b)=>(a.st.sector||"～").localeCompare(b.st.sector||"～","ja")*(stDesc?1:-1))}
   rows.forEach(r=>{
@@ -509,12 +541,13 @@ $("#stockList").addEventListener("click",e=>{
 function stockCard(r){return `<div class="stk" data-s="${r.st.status}" style="border-left-color:${STATUS_COLOR[r.st.status]||"var(--line)"}">
     <div class="shead"><span class="code">${r.code}</span><span class="name" data-open="${r.code}">${esc(r.st.name)||"（名前未設定）"}</span>${r.st.sector?`<span class="sec">${esc(r.st.sector)}</span>`:""}${r.st.rank?stars(r.st.rank):""}<span class="cnt">${r.ns.length}件</span>
     <select data-st="${r.code}">${[...STATUS,...(STATUS.includes(r.st.status)?[]:[r.st.status])].map(s=>`<option${s===r.st.status?" selected":""}>${s}</option>`).join("")}</select></div>
-    ${r.st.memo?`<div class="slast">📌 ${esc(r.st.memo.split("\n")[0])}</div>`:""}
+    ${(r.st.themes||[]).length?`<div style="margin-top:4px">${r.st.themes.map(t=>`<span class="th">${esc(t)}</span>`).join("")}</div>`:""}${r.st.memo?`<div class="slast">📌 ${esc(r.st.memo.split("\n")[0])}</div>`:""}
     ${r.ns[0]?`<div class="slast">${dstr(r.ns[0].ts)}　${esc(r.ns[0].text.split("\n")[0])}</div>`:""}
     <div class="links">${LINKS(r.code).map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join("")}</div></div>`}
 $("#stSort").addEventListener("change",renderStocks);
 $("#qStocks").addEventListener("input",renderStocks);
 $("#stFilter").addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;stSel=stSel===b.dataset.f?null:b.dataset.f;renderStocks()});
+$("#thFilter").addEventListener("click",e=>{const b=e.target.closest("[data-th]");if(!b)return;thSel=thSel===b.dataset.th?null:b.dataset.th;renderStocks()});
 document.addEventListener("change",e=>{const s=e.target.closest("[data-st]");if(!s)return;stock(s.dataset.st).status=s.value;touch(s.dataset.st);save();renderStocks();toast(`${s.dataset.st} → ${s.value}`)});
 
 /* ---------- detail ---------- */
@@ -526,13 +559,23 @@ function openDetail(code){
   $("#dMemo").value=st.memo||"";
   if(!st.name)lookup(code).then(d=>{if(d&&curCode===code){applyLookup(code,d);const i=$("#dName");if(i&&!i.value){i.value=st.name}$("#dSector").value=st.sector||""}});
   $("#dSector").value=st.sector||"";$("#secList").innerHTML=[...new Set([...Object.keys(S.sectors),...Object.values(S.stocks).map(x=>x.sector).filter(Boolean)])].map(x=>`<option value="${esc(x)}">`).join("");
-  renderRank();
+  renderRank();renderThemes();renderRelated();
   renderDetailNotes();
   show("detail");resetCap();window.scrollTo(0,0);
 }
 function renderDetailNotes(){
   const ns=S.notes.filter(n=>n.code===curCode);
   $("#dNotes").innerHTML=ns.length?ns.map(n=>`<div class="day">${dayLabel(n.ts)}</div>`+noteCard(n,false)).join(""):`<div class="empty">この銘柄のメモはまだありません。上の欄に書くとこの銘柄に紐づきます</div>`;
+}
+function renderThemes(){const st=stock(curCode);const mine=st.themes||[];const all=[...new Set([...themes(),...mine])];$("#dThemes").innerHTML=all.map(t=>`<button class="chip${mine.includes(t)?" on":""}" data-th="${esc(t)}">${esc(t)}</button>`).join("")+`<button class="chip" data-thadd>＋</button>`}
+$("#dThemes").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const st=stock(curCode);st.themes=st.themes||[];
+  if(b.dataset.thadd!==undefined){const t=(prompt("テーマ名（例：円高メリット）")||"").trim();if(!t)return;if(!themes().includes(t)){S.themes=[...themes(),t];S.listsUpd=Date.now()}if(!st.themes.includes(t))st.themes.push(t)}
+  else{const t=b.dataset.th;st.themes=st.themes.includes(t)?st.themes.filter(x=>x!==t):[...st.themes,t]}
+  touch(curCode);save();renderThemes();renderRelated()});
+function renderRelated(){const st=stock(curCode);const mine=new Set(st.themes||[]);const rel=[];
+  Object.entries(S.stocks).forEach(([c,x])=>{if(c===curCode)return;const why=[];if(st.sector&&x.sector===st.sector)why.push(st.sector);(x.themes||[]).forEach(t=>{if(mine.has(t))why.push(t)});if(why.length)rel.push({c,x,why})});
+  rel.sort((a,b)=>b.why.length-a.why.length);
+  $("#dRelH").classList.toggle("hide",!rel.length);$("#dRel").innerHTML=rel.map(r=>`<span class="sk" data-open="${r.c}"><b>${r.c}</b>${esc(r.x.name)||"—"}<small>${esc(r.why.join("・"))}</small></span>`).join("");
 }
 function renderRank(){const r=stock(curCode).rank||0;$("#dRank").innerHTML=[1,2,3,4,5].map(i=>`<button data-r="${i}" class="${i<=r?"":"off"}" aria-label="ランク${i}">★</button>`).join("")}
 $("#dRank").addEventListener("click",e=>{const b=e.target.closest("[data-r]");if(!b)return;const st=stock(curCode);const v=+b.dataset.r;st.rank=st.rank===v?0:v;touch(curCode);save();renderRank()});
@@ -544,7 +587,7 @@ $("#backBtn").addEventListener("click",()=>{curCode=null;resetCap();show("vStock
 
 /* ---------- nav ---------- */
 function show(v){
-  view=v;["vNotes","vStocks","vSet","detail","vDiary","vCal","vRules"].forEach(x=>$("#"+x).classList.toggle("hide",x!==v));
+  view=v;["vNotes","vStocks","vPf","vSet","detail","vDiary","vCal","vRules"].forEach(x=>$("#"+x).classList.toggle("hide",x!==v));
   $("#cap").classList.toggle("hide",!["vNotes","detail"].includes(v));
   document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v===v||(v==="detail"&&b.dataset.v==="vStocks")));
   render();
@@ -552,7 +595,7 @@ function show(v){
 $("#tabs").addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(!b)return;curCode=null;resetCap();show(b.dataset.v)});
 function render(){
   $("#stat").textContent=`${S.notes.length}メモ／${Object.keys(S.stocks).length}銘柄`;
-  if(view==="vNotes")renderNotes();else if(view==="vStocks")renderStocks();else if(view==="detail")renderDetailNotes();else if(view==="vDiary")renderDiary();else if(view==="vCal")renderCal();else if(view==="vRules")renderRules();
+  if(view==="vNotes")renderNotes();else if(view==="vStocks")renderStocks();else if(view==="detail")renderDetailNotes();else if(view==="vPf"){renderPf();if(Date.now()-(S.pricesAt||0)>6*36e5)refreshPrices(true)}else if(view==="vDiary")renderDiary();else if(view==="vCal")renderCal();else if(view==="vRules")renderRules();
 }
 
 /* ---------- theme / settings ---------- */
@@ -569,6 +612,10 @@ function ledBind(el,get,set){
 }
 const listsSave=()=>{S.listsUpd=Date.now();editingSync=true;save();editingSync=false;};
 ledBind($("#quickLed"),()=>quick(),(n)=>{S.quick=n;capTags.clear();listsSave();renderQuick();ledRender($("#quickLed"),quick())});
+ledBind($("#themeLed"),()=>themes(),(n,oldName,newName)=>{
+  if(oldName!==undefined){Object.values(S.stocks).forEach(st=>{if((st.themes||[]).includes(oldName)){st.themes=newName?st.themes.map(t=>t===oldName?newName:t):st.themes.filter(t=>t!==oldName);st.upd=Date.now()}})}
+  S.themes=n;listsSave();ledRender($("#themeLed"),themes());thSel=null;
+});
 ledBind($("#statusLed"),()=>STATUS,(n,oldName,newName)=>{
   if(oldName!==undefined){Object.values(S.stocks).forEach(st=>{if(st.status===oldName){st.status=newName||n[0];st.upd=Date.now()}})}
   S.status=n;STATUS=n;listsSave();ledRender($("#statusLed"),STATUS);stSel=null;
@@ -587,7 +634,9 @@ function mergeIn(d){
   const eids=new Set((S.events||[]).map(e=>e.id));(d.events||[]).forEach(e=>{if(!del.has(e.id)&&!eids.has(e.id))S.events.push(e)});S.events=S.events.filter(e=>!del.has(e.id));
   if(d.rules&&(d.rules.upd||0)>(S.rules.upd||0))S.rules=d.rules;
   Object.entries(d.sectors||{}).forEach(([k,v])=>{if(!S.sectors[k]||(v.upd||0)>(S.sectors[k].upd||0))S.sectors[k]=v});
-  if(d.lists&&(d.lists.upd||0)>(S.listsUpd||0)){S.quick=d.lists.quick;S.status=d.lists.status;S.listsUpd=d.lists.upd;STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT}
+  Object.entries(d.holdings||{}).forEach(([k,v])=>{if(del.has("h:"+k))return;if(!S.holdings[k]||(v.upd||0)>(S.holdings[k].upd||0))S.holdings[k]=v});
+  Object.keys(S.holdings).forEach(k=>{if(del.has("h:"+k))delete S.holdings[k]});
+  if(d.lists&&(d.lists.upd||0)>(S.listsUpd||0)){S.quick=d.lists.quick;S.status=d.lists.status;S.themes=d.lists.themes||S.themes;S.listsUpd=d.lists.upd;STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT}
   S.notes.sort((a,b)=>b.ts-a.ts);return add;
 }
 $("#impFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{
@@ -597,10 +646,11 @@ $("#impFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)retu
 /* ---------- AI import ---------- */
 const AI_PROMPT=()=>`あなたは投資ノートアプリ「Invnote」の取り込み係です。以下の私の発言・メモ・分析結果を読み、次のJSONだけを出力してください（説明文・コードフェンス不要）。
 
-{"stocks":[{"code":"4桁コード","name":"銘柄名","status":"${STATUS.join("|")} のいずれか。不明なら省略","sector":"セクターやグループ名。不明なら省略","rank":1〜5の自己評価。言及がなければ省略,"memo":"建値・シナリオ・損切りラインなど固定で持ちたい情報。なければ省略"}],
+{"stocks":[{"code":"4桁コード","name":"銘柄名","status":"${STATUS.join("|")} のいずれか。不明なら省略","sector":"セクターやグループ名。不明なら省略","themes":["${themes().join("|")} など関連テーマ。該当なしなら省略"],"rank":1〜5の自己評価。言及がなければ省略,"memo":"建値・シナリオ・損切りラインなど固定で持ちたい情報。なければ省略"}],
 "notes":[{"code":"4桁コード。銘柄に紐づかなければ省略","text":"メモ本文。私の言葉をなるべく残し、箇条書きは「- 」で","tags":["${quick().join("|")} から該当するもの"],"date":"YYYY-MM-DD。言及がなければ省略"}],
 "diary":[{"date":"YYYY-MM-DD（今日は${dstr(Date.now())}）","text":"その日の振り返り・相場観・感情など、日記に書くべき内容。なければ配列を空に"}],
-"events":[{"date":"YYYY-MM-DD","title":"決算・IR・売買予定などの予定","code":"4桁コード。なければ省略"}]}
+"events":[{"date":"YYYY-MM-DD","title":"決算・IR・売買予定などの予定","code":"4桁コード。なければ省略"}],
+"holdings":[{"code":"4桁コード","name":"銘柄名","shares":株数,"avg":取得単価,"price":現在値,"acct":"現物|信用|NISA など"}],"holdings_replace":true(スクショが保有の全量なら)}
 
 ルール：推測で数値や事実を足さない。コードが分からない銘柄は name だけ入れて code を省略する。一つの発言に複数の銘柄が出たら銘柄ごとに notes を分ける。特定銘柄の話は notes、その日全体の振り返り・反省・相場観は diary、日付のある予定は events に振り分ける。
 
@@ -611,7 +661,7 @@ function importParsed(d){
   let ns=0,ss=0,ds=0,es=0,pending=[];
   (d.stocks||[]).forEach(x=>{
     const code=String(x.code||"").trim().toUpperCase();if(!code){if(x.name)pending.push(x.name);return}
-    const st=stock(code);if(x.name)st.name=x.name;if(x.status&&STATUS.includes(x.status))st.status=x.status;if(x.sector)st.sector=x.sector;
+    const st=stock(code);if(x.name)st.name=x.name;if(x.status&&STATUS.includes(x.status))st.status=x.status;if(x.sector)st.sector=x.sector;if(Array.isArray(x.themes)){st.themes=[...new Set([...(st.themes||[]),...x.themes.filter(Boolean)])];x.themes.forEach(t=>{if(!themes().includes(t)){S.themes=[...themes(),t];S.listsUpd=Date.now()}})}
     if(x.rank)st.rank=Math.min(5,Math.max(1,+x.rank))||st.rank;if(x.memo)st.memo=st.memo?st.memo+"\n"+x.memo:x.memo;touch(code);ss++;
   });
   (d.notes||[]).forEach(x=>{
@@ -619,10 +669,12 @@ function importParsed(d){
     let ts=Date.now();if(x.date&&/^\d{4}-\d{2}-\d{2}$/.test(x.date)){const dd=new Date(x.date+"T12:00:00");if(!isNaN(dd))ts=dd.getTime()}
     S.notes.push({id:uid(),ts,code,text:String(x.text).trim(),tags:Array.isArray(x.tags)?x.tags.filter(Boolean):[],pinned:false,ai:true});ns++;
   });
+  let hs=0;(d.holdings||[]).forEach(x=>{const code=String(x.code||"").trim().toUpperCase();if(!/^(\d{4}|\d{3}[A-Z])$/.test(code))return;setHolding(code,x);hs++});
+  if(hs&&d.holdings_replace){Object.keys(S.holdings).forEach(k=>{if(!(d.holdings||[]).some(x=>String(x.code).toUpperCase()===k)){delete S.holdings[k];(S.deleted=S.deleted||[]).push("h:"+k)}})}
   (d.diary||[]).forEach(x=>{if(!x.text)return;const k=/^\d{4}-\d{2}-\d{2}$/.test(x.date||"")?x.date:dstr(Date.now());const cur=(S.diary[k]||{}).t||"";S.diary[k]={t:cur?cur.trimEnd()+"\n\n"+String(x.text).trim():String(x.text).trim(),upd:Date.now()};ds++});
   (d.events||[]).forEach(x=>{if(x.date&&x.title&&addEvent(String(x.date),String(x.title)+(x.code?" "+x.code:"")))es++});
   S.notes.sort((a,b)=>b.ts-a.ts);save();render();
-  return {msg:`メモ${ns}・銘柄${ss}・日記${ds}・予定${es} を取り込みました`+(pending.length?`　／コード不明：${pending.join("、")}`:"")};
+  return {msg:`メモ${ns}・銘柄${ss}・保有${hs}・日記${ds}・予定${es} を取り込みました`+(pending.length?`　／コード不明：${pending.join("、")}`:"")};
 }
 function parseAiJson(t){t=t.trim().replace(/^```(?:json)?\s*|```$/g,"").trim();const i=t.indexOf("{"),j=t.lastIndexOf("}");if(i>=0&&j>i)t=t.slice(i,j+1);return JSON.parse(t)}
 $("#aiImport").addEventListener("click",()=>{
@@ -653,6 +705,33 @@ $("#aiBtn").addEventListener("click",async()=>{
 });
 $("#aiNo").addEventListener("click",()=>{$("#aiPrev").classList.add("hide");aiParsed=null});
 $("#aiYes").addEventListener("click",()=>{if(!aiParsed)return;const r=importParsed(aiParsed);$("#aiPrev").classList.add("hide");aiParsed=null;resetCap();toast(r.msg)});
+
+/* ---------- portfolio ---------- */
+const fmt=n=>Math.round(n).toLocaleString("ja-JP");
+function setHolding(code,h){const cur=S.holdings[code]||{};S.holdings[code]={shares:+h.shares||cur.shares||0,avg:+h.avg||cur.avg||0,price:+h.price||cur.price||0,acct:h.acct||cur.acct||"",upd:Date.now()};const st=stock(code);if(h.name&&!st.name)st.name=h.name;if(!["保有","買い増し"].includes(st.status)){st.status="保有";touch(code)}}
+function renderPf(){
+  const rows=Object.entries(S.holdings).map(([code,h])=>({code,h,st:stock(code),cost:h.shares*h.avg,val:h.shares*(h.price||h.avg)}));
+  const tot=rows.reduce((a,r)=>({cost:a.cost+r.cost,val:a.val+r.val}),{cost:0,val:0});const pl=tot.val-tot.cost;
+  const pd=[...new Set(rows.map(r=>r.h.pdate).filter(Boolean))].sort().pop();$("#pfDate").textContent=pd?`終値 ${pd.slice(5).replace("-","/")}`:"";
+  $("#pfSum").innerHTML=rows.length?`<div><span>評価額</span><br><b>${fmt(tot.val)}</b></div><div><span>取得額</span><br><b>${fmt(tot.cost)}</b></div><div><span>評価損益</span><br><b class="${pl>=0?"up":"dn"}">${pl>=0?"+":""}${fmt(pl)}</b> <span>${tot.cost?((pl/tot.cost)*100).toFixed(1)+"%":""}</span></div><div><span>銘柄数</span><br><b>${rows.length}</b></div>`:`<span>保有銘柄はまだありません</span>`;
+  rows.sort((a,b)=>b.val-a.val);
+  $("#pfList").innerHTML=rows.map(r=>{const p=r.val-r.cost;const pct=r.cost?(p/r.cost*100).toFixed(1):"";const w=tot.val?(r.val/tot.val*100).toFixed(0):0;
+    return `<div class="pf"><span class="nm" data-open="${r.code}"><b>${r.code}</b>${esc(r.st.name)||"—"}<small>${fmt(r.h.shares)}株 ／ 取得 ${r.h.avg?fmt(r.h.avg):"—"}${r.h.price?" ／ 現在 "+fmt(r.h.price):""}${r.h.acct?" ／ "+esc(r.h.acct):""}</small></span><span class="val">${fmt(r.val)}<small class="pl ${p>=0?"up":"dn"}">${r.h.price?(p>=0?"+":"")+fmt(p)+(pct?" ("+pct+"%)":""):""}</small><small>${w}%</small></span><button class="x" data-hdel="${r.code}">×</button></div>`}).join("");
+  const watch=stockRows().filter(r=>["監視","候補","打診","気になる"].includes(r.st.status)&&!S.holdings[r.code]).sort((a,b)=>(STATUS.indexOf(a.st.status)-STATUS.indexOf(b.st.status))||((b.st.rank||0)-(a.st.rank||0)));
+  $("#pfWatch").innerHTML=watch.length?watch.map(r=>`<div class="pf"><span class="nm" data-open="${r.code}"><b>${r.code}</b>${esc(r.st.name)||"—"}<small>${r.st.status}${r.st.sector?" ／ "+esc(r.st.sector):""}${r.ns[0]?" ／ "+esc(r.ns[0].text.split("\n")[0]):""}</small></span>${r.st.rank?stars(r.st.rank):""}</div>`).join(""):`<div class="hint" style="padding:6px 4px">監視・候補の銘柄はありません</div>`;
+}
+let pfBusy=false;
+async function refreshPrices(auto){
+  const codes=Object.keys(S.holdings);if(!codes.length||!S.gas||pfBusy)return;pfBusy=true;const b=$("#pfRefresh");b.textContent="更新中…";
+  try{const r=await fetch(`${S.gas}?action=prices&codes=${codes.join(",")}&sess=${Date.now()}`);const d=await r.json();let n=0,latest="";
+    Object.entries(d||{}).forEach(([c,x])=>{if(x&&x.close&&S.holdings[c]){S.holdings[c].price=+x.close;S.holdings[c].pdate=x.date;S.holdings[c].upd=Date.now();n++;if(x.date>latest)latest=x.date}});
+    if(n){S.pricesAt=Date.now();save();renderPf();if(!auto)toast(`${n}銘柄の終値を更新（${latest}）`)}else if(!auto)toast("株価を取得できませんでした")}
+  catch(e){if(!auto)toast("株価の更新に失敗")}
+  pfBusy=false;b.textContent="株価を更新";
+}
+$("#pfRefresh").addEventListener("click",()=>refreshPrices(false));
+$("#pfAdd").addEventListener("click",()=>{const code=$("#pfCode").value.trim().toUpperCase();if(!/^(\d{4}|\d{3}[A-Z])$/.test(code)){$("#pfCode").focus();return}setHolding(code,{shares:$("#pfShares").value,avg:$("#pfAvg").value,price:$("#pfPrice").value});save();["pfCode","pfShares","pfAvg","pfPrice"].forEach(i=>$("#"+i).value="");if(!nm(code))lookup(code).then(d=>{applyLookup(code,d);renderPf()});renderPf();toast("追加しました")});
+$("#pfList").addEventListener("click",e=>{const b=e.target.closest("[data-hdel]");if(!b)return;if(!confirm(`${b.dataset.hdel} を保有から外しますか？`))return;delete S.holdings[b.dataset.hdel];(S.deleted=S.deleted||[]).push("h:"+b.dataset.hdel);save();renderPf()});
 
 /* ---------- diary ---------- */
 let dCur=dstr(Date.now()),dT=null;
@@ -752,7 +831,7 @@ function renderRules(){const t=S.rules.text||RULES_DEFAULT;$("#rulesView").inner
 $("#rulesEdit").addEventListener("click",()=>{if(rulesEditing){const t=$("#rulesText").value;if(t!==(S.rules.text||RULES_DEFAULT)){S.rules={text:t,upd:Date.now()};save()}}rulesEditing=!rulesEditing;renderRules();if(rulesEditing)$("#rulesText").focus()});
 
 /* ---------- swipe ---------- */
-const ORDER=["vNotes","vStocks","vDiary","vCal","vRules","vSet"];
+const ORDER=["vNotes","vStocks","vPf","vDiary","vCal","vRules","vSet"];
 let sx=0,sy=0,sw=false;
 document.addEventListener("touchstart",e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;sw=!e.target.closest("input,select,.chips,nav#tabs")&&!(e.target.closest("textarea")&&!e.target.closest("#diaryBox"))},{passive:true});
 document.addEventListener("touchend",e=>{if(!sw)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(Math.abs(dx)<70||Math.abs(dy)>50)return;
@@ -783,7 +862,7 @@ $("#fillNames").addEventListener("click",fillAllNames);
 
 /* ---------- GAS sync ---------- */
 let syncT=null,syncing=false;
-const payload=()=>JSON.stringify({notes:S.notes,stocks:S.stocks,deleted:S.deleted||[],diary:S.diary,events:S.events,rules:S.rules,sectors:S.sectors,lists:{quick:S.quick,status:S.status,upd:S.listsUpd||0}});
+const payload=()=>JSON.stringify({notes:S.notes,stocks:S.stocks,deleted:S.deleted||[],diary:S.diary,events:S.events,rules:S.rules,sectors:S.sectors,holdings:S.holdings,lists:{quick:S.quick,status:S.status,themes:S.themes,upd:S.listsUpd||0}});
 function scheduleSync(){if(!S.gas||editingSync)return;clearTimeout(syncT);syncT=setTimeout(()=>syncNow(true),1500)}
 let editingSync=false;
 async function syncNow(quiet){
@@ -803,17 +882,18 @@ $("#syncNow").addEventListener("click",()=>syncNow(false));
 $("#expMd").addEventListener("click",()=>{
   let out=`# Invnote v${VER}（${dstr(Date.now())}）\n\n`;
   stockRows().sort((a,b)=>STATUS.indexOf(a.st.status)-STATUS.indexOf(b.st.status)).forEach(r=>{
-    out+=`## ${r.code} ${r.st.name}　〔${r.st.status}〕${r.st.sector?"　"+r.st.sector:""}${r.st.rank?"　"+"★".repeat(r.st.rank):""}\n`;if(r.st.memo)out+=`> ${r.st.memo.replace(/\n/g,"\n> ")}\n`;out+="\n";
+    out+=`## ${r.code} ${r.st.name}　〔${r.st.status}〕${r.st.sector?"　"+r.st.sector:""}${r.st.rank?"　"+"★".repeat(r.st.rank):""}${(r.st.themes||[]).length?"　["+r.st.themes.join(", ")+"]":""}\n`;if(r.st.memo)out+=`> ${r.st.memo.replace(/\n/g,"\n> ")}\n`;out+="\n";
     r.ns.forEach(n=>out+=noteMd(n)+"\n");out+="\n";
   });
+  const hk=Object.keys(S.holdings);if(hk.length){out+="## 保有\n\n";hk.forEach(c=>{const h=S.holdings[c];out+=`- ${c} ${nm(c)}　${h.shares}株　取得${h.avg}${h.price?"　現在"+h.price:""}${h.acct?"　"+h.acct:""}\n`});out+="\n"}
   const dk=Object.keys(S.diary).filter(k=>S.diary[k].t).sort().reverse();if(dk.length){out+="## 日記\n\n";dk.forEach(k=>out+=`### ${k}\n${S.diary[k].t}\n\n`)}
   const free=S.notes.filter(n=>!n.code);if(free.length){out+="## 銘柄なしのメモ\n\n";free.forEach(n=>out+=noteMd(n)+"\n")}
   dl(`invnote_${dstr(Date.now())}.md`,out,"text/markdown");
 });
-$("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()},quick:S.quick,status:S.status,listsUpd:Date.now(),sectors:{},stockView:S.stockView};save();render();toast("削除しました")}});
+$("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()},quick:S.quick,status:S.status,themes:S.themes,listsUpd:Date.now(),sectors:{},holdings:{},stockView:S.stockView};save();render();toast("削除しました")}});
 
 /* ---------- init ---------- */
-$("#ver").textContent="v"+VER;load();STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT;applyTheme();renderQuick();autoGrow();render();$("#gasUrl").value=S.gas||"";ledRender($("#quickLed"),quick());ledRender($("#statusLed"),STATUS);if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
+$("#ver").textContent="v"+VER;load();STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT;applyTheme();renderQuick();autoGrow();render();$("#gasUrl").value=S.gas||"";ledRender($("#quickLed"),quick());ledRender($("#statusLed"),STATUS);ledRender($("#themeLed"),themes());if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
 if(mem)toast("この環境では保存できません（GitHub Pagesで開くと保存されます）");
 })();
 </script>
