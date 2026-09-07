@@ -30,7 +30,7 @@ a:hover{text-decoration:underline}
 :focus-visible{outline:2px solid var(--blu);outline-offset:2px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
-#app{max-width:760px;margin:0 auto;padding:8px 12px 40px;overflow-x:hidden}
+#app{max-width:760px;margin:0 auto;padding:calc(8px + env(safe-area-inset-top)) 12px calc(40px + env(safe-area-inset-bottom));overflow-x:hidden}
 header{display:flex;align-items:center;gap:10px;padding:4px 4px 10px}
 header h1{font:600 15px/1 var(--sans);letter-spacing:-.01em}
 header h1 small{font-size:11px;font-weight:500;color:var(--mut);margin-left:6px;font-variant-numeric:tabular-nums}
@@ -255,7 +255,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 "use strict";
 const KEY="invnote_v1";
 const STATUS=["気になる","監視","候補","保有","売却済","見送り"];
-const VER="1.5";
+const VER="1.5.1";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TPL={
 "エントリーチェック":`【エントリーチェック】
