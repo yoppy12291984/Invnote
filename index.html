@@ -81,11 +81,53 @@ nav#tabs button.on{color:var(--ink);font-weight:600;border-bottom-color:var(--in
 .evadd input{border:1px solid var(--line);background:var(--sur);border-radius:6px;padding:6px 8px;font-size:14px}
 .evadd input.tt{flex:1;min-width:140px}
 .sub{font-size:13px;font-weight:600;color:var(--mut);margin:16px 4px 4px}
+/* month grid */
+.mnav{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.mnav button{color:var(--mut);font-size:18px;padding:2px 10px}
+.mnav .mm{font-weight:600;font-size:16px;flex:1;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:6px}
+.grid .wd{text-align:center;font-size:11px;color:var(--mut);padding:2px 0 4px}
+.grid .dc{min-height:52px;border-radius:6px;padding:3px 4px;font-size:12px;font-variant-numeric:tabular-nums;color:var(--mut);cursor:pointer;position:relative}
+.grid .dc.out{opacity:.3}
+.grid .dc.today{color:var(--up);font-weight:600}
+.grid .dc.sel{background:var(--soft);color:var(--ink)}
+.grid .dc.sun{color:var(--up)}.grid .dc.sat{color:var(--blu)}
+.grid .dc .e{display:block;font-size:10px;line-height:1.3;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.grid .dc .e.sq{color:var(--mut)}
+.grid .dc .dot{position:absolute;right:4px;top:5px;width:5px;height:5px;border-radius:50%;background:var(--amb)}
+.seg{display:flex;gap:2px;background:var(--soft);border-radius:8px;padding:2px}
+.seg button{padding:4px 12px;border-radius:6px;font-size:13px;color:var(--mut)}
+.seg button.on{background:var(--sur);color:var(--ink);font-weight:600}
+table.dtab{width:100%;border-collapse:collapse;font-size:13px}
+table.dtab td{padding:7px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+table.dtab tr{cursor:pointer}
+table.dtab td.d{white-space:nowrap;color:var(--mut);font-variant-numeric:tabular-nums;width:82px}
+table.dtab td.d.sun{color:var(--up)}table.dtab td.d.sat{color:var(--blu)}
+table.dtab td.x{white-space:normal;word-break:break-word}
+table.dtab td.x.none{color:var(--line)}
 /* rules */
 .rules{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
 .rules textarea{width:100%;min-height:320px;border:0;background:none;outline:0;font-size:15px;line-height:1.7;resize:vertical}
 .rules .body{font-size:15px;line-height:1.75}
 .rhead{display:flex;justify-content:flex-end;margin-bottom:6px}
+/* list editor */
+.led{display:flex;flex-direction:column;gap:4px}
+.led .li{display:flex;gap:4px;align-items:center}
+.led .li input{flex:1;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 8px;font-size:14px;min-width:0}
+.led .li button{color:var(--mut);padding:4px 7px;border-radius:6px;font-size:13px}
+.led .li button:hover{background:var(--soft);color:var(--ink)}
+.led .add{align-self:flex-start;margin-top:4px}
+/* row view */
+table.rows{width:100%;border-collapse:collapse;font-size:13px}
+table.rows td{padding:7px 6px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}
+table.rows tr{cursor:pointer}
+table.rows td.nm{white-space:normal;font-weight:600;font-size:14px}
+table.rows td.cd{color:var(--mut);font-variant-numeric:tabular-nums;width:44px}
+table.rows td.st{width:8px;padding:0}
+table.rows td.st i{display:block;width:4px;height:22px;border-radius:2px;background:var(--line)}
+table.rows td.mu{color:var(--mut);font-size:12px;text-align:right}
+.grp .m{font-weight:400;color:var(--mut);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grp button{color:var(--mut);font-size:12px}
 
 /* toolbar */
 .bar{display:flex;gap:6px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
@@ -176,7 +218,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
   <textarea id="capText" placeholder="6136 出来高が枯れたあと2日連続で増加。5MA抜けを待つ"></textarea>
   <div class="caprow">
     <input id="capCode" placeholder="コード" maxlength="5" autocomplete="off">
-    <input id="capName" placeholder="銘柄名（初回だけ入力）" autocomplete="off">
+    <input id="capName" placeholder="銘柄名（自動）" autocomplete="off">
     <span id="quickTags" class="chips"></span>
   </div>
   <div class="capfoot">
@@ -192,7 +234,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 </section>
 
 <section id="vStocks" class="hide">
-  <div class="bar"><input id="qStocks" type="search" placeholder="銘柄を検索"><select id="stSort"><option value="status">ステータス順</option><option value="rank">ランク順</option><option value="upd">更新順</option><option value="sector">セクター別</option></select><div id="stFilter" class="chips"></div></div>
+  <div class="bar"><input id="qStocks" type="search" placeholder="銘柄を検索"><button class="chip" id="stView">行</button><select id="stSort"><option value="status">ステータス順</option><option value="rank">ランク順</option><option value="upd">更新順</option><option value="sector">セクター別</option></select><div id="stFilter" class="chips"></div></div>
   <div id="stockList"></div>
 </section>
 
@@ -205,13 +247,22 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 </section>
 
 <section id="vDiary" class="hide">
+  <div class="mnav" style="justify-content:flex-end"><span class="seg" id="diarySeg"><button data-m="write" class="on">書く</button><button data-m="table">一覧</button></span></div>
+  <div id="diaryWrite">
   <div class="dnav"><button id="dPrev">‹</button><span class="dd" id="dDate"></span><input type="date" id="dPick"><button id="dNext">›</button></div>
   <div class="diary" id="diaryBox"><textarea id="diaryText" placeholder="相場環境／今日の売買と理由／うまくいったこと・反省／明日見ること"></textarea>
     <div class="dfoot"><span class="hint" id="diaryStat"></span><span class="hint">左右スワイプで前後の日</span></div></div>
   <div class="sub">最近の日記</div><div class="dlist" id="diaryList"></div>
+  </div>
+  <div id="diaryTable" class="hide">
+    <div class="mnav"><button id="dtPrev">‹</button><span class="mm" id="dtMonth"></span><button id="dtNext">›</button></div>
+    <table class="dtab" id="dtBody"></table>
+  </div>
 </section>
 
 <section id="vCal" class="hide">
+  <div class="mnav"><button id="mPrev">‹</button><span class="mm" id="mTitle"></span><button id="mNext">›</button><span class="seg" id="calSeg"><button data-m="month" class="on">月</button><button data-m="list">リスト</button></span></div>
+  <div id="calGrid" class="grid" style="margin-bottom:12px"></div>
   <div class="evadd"><input type="date" id="evDate"><input class="tt" id="evTitle" placeholder="内容（コードを含めると銘柄に紐づく）"><button class="btn" id="evAdd">追加</button></div>
   <div id="evList"></div>
   <div class="set" style="margin-top:18px"><h3>まとめて取り込む</h3>
@@ -233,16 +284,15 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
   </div><p class="hint" style="margin-top:8px">JSONはブラウザ内（localStorage）にも自動保存されます。端末をまたぐ時は書き出し→読み込み（読み込みは追加・上書きで、既存は消えません）。</p></div>
   <div class="set"><h3>GAS同期</h3><div class="row" style="width:100%">
     <input id="gasUrl" placeholder="GASウェブアプリのURL（https://script.google.com/macros/s/…/exec）" style="flex:1;min-width:200px;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:6px 8px;font-size:13px">
-    <button class="btn" id="syncNow">今すぐ同期</button></div>
-    <p class="hint" id="syncStat" style="margin-top:8px">URLを入れると、保存のたびに自動で同期します（マージ式・新しい方が勝ち）。</p></div>
+    <button class="btn" id="syncNow">今すぐ同期</button><button class="btn" id="fillNames">銘柄名を一括補完</button></div>
+    <p class="hint" id="syncStat" style="margin-top:8px">URLを入れると、保存のたびに自動で同期します（マージ式・新しい方が勝ち）。銘柄名はJ-Quantsの上場一覧から自動で引きます。</p></div>
   <div class="set"><h3>AI取り込み</h3>
     <p class="hint" style="margin-bottom:8px">Claudeに話した内容を取り込み用プロンプトで整形させ、返ってきたJSONを貼って取り込みます。</p>
     <div class="row" style="margin-bottom:8px"><button class="btn" id="copyPrompt">取り込み用プロンプトをコピー</button></div>
     <textarea class="aiin" id="aiIn" placeholder='{"stocks":[…],"notes":[…]}'></textarea>
     <div class="row" style="margin-top:8px"><button class="btn" id="aiImport">取り込む</button><span class="hint" id="aiStat"></span></div></div>
-  <div class="set"><h3>クイックタグ</h3><div class="row">
-    <input id="quickEdit" placeholder="注目, 仮説, 懸念, 決算, 執行, 検証" style="flex:1;min-width:200px;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:6px 8px;font-size:13px"></div>
-    <p class="hint" style="margin-top:8px">カンマ区切り。入力欄の下に並ぶボタンになります（空にすると初期値に戻ります）。</p></div>
+  <div class="set"><h3>クイックタグ</h3><div class="led" id="quickLed"></div><p class="hint" style="margin-top:8px">入力欄の下に並ぶボタン。名前は直接書き換え、↑↓で並び替え。</p></div>
+  <div class="set"><h3>ステータス</h3><div class="led" id="statusLed"></div><p class="hint" style="margin-top:8px">銘柄の状態。名前を変えると既存の銘柄にも反映されます。</p></div>
   <div class="set"><h3>表示</h3><div class="row"><button class="btn" id="themeBtn2">ダーク／ライト切替</button></div></div>
   <div class="set"><h3>危険な操作</h3><div class="row"><button class="btn danger" id="wipe">すべて削除</button></div></div>
 </section>
@@ -254,8 +304,10 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 (function(){
 "use strict";
 const KEY="invnote_v1";
-const STATUS=["気になる","監視","候補","保有","売却済","見送り"];
-const VER="1.5.1";
+const STATUS_DEFAULT=["気になる","監視","候補","保有","売却済","見送り"];
+const STATUS_COLOR={"保有":"var(--up)","候補":"var(--amb)","監視":"var(--blu)","売却済":"var(--dn)"};
+let STATUS=STATUS_DEFAULT;
+const VER="1.8";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TPL={
 "エントリーチェック":`【エントリーチェック】
@@ -296,7 +348,7 @@ const LINKS=c=>[
  ["Yahoo",`https://finance.yahoo.co.jp/quote/${c}.T`]
 ];
 
-let S={notes:[],stocks:{},theme:"dark",gas:"",lastSync:0,quick:null,diary:{},events:[],rules:{text:"",upd:0}};
+let S={notes:[],stocks:{},theme:"dark",gas:"",lastSync:0,quick:null,status:null,sectors:{},stockView:"card",diary:{},events:[],rules:{text:"",upd:0}};
 const RULES_DEFAULT=`【執行】
 - 5MAを陽線が突き抜けたら執行。200MAの向きで順張り／逆張りを決める
 - 順張り：200・25・5MAが上向き、損切り幅 ≤ 2.0ATR
@@ -310,7 +362,7 @@ const RULES_DEFAULT=`【執行】
 - 上がりきったところ（ATR4.0超）を拾わない
 - 一過性利益で膨らんだ決算を伸びしろと見ない`;
 let mem=null;
-function load(){try{const j=localStorage.getItem(KEY);if(j)S=Object.assign(S,JSON.parse(j));}catch(e){mem=true;}S.diary=S.diary||{};S.events=S.events||[];S.rules=S.rules||{text:"",upd:0}}
+function load(){try{const j=localStorage.getItem(KEY);if(j)S=Object.assign(S,JSON.parse(j));}catch(e){mem=true;}S.diary=S.diary||{};S.events=S.events||[];S.rules=S.rules||{text:"",upd:0};S.sectors=S.sectors||{}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}scheduleSync()}
 const $=s=>document.querySelector(s);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
@@ -322,7 +374,7 @@ function dayLabel(t){const a=dstr(t),n=Date.now();if(a===dstr(n))return"今日";
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove("show"),1600)}
 const CODE_RE=/(?:^|[\s（(：:])(\d{4}|\d{3}[A-Z])(?=$|[\s）)：:、。,.])/;
 const nm=c=>(S.stocks[c]&&S.stocks[c].name)||"";
-function stock(c){if(!S.stocks[c])S.stocks[c]={name:"",status:"気になる",memo:"",sector:"",rank:0,upd:0};return S.stocks[c]}
+function stock(c){if(!S.stocks[c])S.stocks[c]={name:"",status:STATUS[0],memo:"",sector:"",rank:0,upd:0};return S.stocks[c]}
 function touch(c){stock(c).upd=Date.now()}
 
 /* ---------- capture ---------- */
@@ -423,15 +475,27 @@ function renderStocks(){
   else if(mode==="upd")rows.sort((a,b)=>b.last-a.last);
   else if(mode==="sector")rows.sort((a,b)=>(a.st.sector||"～").localeCompare(b.st.sector||"～","ja")||((b.st.rank||0)-(a.st.rank||0))||byStatus(a,b));
   else rows.sort(byStatus);
-  if(!rows.length){$("#stockList").innerHTML=`<div class="empty">まだ銘柄がありません</div>`;return}
+  if(!rows.length&&mode!=="sector"){$("#stockList").innerHTML=`<div class="empty">まだ銘柄がありません</div>`;return}
+  const rowView=S.stockView==="row";$("#stView").textContent=rowView?"カード":"行";
+  const secHead=g=>{const m=(S.sectors[g]||{}).memo||"";const n=rows.filter(x=>(x.st.sector||"未分類")===g).length;return `<div class="grp"><b>${esc(g)}</b>${n}銘柄<span class="m">${esc(m)}</span>${g==="未分類"?"":`<button data-secmemo="${esc(g)}">メモ</button>`}</div>`};
+  const tr=r=>`<tr data-open="${r.code}"><td class="st"><i style="background:${STATUS_COLOR[r.st.status]||"var(--line)"}"></i></td><td class="cd">${r.code}</td><td class="nm">${esc(r.st.name)||"（名前未設定）"}</td><td class="mu">${r.st.sector&&mode!=="sector"?esc(r.st.sector):""}</td><td class="mu">${r.st.rank?stars(r.st.rank):""}</td><td class="mu">${r.st.status}</td><td class="mu">${r.ns.length}</td></tr>`;
   let html="",lastG=null;
+  if(mode==="sector"){Object.keys(S.sectors).forEach(g=>{if(!rows.some(r=>r.st.sector===g)&&(!q||g.toLowerCase().includes(q))&&!stSel)rows.push({code:null,st:{sector:g,status:""},ns:[],last:0,ghost:true})});rows.sort((a,b)=>(a.st.sector||"～").localeCompare(b.st.sector||"～","ja"))}
   rows.forEach(r=>{
-    if(mode==="sector"){const g=r.st.sector||"未分類";if(g!==lastG){const n=rows.filter(x=>(x.st.sector||"未分類")===g).length;html+=`<div class="grp"><b>${esc(g)}</b>${n}銘柄</div>`;lastG=g}}
-    html+=stockCard(r);
+    if(mode==="sector"){const g=r.st.sector||"未分類";if(g!==lastG){if(rowView&&lastG!==null)html+="</table>";html+=secHead(g);if(rowView)html+='<table class="rows">';lastG=g}}
+    else if(rowView&&!html)html='<table class="rows">';
+    if(r.ghost)return;html+=rowView?tr(r):stockCard(r);
   });
+  if(rowView&&html)html+="</table>";
+  if(mode==="sector")html+=`<div class="grp"><button id="secAdd">＋ 気になるセクターを追加</button></div>`;
   $("#stockList").innerHTML=html;
 }
-function stockCard(r){return `<div class="stk" data-s="${r.st.status}">
+$("#stView").addEventListener("click",()=>{S.stockView=S.stockView==="row"?"card":"row";editingSync=true;save();editingSync=false;renderStocks()});
+$("#stockList").addEventListener("click",e=>{
+  const b=e.target.closest("[data-secmemo]");if(b){const g=b.dataset.secmemo;const m=prompt(`「${g}」のメモ（見ているテーマ・きっかけ・関連銘柄など）`,(S.sectors[g]||{}).memo||"");if(m===null)return;S.sectors[g]={memo:m,upd:Date.now()};save();renderStocks();return}
+  if(e.target.id==="secAdd"){const g=(prompt("セクター／グループ名")||"").trim();if(!g)return;if(!S.sectors[g])S.sectors[g]={memo:"",upd:Date.now()};save();renderStocks()}
+});
+function stockCard(r){return `<div class="stk" data-s="${r.st.status}" style="border-left-color:${STATUS_COLOR[r.st.status]||"var(--line)"}">
     <div class="shead"><span class="code">${r.code}</span><span class="name" data-open="${r.code}">${esc(r.st.name)||"（名前未設定）"}</span>${r.st.sector?`<span class="sec">${esc(r.st.sector)}</span>`:""}${r.st.rank?stars(r.st.rank):""}<span class="cnt">${r.ns.length}件</span>
     <select data-st="${r.code}">${STATUS.map(s=>`<option${s===r.st.status?" selected":""}>${s}</option>`).join("")}</select></div>
     ${r.st.memo?`<div class="slast">📌 ${esc(r.st.memo.split("\n")[0])}</div>`:""}
@@ -449,7 +513,8 @@ function openDetail(code){
   $("#dStatus").innerHTML=STATUS.map(s=>`<option${s===st.status?" selected":""}>${s}</option>`).join("");
   $("#dLinks").innerHTML=LINKS(code).map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join("");
   $("#dMemo").value=st.memo||"";
-  $("#dSector").value=st.sector||"";$("#secList").innerHTML=[...new Set(Object.values(S.stocks).map(x=>x.sector).filter(Boolean))].map(x=>`<option value="${esc(x)}">`).join("");
+  if(!st.name)lookup(code).then(d=>{if(d&&curCode===code){applyLookup(code,d);const i=$("#dName");if(i&&!i.value){i.value=st.name}$("#dSector").value=st.sector||""}});
+  $("#dSector").value=st.sector||"";$("#secList").innerHTML=[...new Set([...Object.keys(S.sectors),...Object.values(S.stocks).map(x=>x.sector).filter(Boolean)])].map(x=>`<option value="${esc(x)}">`).join("");
   renderRank();
   renderDetailNotes();
   show("detail");resetCap();window.scrollTo(0,0);
@@ -482,7 +547,21 @@ function render(){
 /* ---------- theme / settings ---------- */
 function applyTheme(){document.documentElement.dataset.theme=S.theme;$("#themeBtn").textContent=S.theme==="dark"?"☀":"☾";document.querySelector('meta[name=theme-color]').content=S.theme==="dark"?"#12171C":"#F1F3F5"}
 const flipTheme=()=>{S.theme=S.theme==="dark"?"light":"dark";save();applyTheme()};
-$("#quickEdit").addEventListener("change",e=>{const a=e.target.value.split(/[,、，\s]+/).map(x=>x.trim()).filter(Boolean);S.quick=a.length?[...new Set(a)]:null;capTags.clear();editingSync=true;save();editingSync=false;renderQuick();e.target.value=quick().join(", ");toast("クイックタグを更新")});
+function ledRender(el,list){el.innerHTML=list.map((v,i)=>`<div class="li"><input value="${esc(v)}" data-i="${i}"><button data-mv="-1" data-i="${i}" aria-label="上へ">↑</button><button data-mv="1" data-i="${i}" aria-label="下へ">↓</button><button data-del="${i}" aria-label="削除">×</button></div>`).join("")+`<button class="chip add" data-add>＋ 追加</button>`}
+function ledBind(el,get,set){
+  el.addEventListener("change",e=>{const i=e.target.dataset.i;if(i===undefined)return;const l=get();const v=e.target.value.trim();if(!v){e.target.value=l[i];return}set(l.map((x,k)=>k==+i?v:x),l[i],v)});
+  el.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const l=get();
+    if(b.dataset.add!==undefined){set([...l,"新規"]);const ins=el.querySelectorAll("input");const last=ins[ins.length-1];last.focus();last.select();return}
+    if(b.dataset.del!==undefined){if(l.length<=1)return;set(l.filter((x,k)=>k!=+b.dataset.del),l[+b.dataset.del],null);return}
+    if(b.dataset.mv){const i=+b.dataset.i,j=i+ +b.dataset.mv;if(j<0||j>=l.length)return;const n=[...l];[n[i],n[j]]=[n[j],n[i]];set(n)}
+  });
+}
+const listsSave=()=>{S.listsUpd=Date.now();editingSync=true;save();editingSync=false;};
+ledBind($("#quickLed"),()=>quick(),(n)=>{S.quick=n;capTags.clear();listsSave();renderQuick();ledRender($("#quickLed"),quick())});
+ledBind($("#statusLed"),()=>STATUS,(n,oldName,newName)=>{
+  if(oldName!==undefined){Object.values(S.stocks).forEach(st=>{if(st.status===oldName){st.status=newName||n[0];st.upd=Date.now()}})}
+  S.status=n;STATUS=n;listsSave();ledRender($("#statusLed"),STATUS);stSel=null;
+});
 $("#themeBtn").addEventListener("click",flipTheme);$("#themeBtn2").addEventListener("click",flipTheme);
 function dl(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 $("#expJson").addEventListener("click",()=>dl(`invnote_${dstr(Date.now())}.json`,JSON.stringify(S,null,1),"application/json"));
@@ -496,6 +575,8 @@ function mergeIn(d){
   Object.entries(d.diary||{}).forEach(([k,v])=>{if(!S.diary[k]||(v.upd||0)>(S.diary[k].upd||0))S.diary[k]=v});
   const eids=new Set((S.events||[]).map(e=>e.id));(d.events||[]).forEach(e=>{if(!del.has(e.id)&&!eids.has(e.id))S.events.push(e)});S.events=S.events.filter(e=>!del.has(e.id));
   if(d.rules&&(d.rules.upd||0)>(S.rules.upd||0))S.rules=d.rules;
+  Object.entries(d.sectors||{}).forEach(([k,v])=>{if(!S.sectors[k]||(v.upd||0)>(S.sectors[k].upd||0))S.sectors[k]=v});
+  if(d.lists&&(d.lists.upd||0)>(S.listsUpd||0)){S.quick=d.lists.quick;S.status=d.lists.status;S.listsUpd=d.lists.upd;STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT}
   S.notes.sort((a,b)=>b.ts-a.ts);return add;
 }
 $("#impFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{
@@ -546,8 +627,39 @@ $("#dNext").addEventListener("click",()=>{dCur=shiftDay(dCur,1);renderDiary()});
 $("#dPick").addEventListener("change",e=>{if(e.target.value){dCur=e.target.value;renderDiary()}});
 $("#diaryList").addEventListener("click",e=>{const b=e.target.closest("[data-day]");if(b){dCur=b.dataset.day;renderDiary();window.scrollTo(0,0)}});
 
+/* ---------- diary table ---------- */
+let diaryMode="write",dtM=dCur.slice(0,7);
+const ym=k=>{const [y,m]=k.split("-").map(Number);return new Date(y,m-1,1)};
+const shiftM=(k,n)=>{const d=ym(k);d.setMonth(d.getMonth()+n);return `${d.getFullYear()}-${pad(d.getMonth()+1)}`};
+function renderDiaryTable(){
+  const d=ym(dtM);$("#dtMonth").textContent=`${d.getFullYear()}年${d.getMonth()+1}月`;
+  const days=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();const today=dstr(Date.now());let html="";
+  for(let i=1;i<=days;i++){const k=`${dtM}-${pad(i)}`;if(k>today)break;const w=new Date(k+"T12:00:00").getDay();const t=(S.diary[k]||{}).t||"";
+    html+=`<tr data-day="${k}"><td class="d${w===0?" sun":w===6?" sat":""}">${i}日（${"日月火水木金土"[w]}）</td><td class="x${t?"":" none"}">${t?esc(t.split("\n").slice(0,2).join(" ／ ")):"—"}</td></tr>`}
+  $("#dtBody").innerHTML=html||`<tr><td class="x none">この月の日記はまだありません</td></tr>`;
+}
+$("#diarySeg").addEventListener("click",e=>{const b=e.target.closest("[data-m]");if(!b)return;diaryMode=b.dataset.m;$("#diarySeg").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));$("#diaryWrite").classList.toggle("hide",diaryMode!=="write");$("#diaryTable").classList.toggle("hide",diaryMode!=="table");if(diaryMode==="table"){dtM=dCur.slice(0,7);renderDiaryTable()}});
+$("#dtPrev").addEventListener("click",()=>{dtM=shiftM(dtM,-1);renderDiaryTable()});
+$("#dtNext").addEventListener("click",()=>{dtM=shiftM(dtM,1);renderDiaryTable()});
+$("#dtBody").addEventListener("click",e=>{const r=e.target.closest("[data-day]");if(!r)return;dCur=r.dataset.day;$("#diarySeg").querySelector("[data-m=write]").click();renderDiary();window.scrollTo(0,0)});
+
 /* ---------- calendar ---------- */
-const sqDates=()=>{const out=[];const now=new Date();for(let m=-1;m<=8;m++){const d=new Date(now.getFullYear(),now.getMonth()+m,1);let fri=0;for(let i=1;i<=31;i++){const x=new Date(d.getFullYear(),d.getMonth(),i);if(x.getMonth()!==d.getMonth())break;if(x.getDay()===5&&++fri===2){const mj=[2,5,8,11].includes(x.getMonth());out.push({id:"sq"+dstr(x),date:dstr(x),title:mj?"メジャーSQ":"SQ",sq:true});break}}}return out};
+let calMode="month",calM=dstr(Date.now()).slice(0,7),calSel=null;
+function renderGrid(){
+  const d=ym(calM);$("#mTitle").textContent=`${d.getFullYear()}年${d.getMonth()+1}月`;
+  const today=dstr(Date.now());const first=d.getDay();const days=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
+  const evs={};[...S.events,...sqDates()].forEach(e=>{(evs[e.date]=evs[e.date]||[]).push(e)});
+  let html="日月火水木金土".split("").map(w=>`<div class="wd">${w}</div>`).join("");
+  for(let i=0;i<first;i++)html+=`<div class="dc out"></div>`;
+  for(let i=1;i<=days;i++){const k=`${calM}-${pad(i)}`;const w=(first+i-1)%7;const es=(evs[k]||[]).sort((a,b)=>(a.sq?1:0)-(b.sq?1:0));
+    html+=`<div class="dc${k===today?" today":""}${k===calSel?" sel":""}${w===0?" sun":w===6?" sat":""}" data-day="${k}">${i}${(S.diary[k]||{}).t?'<span class="dot" title="日記あり"></span>':""}${es.slice(0,2).map(e=>`<span class="e${e.sq?" sq":""}">${esc(e.title)}</span>`).join("")}${es.length>2?`<span class="e sq">+${es.length-2}</span>`:""}</div>`}
+  $("#calGrid").innerHTML=html;
+}
+$("#calSeg").addEventListener("click",e=>{const b=e.target.closest("[data-m]");if(!b)return;calMode=b.dataset.m;$("#calSeg").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));renderCal()});
+$("#mPrev").addEventListener("click",()=>{calM=shiftM(calM,-1);renderCal()});
+$("#mNext").addEventListener("click",()=>{calM=shiftM(calM,1);renderCal()});
+$("#calGrid").addEventListener("click",e=>{const c=e.target.closest("[data-day]");if(!c)return;calSel=calSel===c.dataset.day?null:c.dataset.day;$("#evDate").value=calSel||dstr(Date.now());renderCal();if(calSel)$("#evTitle").focus()});
+const sqDates=()=>{const out=[];const now=new Date();for(let m=-13;m<=13;m++){const d=new Date(now.getFullYear(),now.getMonth()+m,1);let fri=0;for(let i=1;i<=31;i++){const x=new Date(d.getFullYear(),d.getMonth(),i);if(x.getMonth()!==d.getMonth())break;if(x.getDay()===5&&++fri===2){const mj=[2,5,8,11].includes(x.getMonth());out.push({id:"sq"+dstr(x),date:dstr(x),title:mj?"メジャーSQ":"SQ",sq:true});break}}}return out};
 function parseDate(str){
   const y0=new Date().getFullYear();let m;
   if((m=str.match(/(\d{4})[\/\-年.](\d{1,2})[\/\-月.](\d{1,2})日?/)))return {d:`${m[1]}-${pad(m[2])}-${pad(m[3])}`,rest:str.replace(m[0],"")};
@@ -557,6 +669,10 @@ function parseDate(str){
 function addEvent(date,title){title=title.replace(/[（(][日月火水木金土][）)]/g,"").replace(/\s+/g," ").trim();if(!date||!title)return false;const cm=title.match(CODE_RE);S.events.push({id:uid(),date,title,code:cm?cm[1]:null});if(cm)stock(cm[1]);return true}
 function renderCal(){
   if(!$("#evDate").value)$("#evDate").value=dstr(Date.now());
+  const month=calMode==="month";$("#calGrid").classList.toggle("hide",!month);$("#mPrev").classList.toggle("hide",!month);$("#mNext").classList.toggle("hide",!month);$("#mTitle").classList.toggle("hide",!month);
+  if(month){renderGrid();const k=calSel;const es=k?[...S.events,...sqDates()].filter(e=>e.date===k).sort((a,b)=>(a.sq?1:0)-(b.sq?1:0)):[];
+    const dd=k?new Date(k+"T12:00:00"):null;
+    $("#evList").innerHTML=k?`<div class="sub">${k.slice(5).replace("-","/")}（${"日月火水木金土"[dd.getDay()]}）の予定</div>`+(es.length?es.map(e=>`<div class="ev"><span class="t${e.sq?" sq":""}">${esc(e.title)}${e.code?` <span class="sk" data-open="${e.code}"><b>${e.code}</b>${esc(nm(e.code))}</span>`:""}</span>${e.sq?"":`<button class="x" data-ev="${e.id}">削除</button>`}</div>`).join(""):`<div class="hint" style="padding:6px 4px">予定なし。上の欄に入力して追加できます</div>`):"";return}
   const today=dstr(Date.now()),y=shiftDay(today,-1),lim=shiftDay(today,-7);
   const all=[...S.events,...sqDates()].filter(e=>e.date>=lim).sort((a,b)=>a.date.localeCompare(b.date)||(a.sq?1:-1));
   const row=e=>{const d=new Date(e.date+"T12:00:00");const lab=e.date===today?"今日":e.date===y?"昨日":`${e.date.slice(5).replace("-","/")}（${"日月火水木金土"[d.getDay()]}）`;
@@ -587,12 +703,33 @@ let sx=0,sy=0,sw=false;
 document.addEventListener("touchstart",e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;sw=!e.target.closest("input,select,.chips,nav#tabs")&&!(e.target.closest("textarea")&&!e.target.closest("#diaryBox"))},{passive:true});
 document.addEventListener("touchend",e=>{if(!sw)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(Math.abs(dx)<70||Math.abs(dy)>50)return;
   if(view==="vDiary"&&e.target.closest("#diaryBox,.dnav")){dCur=shiftDay(dCur,dx<0?1:-1);renderDiary();return}
+  if(view==="vDiary"&&e.target.closest("#diaryTable")){dtM=shiftM(dtM,dx<0?1:-1);renderDiaryTable();return}
+  if(view==="vCal"&&e.target.closest("#calGrid")){calM=shiftM(calM,dx<0?1:-1);renderCal();return}
   const cur=view==="detail"?"vStocks":view;const i=ORDER.indexOf(cur)+(dx<0?1:-1);if(i<0||i>=ORDER.length)return;curCode=null;resetCap();show(ORDER[i]);document.querySelector(`#tabs [data-v=${ORDER[i]}]`).scrollIntoView({inline:"center",block:"nearest"});
 },{passive:true});
 
+/* ---------- name lookup (J-Quants via GAS) ---------- */
+const nameCache={};let lookT=null;
+async function lookup(code){
+  if(!S.gas||!code||!/^(\d{4}|\d{3}[A-Z])$/.test(code))return null;
+  if(nameCache[code]!==undefined)return nameCache[code];
+  try{const r=await fetch(`${S.gas}?action=name&code=${code}&sess=${Date.now()}`);const d=await r.json();nameCache[code]=d&&d.name?d:null}catch(e){nameCache[code]=null}
+  return nameCache[code];
+}
+function applyLookup(code,d){if(!d)return;const st=stock(code);let ch=false;if(!st.name){st.name=d.name;ch=true}if(!st.sector&&d.sector){st.sector=d.sector;ch=true}if(ch){touch(code);save()}}
+function lookupCapture(){clearTimeout(lookT);lookT=setTimeout(async()=>{const code=$("#capCode").value.trim().toUpperCase();if(!code||nm(code))return;const d=await lookup(code);if(d&&$("#capCode").value.trim().toUpperCase()===code&&!$("#capName").value.trim()){$("#capName").value=d.name;applyLookup(code,d);$("#capName").placeholder=""}},350)}
+$("#capCode").addEventListener("input",lookupCapture);
+ta.addEventListener("input",lookupCapture);
+async function fillAllNames(){
+  const codes=Object.keys(S.stocks).filter(c=>!S.stocks[c].name);if(!codes.length){toast("未設定の銘柄名はありません");return}
+  if(!S.gas){toast("先にGAS同期のURLを設定してください");return}
+  try{const r=await fetch(`${S.gas}?action=names&codes=${codes.join(",")}&sess=${Date.now()}`);const d=await r.json();let n=0;Object.entries(d||{}).forEach(([c,x])=>{if(x&&x.name){applyLookup(c,x);n++}});render();toast(`${n}件の銘柄名を補完`)}catch(e){toast("補完に失敗しました")}
+}
+$("#fillNames").addEventListener("click",fillAllNames);
+
 /* ---------- GAS sync ---------- */
 let syncT=null,syncing=false;
-const payload=()=>JSON.stringify({notes:S.notes,stocks:S.stocks,deleted:S.deleted||[],diary:S.diary,events:S.events,rules:S.rules});
+const payload=()=>JSON.stringify({notes:S.notes,stocks:S.stocks,deleted:S.deleted||[],diary:S.diary,events:S.events,rules:S.rules,sectors:S.sectors,lists:{quick:S.quick,status:S.status,upd:S.listsUpd||0}});
 function scheduleSync(){if(!S.gas||editingSync)return;clearTimeout(syncT);syncT=setTimeout(()=>syncNow(true),1500)}
 let editingSync=false;
 async function syncNow(quiet){
@@ -619,10 +756,10 @@ $("#expMd").addEventListener("click",()=>{
   const free=S.notes.filter(n=>!n.code);if(free.length){out+="## 銘柄なしのメモ\n\n";free.forEach(n=>out+=noteMd(n)+"\n")}
   dl(`invnote_${dstr(Date.now())}.md`,out,"text/markdown");
 });
-$("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()}};save();render();toast("削除しました")}});
+$("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()},quick:S.quick,status:S.status,listsUpd:Date.now(),sectors:{},stockView:S.stockView};save();render();toast("削除しました")}});
 
 /* ---------- init ---------- */
-$("#ver").textContent="v"+VER;load();applyTheme();renderQuick();autoGrow();render();$("#gasUrl").value=S.gas||"";$("#quickEdit").value=quick().join(", ");if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
+$("#ver").textContent="v"+VER;load();STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT;applyTheme();renderQuick();autoGrow();render();$("#gasUrl").value=S.gas||"";ledRender($("#quickLed"),quick());ledRender($("#statusLed"),STATUS);if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
 if(mem)toast("この環境では保存できません（GitHub Pagesで開くと保存されます）");
 })();
 </script>
