@@ -136,6 +136,13 @@ table.dtab td.x.none{color:var(--line)}
 .legend{display:flex;gap:12px;font-size:12px;color:var(--mut);flex-wrap:wrap}
 .legend b{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;vertical-align:0}
 .spark{width:100%;height:56px;display:block;margin-bottom:8px}
+.chart{width:100%;height:170px;display:block}
+.chart text{font-size:10px;fill:var(--mut);font-family:var(--sans)}
+.chart .grid{stroke:var(--line);stroke-width:1}
+.chart .zero{stroke:var(--mut);stroke-width:1;stroke-dasharray:3 3}
+.chkey{display:flex;gap:14px;font-size:12px;color:var(--mut);margin-top:6px;flex-wrap:wrap}
+.chkey b{font-weight:500;color:var(--ink)}
+.chkey i{display:inline-block;width:14px;height:2px;vertical-align:middle;margin-right:5px}
 .hrow{display:flex;gap:8px;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px;cursor:pointer}
 .hrow .d{color:var(--mut);font-variant-numeric:tabular-nums;width:80px;flex:none}
 .hrow .v{font-variant-numeric:tabular-nums;flex:1}
@@ -306,7 +313,9 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
   <div id="pfSum" class="set" style="display:flex;gap:16px;flex-wrap:wrap;align-items:baseline"></div>
   <div class="sub" style="display:flex;align-items:center;gap:10px">保有<span style="flex:1"></span><span class="hint" id="pfDate"></span><button class="chip" id="pfRefresh">株価を更新</button></div><div id="pfList"></div>
   <div class="sub">配分</div><div id="pfAlloc" class="set"></div>
-  <div class="sub" style="display:flex;align-items:center;gap:10px">推移<span style="flex:1"></span><button class="chip" id="pfSnap">今の状態を記録</button></div><div id="pfHist" class="set"></div>
+  <div class="sub" style="display:flex;align-items:center;gap:10px">推移<span style="flex:1"></span><span class="seg" id="chSeg"><button data-c="pl" class="on">損益</button><button data-c="val">評価額</button><button data-c="topix">vs TOPIX</button></span></div>
+  <div id="pfChart" class="set"></div>
+  <div class="sub" style="display:flex;align-items:center;gap:10px">履歴<span style="flex:1"></span><button class="chip" id="pfSnap">今の状態を記録</button></div><div id="pfHist" class="set"></div>
   <div class="evadd" style="margin-top:8px"><input id="pfCode" placeholder="コード" style="width:76px"><input id="pfShares" placeholder="株数" inputmode="numeric" style="width:80px"><input id="pfAvg" placeholder="取得単価" inputmode="decimal" style="width:96px"><input id="pfPrice" placeholder="現在値" inputmode="decimal" style="width:90px"><button class="btn" id="pfAdd">追加</button></div>
   <p class="hint">証券アプリのスクショをClaudeのInvnoteプロジェクトに見せると、保有一覧のJSONが返ります（インポートタブに貼る）。</p>
   <div class="sub" style="margin-top:18px">監視・候補</div><div id="pfWatch"></div>
@@ -378,7 +387,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="2.7";
+const VER="2.8";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TPL={
 "エントリーチェック":`【エントリーチェック】
@@ -807,15 +816,53 @@ function snapshot(reason){
 function diffSnaps(a,b){const out=[];const A=a?a.h:{},B=b.h;
   Object.keys(B).forEach(c=>{if(!A[c])out.push({t:"n",c,txt:`新規 ${fmt(B[c].s)}株`});else if(B[c].s>A[c].s)out.push({t:"p",c,txt:`買い増し +${fmt(B[c].s-A[c].s)}株`});else if(B[c].s<A[c].s)out.push({t:"m",c,txt:`一部売却 −${fmt(A[c].s-B[c].s)}株`})});
   Object.keys(A).forEach(c=>{if(!B[c])out.push({t:"o",c,txt:`売却 ${fmt(A[c].s)}株`})});return out}
+let chMode="pl",topixRows=null;
+function perfIndex(H){ // スナップショット連鎖（売却で消えた含み益は実現益として補正）
+  const out=[{date:H[0].date,v:100}];let idx=100;
+  for(let i=1;i<H.length;i++){const a=H[i-1],b=H[i];let realized=0;Object.keys(a.h).forEach(c=>{const sold=a.h[c].s-((b.h[c]||{}).s||0);if(sold>0)realized+=sold*((a.h[c].p||a.h[c].a)-a.h[c].a)});
+    const dpl=(b.val-b.cost)-(a.val-a.cost)+realized;const base=a.val||1;idx=idx*(1+dpl/base);out.push({date:b.date,v:idx})}
+  return out;
+}
+async function loadTopix(from){
+  if(topixRows&&topixRows.from<=from)return topixRows.rows;if(!S.gas)return null;
+  try{const r=await fetch(`${S.gas}?action=topix&from=${from.replace(/-/g,"")}&sess=${Date.now()}`);const d=await r.json();if(!d.ok)throw new Error(d.error||"");topixRows={from,rows:d.rows||[]};return topixRows.rows}catch(e){topixRows={from,rows:[],err:e.message};return []}
+}
+function lineChart(series,opt){ // series:[{pts:[{x:date,y}],color,label}]
+  const W=340,Hh=170,L=44,R=8,T=10,B=22;const all=series.flatMap(s=>s.pts);if(!all.length)return "";
+  const dates=[...new Set(all.map(p=>p.x))].sort();const x=d=>L+(dates.indexOf(d)/(dates.length-1||1))*(W-L-R);
+  let mn=Math.min(...all.map(p=>p.y)),mx=Math.max(...all.map(p=>p.y));if(opt.zero){mn=Math.min(mn,0);mx=Math.max(mx,0)}if(mn===mx){mn-=1;mx+=1}const pad=(mx-mn)*.08;mn-=pad;mx+=pad;
+  const y=v=>T+(1-(v-mn)/(mx-mn))*(Hh-T-B);
+  const ticks=[mn+pad,(mn+mx)/2,mx-pad];
+  let g=ticks.map(t=>`<line class="grid" x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}"/><text x="${L-4}" y="${y(t)+3}" text-anchor="end">${opt.fmt(t)}</text>`).join("");
+  if(opt.zero&&mn<0&&mx>0)g+=`<line class="zero" x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}"/>`;
+  g+=`<text x="${L}" y="${Hh-6}">${dates[0].slice(5).replace("-","/")}</text><text x="${W-R}" y="${Hh-6}" text-anchor="end">${dates[dates.length-1].slice(5).replace("-","/")}</text>`;
+  series.forEach(s=>{if(s.pts.length<2)return;g+=`<polyline fill="none" stroke="${s.color}" stroke-width="${s.w||1.8}" stroke-linejoin="round" points="${s.pts.map(p=>`${x(p.x).toFixed(1)},${y(p.y).toFixed(1)}`).join(" ")}"/>`;const l=s.pts[s.pts.length-1];g+=`<circle cx="${x(l.x)}" cy="${y(l.y)}" r="2.5" fill="${s.color}"/>`});
+  return `<svg class="chart" viewBox="0 0 ${W} ${Hh}" preserveAspectRatio="none">${g}</svg>`;
+}
+async function renderChart(){
+  const H=S.pfHistory;const el=$("#pfChart");
+  if(H.length<2){el.innerHTML=`<span class="hint">記録が2日分以上たまるとグラフが出ます</span>`;return}
+  if(chMode==="pl"){const pts=H.map(x=>({x:x.date,y:x.val-x.cost}));const last=pts[pts.length-1].y,first=pts[0].y;
+    el.innerHTML=lineChart([{pts,color:last>=0?"var(--up)":"var(--dn)"}],{zero:true,fmt:v=>(Math.abs(v)>=1e4?(v/1e4).toFixed(0)+"万":Math.round(v))})+`<div class="chkey"><span>評価損益 <b style="color:${last>=0?"var(--up)":"var(--dn)"}">${last>=0?"+":""}${fmt(last)}</b></span><span>期間中 <b>${last-first>=0?"+":""}${fmt(last-first)}</b></span></div>`;return}
+  if(chMode==="val"){const pts=H.map(x=>({x:x.date,y:x.val}));el.innerHTML=lineChart([{pts,color:"var(--ink)"}],{fmt:v=>(v/1e4).toFixed(0)+"万"})+`<div class="chkey"><span>評価額 <b>${fmt(pts[pts.length-1].y)}</b></span></div>`;return}
+  el.innerHTML=`<span class="hint">TOPIXを取得中…</span>`;
+  const pf=perfIndex(H);const rows=await loadTopix(H[0].date);
+  if(!rows||!rows.length){el.innerHTML=`<span class="hint">TOPIXを取得できませんでした${topixRows&&topixRows.err?"（"+esc(topixRows.err)+"）":""}。J-QuantsのプランでTOPIX四本値が使えるか確認してください</span>`;return}
+  const closeOn=d=>{let c=null;for(const r of rows){if(r.date<=d)c=r.close;else break}return c};
+  const base=closeOn(pf[0].date)||rows[0].close;const tp=pf.map(p=>({x:p.date,y:(closeOn(p.date)||base)/base*100}));
+  const a=pf[pf.length-1].v-100,b=tp[tp.length-1].y-100;
+  el.innerHTML=lineChart([{pts:tp,color:"var(--mut)",w:1.4},{pts:pf.map(p=>({x:p.date,y:p.v})),color:"var(--up)"}],{fmt:v=>v.toFixed(0)})+`<div class="chkey"><span><i style="background:var(--up)"></i>ポートフォリオ <b>${a>=0?"+":""}${a.toFixed(1)}%</b></span><span><i style="background:var(--mut)"></i>TOPIX <b>${b>=0?"+":""}${b.toFixed(1)}%</b></span><span>超過 <b style="color:${a-b>=0?"var(--up)":"var(--dn)"}">${a-b>=0?"+":""}${(a-b).toFixed(1)}pt</b></span></div><div class="hint" style="margin-top:4px">${pf[0].date.slice(5).replace("-","/")} を100として。売買による資金の出入りは、売却時の実現損益を足し戻して補正した近似です</div>`;
+}
+$("#chSeg").addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;chMode=b.dataset.c;$("#chSeg").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));renderChart()});
 let histSel=null;
-function renderHist(){
+function renderHist(){renderChart();
   const H=S.pfHistory;if(!H.length){$("#pfHist").innerHTML=`<span class="hint">保有を取り込むか「今の状態を記録」を押すと、ここに履歴がたまります</span>`;return}
   const w=320,hh=48,vs=H.map(x=>x.val),mn=Math.min(...vs),mx=Math.max(...vs);const pt=H.map((x,i)=>`${(i/(H.length-1||1))*w},${hh-4-((x.val-mn)/((mx-mn)||1))*(hh-8)}`).join(" ");
   const spark=H.length>1?`<svg class="spark" viewBox="0 0 ${w} ${hh}" preserveAspectRatio="none"><polyline points="${pt}" fill="none" stroke="var(--ink)" stroke-width="1.5" vector-effect="non-scaling-stroke"/></svg>`:"";
   const sel=histSel||H[H.length-1].id;const idx=H.findIndex(x=>x.id===sel);const cur=H[idx],prev=H[idx-1];
   const d=cur?diffSnaps(prev,cur):[];
   const rows=[...H].reverse().slice(0,12).map(x=>{const pl=x.val-x.cost;return `<div class="hrow" data-hs="${x.id}" style="${x.id===sel?"color:var(--ink);font-weight:600":""}"><span class="d">${x.date.slice(2).replace(/-/g,"/")}</span><span class="v">${fmt(x.val)}</span><span class="c ${pl>=0?"":""}" style="color:${pl>=0?"var(--up)":"var(--dn)"}">${pl>=0?"+":""}${fmt(pl)}</span><span class="c">${Object.keys(x.h).length}銘柄</span></div>`}).join("");
-  $("#pfHist").innerHTML=spark+rows+(cur?`<div class="diff"><div class="hint">${prev?prev.date.slice(5).replace("-","/")+" → ":""}${cur.date.slice(5).replace("-","/")} の変化${prev?`　評価額 ${cur.val-prev.val>=0?"+":""}${fmt(cur.val-prev.val)}`:""}</div>${d.length?d.map(x=>`<div class="${x.t}"><b style="font-weight:500">${x.c}</b> ${esc(nm(x.c))}　${x.txt}</div>`).join(""):`<div class="hint">銘柄・株数の変化なし</div>`}</div>`:"");
+  $("#pfHist").innerHTML=rows+(cur?`<div class="diff"><div class="hint">${prev?prev.date.slice(5).replace("-","/")+" → ":""}${cur.date.slice(5).replace("-","/")} の変化${prev?`　評価額 ${cur.val-prev.val>=0?"+":""}${fmt(cur.val-prev.val)}`:""}</div>${d.length?d.map(x=>`<div class="${x.t}"><b style="font-weight:500">${x.c}</b> ${esc(nm(x.c))}　${x.txt}</div>`).join(""):`<div class="hint">銘柄・株数の変化なし</div>`}</div>`:"");
 }
 $("#pfHist").addEventListener("click",e=>{const r=e.target.closest("[data-hs]");if(!r)return;histSel=r.dataset.hs;renderHist()});
 $("#pfSnap").addEventListener("click",()=>{snapshot("manual");save();renderPf();toast("記録しました")});
