@@ -387,7 +387,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="2.8";
+const VER="2.9";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TPL={
 "エントリーチェック":`【エントリーチェック】
@@ -696,7 +696,7 @@ const AI_PROMPT=()=>`あなたは投資ノートアプリ「Invnote」の取り�
 "notes":[{"code":"4桁コード。銘柄に紐づかなければ省略","text":"メモ本文。私の言葉をなるべく残し、箇条書きは「- 」で","tags":["${quick().join("|")} から該当するもの"],"date":"YYYY-MM-DD。言及がなければ省略"}],
 "diary":[{"date":"YYYY-MM-DD（今日は${dstr(Date.now())}）","text":"その日の振り返り・相場観・感情など、日記に書くべき内容。なければ配列を空に"}],
 "events":[{"date":"YYYY-MM-DD","title":"決算・IR・売買予定などの予定","code":"4桁コード。なければ省略"}],
-"holdings":[{"code":"4桁コード","name":"銘柄名","shares":株数,"avg":取得単価,"price":現在値,"acct":"現物|信用|NISA など"}],"holdings_replace":true(スクショが保有の全量なら)}
+"holdings":[{"code":"4桁コード","name":"銘柄名","shares":株数,"avg":取得単価,"price":現在値,"acct":"現物|信用|NISA など"}],"holdings_replace":true(スクショが保有の全量なら),"holdings_date":"YYYY-MM-DD（スクショが撮られた日。今日でなければ必ず）"}
 
 ルール：推測で数値や事実を足さない。コードが分からない銘柄は name だけ入れて code を省略する。一つの発言に複数の銘柄が出たら銘柄ごとに notes を分ける。特定銘柄の話は notes、その日全体の振り返り・反省・相場観は diary、日付のある予定は events に振り分ける。
 
@@ -715,9 +715,13 @@ function importParsed(d){
     let ts=Date.now();if(x.date&&/^\d{4}-\d{2}-\d{2}$/.test(x.date)){const dd=new Date(x.date+"T12:00:00");if(!isNaN(dd))ts=dd.getTime()}
     S.notes.push({id:uid(),ts,code,text:String(x.text).trim(),tags:Array.isArray(x.tags)?x.tags.filter(Boolean):[],pinned:false,ai:true});ns++;
   });
-  let hs=0;(d.holdings||[]).forEach(x=>{const code=String(x.code||"").trim().toUpperCase();if(!/^(\d{4}|\d{3}[A-Z])$/.test(code))return;setHolding(code,x);hs++});
-  let sold=[];if(hs&&d.holdings_replace){Object.keys(S.holdings).forEach(k=>{if(!(d.holdings||[]).some(x=>String(x.code).toUpperCase()===k)){const h=S.holdings[k];const st=stock(k);if(["保有","買い増し"].includes(st.status)){st.status=(h.price||0)>=(h.avg||0)?"利確":"損切";touch(k)}sold.push(k);delete S.holdings[k];(S.deleted=S.deleted||[]).push("h:"+k)}})}
-  if(hs){const prev=S.pfHistory[S.pfHistory.length-1];const snap=snapshot("import");var diffTxt=diffSnaps(prev&&prev!==snap?prev:null,snap).map(x=>`${x.c} ${nm(x.c)}　${x.txt}`).join("<br>")}
+  let hs=0;const hday=/^\d{4}-\d{2}-\d{2}$/.test(d.holdings_date||"")?d.holdings_date:null;const latest=S.pfHistory.length?S.pfHistory[S.pfHistory.length-1].date:null;
+  const histOnly=hday&&latest&&hday<latest;
+  if(histOnly){snapshotFrom(d.holdings||[],hday,"import");hs=(d.holdings||[]).length;(d.holdings||[]).forEach(x=>{const c=String(x.code||"").toUpperCase();if(c&&x.name&&!nm(c)){stock(c).name=x.name}})}
+  else (d.holdings||[]).forEach(x=>{const code=String(x.code||"").trim().toUpperCase();if(!/^(\d{4}|\d{3}[A-Z])$/.test(code))return;setHolding(code,x);hs++});
+  let sold=[];if(hs&&d.holdings_replace&&!histOnly){Object.keys(S.holdings).forEach(k=>{if(!(d.holdings||[]).some(x=>String(x.code).toUpperCase()===k)){const h=S.holdings[k];const st=stock(k);if(["保有","買い増し"].includes(st.status)){st.status=(h.price||0)>=(h.avg||0)?"利確":"損切";touch(k)}sold.push(k);delete S.holdings[k];(S.deleted=S.deleted||[]).push("h:"+k)}})}
+  if(hs&&!histOnly){const prev=[...S.pfHistory].reverse().find(x=>x.date<(hday||dstr(Date.now())));const snap=snapshot("import",hday||undefined);var diffTxt=diffSnaps(prev||null,snap).map(x=>`${x.c} ${nm(x.c)}　${x.txt}`).join("<br>")}
+  else if(histOnly){var diffTxt=`${hday} の記録として履歴にだけ追加しました（現在の保有は変更していません）`}
   (d.diary||[]).forEach(x=>{if(!x.text)return;const k=/^\d{4}-\d{2}-\d{2}$/.test(x.date||"")?x.date:dstr(Date.now());const cur=(S.diary[k]||{}).t||"";S.diary[k]={t:cur?cur.trimEnd()+"\n\n"+String(x.text).trim():String(x.text).trim(),upd:Date.now()};ds++});
   (d.events||[]).forEach(x=>{if(x.date&&x.title&&addEvent(String(x.date),String(x.title)+(x.code?" "+x.code:"")))es++});
   S.notes.sort((a,b)=>b.ts-a.ts);save();render();
@@ -806,12 +810,18 @@ function gaps(rows){
   ${mb.map(b=>`<div style="font-size:13px;padding:3px 0;display:flex;gap:8px;align-items:baseline"><span style="font-weight:600;white-space:nowrap">${b[0]}</span><span class="hint">${b[2]}</span></div>`).join("")}
   ${mt.length?`<div class="hint" style="margin:8px 0 4px">持っていないテーマ</div><div style="display:flex;gap:4px;flex-wrap:wrap">${mt.map(t=>`<span class="th" style="font-size:12px;padding:2px 8px">${esc(t)}</span>`).join("")}</div>`:""}`;
 }
-function snapshot(reason){
+function snapshotFrom(list,day,reason){ // 過去日のスクショ用：現在の保有は触らず履歴だけ追加
+  const h={};list.forEach(x=>{const c=String(x.code||"").toUpperCase();if(!/^(\d{4}|\d{3}[A-Z])$/.test(c))return;h[c]={s:+x.shares||0,a:+x.avg||0,p:+x.price||0,ac:x.acct||""}});
+  const val=Object.values(h).reduce((a,x)=>a+x.s*(x.p||x.a),0),cost=Object.values(h).reduce((a,x)=>a+x.s*x.a,0);
+  const ex=S.pfHistory.find(x=>x.date===day);const ts=new Date(day+"T15:00:00").getTime();
+  if(ex){Object.assign(ex,{h,val,cost,why:reason})}else{S.pfHistory.push({id:uid(),ts,date:day,h,val,cost,why:reason});S.pfHistory.sort((a,b)=>a.ts-b.ts)}
+}
+function snapshot(reason,day){
   const h={};Object.entries(S.holdings).forEach(([c,x])=>{h[c]={s:x.shares,a:x.avg,p:x.price||0,ac:x.acct||""}});
   const val=Object.values(h).reduce((a,x)=>a+x.s*(x.p||x.a),0),cost=Object.values(h).reduce((a,x)=>a+x.s*x.a,0);
-  const day=dstr(Date.now());const last=S.pfHistory[S.pfHistory.length-1];
-  if(last&&last.date===day&&reason!=="manual"){Object.assign(last,{h,val,cost,ts:Date.now(),why:reason});return last}
-  const snap={id:uid(),ts:Date.now(),date:day,h,val,cost,why:reason};S.pfHistory.push(snap);if(S.pfHistory.length>200)S.pfHistory.splice(0,S.pfHistory.length-200);return snap;
+  day=day||dstr(Date.now());const last=S.pfHistory.find(x=>x.date===day);
+  if(last&&reason!=="manual"){Object.assign(last,{h,val,cost,why:reason});return last}
+  const ts=day===dstr(Date.now())?Date.now():new Date(day+"T15:00:00").getTime();const snap={id:uid(),ts,date:day,h,val,cost,why:reason};S.pfHistory.push(snap);S.pfHistory.sort((a,b)=>a.ts-b.ts);if(S.pfHistory.length>200)S.pfHistory.splice(0,S.pfHistory.length-200);return snap;
 }
 function diffSnaps(a,b){const out=[];const A=a?a.h:{},B=b.h;
   Object.keys(B).forEach(c=>{if(!A[c])out.push({t:"n",c,txt:`新規 ${fmt(B[c].s)}株`});else if(B[c].s>A[c].s)out.push({t:"p",c,txt:`買い増し +${fmt(B[c].s-A[c].s)}株`});else if(B[c].s<A[c].s)out.push({t:"m",c,txt:`一部売却 −${fmt(A[c].s-B[c].s)}株`})});
