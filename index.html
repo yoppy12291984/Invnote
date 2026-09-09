@@ -16,14 +16,17 @@
   --up:#C8322B; --dn:#2E7D67; --amb:#B7791F; --blu:#2F5F9E;
   --r:10px; --sans:-apple-system,"Hiragino Sans","Noto Sans JP","Yu Gothic UI",system-ui,sans-serif;
   --mincho:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  color-scheme:light;
 }
 [data-theme=dark]{
   --bg:#12171C; --sur:#1B2229; --ink:#E6EAEE; --mut:#8A96A3; --line:#2B343D; --soft:#232C35;
   --up:#E4574F; --dn:#4FB394; --amb:#D9A441; --blu:#6E9BD6;
+  color-scheme:dark;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);-webkit-text-size-adjust:100%}
 button,input,select,textarea{font:inherit;color:inherit}
+input,textarea{-webkit-appearance:none;appearance:none;box-shadow:none;border-radius:0}
 button{background:none;border:0;cursor:pointer}
 a{color:var(--blu);text-decoration:none}
 a:hover{text-decoration:underline}
@@ -387,7 +390,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="2.9";
+const VER="2.9.1";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TPL={
 "エントリーチェック":`【エントリーチェック】
