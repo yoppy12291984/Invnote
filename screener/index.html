@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Screener">
+<meta name="theme-color" content="#F1F3F5">
+<link rel="apple-touch-icon" href="../invnote-icon.png">
+<link rel="icon" href="../invnote-icon.svg" type="image/svg+xml">
+<title>Screener</title>
+<style>
+:root{
+  --bg:#F1F3F5; --sur:#FFFFFF; --ink:#1C2733; --mut:#6B7785; --line:#D9DEE3; --soft:#E9EDF0;
+  --up:#C8322B; --dn:#2E7D67; --amb:#B7791F; --blu:#2F5F9E;
+  --r:10px; --sans:-apple-system,"Hiragino Sans","Noto Sans JP","Yu Gothic UI",system-ui,sans-serif;
+  color-scheme:light;
+}
+[data-theme=dark]{
+  --bg:#12171C; --sur:#1B2229; --ink:#E6EAEE; --mut:#8A96A3; --line:#2B343D; --soft:#232C35;
+  --up:#E4574F; --dn:#4FB394; --amb:#D9A441; --blu:#6E9BD6;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);-webkit-text-size-adjust:100%}
+button{background:none;border:0;cursor:pointer;font:inherit;color:inherit}
+a{color:var(--blu);text-decoration:none}
+:focus-visible{outline:2px solid var(--blu);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.num{font-variant-numeric:tabular-nums}
+
+#app{max-width:760px;margin:0 auto;padding:calc(8px + env(safe-area-inset-top)) 12px calc(40px + env(safe-area-inset-bottom));overflow-x:hidden}
+header{display:flex;align-items:center;gap:10px;padding:4px 4px 10px}
+header h1{font:600 15px/1 var(--sans);letter-spacing:-.01em}
+header h1 small{font-size:11px;font-weight:500;color:var(--mut);margin-left:6px;font-variant-numeric:tabular-nums}
+#stat{font-size:11px;color:var(--mut);flex:1;font-variant-numeric:tabular-nums}
+#back{color:var(--mut);padding:5px 10px;font-size:13px;font-weight:600;border-radius:8px}
+#back:hover{color:var(--ink);background:var(--soft)}
+
+.cycle{font-size:12.5px;color:var(--mut);padding:0 4px 10px;font-variant-numeric:tabular-nums}
+.cycle b{color:var(--ink);font-weight:600}
+
+nav#tabs{display:flex;gap:2px;overflow-x:auto;margin:0 -12px 12px;padding:0 12px;border-bottom:1px solid var(--line);scrollbar-width:none}
+nav#tabs::-webkit-scrollbar{display:none}
+nav#tabs button{padding:8px 12px 9px;color:var(--mut);font-size:14px;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px}
+nav#tabs button.on{color:var(--ink);font-weight:600;border-bottom-color:var(--ink)}
+section[hidden]{display:none}
+
+.bar{display:flex;gap:6px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.chip{border:1px solid transparent;border-radius:6px;padding:3px 9px;font-size:12.5px;color:var(--mut);background:var(--soft);white-space:nowrap}
+.chip.on{background:var(--ink);color:var(--sur);border-color:var(--ink)}
+.cnt{font-size:12px;color:var(--mut);margin-left:auto}
+
+.tblwrap{overflow-x:auto;margin:0 -12px;padding:0 12px;scrollbar-width:none}
+.tblwrap::-webkit-scrollbar{display:none}
+table.rows{min-width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}
+table.rows th{position:sticky;top:0;background:var(--bg);color:var(--mut);font-weight:500;font-size:11.5px;text-align:right;padding:4px 0 6px 8px;border-bottom:1px solid var(--line);cursor:pointer;user-select:none}
+table.rows th:first-child{text-align:left;padding-left:4px}
+table.rows th[aria-sort]{color:var(--ink);font-weight:600}
+table.rows th[aria-sort=descending]::after{content:" ↓"}
+table.rows th[aria-sort=ascending]::after{content:" ↑"}
+table.rows td{padding:7px 0 7px 8px;border-bottom:1px solid var(--line);vertical-align:middle;text-align:right;font-variant-numeric:tabular-nums}
+table.rows td:first-child{text-align:left;padding-left:4px}
+table.rows tr.r{cursor:pointer}
+table.rows td.nm b{font-weight:600;font-size:14px;display:block;line-height:1.3}
+table.rows td.nm small{color:var(--mut);font-size:12px}
+table.rows td.nc{font-weight:600;color:var(--ink)}
+table.rows td.mu{color:var(--mut);font-size:12.5px}
+table.rows tr.detail td{text-align:left;white-space:normal;background:var(--sur);padding:8px 10px;cursor:default}
+.links{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.links a{font-size:12px;padding:2px 9px;border:1px solid var(--line);border-radius:999px;color:var(--mut)}
+.links a:hover{color:var(--blu);border-color:var(--blu)}
+.meta{font-size:12px;color:var(--mut);margin-top:6px}
+
+.stk{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin-bottom:8px;border-left:4px solid var(--line)}
+.stk[data-s=保有]{border-left-color:var(--up)}
+.stk[data-s=売却済]{border-left-color:var(--dn)}
+.stk[data-s=テーマ]{border-left-color:var(--blu)}
+.shead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.shead .code{font-variant-numeric:tabular-nums;color:var(--mut);font-size:13px}
+.shead .name{font-weight:600;font-size:16px}
+.shead .cnt{margin-left:auto}
+.slast{font-size:13px;color:var(--mut);margin-top:4px}
+.body{font-size:14px;margin-top:6px;white-space:pre-wrap;word-break:break-word}
+.body .k{color:var(--mut);font-size:12px;margin-right:6px}
+.body .warn{color:var(--amb)}
+details{margin-top:6px}
+summary{font-size:12px;color:var(--mut);cursor:pointer}
+details ul{padding-left:1.2em;font-size:12.5px;color:var(--mut);margin-top:4px}
+details li{margin:2px 0}
+pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;font:11px/1.5 "SF Mono",Consolas,"MS Gothic",monospace;color:var(--mut);overflow-x:auto;margin-top:8px}
+
+.sum{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.sum div{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px}
+.sum b{display:block;font-size:20px;font-variant-numeric:tabular-nums;font-weight:600}
+.sum span{font-size:12px;color:var(--mut);display:block}
+.sum .up{color:var(--up)}.sum .dn{color:var(--dn)}
+.hint{font-size:12px;color:var(--mut);padding:0 4px}
+.empty{padding:28px 4px;color:var(--mut);text-align:center;font-size:14px}
+.err{color:var(--up)}
+</style>
+</head>
+<body>
+<div id="app">
+<header><h1>Screener<small id="ver"></small></h1><span id="stat">読み込み中</span><a id="back" href="../">Invnote</a></header>
+<p class="cycle" id="cycle"></p>
+<nav id="tabs">
+  <button class="on" data-tab="cand">候補</button>
+  <button data-tab="hold">保有</button>
+  <button data-tab="theme">テーマ</button>
+  <button data-tab="status">検証</button>
+</nav>
+
+<section id="cand">
+  <div class="bar">
+    <button class="chip" data-f="small">時価総額 ≤500億</button>
+    <button class="chip" data-f="thin">売買代金 1〜5億</button>
+    <span class="cnt" id="candCount"></span>
+  </div>
+  <div class="tblwrap"><table class="rows">
+    <thead><tr>
+      <th data-k="name">銘柄</th>
+      <th data-k="nc" aria-sort="descending">NC比率</th>
+      <th data-k="pbr">PBR</th>
+      <th data-k="mcap_oku">時価総額</th>
+      <th data-k="turnover_oku">売買代金</th>
+    </tr></thead>
+    <tbody id="candBody"></tbody>
+  </table></div>
+</section>
+<section id="hold" hidden></section>
+<section id="theme" hidden></section>
+<section id="status" hidden></section>
+</div>
+
+<script>
+(async function(){
+  /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
+  try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
+    if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
+
+  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const fmt=(v,d=2)=>v==null||v===''?'—':Number(v).toLocaleString('ja-JP',{minimumFractionDigits:d,maximumFractionDigits:d});
+  const pct=v=>v==null?'—':(v>=0?'+':'')+(v*100).toFixed(1)+'%';
+  const kabutan=c=>`https://kabutan.jp/stock/?code=${c}`;
+  const tv=c=>`https://jp.tradingview.com/chart/?symbol=TSE%3A${c}`;
+  const linkRow=c=>`<div class="links"><a href="${kabutan(c)}" target="_blank" rel="noopener">株探</a><a href="${tv(c)}" target="_blank" rel="noopener">TradingView</a></div>`;
+
+  async function load(name){
+    const r=await fetch(`data/${name}.json?v=${Date.now()}`,{cache:'no-store'});
+    if(!r.ok) throw new Error(`${name}.json が読めません (${r.status})`);
+    return JSON.parse((await r.text()).replace(/^\uFEFF/,''));
+  }
+
+  $$('nav#tabs button').forEach(b=>b.addEventListener('click',()=>{
+    $$('nav#tabs button').forEach(x=>x.classList.toggle('on',x===b));
+    $$('section').forEach(s=>s.hidden=s.id!==b.dataset.tab);
+    window.scrollTo(0,0);
+  }));
+
+  let index,status,cand,hold,themes;
+  try{[index,status,cand,hold,themes]=await Promise.all(['index','status','candidates','holdings','themes'].map(load));}
+  catch(e){$('#stat').textContent='';$('#candBody').innerHTML=`<tr><td colspan="5" class="empty err">${esc(e.message)}</td></tr>`;return;}
+
+  /* header */
+  $('#ver').textContent=`基準日 ${cand.date}`;
+  $('#stat').textContent=`更新 ${index.updated}`;
+  const c=index.cycle||{};
+  $('#cycle').innerHTML=`<b>${esc(c.M)} ${esc(c.label)}</b>（${esc(c.month)}）　FF ${fmt(c.ff)}%　失業率 ${fmt(c.unrate,1)}%　10-2y ${fmt(c.spread10_2)}　VIX <b>${fmt(c.vix,1)}</b>`;
+
+  /* candidates */
+  const filt={small:false,thin:false};
+  let sortKey='nc',sortDesc=true;
+  const rows=$('#candBody');
+  function render(){
+    let items=cand.items.filter(x=>(!filt.small||x.mcap_oku<=500)&&(!filt.thin||(x.turnover_oku>=1&&x.turnover_oku<=5)));
+    items.sort((a,b)=>{const va=a[sortKey],vb=b[sortKey];const r=typeof va==='string'?va.localeCompare(vb,'ja'):(va-vb);return sortDesc?-r:r;});
+    $('#candCount').textContent=`${items.length} / ${cand.count}`;
+    if(!items.length){rows.innerHTML='<tr><td colspan="5" class="empty">条件に合う銘柄がありません</td></tr>';return;}
+    rows.innerHTML=items.map(x=>`<tr class="r" data-code="${esc(x.code)}">
+      <td class="nm"><b>${esc(x.name)}</b><small>${esc(x.code)}　${fmt(x.price,0)}円</small></td>
+      <td class="nc">${fmt(x.nc)}</td>
+      <td class="mu">${fmt(x.pbr)}</td>
+      <td class="mu">${fmt(x.mcap_oku,0)}億</td>
+      <td class="mu">${fmt(x.turnover_oku,1)}億</td></tr>`).join('');
+  }
+  rows.addEventListener('click',e=>{
+    const tr=e.target.closest('tr.r'); if(!tr) return;
+    const open=tr.nextElementSibling?.classList.contains('detail');
+    $$('tr.detail').forEach(d=>d.remove());
+    if(open) return;
+    const x=cand.items.find(i=>i.code===tr.dataset.code);
+    const d=document.createElement('tr'); d.className='detail';
+    d.innerHTML=`<td colspan="5">${linkRow(x.code)}<div class="meta">ネットキャッシュ比率 ${fmt(x.nc)}　PBR ${fmt(x.pbr)}　直近BS ${esc(x.bs_date)}</div></td>`;
+    tr.after(d);
+  });
+  $$('table.rows th').forEach(th=>th.addEventListener('click',()=>{
+    const k=th.dataset.k;
+    if(sortKey===k) sortDesc=!sortDesc; else{sortKey=k;sortDesc=k!=='name'&&k!=='pbr';}
+    $$('table.rows th').forEach(t=>t.removeAttribute('aria-sort'));
+    th.setAttribute('aria-sort',sortDesc?'descending':'ascending');
+    render();
+  }));
+  $$('.chip').forEach(b=>b.addEventListener('click',()=>{filt[b.dataset.f]=!filt[b.dataset.f];b.classList.toggle('on',filt[b.dataset.f]);render();}));
+  render();
+
+  /* holdings */
+  const hs=$('#hold');
+  if(!hold.items?.length){hs.innerHTML='<p class="empty">保有銘柄はまだありません</p>';}
+  else{
+    const seen=new Set();
+    hs.innerHTML=hold.items.filter(h=>{const k=h.code+h.date;if(seen.has(k))return false;seen.add(k);return true;}).map(h=>`
+      <div class="stk" data-s="${h.sell_date?'売却済':'保有'}">
+        <div class="shead"><span class="code">${esc(h.code)}</span><span class="name">${esc(h.name)}</span><span class="cnt">${esc(h.bucket)}</span></div>
+        <div class="slast num">買値 ${fmt(h.price,0)}円　${esc(h.date)}${h.sell_date?`　→ 売却 ${esc(h.sell_date)} ${fmt(h.sell_price,0)}円`:''}${h.note?`　${esc(h.note)}`:''}</div>
+        ${linkRow(h.code)}
+      </div>`).join('')+(hold.score_text?`<pre>${esc(hold.score_text)}</pre>`:'');
+  }
+
+  /* themes */
+  $('#theme').innerHTML=(themes.items||[]).map(t=>`
+    <div class="stk" data-s="テーマ">
+      <div class="shead"><span class="name">${esc(t.theme_name||t.title)}</span></div>
+      <div class="slast">${esc(t.title)}</div>
+      <div class="body">${esc(t.summary)}
+<span class="k">段階</span>${esc(t.stage)}
+<span class="k">背景</span>${esc(t.driver)}
+<span class="warn">${esc(t.caution)}</span>
+<span class="k">主導</span>${(t.leaders||[]).map(l=>`<a href="${kabutan(String(l).split(' ')[0])}" target="_blank" rel="noopener">${esc(l)}</a>`).join('　')}
+<span class="k">${esc(t.earnings)}　${esc(t.margin)}
+${esc(t.us)}</span></div>
+      ${t.news?.length?`<details><summary>ニュース ${t.news.length}件</summary><ul>${t.news.map(n=>`<li>${esc(n)}</li>`).join('')}</ul></details>`:''}
+    </div>`).join('')||'<p class="empty">テーマの塊はありません</p>';
+
+  /* status */
+  const st=status.strategies||{};
+  const box=(label,s)=>s?`<div><span>${label}　直近3ヶ月</span><b class="${s.last3m>=0?'up':'dn'}">${pct(s.last3m)}</b><span>TOPIX ${pct(s.last3m_topix)}　超過 ${pct(s.last3m-s.last3m_topix)}　${s.months}ヶ月分</span></div>`:'';
+  $('#status').innerHTML=`<div class="sum">${box('清原式',st.kiyohara)}${box('低PBR単独',st.lowpbr)}</div>
+    <p class="hint">20年検証で採用した戦略は清原式（ネットキャッシュ比率≥0.5 × 低PBR、小型、四半期入替）のみ。超過リターンは売買代金1〜5億の小型株に集中するため、指値で数日かけて集める。</p>`;
+})();
+</script>
+</body>
+</html>
