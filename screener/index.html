@@ -108,6 +108,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 <nav id="tabs">
   <button class="on" data-tab="cand">候補</button>
   <button data-tab="hold">保有</button>
+  <button data-tab="cs">CAN-SLIM</button>
   <button data-tab="theme">テーマ</button>
   <button data-tab="status">検証</button>
 </nav>
@@ -127,6 +128,20 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
       <th data-k="turnover_oku">売買代金</th>
     </tr></thead>
     <tbody id="candBody"></tbody>
+  </table></div>
+</section>
+<section id="cs" hidden>
+  <div class="bar" id="csBar"></div>
+  <div class="tblwrap"><table class="rows">
+    <thead><tr>
+      <th data-k="name">銘柄</th>
+      <th data-k="score" aria-sort="descending">スコア</th>
+      <th data-k="pivot_gap">ピボット</th>
+      <th data-k="stop_pct">損切り幅</th>
+      <th data-k="mcap_oku">時価総額</th>
+      <th data-k="lot_man">100株</th>
+    </tr></thead>
+    <tbody id="csBody"></tbody>
   </table></div>
 </section>
 <section id="hold" hidden></section>
@@ -160,9 +175,10 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     window.scrollTo(0,0);
   }));
 
-  let index,status,cand,hold,themes;
+  let index,status,cand,hold,themes,cs;
   try{[index,status,cand,hold,themes]=await Promise.all(['index','status','candidates','holdings','themes'].map(load));}
   catch(e){$('#stat').textContent='';$('#candBody').innerHTML=`<tr><td colspan="5" class="empty err">${esc(e.message)}</td></tr>`;return;}
+  try{cs=await load('canslim');}catch(e){cs={date:null,count:0,buckets:{},items:[]};}
 
   /* header */
   $('#ver').textContent=`基準日 ${cand.date}`;
@@ -205,6 +221,45 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   }));
   $$('.chip').forEach(b=>b.addEventListener('click',()=>{filt[b.dataset.f]=!filt[b.dataset.f];b.classList.toggle('on',filt[b.dataset.f]);render();}));
   render();
+
+  /* CAN-SLIM */
+  let csB=null,csKey='score',csDesc=true;
+  const csRows=$('#csBody');
+  function renderCs(){
+    const bk=cs.buckets||{};
+    $('#csBar').innerHTML=Object.keys(bk).map(k=>`<button class="chip${csB===k?' on':''}" data-b="${esc(k)}">${esc(k)} ${bk[k]}</button>`).join('')
+      +`<span class="cnt" id="csCount"></span>`;
+    let items=(cs.items||[]).filter(x=>!csB||x.bucket===csB);
+    items.sort((a,b)=>{const va=a[csKey],vb=b[csKey];const r=typeof va==='string'?va.localeCompare(vb,'ja'):((va??-1e9)-(vb??-1e9));return csDesc?-r:r;});
+    $('#csCount').textContent=`${items.length} / ${cs.count||0}${cs.date?`　${cs.date}`:''}`;
+    if(!items.length){csRows.innerHTML=`<tr><td colspan="6" class="empty">${cs.count?'条件に合う銘柄がありません':'通過銘柄はありません'}</td></tr>`;return;}
+    csRows.innerHTML=items.map(x=>`<tr class="r" data-code="${esc(x.code)}">
+      <td class="nm"><b>${esc(x.name)}</b><small>${esc(x.code)}　${esc(x.bucket)}${x.sector?'　'+esc(x.sector):''}</small></td>
+      <td class="nc">${fmt(x.score,0)}</td>
+      <td class="mu">${x.pivot_gap==null?'—':fmt(x.pivot_gap,1)+'%'}</td>
+      <td class="mu">${x.stop_pct==null?'—':fmt(x.stop_pct,1)+'%'}</td>
+      <td class="mu">${fmt(x.mcap_oku,0)}億</td>
+      <td class="mu">${fmt(x.lot_man,1)}万</td></tr>`).join('');
+  }
+  csRows.addEventListener('click',e=>{
+    const tr=e.target.closest('tr.r'); if(!tr) return;
+    const open=tr.nextElementSibling?.classList.contains('detail');
+    csRows.querySelectorAll('tr.detail').forEach(d=>d.remove());
+    if(open) return;
+    const x=(cs.items||[]).find(i=>i.code===tr.dataset.code&&(!csB||i.bucket===csB));
+    const d=document.createElement('tr'); d.className='detail';
+    d.innerHTML=`<td colspan="6">${linkRow(x.code)}<div class="meta">終値 ${fmt(x.price,0)}円　ピボット ${fmt(x.pivot,0)}円（乖離 ${fmt(x.pivot_gap,1)}%）<br>損切り目安 ${fmt(x.stop,0)}円（幅 ${fmt(x.stop_pct,1)}%）　260日 ${fmt(x.r260,0)}%　出来高乾き度 ${fmt(x.vol_dry)}<br>TrendTemplate ${esc(x.tt)}　警告 ${esc(x.warn)}</div></td>`;
+    tr.after(d);
+  });
+  $('#cs').querySelectorAll('thead th').forEach(th=>th.addEventListener('click',()=>{
+    const k=th.dataset.k;
+    if(csKey===k) csDesc=!csDesc; else{csKey=k;csDesc=k!=='name'&&k!=='stop_pct'&&k!=='lot_man';}
+    $('#cs').querySelectorAll('thead th').forEach(t=>t.removeAttribute('aria-sort'));
+    th.setAttribute('aria-sort',csDesc?'descending':'ascending');
+    renderCs();
+  }));
+  $('#csBar').addEventListener('click',e=>{const b=e.target.closest('[data-b]');if(!b)return;csB=csB===b.dataset.b?null:b.dataset.b;renderCs();});
+  renderCs();
 
   /* holdings */
   const hs=$('#hold');
