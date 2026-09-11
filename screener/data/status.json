@@ -1,0 +1,24 @@
+{
+ "updated": "2026-09-11 16:15",
+ "cycle": {
+  "month": "2026-08",
+  "M": "M2",
+  "label": "業績相場",
+  "ff": 3.63,
+  "unrate": 4.1,
+  "spread10_2": 0.41,
+  "vix": 15.2
+ },
+ "strategies": {
+  "kiyohara": {
+   "last3m": 0.1194,
+   "last3m_topix": 0.013,
+   "months": 212
+  },
+  "lowpbr": {
+   "last3m": 0.1105,
+   "last3m_topix": 0.013,
+   "months": 208
+  }
+ }
+}
