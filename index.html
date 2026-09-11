@@ -263,15 +263,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 <body>
 <div id="app">
 <header><h1>Invnote<small id="ver"></small></h1><span id="stat"></span><button id="syncBtn" aria-label="同期"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M4 12a8 8 0 0 1 13.7-5.6"/><path d="M17.7 3v3.4h-3.4"/><path d="M6.3 21v-3.4h3.4"/></svg><span>Sync</span></button><button id="impBtn" aria-label="Import"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span>Import</span></button><button id="gearBtn" aria-label="設定"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header>
-<nav id="tabs">
-  <button data-v="vNotes" class="on">ノート</button>
-  <button data-v="vStocks">銘柄</button>
-  <button data-v="vPf">ポートフォリオ</button>
-  <button data-v="vDiary">日記</button>
-  <button data-v="vCal">カレンダー</button>
-  <button data-v="vRules">ルール</button>
-  <button onclick="location.href='screener/'">スクリーナー</button>
-</nav>
+<nav id="tabs"></nav>
 
 <section id="cap">
   <div class="caprow" style="margin:0 0 8px">
@@ -373,6 +365,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
     <input id="gasUrl" placeholder="GASウェブアプリのURL（https://script.google.com/macros/s/…/exec）" style="flex:1;min-width:200px;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:6px 8px;font-size:13px">
     <button class="btn" id="syncNow">今すぐ同期</button><button class="btn" id="fillNames">銘柄名を一括補完</button></div>
     <p class="hint" id="syncStat" style="margin-top:8px">URLを入れると、保存のたびに自動で同期します（マージ式・新しい方が勝ち）。銘柄名はJ-Quantsの上場一覧から自動で引きます。</p></div>
+  <div class="set"><h3>タブの並び</h3><div class="led" id="tabLed"></div><p class="hint" style="margin-top:8px">↑↓で並び替え、×で隠す。隠したタブは下のボタンで戻せます。</p><div class="row" id="tabHidden" style="margin-top:8px"></div></div>
   <div class="set"><h3>クイックタグ</h3><div class="led" id="quickLed"></div><p class="hint" style="margin-top:8px">入力欄の下に並ぶボタン。名前は直接書き換え、↑↓で並び替え。</p></div>
   <div class="set"><h3>テーマ</h3><div class="led" id="themeLed"></div><p class="hint" style="margin-top:8px">銘柄に付ける関連テーマ（複数可）。同じテーマ・同じセクターの銘柄が「関連銘柄」として出ます。</p></div>
   <div class="set"><h3>ステータス</h3><div class="led" id="statusLed"></div><p class="hint" style="margin-top:8px">銘柄の状態。名前を変えると既存の銘柄にも反映されます。</p></div>
@@ -390,8 +383,11 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="2.9.3";
+const VER="2.9.4";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
+const TAB_DEFS=[{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"},{v:"scr",t:"スクリーナー",url:"screener/"}];
+const tabDef=v=>TAB_DEFS.find(x=>x.v===v);
+function tabOrder(){const saved=(S.tabOrder||[]).filter(tabDef);return saved.length?saved:TAB_DEFS.map(x=>x.v)}
 const TPL={
 "エントリーチェック":`【エントリーチェック】
 モード：順張り／回復初動／逆張り
@@ -431,7 +427,7 @@ const LINKS=c=>[
  ["Yahoo",`https://finance.yahoo.co.jp/quote/${c}.T`]
 ];
 
-let S={notes:[],stocks:{},theme:"dark",gas:"",lastSync:0,quick:null,status:null,themes:null,sectors:{},holdings:{},pfHistory:[],stockView:"card",diary:{},events:[],rules:{text:"",upd:0}};
+let S={notes:[],stocks:{},theme:"dark",gas:"",lastSync:0,quick:null,status:null,themes:null,tabOrder:null,sectors:{},holdings:{},pfHistory:[],stockView:"card",diary:{},events:[],rules:{text:"",upd:0}};
 const THEMES_DEFAULT=["AI関連","データセンター","半導体","防衛","円安メリット","円高メリット","金利上昇メリット","インバウンド","高配当","再エネ"];
 const themes=()=>(S.themes&&S.themes.length?S.themes:THEMES_DEFAULT);
 const RULES_DEFAULT=`【執行】
@@ -632,13 +628,29 @@ document.addEventListener("change",e=>{if(e.target.id==="dName"){stock(curCode).
 $("#backBtn").addEventListener("click",()=>{curCode=null;resetCap();show("vStocks")});
 
 /* ---------- nav ---------- */
+function renderTabs(){
+  $("#tabs").innerHTML=tabOrder().map(v=>{const t=tabDef(v);return `<button ${t.url?`data-url="${t.url}"`:`data-v="${v}"`}>${esc(t.t)}</button>`}).join("");
+  document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v===view||(view==="detail"&&b.dataset.v==="vStocks")));
+}
+function renderTabLed(){
+  const l=tabOrder();
+  $("#tabLed").innerHTML=l.map((v,i)=>`<div class="li"><span style="flex:1;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 8px;font-size:14px">${esc(tabDef(v).t)}</span><button data-tmv="-1" data-ti="${i}" aria-label="上へ">↑</button><button data-tmv="1" data-ti="${i}" aria-label="下へ">↓</button><button data-thide="${v}" aria-label="隠す">×</button></div>`).join("");
+  const hid=TAB_DEFS.map(x=>x.v).filter(v=>!l.includes(v));
+  $("#tabHidden").innerHTML=hid.length?`<span class="hint">隠したタブ：</span>`+hid.map(v=>`<button class="chip" data-tshow="${v}">${esc(tabDef(v).t)} を戻す</button>`).join(""):"";
+}
+function tabsSave(list){S.tabOrder=list;S.listsUpd=Date.now();editingSync=true;save();editingSync=false;renderTabs();renderTabLed()}
+$("#tabLed").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const l=tabOrder();
+  if(b.dataset.thide!==undefined){if(l.length<=1)return;const n=l.filter(v=>v!==b.dataset.thide);tabsSave(n);if(view===b.dataset.thide)show(n[0]);return}
+  if(b.dataset.tmv){const i=+b.dataset.ti,j=i+ +b.dataset.tmv;if(j<0||j>=l.length)return;const n=[...l];[n[i],n[j]]=[n[j],n[i]];tabsSave(n)}
+});
+$("#tabHidden").addEventListener("click",e=>{const b=e.target.closest("[data-tshow]");if(!b)return;tabsSave([...tabOrder(),b.dataset.tshow])});
 function show(v){
   view=v;["vNotes","vStocks","vPf","vSet","detail","vDiary","vCal","vRules","vImport"].forEach(x=>$("#"+x).classList.toggle("hide",x!==v));
   $("#cap").classList.toggle("hide",!["vNotes","detail"].includes(v));
   document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v===v||(v==="detail"&&b.dataset.v==="vStocks")));$("#gearBtn").classList.toggle("on",v==="vSet");$("#impBtn").classList.toggle("on",v==="vImport");
   render();
 }
-$("#tabs").addEventListener("click",e=>{const b=e.target.closest("[data-v]");if(!b)return;curCode=null;resetCap();show(b.dataset.v)});
+$("#tabs").addEventListener("click",e=>{const u=e.target.closest("[data-url]");if(u){location.href=u.dataset.url;return}const b=e.target.closest("[data-v]");if(!b)return;curCode=null;resetCap();show(b.dataset.v)});
 let beforeSet="vNotes";const side=(v)=>{if(view===v){show(beforeSet)}else{if(view!=="vSet"&&view!=="vImport")beforeSet=view==="detail"?"vStocks":view;curCode=null;resetCap();show(v)}};
 $("#gearBtn").addEventListener("click",()=>side("vSet"));$("#impBtn").addEventListener("click",()=>side("vImport"));
 function render(){
@@ -685,7 +697,7 @@ function mergeIn(d){
   Object.entries(d.holdings||{}).forEach(([k,v])=>{if(del.has("h:"+k))return;if(!S.holdings[k]||(v.upd||0)>(S.holdings[k].upd||0))S.holdings[k]=v});
   Object.keys(S.holdings).forEach(k=>{if(del.has("h:"+k))delete S.holdings[k]});
   const hids=new Set(S.pfHistory.map(x=>x.id));(d.pfHistory||[]).forEach(x=>{if(!hids.has(x.id))S.pfHistory.push(x)});S.pfHistory.sort((a,b)=>a.ts-b.ts);
-  if(d.lists&&(d.lists.upd||0)>(S.listsUpd||0)){S.quick=d.lists.quick;S.status=d.lists.status;S.themes=d.lists.themes||S.themes;S.listsUpd=d.lists.upd;STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT}
+  if(d.lists&&(d.lists.upd||0)>(S.listsUpd||0)){S.quick=d.lists.quick;S.status=d.lists.status;S.themes=d.lists.themes||S.themes;if(d.lists.tabOrder)S.tabOrder=d.lists.tabOrder;S.listsUpd=d.lists.upd;STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT}
   S.notes.sort((a,b)=>b.ts-a.ts);return add;
 }
 $("#impFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{
@@ -980,14 +992,14 @@ function renderRules(){const t=S.rules.text||RULES_DEFAULT;$("#rulesView").inner
 $("#rulesEdit").addEventListener("click",()=>{if(rulesEditing){const t=$("#rulesText").value;if(t!==(S.rules.text||RULES_DEFAULT)){S.rules={text:t,upd:Date.now()};save()}}rulesEditing=!rulesEditing;renderRules();if(rulesEditing)$("#rulesText").focus()});
 
 /* ---------- swipe ---------- */
-const ORDER=["vNotes","vStocks","vPf","vDiary","vCal","vRules"];
+const ORDER=()=>tabOrder().filter(v=>!tabDef(v).url);
 let sx=0,sy=0,sw=false;
 document.addEventListener("touchstart",e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;sw=!e.target.closest("input,select,.chips,nav#tabs,.tblwrap")&&!(e.target.closest("textarea")&&!e.target.closest("#diaryBox"))},{passive:true});
 document.addEventListener("touchend",e=>{if(!sw)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(Math.abs(dx)<70||Math.abs(dy)>50)return;
   if(view==="vDiary"&&e.target.closest("#diaryBox,.dnav,#diaryGrid")){clearTimeout(dT);diarySave();dCur=shiftDay(dCur,dx<0?1:-1);renderDiary();return}
   if(view==="vDiary"&&e.target.closest("#diaryTable")){dtM=shiftM(dtM,dx<0?1:-1);renderDiaryTable();return}
   if(view==="vCal"&&e.target.closest("#calGrid")){calM=shiftM(calM,dx<0?1:-1);renderCal();return}
-  const cur=view==="detail"?"vStocks":view;const i=ORDER.indexOf(cur)+(dx<0?1:-1);if(i<0||i>=ORDER.length)return;curCode=null;resetCap();show(ORDER[i]);document.querySelector(`#tabs [data-v=${ORDER[i]}]`).scrollIntoView({inline:"center",block:"nearest"});
+  const O=ORDER();const cur=view==="detail"?"vStocks":view;const i=O.indexOf(cur)+(dx<0?1:-1);if(i<0||i>=O.length)return;curCode=null;resetCap();show(O[i]);const tb=document.querySelector(`#tabs [data-v=${O[i]}]`);if(tb)tb.scrollIntoView({inline:"center",block:"nearest"});
 },{passive:true});
 
 /* ---------- name lookup (J-Quants via GAS) ---------- */
@@ -1011,7 +1023,7 @@ $("#fillNames").addEventListener("click",fillAllNames);
 
 /* ---------- GAS sync ---------- */
 let syncT=null,syncing=false;
-const payload=()=>JSON.stringify({notes:S.notes,stocks:S.stocks,deleted:S.deleted||[],diary:S.diary,events:S.events,rules:S.rules,sectors:S.sectors,holdings:S.holdings,pfHistory:S.pfHistory,lists:{quick:S.quick,status:S.status,themes:S.themes,upd:S.listsUpd||0}});
+const payload=()=>JSON.stringify({notes:S.notes,stocks:S.stocks,deleted:S.deleted||[],diary:S.diary,events:S.events,rules:S.rules,sectors:S.sectors,holdings:S.holdings,pfHistory:S.pfHistory,lists:{quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,upd:S.listsUpd||0}});
 function scheduleSync(){if(!S.gas||editingSync)return;clearTimeout(syncT);syncT=setTimeout(()=>syncNow(true),1500)}
 let editingSync=false;
 async function syncNow(quiet){
@@ -1040,10 +1052,10 @@ $("#expMd").addEventListener("click",()=>{
   const free=S.notes.filter(n=>!n.code);if(free.length){out+="## 銘柄なしのメモ\n\n";free.forEach(n=>out+=noteMd(n)+"\n")}
   dl(`invnote_${dstr(Date.now())}.md`,out,"text/markdown");
 });
-$("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()},quick:S.quick,status:S.status,themes:S.themes,listsUpd:Date.now(),sectors:{},holdings:{},pfHistory:[],stockView:S.stockView};save();render();toast("削除しました")}});
+$("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()},quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,listsUpd:Date.now(),sectors:{},holdings:{},pfHistory:[],stockView:S.stockView};save();render();toast("削除しました")}});
 
 /* ---------- init ---------- */
-$("#ver").textContent="v"+VER;load();STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT;applyTheme();renderQuick();autoGrow();render();$("#gasUrl").value=S.gas||"";ledRender($("#quickLed"),quick());ledRender($("#statusLed"),STATUS);ledRender($("#themeLed"),themes());if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
+$("#ver").textContent="v"+VER;load();STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT;applyTheme();renderQuick();autoGrow();render();$("#gasUrl").value=S.gas||"";ledRender($("#quickLed"),quick());ledRender($("#statusLed"),STATUS);ledRender($("#themeLed"),themes());renderTabs();renderTabLed();if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
 if(mem)toast("この環境では保存できません（GitHub Pagesで開くと保存されます）");
 })();
 </script>
