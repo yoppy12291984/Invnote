@@ -156,6 +156,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
+  const VER="1.3";   // 変更のたびに上げる（1.0 初版 / 1.1 CAN-SLIMタブ / 1.2 採点タブ名・色 / 1.3 スワイプ＋タブ並び替え）
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -221,7 +222,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   try{cs=await load('canslim');}catch(e){cs={date:null,count:0,buckets:{},items:[]};}
 
   /* header */
-  $('#ver').textContent=`基準日 ${cand.date}`;
+  $('#ver').textContent=`v${VER}　基準日 ${cand.date}`;
   $('#stat').textContent=`更新 ${index.updated}`;
   const c=index.cycle||{};
   $('#cycle').innerHTML=`<b>${esc(c.M)} ${esc(c.label)}</b>（${esc(c.month)}）　FF ${fmt(c.ff)}%　失業率 ${fmt(c.unrate,1)}%　10-2y ${fmt(c.spread10_2)}　VIX <b>${fmt(c.vix,1)}</b>`;
