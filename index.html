@@ -270,6 +270,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
   <button data-v="vDiary">日記</button>
   <button data-v="vCal">カレンダー</button>
   <button data-v="vRules">ルール</button>
+  <button onclick="location.href='screener/'">スクリーナー</button>
 </nav>
 
 <section id="cap">
@@ -389,7 +390,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="2.9.2";
+const VER="2.9.3";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TPL={
 "エントリーチェック":`【エントリーチェック】
