@@ -52,6 +52,21 @@ section[hidden]{display:none}
 .chip.on{background:var(--ink);color:var(--sur);border-color:var(--ink)}
 .cnt{font-size:12px;color:var(--mut);margin-left:auto}
 
+.sortbar{display:flex;gap:6px;align-items:center;margin:0 0 2px;overflow-x:auto;scrollbar-width:none}
+.sortbar::-webkit-scrollbar{display:none}
+.sortbar .lab{font-size:11.5px;color:var(--mut);flex:none}
+.lst{margin:0 -12px;padding:0}
+.it{padding:9px 12px;border-bottom:1px solid var(--line);cursor:pointer}
+.it .l1{display:flex;align-items:baseline;gap:7px}
+.it .l1 b{font-size:15px;font-weight:600;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.it .l1 .cd{font-size:12px;color:var(--mut);font-variant-numeric:tabular-nums;flex:none}
+.it .l1 .px{margin-left:auto;font-size:13px;color:var(--mut);font-variant-numeric:tabular-nums;flex:none}
+.it .l2{display:flex;flex-wrap:wrap;gap:3px 14px;margin-top:3px;font-size:13px;font-variant-numeric:tabular-nums}
+.it .l2 span{color:var(--ink)}
+.it .l2 i{font-style:normal;color:var(--mut);font-size:11.5px;margin-right:4px}
+.it .l2 .key{font-weight:600}
+.it.sel{background:var(--sur)}
+.det{padding:2px 12px 12px;border-bottom:1px solid var(--line);background:var(--sur)}
 .tblwrap{overflow-x:auto;margin:0 -12px;padding:0 12px;scrollbar-width:none}
 .tblwrap::-webkit-scrollbar{display:none}
 table.rows{min-width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}
@@ -97,21 +112,26 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 .sum span{font-size:12px;color:var(--mut);display:block}
 .sum .up{color:var(--up)}.sum .dn{color:var(--dn)}
 .hint{font-size:12px;color:var(--mut);padding:0 4px}
+#edit{color:var(--mut);padding:6px;border-radius:8px;display:flex;align-items:center}
+#edit:hover,#edit.on{color:var(--ink);background:var(--soft)}
+#tabEdit{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin:0 0 12px}
+.led{display:flex;flex-direction:column;gap:4px}
+.led .li{display:flex;gap:4px;align-items:center}
+.led .li span{flex:1;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 8px;font-size:14px}
+.led .li button{color:var(--mut);padding:4px 9px;border-radius:6px}
+.led .li button:hover{background:var(--soft);color:var(--ink)}
+.ehint{font-size:12px;color:var(--mut);margin:8px 0 0}
+#tabHidden{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .empty{padding:28px 4px;color:var(--mut);text-align:center;font-size:14px}
 .err{color:var(--up)}
 </style>
 </head>
 <body>
 <div id="app">
-<header><h1>Screener<small id="ver"></small></h1><span id="stat">読み込み中</span><a id="back" href="../">Invnote</a></header>
+<header><h1>Screener<small id="ver"></small></h1><span id="stat">読み込み中</span><button id="edit" aria-label="タブの並び"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10"/><path d="M4 12h7"/><path d="M4 18h10"/><path d="M18 4v16"/><path d="M15 17l3 3 3-3"/></svg></button><a id="back" href="../">Invnote</a></header>
+<div id="tabEdit" hidden><div class="led" id="tabLed"></div><p class="ehint">↑↓で並び替え、×で隠す。この端末に保存されます。</p><div id="tabHidden"></div></div>
 <p class="cycle" id="cycle"></p>
-<nav id="tabs">
-  <button class="on" data-tab="cand">候補</button>
-  <button data-tab="hold">採点</button>
-  <button data-tab="cs">CAN-SLIM</button>
-  <button data-tab="theme">テーマ</button>
-  <button data-tab="status">検証</button>
-</nav>
+<nav id="tabs"></nav>
 
 <section id="cand">
   <div class="bar">
@@ -119,30 +139,13 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     <button class="chip" data-f="thin">売買代金 1〜5億</button>
     <span class="cnt" id="candCount"></span>
   </div>
-  <div class="tblwrap"><table class="rows">
-    <thead><tr>
-      <th data-k="name">銘柄</th>
-      <th data-k="nc" aria-sort="descending">NC比率</th>
-      <th data-k="pbr">PBR</th>
-      <th data-k="mcap_oku">時価総額</th>
-      <th data-k="turnover_oku">売買代金</th>
-    </tr></thead>
-    <tbody id="candBody"></tbody>
-  </table></div>
+  <div class="sortbar" id="candSort"><span class="lab">並べ替え</span></div>
+  <div class="lst" id="candBody"></div>
 </section>
 <section id="cs" hidden>
   <div class="bar" id="csBar"></div>
-  <div class="tblwrap"><table class="rows">
-    <thead><tr>
-      <th data-k="name">銘柄</th>
-      <th data-k="score" aria-sort="descending">スコア</th>
-      <th data-k="pivot_gap">ピボット</th>
-      <th data-k="stop_pct">損切り幅</th>
-      <th data-k="mcap_oku">時価総額</th>
-      <th data-k="lot_man">100株</th>
-    </tr></thead>
-    <tbody id="csBody"></tbody>
-  </table></div>
+  <div class="sortbar" id="csSort"><span class="lab">並べ替え</span></div>
+  <div class="lst" id="csBody"></div>
 </section>
 <section id="hold" hidden></section>
 <section id="theme" hidden></section>
@@ -169,11 +172,46 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     return JSON.parse((await r.text()).replace(/^\uFEFF/,''));
   }
 
-  $$('nav#tabs button').forEach(b=>b.addEventListener('click',()=>{
-    $$('nav#tabs button').forEach(x=>x.classList.toggle('on',x===b));
-    $$('section').forEach(s=>s.hidden=s.id!==b.dataset.tab);
-    window.scrollTo(0,0);
-  }));
+  /* タブ：並び替え・スワイプ */
+  const TABS=[{v:'cand',t:'候補'},{v:'hold',t:'採点'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'status',t:'検証'}];
+  const tdef=v=>TABS.find(x=>x.v===v);
+  const TKEY='screener_tabs';
+  let order;
+  try{order=(JSON.parse(localStorage.getItem(TKEY))||[]).filter(tdef);}catch(e){order=[];}
+  if(!order.length) order=TABS.map(x=>x.v);
+  let view=order[0];
+  const saveOrder=()=>{try{localStorage.setItem(TKEY,JSON.stringify(order));}catch(e){}};
+  function renderTabs(){
+    $('#tabs').innerHTML=order.map(v=>`<button data-tab="${v}"${v===view?' class="on"':''}>${esc(tdef(v).t)}</button>`).join('');
+    $$('main section').forEach(s=>s.hidden=s.id!==view);
+  }
+  function show(v){if(!order.includes(v))return;view=v;renderTabs();window.scrollTo(0,0);}
+  $('#tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b)show(b.dataset.tab);});
+  function renderLed(){
+    $('#tabLed').innerHTML=order.map((v,i)=>`<div class="li"><span>${esc(tdef(v).t)}</span><button data-mv="-1" data-i="${i}" aria-label="上へ">↑</button><button data-mv="1" data-i="${i}" aria-label="下へ">↓</button><button data-hide="${v}" aria-label="隠す">×</button></div>`).join('');
+    const hid=TABS.map(x=>x.v).filter(v=>!order.includes(v));
+    $('#tabHidden').innerHTML=hid.map(v=>`<button class="chip" data-show="${v}">${esc(tdef(v).t)} を戻す</button>`).join('');
+  }
+  $('#edit').addEventListener('click',()=>{const p=$('#tabEdit');p.hidden=!p.hidden;$('#edit').classList.toggle('on',!p.hidden);if(!p.hidden)renderLed();});
+  $('#tabEdit').addEventListener('click',e=>{
+    const b=e.target.closest('button');if(!b)return;
+    if(b.dataset.show){order=[...order,b.dataset.show];}
+    else if(b.dataset.hide){if(order.length<=1)return;order=order.filter(v=>v!==b.dataset.hide);if(view===b.dataset.hide)view=order[0];}
+    else if(b.dataset.mv){const i=+b.dataset.i,j=i+ +b.dataset.mv;if(j<0||j>=order.length)return;[order[i],order[j]]=[order[j],order[i]];}
+    else return;
+    saveOrder();renderTabs();renderLed();
+  });
+  let sx=0,sy=0,sw=false;
+  document.addEventListener('touchstart',e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;
+    sw=!e.target.closest('.tblwrap,.bar,#tabEdit,a,button,details');},{passive:true});
+  document.addEventListener('touchend',e=>{
+    if(!sw)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Math.abs(dx)<70||Math.abs(dy)>50)return;
+    const i=order.indexOf(view)+(dx<0?1:-1);if(i<0||i>=order.length)return;
+    show(order[i]);
+    const b=document.querySelector(`#tabs [data-tab="${order[i]}"]`);if(b)b.scrollIntoView({inline:'center',block:'nearest'});
+  },{passive:true});
+  renderTabs();
 
   let index,status,cand,hold,themes,cs;
   try{[index,status,cand,hold,themes]=await Promise.all(['index','status','candidates','holdings','themes'].map(load));}
@@ -190,74 +228,73 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   const filt={small:false,thin:false};
   let sortKey='nc',sortDesc=true;
   const rows=$('#candBody');
+  const CAND_SORT=[['nc','NC比率'],['pbr','PBR'],['mcap_oku','時価総額'],['turnover_oku','売買代金'],['name','銘柄名']];
   function render(){
+    $('#candSort').innerHTML='<span class="lab">並べ替え</span>'+CAND_SORT.map(([k,t])=>
+      `<button class="chip${sortKey===k?' on':''}" data-s="${k}">${t}${sortKey===k?(sortDesc?' ↓':' ↑'):''}</button>`).join('');
     let items=cand.items.filter(x=>(!filt.small||x.mcap_oku<=500)&&(!filt.thin||(x.turnover_oku>=1&&x.turnover_oku<=5)));
     items.sort((a,b)=>{const va=a[sortKey],vb=b[sortKey];const r=typeof va==='string'?va.localeCompare(vb,'ja'):(va-vb);return sortDesc?-r:r;});
     $('#candCount').textContent=`${items.length} / ${cand.count}`;
-    if(!items.length){rows.innerHTML='<tr><td colspan="5" class="empty">条件に合う銘柄がありません</td></tr>';return;}
-    rows.innerHTML=items.map(x=>`<tr class="r" data-code="${esc(x.code)}">
-      <td class="nm"><b>${esc(x.name)}</b><small>${esc(x.code)}　${fmt(x.price,0)}円</small></td>
-      <td class="nc">${fmt(x.nc)}</td>
-      <td class="mu">${fmt(x.pbr)}</td>
-      <td class="mu">${fmt(x.mcap_oku,0)}億</td>
-      <td class="mu">${fmt(x.turnover_oku,1)}億</td></tr>`).join('');
+    if(!items.length){rows.innerHTML='<p class="empty">条件に合う銘柄がありません</p>';return;}
+    rows.innerHTML=items.map(x=>`<div class="it" data-code="${esc(x.code)}">
+      <div class="l1"><b>${esc(x.name)}</b><span class="cd">${esc(x.code)}</span><span class="px">${fmt(x.price,0)}円</span></div>
+      <div class="l2"><span class="key"><i>NC</i>${fmt(x.nc)}</span><span><i>PBR</i>${fmt(x.pbr)}</span><span><i>時価</i>${fmt(x.mcap_oku,0)}億</span><span><i>代金</i>${fmt(x.turnover_oku,1)}億</span></div></div>`).join('');
   }
   rows.addEventListener('click',e=>{
-    const tr=e.target.closest('tr.r'); if(!tr) return;
-    const open=tr.nextElementSibling?.classList.contains('detail');
-    $$('tr.detail').forEach(d=>d.remove());
+    const it=e.target.closest('.it'); if(!it) return;
+    const open=it.nextElementSibling?.classList.contains('det');
+    rows.querySelectorAll('.det').forEach(d=>d.remove());
+    rows.querySelectorAll('.it').forEach(d=>d.classList.remove('sel'));
     if(open) return;
-    const x=cand.items.find(i=>i.code===tr.dataset.code);
-    const d=document.createElement('tr'); d.className='detail';
-    d.innerHTML=`<td colspan="5">${linkRow(x.code)}<div class="meta">ネットキャッシュ比率 ${fmt(x.nc)}　PBR ${fmt(x.pbr)}　直近BS ${esc(x.bs_date)}</div></td>`;
-    tr.after(d);
+    const x=cand.items.find(i=>i.code===it.dataset.code);
+    const d=document.createElement('div'); d.className='det';
+    d.innerHTML=`${linkRow(x.code)}<div class="meta">ネットキャッシュ比率 ${fmt(x.nc)}　PBR ${fmt(x.pbr)}　直近BS ${esc(x.bs_date)}</div>`;
+    it.classList.add('sel'); it.after(d);
   });
-  $$('table.rows th').forEach(th=>th.addEventListener('click',()=>{
-    const k=th.dataset.k;
+  $('#candSort').addEventListener('click',e=>{
+    const b=e.target.closest('[data-s]'); if(!b) return;
+    const k=b.dataset.s;
     if(sortKey===k) sortDesc=!sortDesc; else{sortKey=k;sortDesc=k!=='name'&&k!=='pbr';}
-    $$('table.rows th').forEach(t=>t.removeAttribute('aria-sort'));
-    th.setAttribute('aria-sort',sortDesc?'descending':'ascending');
     render();
-  }));
+  });
   $$('.chip').forEach(b=>b.addEventListener('click',()=>{filt[b.dataset.f]=!filt[b.dataset.f];b.classList.toggle('on',filt[b.dataset.f]);render();}));
   render();
 
   /* CAN-SLIM */
   let csB=null,csKey='score',csDesc=true;
   const csRows=$('#csBody');
+  const CS_SORT=[['score','スコア'],['pivot_gap','ピボット乖離'],['stop_pct','損切り幅'],['mcap_oku','時価総額'],['lot_man','100株金額']];
   function renderCs(){
     const bk=cs.buckets||{};
     $('#csBar').innerHTML=Object.keys(bk).map(k=>`<button class="chip${csB===k?' on':''}" data-b="${esc(k)}">${esc(k)} ${bk[k]}</button>`).join('')
       +`<span class="cnt" id="csCount"></span>`;
+    $('#csSort').innerHTML='<span class="lab">並べ替え</span>'+CS_SORT.map(([k,t])=>
+      `<button class="chip${csKey===k?' on':''}" data-s="${k}">${t}${csKey===k?(csDesc?' ↓':' ↑'):''}</button>`).join('');
     let items=(cs.items||[]).filter(x=>!csB||x.bucket===csB);
     items.sort((a,b)=>{const va=a[csKey],vb=b[csKey];const r=typeof va==='string'?va.localeCompare(vb,'ja'):((va??-1e9)-(vb??-1e9));return csDesc?-r:r;});
     $('#csCount').textContent=`${items.length} / ${cs.count||0}${cs.date?`　${cs.date}`:''}`;
-    if(!items.length){csRows.innerHTML=`<tr><td colspan="6" class="empty">${cs.count?'条件に合う銘柄がありません':'通過銘柄はありません'}</td></tr>`;return;}
-    csRows.innerHTML=items.map(x=>`<tr class="r" data-code="${esc(x.code)}">
-      <td class="nm"><b>${esc(x.name)}</b><small>${esc(x.code)}　${esc(x.bucket)}${x.sector?'　'+esc(x.sector):''}</small></td>
-      <td class="nc">${fmt(x.score,0)}</td>
-      <td class="mu">${x.pivot_gap==null?'—':fmt(x.pivot_gap,1)+'%'}</td>
-      <td class="mu">${x.stop_pct==null?'—':fmt(x.stop_pct,1)+'%'}</td>
-      <td class="mu">${fmt(x.mcap_oku,0)}億</td>
-      <td class="mu">${fmt(x.lot_man,1)}万</td></tr>`).join('');
+    if(!items.length){csRows.innerHTML=`<p class="empty">${cs.count?'条件に合う銘柄がありません':'通過銘柄はありません'}</p>`;return;}
+    csRows.innerHTML=items.map(x=>`<div class="it" data-code="${esc(x.code)}">
+      <div class="l1"><b>${esc(x.name)}</b><span class="cd">${esc(x.code)}</span><span class="px">${esc(x.bucket)}</span></div>
+      <div class="l2"><span class="key"><i>点</i>${fmt(x.score,0)}</span><span><i>乖離</i>${x.pivot_gap==null?'—':fmt(x.pivot_gap,1)+'%'}</span><span><i>損切</i>${x.stop_pct==null?'—':fmt(x.stop_pct,1)+'%'}</span><span><i>時価</i>${fmt(x.mcap_oku,0)}億</span><span><i>100株</i>${fmt(x.lot_man,1)}万</span></div></div>`).join('');
   }
   csRows.addEventListener('click',e=>{
-    const tr=e.target.closest('tr.r'); if(!tr) return;
-    const open=tr.nextElementSibling?.classList.contains('detail');
-    csRows.querySelectorAll('tr.detail').forEach(d=>d.remove());
+    const it=e.target.closest('.it'); if(!it) return;
+    const open=it.nextElementSibling?.classList.contains('det');
+    csRows.querySelectorAll('.det').forEach(d=>d.remove());
+    csRows.querySelectorAll('.it').forEach(d=>d.classList.remove('sel'));
     if(open) return;
-    const x=(cs.items||[]).find(i=>i.code===tr.dataset.code&&(!csB||i.bucket===csB));
-    const d=document.createElement('tr'); d.className='detail';
-    d.innerHTML=`<td colspan="6">${linkRow(x.code)}<div class="meta">終値 ${fmt(x.price,0)}円　ピボット ${fmt(x.pivot,0)}円（乖離 ${fmt(x.pivot_gap,1)}%）<br>損切り目安 ${fmt(x.stop,0)}円（幅 ${fmt(x.stop_pct,1)}%）　260日 ${fmt(x.r260,0)}%　出来高乾き度 ${fmt(x.vol_dry)}<br>TrendTemplate ${esc(x.tt)}　警告 ${esc(x.warn)}</div></td>`;
-    tr.after(d);
+    const x=(cs.items||[]).find(i=>i.code===it.dataset.code&&(!csB||i.bucket===csB));
+    const d=document.createElement('div'); d.className='det';
+    d.innerHTML=`${linkRow(x.code)}<div class="meta">${x.sector?esc(x.sector)+'　':''}終値 ${fmt(x.price,0)}円　ピボット ${fmt(x.pivot,0)}円（乖離 ${fmt(x.pivot_gap,1)}%）<br>損切り目安 ${fmt(x.stop,0)}円（幅 ${fmt(x.stop_pct,1)}%）　260日 ${fmt(x.r260,0)}%　出来高乾き度 ${fmt(x.vol_dry)}<br>TrendTemplate ${esc(x.tt)}　警告 ${esc(x.warn)}</div>`;
+    it.classList.add('sel'); it.after(d);
   });
-  $('#cs').querySelectorAll('thead th').forEach(th=>th.addEventListener('click',()=>{
-    const k=th.dataset.k;
+  $('#csSort').addEventListener('click',e=>{
+    const b=e.target.closest('[data-s]'); if(!b) return;
+    const k=b.dataset.s;
     if(csKey===k) csDesc=!csDesc; else{csKey=k;csDesc=k!=='name'&&k!=='stop_pct'&&k!=='lot_man';}
-    $('#cs').querySelectorAll('thead th').forEach(t=>t.removeAttribute('aria-sort'));
-    th.setAttribute('aria-sort',csDesc?'descending':'ascending');
     renderCs();
-  }));
+  });
   $('#csBar').addEventListener('click',e=>{const b=e.target.closest('[data-b]');if(!b)return;csB=csB===b.dataset.b?null:b.dataset.b;renderCs();});
   renderCs();
 
