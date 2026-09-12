@@ -30,18 +30,29 @@ a{color:var(--blu);text-decoration:none}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 .num{font-variant-numeric:tabular-nums}
 
-#app{max-width:760px;margin:0 auto;padding:calc(8px + env(safe-area-inset-top)) 12px calc(40px + env(safe-area-inset-bottom));overflow-x:hidden}
-header{display:flex;align-items:center;gap:10px;padding:4px 4px 10px}
+#app{max-width:760px;margin:0 auto;padding:0 12px calc(40px + env(safe-area-inset-bottom));overflow-x:hidden}
+header{display:flex;align-items:center;gap:8px;padding:calc(6px + env(safe-area-inset-top)) 12px 8px;
+  position:sticky;top:0;z-index:20;background:var(--bg);margin:0 -12px}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--line)}
 header h1{font:600 15px/1 var(--sans);letter-spacing:-.01em}
 header h1 small{font-size:11px;font-weight:500;color:var(--mut);margin-left:6px;font-variant-numeric:tabular-nums}
 #stat{font-size:11px;color:var(--mut);flex:1;font-variant-numeric:tabular-nums}
-#back{color:var(--mut);padding:5px 10px;font-size:13px;font-weight:600;border-radius:8px}
-#back:hover{color:var(--ink);background:var(--soft)}
+.wm{display:flex;align-items:baseline;gap:0;white-space:nowrap;flex:none;margin-left:-8px}
+.wm a,.wm b{font:600 15px/1 var(--sans);letter-spacing:-.01em;padding:8px;border-radius:8px;text-decoration:none}
+.wm b{color:var(--ink)}
+.wm a{color:var(--mut)}
+.wm a:active,.wm a:hover{color:var(--ink);background:var(--soft);text-decoration:none}
+.wm span{color:var(--line);font-size:15px;font-weight:300}
+#reload{color:var(--mut);padding:6px;border-radius:8px;display:flex;align-items:center}
+#reload:hover{color:var(--ink);background:var(--soft)}
+#reload.busy svg{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-.cycle{font-size:12.5px;color:var(--mut);padding:0 4px 10px;font-variant-numeric:tabular-nums}
+.cycle{font-size:12.5px;color:var(--mut);padding:10px 4px;font-variant-numeric:tabular-nums}
 .cycle b{color:var(--ink);font-weight:600}
 
-nav#tabs{display:flex;gap:2px;overflow-x:auto;margin:0 -12px 12px;padding:0 12px;border-bottom:1px solid var(--line);scrollbar-width:none}
+nav#tabs{display:flex;gap:2px;overflow-x:auto;margin:0 -12px 12px;padding:0 12px;border-bottom:1px solid var(--line);scrollbar-width:none;
+  position:sticky;top:44px;z-index:19;background:var(--bg)}
 nav#tabs::-webkit-scrollbar{display:none}
 nav#tabs button{padding:8px 12px 9px;color:var(--mut);font-size:14px;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px}
 nav#tabs button.on{color:var(--ink);font-weight:600;border-bottom-color:var(--ink)}
@@ -113,7 +124,12 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 </head>
 <body>
 <div id="app">
-<header><h1>Screener<small id="ver"></small></h1><span id="stat">読み込み中</span><button id="edit" aria-label="タブの並び"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10"/><path d="M4 12h7"/><path d="M4 18h10"/><path d="M18 4v16"/><path d="M15 17l3 3 3-3"/></svg></button><a id="back" href="../">Invnote</a></header>
+<header>
+  <h1 class="wm"><a href="../">Invnote</a><span>/</span><b>Screener</b><small id="ver"></small></h1>
+  <span id="stat">読み込み中</span>
+  <button id="reload" aria-label="再読込"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M4 12a8 8 0 0 1 13.7-5.6"/><path d="M17.7 3v3.4h-3.4"/><path d="M6.3 21v-3.4h3.4"/></svg></button>
+  <button id="edit" aria-label="タブの並び"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10"/><path d="M4 12h7"/><path d="M4 18h10"/><path d="M18 4v16"/><path d="M15 17l3 3 3-3"/></svg></button>
+</header>
 <div id="tabEdit" hidden><div class="led" id="tabLed"></div><p class="ehint">↑↓で並び替え、×で隠す。この端末に保存されます。</p><div id="tabHidden"></div></div>
 <p class="cycle" id="cycle"></p>
 <nav id="tabs"></nav>
@@ -156,12 +172,13 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="1.3";   // 変更のたびに上げる（1.0 初版 / 1.1 CAN-SLIMタブ / 1.2 採点タブ名・色 / 1.3 スワイプ＋タブ並び替え）
+  const VER="1.7";   // 1.0 初版 / 1.1 CAN-SLIMタブ / 1.2 採点タブ名・色 / 1.3 スワイプ＋タブ並び替え / 1.4 ヘッダ固定・戻る左上・再読込
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
 
   const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+  $('#ver').textContent=`v${VER}`;
   const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const fmt=(v,d=2)=>v==null||v===''?'—':Number(v).toLocaleString('ja-JP',{minimumFractionDigits:d,maximumFractionDigits:d});
   const pct=v=>v==null?'—':(v>=0?'+':'')+(v*100).toFixed(1)+'%';
@@ -190,6 +207,8 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   }
   function show(v){if(!order.includes(v))return;view=v;renderTabs();window.scrollTo(0,0);}
   $('#tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b)show(b.dataset.tab);});
+  $('#reload').addEventListener('click',()=>{$('#reload').classList.add('busy');
+    location.replace(location.pathname+'?r='+Date.now());});
   function renderLed(){
     $('#tabLed').innerHTML=order.map((v,i)=>`<div class="li"><span>${esc(tdef(v).t)}</span><button data-mv="-1" data-i="${i}" aria-label="上へ">↑</button><button data-mv="1" data-i="${i}" aria-label="下へ">↓</button><button data-hide="${v}" aria-label="隠す">×</button></div>`).join('');
     const hid=TABS.map(x=>x.v).filter(v=>!order.includes(v));
@@ -222,7 +241,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   try{cs=await load('canslim');}catch(e){cs={date:null,count:0,buckets:{},items:[]};}
 
   /* header */
-  $('#ver').textContent=`v${VER}　基準日 ${cand.date}`;
+  $('#ver').textContent=`v${VER}　${cand.date}`;
   $('#stat').textContent=`更新 ${index.updated}`;
   const c=index.cycle||{};
   $('#cycle').innerHTML=`<b>${esc(c.M)} ${esc(c.label)}</b>（${esc(c.month)}）　FF ${fmt(c.ff)}%　失業率 ${fmt(c.unrate,1)}%　10-2y ${fmt(c.spread10_2)}　VIX <b>${fmt(c.vix,1)}</b>`;
