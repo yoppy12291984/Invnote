@@ -221,6 +221,11 @@ table.rows td.th{padding-right:0}table.rows td.th .th{margin-right:4px}
 
 /* stocks */
 .stk{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin-bottom:8px;border-left:4px solid var(--line)}
+.why{background:var(--bg);border-radius:6px;padding:7px 10px;margin:7px 0 4px;font-size:13px}
+.why b{font-size:12.5px;display:block;margin-bottom:2px}
+.why .r{font-size:14px;font-weight:600}
+.why summary{font-size:12px;color:var(--mut);cursor:pointer;margin-top:5px}
+.why p{font-size:12.5px;color:var(--mut);line-height:1.6;margin-top:4px}
 .stk[data-s=保有]{border-left-color:var(--up)}
 .stk[data-s=候補]{border-left-color:var(--amb)}
 .stk[data-s=監視]{border-left-color:var(--blu)}
@@ -311,6 +316,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
   <div class="top"><button class="back" id="backBtn">‹ 銘柄一覧</button><span style="flex:1"></span><select id="dStatus"></select></div>
 <h2 id="dTitle"></h2>
   <div class="drow"><input id="dSector" list="secList" placeholder="セクター／グループ"><datalist id="secList"></datalist><span class="rank" id="dRank"></span><button class="chip" id="dHot">直前</button></div>
+<div class="drow" id="dWhyRow"><span class="hint" style="margin-right:2px">買う理由</span><span id="dWhy"></span></div>
 <div class="thpick" id="dThemes"></div>
 <div class="links" id="dLinks"></div>
 <div class="sub" id="dRelH" style="margin-top:12px">関連銘柄</div><div class="rel" id="dRel"></div>
@@ -397,7 +403,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="3.2";
+const VER="3.3";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TAB_DEFS=[{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vHot",t:"直前"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"}];
 const tabDef=v=>TAB_DEFS.find(x=>x.v===v);
@@ -444,6 +450,24 @@ const LINKS=c=>[
 let S={notes:[],stocks:{},theme:"dark",gas:"",lastSync:0,quick:null,status:null,themes:null,tabOrder:null,sectors:{},holdings:{},pfHistory:[],stockView:"card",diary:{},events:[],rules:{text:"",upd:0}};
 const THEMES_DEFAULT=["AI関連","データセンター","半導体","防衛","円安メリット","円高メリット","金利上昇メリット","インバウンド","高配当","再エネ"];
 const themes=()=>(S.themes&&S.themes.length?S.themes:THEMES_DEFAULT);
+const WHY=[
+ {k:"value", t:"バリュー", color:"var(--dn)",
+  head:"清原式（小型×低PBR）",
+  rule:"チャートでは切らない。現物で持ち切る",
+  why:"20年検証: 何もせず保有 平均+20.0%／25MA割れで売ると+0.3%（-19.7pt）。低PBR小型は値動きが荒く、切ると上昇を取り逃す",
+  size:"下位5%が-33%。1銘柄は資産の5%以内に抑えれば最悪でも全体-1.7%。信用では持ち切れない"},
+ {k:"tech", t:"テクニカル", color:"var(--up)",
+  head:"大型の急落からの反転",
+  rule:"5MA割れで1/3、25MA割れでさらに1/3、買値戻りで同値撤退",
+  why:"20年検証: 条件だけで機械的に買うとリフト0.67（負ける）。だましが本物より多いので、崩れたら軽くする",
+  size:"太陽誘電は28回点灯し当たりは5回。入口ではなく、崩れたときに切れるかで決まる"},
+ {k:"theme", t:"テーマ", color:"var(--blu)",
+  head:"材料・テーマ主導",
+  rule:"テーマが否定されたら即撤退。チャートも併用",
+  why:"テーマ加速・塊の初動はいずれも検証で不成立。自分の判断が根拠なので、根拠が崩れたら持たない",
+  size:"小さく入り、確認できたら足す"},
+];
+const whyDef=k=>WHY.find(x=>x.k===k);
 const RULES_DEFAULT=`【執行】
 - 5MAを陽線が突き抜けたら執行。200MAの向きで順張り／逆張りを決める
 - 順張り：200・25・5MAが上向き、損切り幅 ≤ 2.0ATR
@@ -564,7 +588,11 @@ function renderHot(){
     return `<div class="stk" data-s="${r.st.status}" style="border-left-color:${STATUS_COLOR[r.st.status]||"var(--amb)"}">
     <div class="shead"><span class="code">${r.code}</span><span class="name" data-open="${r.code}">${esc(r.st.name)||"（名前未設定）"}</span>${r.st.sector?`<span class="sec">${esc(r.st.sector)}</span>`:""}${r.st.rank?stars(r.st.rank):""}<span class="cnt">${r.st.status}</span></div>
     ${h?`<div class="slast num">保有 ${fmt(h.shares)}株　取得 ${fmt(h.avg)}${h.price?`　現在 ${fmt(h.price)}`:""}</div>`:""}
-    ${r.st.memo?`<div class="body" style="font-size:14px;margin-top:6px">${esc(r.st.memo)}</div>`:`<div class="slast">固定メモに建値・損切りラインを書いておくとここに出ます</div>`}
+    ${r.st.why?(()=>{const w=whyDef(r.st.why);return `<div class="why" style="border-left:3px solid ${w.color}">
+      <b style="color:${w.color}">${esc(w.t)}　${esc(w.head)}</b>
+      <div class="r">${esc(w.rule)}</div>
+      <details><summary>検証の根拠</summary><p>${esc(w.why)}</p><p>${esc(w.size)}</p></details></div>`})():`<div class="slast">銘柄ページで「買う理由」を選ぶと、検証にもとづく持ち方がここに出ます</div>`}
+    ${r.st.memo?`<div class="body" style="font-size:14px;margin-top:6px">${esc(r.st.memo)}</div>`:""}
     ${r.ns[0]?`<div class="slast">${dstr(r.ns[0].ts)}　${esc(r.ns[0].text.split("\n")[0])}</div>`:""}
     <div class="links">${LINKS(r.code).map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join("")}<button class="chip" data-unhot="${r.code}" style="margin-left:auto">外す</button></div></div>`}).join("");
 }
@@ -595,7 +623,7 @@ function renderStocks(){
   if(!rows.length&&mode!=="sector"){$("#stockList").innerHTML=`<div class="empty">まだ銘柄がありません</div>`;return}
   const rowView=S.stockView==="row";$("#stView").textContent=rowView?"カード":"行";
   const secHead=g=>{const m=(S.sectors[g]||{}).memo||"";const n=rows.filter(x=>(x.st.sector||"未分類")===g).length;return `<div class="grp"><b>${esc(g)}</b>${n}銘柄<span class="m">${esc(m)}</span>${g==="未分類"?"":`<button data-secmemo="${esc(g)}">メモ</button>`}</div>`};
-  const tr=r=>`<tr data-open="${r.code}"><td class="st"><i style="background:${STATUS_COLOR[r.st.status]||"var(--line)"}"></i></td><td class="cd">${r.code}</td><td class="nm">${esc(r.st.name)||"（名前未設定）"}</td><td class="mu">${r.st.status}</td><td class="mu">${r.st.hot?"<span class=\"th\" style=\"color:var(--amb);background:color-mix(in srgb,var(--amb) 14%,transparent)\">直前</span>":""}${r.st.rank?stars(r.st.rank):""}</td><td class="mu">${r.st.sector&&mode!=="sector"?esc(r.st.sector):""}</td><td class="th">${(r.st.themes||[]).map(t=>`<span class="th">${esc(t)}</span>`).join("")}</td><td class="num">${r.ns.length}</td></tr>`;
+  const tr=r=>`<tr data-open="${r.code}"><td class="st"><i style="background:${STATUS_COLOR[r.st.status]||"var(--line)"}"></i></td><td class="cd">${r.code}</td><td class="nm">${esc(r.st.name)||"（名前未設定）"}</td><td class="mu">${r.st.status}</td><td class="mu">${r.st.hot?"<span class=\"th\" style=\"color:var(--amb);background:color-mix(in srgb,var(--amb) 14%,transparent)\">直前</span>":""}${r.st.why?`<span class="th" style="color:${whyDef(r.st.why).color}">${whyDef(r.st.why).t}</span>`:""}${r.st.rank?stars(r.st.rank):""}</td><td class="mu">${r.st.sector&&mode!=="sector"?esc(r.st.sector):""}</td><td class="th">${(r.st.themes||[]).map(t=>`<span class="th">${esc(t)}</span>`).join("")}</td><td class="num">${r.ns.length}</td></tr>`;
   let html="",lastG=null;
   if(mode==="sector"){Object.keys(S.sectors).forEach(g=>{if(!rows.some(r=>r.st.sector===g)&&(!q||g.toLowerCase().includes(q))&&!stSel)rows.push({code:null,st:{sector:g,status:""},ns:[],last:0,ghost:true})});rows.sort((a,b)=>(a.st.sector||"～").localeCompare(b.st.sector||"～","ja")*(stDesc?1:-1))}
   rows.forEach(r=>{
@@ -634,7 +662,7 @@ function openDetail(code){
   $("#dMemo").value=st.memo||"";
   if(!st.name)lookup(code).then(d=>{if(d&&curCode===code){applyLookup(code,d);const i=$("#dName");if(i&&!i.value){i.value=st.name}$("#dSector").value=st.sector||""}});
   $("#dSector").value=st.sector||"";$("#secList").innerHTML=[...new Set([...Object.keys(S.sectors),...Object.values(S.stocks).map(x=>x.sector).filter(Boolean)])].map(x=>`<option value="${esc(x)}">`).join("");
-  renderRank();renderThemes();renderRelated();renderHotBtn();
+  renderRank();renderThemes();renderRelated();renderHotBtn();renderWhy();
   renderDetailNotes();
   show("detail");resetCap();window.scrollTo(0,0);
 }
@@ -652,6 +680,13 @@ function renderRelated(){const st=stock(curCode);const mine=new Set(st.themes||[
   rel.sort((a,b)=>b.why.length-a.why.length);
   $("#dRelH").classList.toggle("hide",!rel.length);$("#dRel").innerHTML=rel.map(r=>`<span class="sk" data-open="${r.c}"><b>${r.c}</b>${esc(r.x.name)||"—"}<small>${esc(r.why.join("・"))}</small></span>`).join("");
 }
+function renderWhy(){
+  const st=stock(curCode);
+  $("#dWhy").innerHTML=WHY.map(w=>`<button class="chip${st.why===w.k?" on":""}" data-why="${w.k}">${w.t}</button>`).join("");
+}
+$("#dWhy").addEventListener("click",e=>{const b=e.target.closest("[data-why]");if(!b)return;
+  const st=stock(curCode);st.why=st.why===b.dataset.why?null:b.dataset.why;touch(curCode);save();renderWhy();
+  toast(st.why?`${whyDef(st.why).t}として記録`:"買う理由を外しました")});
 function renderRank(){const r=stock(curCode).rank||0;$("#dRank").innerHTML=[1,2,3,4,5].map(i=>`<button data-r="${i}" class="${i<=r?"":"off"}" aria-label="ランク${i}">★</button>`).join("")}
 $("#dRank").addEventListener("click",e=>{const b=e.target.closest("[data-r]");if(!b)return;const st=stock(curCode);const v=+b.dataset.r;st.rank=st.rank===v?0:v;touch(curCode);save();renderRank()});
 $("#dSector").addEventListener("change",e=>{stock(curCode).sector=e.target.value.trim();touch(curCode);save();toast("セクターを保存")});
