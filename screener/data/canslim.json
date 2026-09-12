@@ -21,7 +21,7 @@
    "vol_dry": 0.8,
    "r260": 32.81,
    "tt": 7,
-   "warn": NaN,
+   "warn": null,
    "score": 46.27,
    "lot_man": 37,
    "bucket": "柔軟"
@@ -40,7 +40,7 @@
    "vol_dry": 1.01,
    "r260": 59.1,
    "tt": 8,
-   "warn": NaN,
+   "warn": null,
    "score": 100.2,
    "lot_man": 42.4,
    "bucket": "S2初期"
@@ -59,7 +59,7 @@
    "vol_dry": 0.93,
    "r260": 60.0,
    "tt": 8,
-   "warn": NaN,
+   "warn": null,
    "score": 89.07,
    "lot_man": 50.0,
    "bucket": "S2初期"
@@ -78,7 +78,7 @@
    "vol_dry": 0.8,
    "r260": 52.83,
    "tt": 8,
-   "warn": NaN,
+   "warn": null,
    "score": 87.65,
    "lot_man": 21.3,
    "bucket": "S2初期"
@@ -97,7 +97,7 @@
    "vol_dry": 1.03,
    "r260": 45.37,
    "tt": 8,
-   "warn": NaN,
+   "warn": null,
    "score": 87.17,
    "lot_man": 30.3,
    "bucket": "S2初期"
@@ -116,7 +116,7 @@
    "vol_dry": 0.9,
    "r260": 42.03,
    "tt": 8,
-   "warn": NaN,
+   "warn": null,
    "score": 86.56,
    "lot_man": 30.8,
    "bucket": "S2初期"
@@ -135,7 +135,7 @@
    "vol_dry": 0.78,
    "r260": 35.92,
    "tt": 8,
-   "warn": NaN,
+   "warn": null,
    "score": 86.49,
    "lot_man": 12.9,
    "bucket": "S2初期"
@@ -154,7 +154,7 @@
    "vol_dry": 0.99,
    "r260": 52.07,
    "tt": 8,
-   "warn": NaN,
+   "warn": null,
    "score": 86.21,
    "lot_man": 9.9,
    "bucket": "S2初期"
@@ -173,7 +173,7 @@
    "vol_dry": 0.99,
    "r260": 35.71,
    "tt": 8,
-   "warn": NaN,
+   "warn": null,
    "score": 84.55,
    "lot_man": 19.2,
    "bucket": "S2初期"
@@ -192,7 +192,7 @@
    "vol_dry": 0.66,
    "r260": 29.95,
    "tt": 7,
-   "warn": NaN,
+   "warn": null,
    "score": 84.03,
    "lot_man": 29.6,
    "bucket": "S2初期"
@@ -211,7 +211,7 @@
    "vol_dry": 1.01,
    "r260": 18.62,
    "tt": 7,
-   "warn": NaN,
+   "warn": null,
    "score": 83.54,
    "lot_man": 13.2,
    "bucket": "S2初期"
@@ -230,7 +230,7 @@
    "vol_dry": 1.1,
    "r260": 31.08,
    "tt": 7,
-   "warn": NaN,
+   "warn": null,
    "score": 80.13,
    "lot_man": 44.5,
    "bucket": "S2初期"
@@ -249,7 +249,7 @@
    "vol_dry": 0.77,
    "r260": 27.11,
    "tt": 7,
-   "warn": NaN,
+   "warn": null,
    "score": 78.34,
    "lot_man": 33.1,
    "bucket": "S2初期"
@@ -268,7 +268,7 @@
    "vol_dry": 1.02,
    "r260": 39.7,
    "tt": 8,
-   "warn": NaN,
+   "warn": null,
    "score": 78.25,
    "lot_man": 25.2,
    "bucket": "S2初期"
@@ -287,7 +287,7 @@
    "vol_dry": 1.29,
    "r260": 34.53,
    "tt": 8,
-   "warn": NaN,
+   "warn": null,
    "score": 77.14,
    "lot_man": 37.2,
    "bucket": "S2初期"
@@ -306,7 +306,7 @@
    "vol_dry": 1.14,
    "r260": 17.67,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 76.6,
    "lot_man": 38.0,
    "bucket": "S2初期"
@@ -325,7 +325,7 @@
    "vol_dry": 1.02,
    "r260": 26.72,
    "tt": 7,
-   "warn": NaN,
+   "warn": null,
    "score": 74.55,
    "lot_man": 15.1,
    "bucket": "S2初期"
@@ -344,7 +344,7 @@
    "vol_dry": 0.9,
    "r260": 14.17,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 74.28,
    "lot_man": 29.8,
    "bucket": "S2初期"
@@ -363,7 +363,7 @@
    "vol_dry": 0.81,
    "r260": 25.66,
    "tt": 7,
-   "warn": NaN,
+   "warn": null,
    "score": 74.24,
    "lot_man": 14.7,
    "bucket": "S2初期"
@@ -382,7 +382,7 @@
    "vol_dry": 1.05,
    "r260": 30.5,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 71.79,
    "lot_man": 40.6,
    "bucket": "S2初期"
@@ -401,7 +401,7 @@
    "vol_dry": 0.99,
    "r260": 14.54,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 69.74,
    "lot_man": 22.5,
    "bucket": "S2初期"
@@ -420,7 +420,7 @@
    "vol_dry": 1.12,
    "r260": 3.32,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 69.21,
    "lot_man": 2.9,
    "bucket": "S2初期"
@@ -439,7 +439,7 @@
    "vol_dry": 1.36,
    "r260": 7.81,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 68.98,
    "lot_man": 14.5,
    "bucket": "S2初期"
@@ -458,7 +458,7 @@
    "vol_dry": 0.93,
    "r260": 18.83,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 68.29,
    "lot_man": 23.0,
    "bucket": "S2初期"
@@ -477,7 +477,7 @@
    "vol_dry": 0.95,
    "r260": 36.76,
    "tt": 8,
-   "warn": NaN,
+   "warn": null,
    "score": 67.81,
    "lot_man": 38.7,
    "bucket": "S2初期"
@@ -496,7 +496,7 @@
    "vol_dry": 0.92,
    "r260": 5.69,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 67.08,
    "lot_man": 18.4,
    "bucket": "S2初期"
@@ -515,7 +515,7 @@
    "vol_dry": 0.64,
    "r260": 60.89,
    "tt": 7,
-   "warn": NaN,
+   "warn": null,
    "score": 66.34,
    "lot_man": 65.0,
    "bucket": "S2初期"
@@ -534,7 +534,7 @@
    "vol_dry": 0.77,
    "r260": 5.26,
    "tt": 7,
-   "warn": NaN,
+   "warn": null,
    "score": 65.66,
    "lot_man": 30.4,
    "bucket": "S2初期"
@@ -553,7 +553,7 @@
    "vol_dry": 0.94,
    "r260": 14.2,
    "tt": 7,
-   "warn": NaN,
+   "warn": null,
    "score": 65.04,
    "lot_man": 30.1,
    "bucket": "S2初期"
@@ -572,7 +572,7 @@
    "vol_dry": 0.86,
    "r260": 3.57,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 64.89,
    "lot_man": 20.5,
    "bucket": "S2初期"
@@ -591,7 +591,7 @@
    "vol_dry": 0.74,
    "r260": -1.13,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 64.08,
    "lot_man": 35.1,
    "bucket": "S2初期"
@@ -610,7 +610,7 @@
    "vol_dry": 0.68,
    "r260": 30.44,
    "tt": 7,
-   "warn": NaN,
+   "warn": null,
    "score": 62.78,
    "lot_man": 28.7,
    "bucket": "S2初期"
@@ -629,7 +629,7 @@
    "vol_dry": 0.78,
    "r260": 38.83,
    "tt": 7,
-   "warn": NaN,
+   "warn": null,
    "score": 62.05,
    "lot_man": 66.1,
    "bucket": "S2初期"
@@ -648,7 +648,7 @@
    "vol_dry": 0.9,
    "r260": 15.25,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 60.79,
    "lot_man": 46.1,
    "bucket": "S2初期"
@@ -667,7 +667,7 @@
    "vol_dry": 1.0,
    "r260": 7.35,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 55.23,
    "lot_man": 13.1,
    "bucket": "S2初期"
@@ -686,7 +686,7 @@
    "vol_dry": 0.92,
    "r260": 10.73,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 52.13,
    "lot_man": 37.9,
    "bucket": "S2初期"
@@ -705,7 +705,7 @@
    "vol_dry": 0.84,
    "r260": 18.98,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 51.95,
    "lot_man": 38.6,
    "bucket": "S2初期"
@@ -724,7 +724,7 @@
    "vol_dry": 0.76,
    "r260": 9.07,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 50.85,
    "lot_man": 30.2,
    "bucket": "S2初期"
@@ -743,7 +743,7 @@
    "vol_dry": 0.83,
    "r260": 26.32,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 49.8,
    "lot_man": 27.9,
    "bucket": "S2初期"
@@ -762,7 +762,7 @@
    "vol_dry": 1.08,
    "r260": 8.22,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 49.17,
    "lot_man": 28.8,
    "bucket": "S2初期"
@@ -781,7 +781,7 @@
    "vol_dry": 0.83,
    "r260": -2.04,
    "tt": 6,
-   "warn": NaN,
+   "warn": null,
    "score": 48.19,
    "lot_man": 15.6,
    "bucket": "S2初期"
