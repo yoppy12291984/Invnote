@@ -125,6 +125,27 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 .led .li button:hover{background:var(--soft);color:var(--ink)}
 .ehint{font-size:12px;color:var(--mut);margin:8px 0 0}
 #tabHidden{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+/* レーダー */
+.rd h3{font-size:13px;color:var(--mut);margin:16px 4px 6px;font-weight:600}
+.rd .cl{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);
+  padding:9px 11px;margin-bottom:7px;border-left:3px solid var(--blu)}
+.rd .cl b{font-size:14px}
+.rd .cl .sec{font-size:12px;color:var(--mut);margin-left:6px}
+.rd .cl .ld{font-size:12.5px;color:var(--mut);margin-top:3px;line-height:1.5}
+.rd .w{display:inline-block;font-size:12.5px;padding:1px 8px;border-radius:5px;
+  background:var(--soft);color:var(--ink);margin:4px 4px 0 0}
+.rd .w.sig{color:var(--amb);background:color-mix(in srgb,var(--amb) 14%,transparent);font-weight:600}
+.rd .kw{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);
+  padding:9px 11px;margin-bottom:7px}
+.rd .kw b{font-size:14px;color:var(--amb)}
+.rd .kw li{font-size:12.5px;color:var(--mut);margin:5px 0;line-height:1.5;list-style:none}
+.rd .kw ul{padding:0;margin:6px 0 0}
+.rd .q{display:flex;align-items:baseline;gap:8px;padding:7px 4px;border-bottom:1px solid var(--line);
+  font-size:13px;cursor:pointer}
+.rd .q b{font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rd .q .cd{color:var(--mut);font-variant-numeric:tabular-nums;font-size:12px;flex:none}
+.rd .q .n{font-variant-numeric:tabular-nums;color:var(--up);font-weight:600;flex:none}
+.rd .q .t{font-variant-numeric:tabular-nums;color:var(--mut);font-size:12px;flex:none}
 /* 反転タブ: 5000億以上は銘柄名を青、200日線の上は緑 */
 #reb tr.big td.nm b{color:var(--blu)}
 #reb tr.big td.mcap{color:var(--blu);font-weight:600}
@@ -203,6 +224,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     <tbody id="rebBody"></tbody>
   </table></div>
 </section>
+<section id="radar" hidden></section>
 <section id="rec" hidden></section>
 <section id="hold" hidden></section>
 <section id="theme" hidden></section>
@@ -211,7 +233,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.2";   // 2.2 反転タブに半年高値比・5000億以上と200MA上の色分け   // 1.0 初版 / 1.1 CAN-SLIMタブ / 1.2 採点タブ名・色 / 1.3 スワイプ＋タブ並び替え / 1.4 ヘッダ固定・戻る左上・再読込
+  const VER="2.3";   // 2.3 レーダータブ（塊・新出キーワード・知らない会社）   // 1.0 初版 / 1.1 CAN-SLIMタブ / 1.2 採点タブ名・色 / 1.3 スワイプ＋タブ並び替え / 1.4 ヘッダ固定・戻る左上・再読込
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -232,7 +254,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   }
 
   /* タブ：並び替え・スワイプ */
-  const TABS=[{v:'cand',t:'候補'},{v:'reb',t:'反転'},{v:'hold',t:'採点'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'status',t:'検証'},{v:'rec',t:'記録'}];
+  const TABS=[{v:'cand',t:'候補'},{v:'reb',t:'反転'},{v:'hold',t:'採点'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'radar',t:'レーダー'},{v:'status',t:'検証'},{v:'rec',t:'記録'}];
   const tdef=v=>TABS.find(x=>x.v===v);
   const TKEY='screener_tabs';
   let order;
@@ -281,6 +303,8 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   let reb,rec;
   try{reb=await load('rebound');}catch(e){reb={date:null,count:0,items:[],note:''};}
   try{rec=await load('verdicts');}catch(e){rec=null;}
+  let rad;
+  try{rad=await load('radar');}catch(e){rad=null;}
 
   /* header */
   $('#ver').textContent=`v${VER}　${cand.date}`;
@@ -399,6 +423,42 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     renderReb();
   }));
   renderReb();
+
+  /* レーダー（塊と新しく出てきた言葉） */
+  if(rad){
+    $('#radar').className='rd';
+    const sig=w=>/受注|増産|新工場|設備投資|能力増強|量産|供給|契約|提携|参入|値上|価格改定|需給|逼迫|不足|特需|上方修正|最高益|宇宙|半導体|データセンター|電力|送電|変圧器|銅|アンモニア|水素|原子力|防衛|AI|利上|金利/.test(w);
+    const kwHtml=(rad.keywords||[]).filter(k=>(k.news||[]).length).map(k=>
+      `<div class="kw"><b>${esc(k.word)}</b><ul>${k.news.map(n=>`<li>${esc(n)}</li>`).join('')}</ul></div>`).join('');
+    $('#radar').innerHTML=
+      `<p class="warn-note">${esc(rad.note||'')}</p>`+
+      (rad.first_run?`<p class="meta" style="padding:0 4px 8px">初回のため「新しく出てきた語」はまだ出ません。来週から前週との差分が出ます。</p>`:'')+
+      (kwHtml?`<h3>新しく出てきた言葉で、世界のニュースを引き直した結果</h3>${kwHtml}`:'')+
+      `<h3>同時に動いている塊（${(rad.clusters||[]).length}個）</h3>`+
+      (rad.clusters||[]).map(c=>`<div class="cl">
+        <b>塊${c.no}</b><span class="sec">${c.n}銘柄　${(c.sectors||[]).join(' / ')}</span>
+        <div class="ld">中心: ${(c.leaders||[]).map(esc).join('、')}</div>
+        ${(c.new_words||[]).length?`<div>${c.new_words.map(w=>`<span class="w${sig(w)?' sig':''}">${esc(w)}</span>`).join('')}</div>`:''}
+      </div>`).join('')+
+      `<h3>動いているが名前を知られていない銘柄（${(rad.quiet||[]).length}件）</h3>`+
+      ((rad.quiet||[]).map(q=>`<div class="q" data-rcode="${esc(q.code)}">
+        <span class="cd">${esc(q.code)}</span><b>${esc(q.name)}</b>
+        <span class="n">${q.r20>=0?'+':''}${fmt(q.r20,1)}%</span>
+        <span class="t">${fmt(q.turnover_oku,0)}億</span></div>`).join('')
+        || '<p class="empty">該当なし</p>')+
+      `<p class="meta" style="padding:10px 4px">基準日 ${esc(rad.date||'')}</p>`;
+    $('#radar').addEventListener('click',e=>{
+      const q=e.target.closest('[data-rcode]'); if(!q) return;
+      const open=q.nextElementSibling?.classList.contains('det');
+      $('#radar').querySelectorAll('.det').forEach(d=>d.remove());
+      if(open) return;
+      const d=document.createElement('div'); d.className='det';
+      d.innerHTML=linkRow(q.dataset.rcode);
+      q.after(d);
+    });
+  }else{
+    $('#radar').innerHTML='<p class="empty">レーダーのデータがありません（news_radar.py --json を実行してください）</p>';
+  }
 
   /* 記録（検証で確定したこと） */
   if(rec){
