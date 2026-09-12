@@ -221,6 +221,18 @@ table.rows td.th{padding-right:0}table.rows td.th .th{margin-right:4px}
 
 /* stocks */
 .stk{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin-bottom:8px;border-left:4px solid var(--line)}
+.cat{margin:8px 0}
+.cat .crow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:5px}
+.cat input,.cat select{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 8px;font-size:13.5px}
+.cat #cTitle{flex:1;min-width:200px}
+.cat #cDate{font-variant-numeric:tabular-nums}
+.chint{font-size:12px;color:var(--mut);line-height:1.6;margin-top:2px}
+.chint b{color:var(--ink)}
+.chint .ng{color:var(--up)}
+.cbadge{font-size:11px;padding:1px 7px;border-radius:4px;margin-left:4px;font-weight:600}
+.cbadge.near{color:var(--up);background:color-mix(in srgb,var(--up) 14%,transparent)}
+.cbadge.far{color:var(--blu);background:color-mix(in srgb,var(--blu) 14%,transparent)}
+.cbadge.done{color:var(--dn);background:color-mix(in srgb,var(--dn) 14%,transparent)}
 .why{background:var(--bg);border-radius:6px;padding:7px 10px;margin:7px 0 4px;font-size:13px}
 .why b{font-size:12.5px;display:block;margin-bottom:2px}
 .why .r{font-size:14px;font-weight:600}
@@ -317,6 +329,16 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 <h2 id="dTitle"></h2>
   <div class="drow"><input id="dSector" list="secList" placeholder="セクター／グループ"><datalist id="secList"></datalist><span class="rank" id="dRank"></span><button class="chip" id="dHot">直前</button></div>
 <div class="drow" id="dWhyRow"><span class="hint" style="margin-right:2px">買う理由</span><span id="dWhy"></span></div>
+<div class="cat" id="dCat">
+  <div class="crow"><input id="cTitle" placeholder="カタリスト（決算・新工場稼働・承認など）"></div>
+  <div class="crow">
+    <input type="date" id="cDate">
+    <select id="cProb"><option value="">確度</option><option value="高">高</option><option value="中">中</option><option value="低">低</option></select>
+    <select id="cUp"><option value="">期待</option><option value="+20%">+20%</option><option value="+50%">+50%</option><option value="2倍">2倍</option><option value="3倍">3倍</option></select>
+    <select id="cRes"><option value="">結果</option><option value="実現">実現</option><option value="遅延">遅延</option><option value="不発">不発</option></select>
+  </div>
+  <p class="chint" id="cJudge"></p>
+</div>
 <div class="thpick" id="dThemes"></div>
 <div class="links" id="dLinks"></div>
 <div class="sub" id="dRelH" style="margin-top:12px">関連銘柄</div><div class="rel" id="dRel"></div>
@@ -403,7 +425,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="3.4";
+const VER="3.5";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TAB_DEFS=[{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vHot",t:"直前"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"}];
 const tabDef=v=>TAB_DEFS.find(x=>x.v===v);
@@ -582,11 +604,22 @@ const noteMd=n=>`- ${dstr(n.ts)} ${tstr(n.ts)}${n.code?` [${n.code} ${nm(n.code)
 function renderHot(){
   const rows=stockRows().filter(r=>r.st.hot);
   if(!rows.length){$("#hotList").innerHTML=`<div class="empty">まだありません。銘柄ページを開いて「直前」を押すとここに並びます</div>`;return}
-  rows.sort((a,b)=>((b.st.rank||0)-(a.st.rank||0))||(b.last-a.last));
+  // カタリストが近い順。未設定は後ろ
+  rows.sort((a,b)=>{
+    const da=dayLeft((a.st.cat||{}).date),db=dayLeft((b.st.cat||{}).date);
+    const va=(da===null||da<0)?9999:da,vb=(db===null||db<0)?9999:db;
+    return (va-vb)||((b.st.rank||0)-(a.st.rank||0))||(b.last-a.last);
+  });
   $("#hotList").innerHTML=rows.map(r=>{
     const h=S.holdings[r.code];
     return `<div class="stk" data-s="${r.st.status}" style="border-left-color:${STATUS_COLOR[r.st.status]||"var(--amb)"}">
-    <div class="shead"><span class="code">${r.code}</span><span class="name" data-open="${r.code}">${esc(r.st.name)||"（名前未設定）"}</span>${r.st.sector?`<span class="sec">${esc(r.st.sector)}</span>`:""}${r.st.rank?stars(r.st.rank):""}<span class="cnt">${r.st.status}</span></div>
+    <div class="shead"><span class="code">${r.code}</span><span class="name" data-open="${r.code}">${esc(r.st.name)||"（名前未設定）"}</span>${r.st.sector?`<span class="sec">${esc(r.st.sector)}</span>`:""}${r.st.rank?stars(r.st.rank):""}${(()=>{const c=r.st.cat||{};if(!c.title)return "";
+      if(c.res)return `<span class="cbadge done">${esc(c.res)}</span>`;
+      const dl=dayLeft(c.date);if(dl===null)return "";
+      return dl<0?`<span class="cbadge done">期日超過</span>`:`<span class="cbadge ${dl<=45?"near":"far"}">あと${dl}日</span>`})()}<span class="cnt">${r.st.status}</span></div>
+    ${(r.st.cat||{}).title?`<div class="why" style="border-left:3px solid ${(()=>{const dl=dayLeft(r.st.cat.date);return (dl!==null&&dl>=0&&dl<=45)?"var(--up)":"var(--blu)"})()}">
+      <b>カタリスト</b><div class="r">${esc(r.st.cat.title)}</div>
+      <div class="chint">${r.st.cat.date?esc(r.st.cat.date):"時期未定"}${r.st.cat.prob?`　確度${esc(r.st.cat.prob)}`:""}${r.st.cat.up?`　期待${esc(r.st.cat.up)}`:""}${r.st.cat.res?`　結果${esc(r.st.cat.res)}`:""}</div></div>`:""}
     ${h?`<div class="slast num">保有 ${fmt(h.shares)}株　取得 ${fmt(h.avg)}${h.price?`　現在 ${fmt(h.price)}`:""}</div>`:""}
     ${r.st.why?(()=>{const w=whyDef(r.st.why);return `<div class="why" style="border-left:3px solid ${w.color}">
       <b style="color:${w.color}">${esc(w.t)}　${esc(w.head)}</b>
@@ -662,7 +695,7 @@ function openDetail(code){
   $("#dMemo").value=st.memo||"";
   if(!st.name)lookup(code).then(d=>{if(d&&curCode===code){applyLookup(code,d);const i=$("#dName");if(i&&!i.value){i.value=st.name}$("#dSector").value=st.sector||""}});
   $("#dSector").value=st.sector||"";$("#secList").innerHTML=[...new Set([...Object.keys(S.sectors),...Object.values(S.stocks).map(x=>x.sector).filter(Boolean)])].map(x=>`<option value="${esc(x)}">`).join("");
-  renderRank();renderThemes();renderRelated();renderHotBtn();renderWhy();
+  renderRank();renderThemes();renderRelated();renderHotBtn();renderWhy();renderCat();
   renderDetailNotes();
   show("detail");resetCap();window.scrollTo(0,0);
 }
@@ -680,6 +713,32 @@ function renderRelated(){const st=stock(curCode);const mine=new Set(st.themes||[
   rel.sort((a,b)=>b.why.length-a.why.length);
   $("#dRelH").classList.toggle("hide",!rel.length);$("#dRel").innerHTML=rel.map(r=>`<span class="sk" data-open="${r.c}"><b>${r.c}</b>${esc(r.x.name)||"—"}<small>${esc(r.why.join("・"))}</small></span>`).join("");
 }
+const dayLeft=s=>{if(!s)return null;const d=new Date(s+"T12:00:00");return Math.round((d-new Date(dstr(Date.now())+"T12:00:00"))/864e5)};
+function catJudge(c){
+  if(!c||!c.title)return "";
+  if(c.res)return `結果: <b>${esc(c.res)}</b>　振り返りをメモに残しておくと、次の判断に効きます`;
+  const dl=dayLeft(c.date);
+  if(dl===null)return "時期を入れると、近いか遠いかで持ち方の目安が出ます";
+  if(dl<0)return `<span class="ng">期日を${-dl}日過ぎています</span>　結果を記録してください`;
+  if(dl<=45)return `あと<b>${dl}日</b>　近いカタリスト。短期で結果が出るので、小さめの値幅でも回転が効く`;
+  const ok=["2倍","3倍"].includes(c.up||"");
+  return `あと<b>${dl}日</b>　遠いカタリスト。資金を寝かせる分、大きな値幅が要る`
+    + (c.up?(ok?`（期待${esc(c.up)}＝見合う）`:`<span class="ng">（期待${esc(c.up)}では見合わない可能性）</span>`):"（期待リターンを入れてください）");
+}
+function renderCat(){
+  const c=stock(curCode).cat||{};
+  $("#cTitle").value=c.title||"";$("#cDate").value=c.date||"";
+  $("#cProb").value=c.prob||"";$("#cUp").value=c.up||"";$("#cRes").value=c.res||"";
+  $("#cJudge").innerHTML=catJudge(c);
+}
+function saveCat(){
+  const st=stock(curCode);
+  const c={title:$("#cTitle").value.trim(),date:$("#cDate").value,
+           prob:$("#cProb").value,up:$("#cUp").value,res:$("#cRes").value};
+  if(!c.title&&!c.date&&!c.prob&&!c.up&&!c.res){delete st.cat}else{st.cat=c}
+  touch(curCode);save();renderCat();
+}
+["cTitle","cDate","cProb","cUp","cRes"].forEach(id=>$("#"+id).addEventListener("change",saveCat));
 function renderWhy(){
   const st=stock(curCode);
   $("#dWhy").innerHTML=WHY.map(w=>`<button class="chip${st.why===w.k?" on":""}" data-why="${w.k}">${w.t}</button>`).join("");
