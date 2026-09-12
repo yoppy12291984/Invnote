@@ -403,7 +403,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="3.3";
+const VER="3.4";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TAB_DEFS=[{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vHot",t:"直前"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"}];
 const tabDef=v=>TAB_DEFS.find(x=>x.v===v);
@@ -762,8 +762,7 @@ function mergeIn(d){
   const eids=new Set((S.events||[]).map(e=>e.id));(d.events||[]).forEach(e=>{if(!del.has(e.id)&&!eids.has(e.id))S.events.push(e)});S.events=S.events.filter(e=>!del.has(e.id));
   if(d.rules&&(d.rules.upd||0)>(S.rules.upd||0))S.rules=d.rules;
   Object.entries(d.sectors||{}).forEach(([k,v])=>{if(!S.sectors[k]||(v.upd||0)>(S.sectors[k].upd||0))S.sectors[k]=v});
-  Object.entries(d.holdings||{}).forEach(([k,v])=>{if(del.has("h:"+k))return;if(!S.holdings[k]||(v.upd||0)>(S.holdings[k].upd||0))S.holdings[k]=v});
-  Object.keys(S.holdings).forEach(k=>{if(del.has("h:"+k))delete S.holdings[k]});
+  Object.entries(d.holdings||{}).forEach(([k,v])=>{if(del.has("h:"+k)&&!S.holdings[k])return;if(!S.holdings[k]||(v.upd||0)>(S.holdings[k].upd||0))S.holdings[k]=v});
   const hids=new Set(S.pfHistory.map(x=>x.id));(d.pfHistory||[]).forEach(x=>{if(!hids.has(x.id))S.pfHistory.push(x)});S.pfHistory.sort((a,b)=>a.ts-b.ts);
   if(d.lists&&(d.lists.upd||0)>(S.listsUpd||0)){S.quick=d.lists.quick;S.status=d.lists.status;S.themes=d.lists.themes||S.themes;if(d.lists.tabOrder)S.tabOrder=d.lists.tabOrder;S.listsUpd=d.lists.upd;STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT}
   S.notes.sort((a,b)=>b.ts-a.ts);return add;
@@ -799,7 +798,7 @@ function importParsed(d){
     S.notes.push({id:uid(),ts,code,text:String(x.text).trim(),tags:Array.isArray(x.tags)?x.tags.filter(Boolean):[],pinned:false,ai:true});ns++;
   });
   let hs=0;const hday=/^\d{4}-\d{2}-\d{2}$/.test(d.holdings_date||"")?d.holdings_date:null;const latest=S.pfHistory.length?S.pfHistory[S.pfHistory.length-1].date:null;
-  const histOnly=hday&&latest&&hday<latest;
+  const histOnly=hday&&latest&&hday<latest&&hday!==dstr(Date.now());
   if(histOnly){snapshotFrom(d.holdings||[],hday,"import");hs=(d.holdings||[]).length;(d.holdings||[]).forEach(x=>{const c=String(x.code||"").toUpperCase();if(c&&x.name&&!nm(c)){stock(c).name=x.name}})}
   else (d.holdings||[]).forEach(x=>{const code=String(x.code||"").trim().toUpperCase();if(!/^(\d{4}|\d{3}[A-Z])$/.test(code))return;setHolding(code,x);hs++});
   let sold=[];if(hs&&d.holdings_replace&&!histOnly){Object.keys(S.holdings).forEach(k=>{if(!(d.holdings||[]).some(x=>String(x.code).toUpperCase()===k)){const h=S.holdings[k];const st=stock(k);if(["保有","買い増し"].includes(st.status)){st.status=(h.price||0)>=(h.avg||0)?"利確":"損切";touch(k)}sold.push(k);delete S.holdings[k];(S.deleted=S.deleted||[]).push("h:"+k)}})}
@@ -842,7 +841,11 @@ $("#aiYes").addEventListener("click",()=>{if(!aiParsed)return;const r=importPars
 
 /* ---------- portfolio ---------- */
 const fmt=n=>Math.round(n).toLocaleString("ja-JP");
-function setHolding(code,h){const cur=S.holdings[code]||{};S.holdings[code]={shares:+h.shares||cur.shares||0,avg:+h.avg||cur.avg||0,price:+h.price||cur.price||0,acct:h.acct||cur.acct||"",upd:Date.now()};const st=stock(code);if(h.name&&!st.name)st.name=h.name;if(!["保有","買い増し"].includes(st.status)){st.status="保有";touch(code)}}
+function setHolding(code,h){const cur=S.holdings[code]||{};
+  const num=(v,d)=>{const x=Number(v);return (v===""||v===null||v===undefined||isNaN(x))?(d||0):x};
+  S.holdings[code]={shares:num(h.shares,cur.shares),avg:num(h.avg,cur.avg),price:num(h.price,cur.price),acct:h.acct||cur.acct||"",upd:Date.now()};
+  if(S.deleted&&S.deleted.length)S.deleted=S.deleted.filter(x=>x!=="h:"+code);   // 取り込み直したら削除履歴から外す
+const st=stock(code);if(h.name&&!st.name)st.name=h.name;if(!["保有","買い増し"].includes(st.status)){st.status="保有";touch(code)}}
 function renderPf(){
   const rows=Object.entries(S.holdings).map(([code,h])=>({code,h,st:stock(code),cost:h.shares*h.avg,val:h.shares*(h.price||h.avg)}));
   const tot=rows.reduce((a,r)=>({cost:a.cost+r.cost,val:a.val+r.val}),{cost:0,val:0});const pl=tot.val-tot.cost;
