@@ -74,7 +74,7 @@ table.rows tr.detail td{text-align:left;white-space:normal;background:var(--sur)
 .meta{font-size:12px;color:var(--mut);margin-top:6px}
 
 .stk{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin-bottom:8px;border-left:4px solid var(--line)}
-.stk[data-s=保有]{border-left-color:var(--up)}
+.stk[data-s=記録]{border-left-color:var(--amb)}
 .stk[data-s=売却済]{border-left-color:var(--dn)}
 .stk[data-s=テーマ]{border-left-color:var(--blu)}
 .shead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -97,21 +97,26 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 .sum span{font-size:12px;color:var(--mut);display:block}
 .sum .up{color:var(--up)}.sum .dn{color:var(--dn)}
 .hint{font-size:12px;color:var(--mut);padding:0 4px}
+#edit{color:var(--mut);padding:6px;border-radius:8px;display:flex;align-items:center}
+#edit:hover,#edit.on{color:var(--ink);background:var(--soft)}
+#tabEdit{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin:0 0 12px}
+.led{display:flex;flex-direction:column;gap:4px}
+.led .li{display:flex;gap:4px;align-items:center}
+.led .li span{flex:1;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 8px;font-size:14px}
+.led .li button{color:var(--mut);padding:4px 9px;border-radius:6px}
+.led .li button:hover{background:var(--soft);color:var(--ink)}
+.ehint{font-size:12px;color:var(--mut);margin:8px 0 0}
+#tabHidden{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .empty{padding:28px 4px;color:var(--mut);text-align:center;font-size:14px}
 .err{color:var(--up)}
 </style>
 </head>
 <body>
 <div id="app">
-<header><h1>Screener<small id="ver"></small></h1><span id="stat">読み込み中</span><a id="back" href="../">Invnote</a></header>
+<header><h1>Screener<small id="ver"></small></h1><span id="stat">読み込み中</span><button id="edit" aria-label="タブの並び"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10"/><path d="M4 12h7"/><path d="M4 18h10"/><path d="M18 4v16"/><path d="M15 17l3 3 3-3"/></svg></button><a id="back" href="../">Invnote</a></header>
+<div id="tabEdit" hidden><div class="led" id="tabLed"></div><p class="ehint">↑↓で並び替え、×で隠す。この端末に保存されます。</p><div id="tabHidden"></div></div>
 <p class="cycle" id="cycle"></p>
-<nav id="tabs">
-  <button class="on" data-tab="cand">候補</button>
-  <button data-tab="hold">保有</button>
-  <button data-tab="cs">CAN-SLIM</button>
-  <button data-tab="theme">テーマ</button>
-  <button data-tab="status">検証</button>
-</nav>
+<nav id="tabs"></nav>
 
 <section id="cand">
   <div class="bar">
@@ -151,6 +156,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
+  const VER="1.3";   // 変更のたびに上げる（1.0 初版 / 1.1 CAN-SLIMタブ / 1.2 採点タブ名・色 / 1.3 スワイプ＋タブ並び替え）
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -169,11 +175,46 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     return JSON.parse((await r.text()).replace(/^\uFEFF/,''));
   }
 
-  $$('nav#tabs button').forEach(b=>b.addEventListener('click',()=>{
-    $$('nav#tabs button').forEach(x=>x.classList.toggle('on',x===b));
-    $$('section').forEach(s=>s.hidden=s.id!==b.dataset.tab);
-    window.scrollTo(0,0);
-  }));
+  /* タブ：並び替え・スワイプ */
+  const TABS=[{v:'cand',t:'候補'},{v:'hold',t:'採点'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'status',t:'検証'}];
+  const tdef=v=>TABS.find(x=>x.v===v);
+  const TKEY='screener_tabs';
+  let order;
+  try{order=(JSON.parse(localStorage.getItem(TKEY))||[]).filter(tdef);}catch(e){order=[];}
+  if(!order.length) order=TABS.map(x=>x.v);
+  let view=order[0];
+  const saveOrder=()=>{try{localStorage.setItem(TKEY,JSON.stringify(order));}catch(e){}};
+  function renderTabs(){
+    $('#tabs').innerHTML=order.map(v=>`<button data-tab="${v}"${v===view?' class="on"':''}>${esc(tdef(v).t)}</button>`).join('');
+    TABS.forEach(t=>{const s=document.getElementById(t.v); if(s) s.hidden=(t.v!==view);});
+  }
+  function show(v){if(!order.includes(v))return;view=v;renderTabs();window.scrollTo(0,0);}
+  $('#tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b)show(b.dataset.tab);});
+  function renderLed(){
+    $('#tabLed').innerHTML=order.map((v,i)=>`<div class="li"><span>${esc(tdef(v).t)}</span><button data-mv="-1" data-i="${i}" aria-label="上へ">↑</button><button data-mv="1" data-i="${i}" aria-label="下へ">↓</button><button data-hide="${v}" aria-label="隠す">×</button></div>`).join('');
+    const hid=TABS.map(x=>x.v).filter(v=>!order.includes(v));
+    $('#tabHidden').innerHTML=hid.map(v=>`<button class="chip" data-show="${v}">${esc(tdef(v).t)} を戻す</button>`).join('');
+  }
+  $('#edit').addEventListener('click',()=>{const p=$('#tabEdit');p.hidden=!p.hidden;$('#edit').classList.toggle('on',!p.hidden);if(!p.hidden)renderLed();});
+  $('#tabEdit').addEventListener('click',e=>{
+    const b=e.target.closest('button');if(!b)return;
+    if(b.dataset.show){order=[...order,b.dataset.show];}
+    else if(b.dataset.hide){if(order.length<=1)return;order=order.filter(v=>v!==b.dataset.hide);if(view===b.dataset.hide)view=order[0];}
+    else if(b.dataset.mv){const i=+b.dataset.i,j=i+ +b.dataset.mv;if(j<0||j>=order.length)return;[order[i],order[j]]=[order[j],order[i]];}
+    else return;
+    saveOrder();renderTabs();renderLed();
+  });
+  let sx=0,sy=0,sw=false;
+  document.addEventListener('touchstart',e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;
+    sw=!e.target.closest('.tblwrap,.bar,#tabEdit,a,button,details');},{passive:true});
+  document.addEventListener('touchend',e=>{
+    if(!sw)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Math.abs(dx)<70||Math.abs(dy)>50)return;
+    const i=order.indexOf(view)+(dx<0?1:-1);if(i<0||i>=order.length)return;
+    show(order[i]);
+    const b=document.querySelector(`#tabs [data-tab="${order[i]}"]`);if(b)b.scrollIntoView({inline:'center',block:'nearest'});
+  },{passive:true});
+  renderTabs();
 
   let index,status,cand,hold,themes,cs;
   try{[index,status,cand,hold,themes]=await Promise.all(['index','status','candidates','holdings','themes'].map(load));}
@@ -181,7 +222,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   try{cs=await load('canslim');}catch(e){cs={date:null,count:0,buckets:{},items:[]};}
 
   /* header */
-  $('#ver').textContent=`基準日 ${cand.date}`;
+  $('#ver').textContent=`v${VER}　基準日 ${cand.date}`;
   $('#stat').textContent=`更新 ${index.updated}`;
   const c=index.cycle||{};
   $('#cycle').innerHTML=`<b>${esc(c.M)} ${esc(c.label)}</b>（${esc(c.month)}）　FF ${fmt(c.ff)}%　失業率 ${fmt(c.unrate,1)}%　10-2y ${fmt(c.spread10_2)}　VIX <b>${fmt(c.vix,1)}</b>`;
@@ -263,11 +304,11 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
   /* holdings */
   const hs=$('#hold');
-  if(!hold.items?.length){hs.innerHTML='<p class="empty">保有銘柄はまだありません</p>';}
+  if(!hold.items?.length){hs.innerHTML='<p class="empty">採点対象の記録はまだありません</p>';}
   else{
     const seen=new Set();
     hs.innerHTML=hold.items.filter(h=>{const k=h.code+h.date;if(seen.has(k))return false;seen.add(k);return true;}).map(h=>`
-      <div class="stk" data-s="${h.sell_date?'売却済':'保有'}">
+      <div class="stk" data-s="${h.sell_date?'売却済':'記録'}">
         <div class="shead"><span class="code">${esc(h.code)}</span><span class="name">${esc(h.name)}</span><span class="cnt">${esc(h.bucket)}</span></div>
         <div class="slast num">買値 ${fmt(h.price,0)}円　${esc(h.date)}${h.sell_date?`　→ 売却 ${esc(h.sell_date)} ${fmt(h.sell_price,0)}円`:''}${h.note?`　${esc(h.note)}`:''}</div>
         ${linkRow(h.code)}
