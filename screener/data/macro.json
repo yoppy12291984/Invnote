@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-09-13T12:43:53+00:00",
+  "generated_at": "2026-09-13T12:58:20+00:00",
   "items": [
     {
       "id": "DFII10",
@@ -313,7 +313,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T12:43:52+00:00"
+      "fetched_at": "2026-09-13T12:58:19+00:00"
     },
     {
       "id": "DGS10",
@@ -626,7 +626,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T12:43:52+00:00"
+      "fetched_at": "2026-09-13T12:58:19+00:00"
     },
     {
       "id": "T10YIE",
@@ -939,7 +939,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T12:43:52+00:00"
+      "fetched_at": "2026-09-13T12:58:19+00:00"
     },
     {
       "id": "T10Y2Y",
@@ -1252,7 +1252,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T12:43:52+00:00"
+      "fetched_at": "2026-09-13T12:58:19+00:00"
     },
     {
       "id": "BAMLH0A0HYM2",
@@ -1577,7 +1577,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T12:43:52+00:00"
+      "fetched_at": "2026-09-13T12:58:19+00:00"
     },
     {
       "id": "BAMLC0A4CBBB",
@@ -1902,7 +1902,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T12:43:52+00:00"
+      "fetched_at": "2026-09-13T12:58:20+00:00"
     },
     {
       "id": "VIXCLS",
@@ -2227,7 +2227,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T12:43:52+00:00"
+      "fetched_at": "2026-09-13T12:58:20+00:00"
     },
     {
       "id": "DEXJPUS",
@@ -2544,7 +2544,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T12:43:52+00:00"
+      "fetched_at": "2026-09-13T12:58:20+00:00"
     },
     {
       "id": "FEDFUNDS",
@@ -2589,7 +2589,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T12:43:52+00:00"
+      "fetched_at": "2026-09-13T12:58:20+00:00"
     },
     {
       "id": "UNRATE",
@@ -2634,7 +2634,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T12:43:53+00:00"
+      "fetched_at": "2026-09-13T12:58:20+00:00"
     }
   ],
   "note": "FREDの現在取得できる観測値。公表時点の履歴（ビンテージ）ではなく、過去検証にはそのまま使用できません。"
