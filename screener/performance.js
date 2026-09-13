@@ -1,4 +1,4 @@
-import {defaults,calculate} from './ideal.js?v=2.11';
+import {defaults,calculate,readPlan} from './ideal.js?v=2.14';
 import {validate,positions,evaluate} from './performance-engine.js?v=2.12';
 const KEY='screener_performance_v1';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -31,8 +31,8 @@ export function mount(root){
   root.querySelector('[data-import]').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;if(f.size>2000000)throw new Error('2MB以下のバックアップを選んでください。');const next=validate(JSON.parse(await f.text()));if(state&&!confirm('現在の運用記録をバックアップの内容に置き換えますか？'))return;commit(next);}catch(err){message(err.message);}};
  }
  function setup(main){
-  let saved={};try{saved=JSON.parse(localStorage.getItem('screener_ideal_inputs_v1')||'{}')||{};}catch(e){}
-  const rows=defaults.map(r=>({...r,weight:Number(saved.rows?.[r.code]?.weight??r.weight),price:Number(saved.rows?.[r.code]?.price??r.price)}));
+  let plan;try{plan=readPlan();}catch(e){main.textContent='理想配分の保存データを確認してください。開始条件はまだ固定していません。';return;}
+  const rows=plan.items.map(r=>({...r,weight:r.weight===''?NaN:Number(r.weight),price:r.price===''?NaN:Number(r.price)}));
   main.innerHTML=`<form class="perf-box" data-start><b>1. 運用の開始時点を固定</b><p class="hint">開始資産は株式時価＋現金の合計。すでに持つ株は、開始日の時価で「購入／開始時保有」に記録してください。過去の購入価格を使うと開始以前の損益が混ざります。</p>
   ${input('date','開始日','date',today())}${input('capital','開始資産（万円）')}${input('topix','開始日のTOPIX終値（省略すると比較なし）','number','',false)}
   <details open><summary>比較用の理想配分を確認</summary><p class="hint">理想配分タブの比率を読み込みます。株価は開始日の終値へ修正してください。固定後は理想配分タブを編集しても比較基準は変わりません。</p>
@@ -74,5 +74,6 @@ export function mount(root){
   for(const b of main.querySelectorAll('[data-del-point]'))b.onclick=()=>{if(confirm('この評価を削除しますか？'))change(s=>s.points=s.points.filter(p=>p.date!==b.dataset.delPoint));};
   for(const b of main.querySelectorAll('[data-del-review]'))b.onclick=()=>{if(confirm('この仮説記録を削除しますか？'))change(s=>s.reviews.splice(Number(b.dataset.delReview),1));};
  }
+ window.addEventListener('ideal-plan-changed',()=>{if(!state&&!broken)render();});
  render();
 }
