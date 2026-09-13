@@ -136,11 +136,12 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 #tabEdit{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin:0 0 12px}
 .led{display:flex;flex-direction:column;gap:4px}
 .led .li{display:flex;gap:4px;align-items:center}
-.led .li span{flex:1;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 8px;font-size:14px}
+.led .li span{flex:1;min-width:0;overflow-wrap:anywhere;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 8px;font-size:14px}
 .led .li button{color:var(--mut);padding:4px 9px;border-radius:6px}
 .led .li button:hover{background:var(--soft);color:var(--ink)}
 .ehint{font-size:12px;color:var(--mut);margin:8px 0 0}
 #tabHidden{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+#tabHidden .chip{white-space:normal;overflow-wrap:anywhere;max-width:100%}
 /* レーダー */
 .rd h3{font-size:13px;color:var(--mut);margin:16px 4px 6px;font-weight:600}
 .rd .cl{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);
@@ -190,10 +191,10 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 <header>
   <h1 class="wm"><a href="/Invnote/">Invnote</a><span>/</span><b>Screener</b></h1>
   <button id="reload" aria-label="再読込"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M4 12a8 8 0 0 1 13.7-5.6"/><path d="M17.7 3v3.4h-3.4"/><path d="M6.3 21v-3.4h3.4"/></svg></button>
-  <button id="edit" aria-label="タブの並び"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10"/><path d="M4 12h7"/><path d="M4 18h10"/><path d="M18 4v16"/><path d="M15 17l3 3 3-3"/></svg></button>
+  <button id="edit" aria-label="タブ設定" aria-expanded="false" aria-controls="tabEdit" style="font-size:13px;white-space:nowrap">⚙ 設定</button>
   <div class="header-meta"><small id="ver"></small><span id="stat">読み込み中</span></div>
 </header>
-<div id="tabEdit" hidden><div class="led" id="tabLed"></div><p class="ehint">↑↓で並び替え、×で隠す。この端末に保存されます。</p><div id="tabHidden"></div></div>
+<div id="tabEdit" hidden><b>タブ設定</b><div class="led" id="tabLed"></div><p class="ehint">↑↓で並び替え、×で隠す。この端末に保存されます。</p><div id="tabHidden"></div><details><summary>タブ名を変更</summary><p class="ehint">表示名のみ変更します。例：候補 → 現物・清原式、反転 → 信用・反転。抽出条件や売買ルールは変わりません。空欄で元の名前に戻ります（20文字まで）。</p><form id="tabNames"><div id="tabNameFields"></div><button class="chip" type="submit">名前を保存</button><button class="chip" type="button" id="tabNameReset">名前を初期状態に戻す</button></form></details><p id="tabSettingsStatus" class="ehint" role="status"></p></div>
 <p class="cycle" id="cycle"></p>
 <nav id="tabs"></nav>
 
@@ -260,7 +261,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.12";  // 2.12 ポートフォリオ全体の運用成績・端末内記録
+  const VER="2.13";  // 2.13 タブ設定から表示名を変更・端末内保存
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -287,6 +288,12 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   /* タブ：並び替え・スワイプ */
   const TABS=[{v:'cand',t:'候補'},{v:'ideal',t:'理想配分'},{v:'catalyst',t:'カタリスト'},{v:'reb',t:'反転'},{v:'hold',t:'運用成績'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'radar',t:'レーダー'},{v:'status',t:'検証'},{v:'rec',t:'記録'}];
   const tdef=v=>TABS.find(x=>x.v===v);
+  const NAME_KEY='screener_tab_names_v1';
+  let tabNames={};
+  try{const names=JSON.parse(localStorage.getItem(NAME_KEY)||'{}');
+    for(const t of TABS){const n=names?.[t.v];if(typeof n==='string'&&n.trim())tabNames[t.v]=Array.from(n.trim()).slice(0,20).join('');}
+  }catch(e){}
+  const tabTitle=v=>tabNames[v]||tdef(v).t;
   const TKEY='screener_tabs';
   let order;
   try{order=(JSON.parse(localStorage.getItem(TKEY))||[]).filter(tdef);}catch(e){order=[];}
@@ -305,7 +312,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   let view=order[0];
   const saveOrder=()=>{try{localStorage.setItem(TKEY,JSON.stringify(order));}catch(e){}};
   function renderTabs(){
-    $('#tabs').innerHTML=order.map(v=>`<button data-tab="${v}"${v===view?' class="on"':''}>${esc(tdef(v).t)}</button>`).join('');
+    $('#tabs').innerHTML=order.map(v=>`<button data-tab="${v}"${v===view?' class="on"':''}>${esc(tabTitle(v))}</button>`).join('');
     TABS.forEach(t=>{const s=document.getElementById(t.v); if(s) s.hidden=(t.v!==view);});
   }
   function show(v){if(!order.includes(v))return;view=v;renderTabs();window.scrollTo(0,0);}
@@ -313,11 +320,24 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   $('#reload').addEventListener('click',()=>{$('#reload').classList.add('busy');
     location.replace(location.pathname+'?r='+Date.now());});
   function renderLed(){
-    $('#tabLed').innerHTML=order.map((v,i)=>`<div class="li"><span>${esc(tdef(v).t)}</span><button data-mv="-1" data-i="${i}" aria-label="上へ">↑</button><button data-mv="1" data-i="${i}" aria-label="下へ">↓</button><button data-hide="${v}" aria-label="隠す">×</button></div>`).join('');
+    $('#tabLed').innerHTML=order.map((v,i)=>`<div class="li"><span>${esc(tabTitle(v))}</span><button data-mv="-1" data-i="${i}" aria-label="上へ">↑</button><button data-mv="1" data-i="${i}" aria-label="下へ">↓</button><button data-hide="${v}" aria-label="隠す">×</button></div>`).join('');
     const hid=TABS.map(x=>x.v).filter(v=>!order.includes(v));
-    $('#tabHidden').innerHTML=hid.map(v=>`<button class="chip" data-show="${v}">${esc(tdef(v).t)} を戻す</button>`).join('');
+    $('#tabHidden').innerHTML=hid.map(v=>`<button class="chip" data-show="${v}">${esc(tabTitle(v))} を戻す</button>`).join('');
   }
-  $('#edit').addEventListener('click',()=>{const p=$('#tabEdit');p.hidden=!p.hidden;$('#edit').classList.toggle('on',!p.hidden);if(!p.hidden)renderLed();});
+  function nameFields(){
+    $('#tabNameFields').innerHTML=TABS.map(t=>`<label style="display:block;margin:8px 0;font-size:12px">${esc(t.t)}<input data-tab-name="${t.v}" aria-label="${esc(t.t)}の表示名" maxlength="40" placeholder="${esc(t.t)}" value="${esc(tabNames[t.v]||'')}" style="display:block;width:100%;min-width:0;padding:7px;border:1px solid var(--line);border-radius:6px;background:var(--sur);color:var(--ink);font:inherit;font-size:16px"></label>`).join('');
+  }
+  function saveNames(next){
+    try{localStorage.setItem(NAME_KEY,JSON.stringify(next));}
+    catch(e){$('#tabSettingsStatus').textContent='名前を保存できませんでした。変更は未確定です。ブラウザの保存設定を確認してください。';return;}
+    tabNames=next;renderTabs();renderLed();nameFields();$('#tabSettingsStatus').textContent='タブ名をこの端末に保存しました。他の端末とは同期しません。';
+  }
+  $('#tabNames').addEventListener('submit',e=>{e.preventDefault();const next={};
+    for(const el of $$('#tabNameFields input')){const n=el.value.trim();if(Array.from(n).length>20){$('#tabSettingsStatus').textContent='タブ名は20文字以内にしてください。';return;}if(n)next[el.dataset.tabName]=n;}
+    saveNames(next);
+  });
+  $('#tabNameReset').addEventListener('click',()=>saveNames({}));
+  $('#edit').addEventListener('click',()=>{const p=$('#tabEdit');p.hidden=!p.hidden;$('#edit').classList.toggle('on',!p.hidden);$('#edit').setAttribute('aria-expanded',String(!p.hidden));if(!p.hidden){renderLed();nameFields();}});
   $('#tabEdit').addEventListener('click',e=>{
     const b=e.target.closest('button');if(!b)return;
     if(b.dataset.show){order=[...order,b.dataset.show];}
