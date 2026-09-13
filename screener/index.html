@@ -186,6 +186,10 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 .rec li{font-size:13px;color:var(--mut);margin:4px 0;line-height:1.6;overflow-wrap:anywhere}
 .empty{padding:28px 4px;color:var(--mut);text-align:center;font-size:14px}
 .err{color:var(--up)}
+.macro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:12px;margin:16px 0}
+.macro-card{background:var(--sur);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0;overflow-wrap:anywhere}
+.macro-card p{font-size:13px;line-height:1.65;margin:10px 0}.macro-card small{font-size:11px;line-height:1.6}.macro-card h3{font-size:16px;margin:8px 0}
+.macro-changes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;font-size:12px;margin-top:12px}.macro-changes small{font-size:10px}
 </style>
 </head>
 <body>
@@ -259,11 +263,12 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 <section id="hold" hidden></section>
 <section id="theme" hidden></section>
 <section id="status" hidden></section>
+<section id="macro" hidden></section>
 </div>
 
 <script>
 (async function(){
-  const VER="2.14";  // 2.14 銘柄編集・全画面タブ設定
+  const VER="2.16";  // 2.16 総合局面と判定根拠
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -288,7 +293,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   }
 
   /* タブ：並び替え・スワイプ */
-  const TABS=[{v:'cand',t:'候補'},{v:'ideal',t:'理想配分'},{v:'catalyst',t:'カタリスト'},{v:'reb',t:'反転'},{v:'hold',t:'運用成績'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'radar',t:'レーダー'},{v:'status',t:'検証'},{v:'rec',t:'記録'}];
+  const TABS=[{v:'cand',t:'候補'},{v:'macro',t:'マクロ'},{v:'ideal',t:'理想配分'},{v:'catalyst',t:'カタリスト'},{v:'reb',t:'反転'},{v:'hold',t:'運用成績'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'radar',t:'レーダー'},{v:'status',t:'検証'},{v:'rec',t:'記録'}];
   const tdef=v=>TABS.find(x=>x.v===v);
   const NAME_KEY='screener_tab_names_v1';
   let tabNames={};
@@ -311,7 +316,12 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     localStorage.setItem(TKEY,JSON.stringify(order));
     localStorage.setItem('screener_ideal_tab_v1','1');
   }}catch(e){if(!order.includes('ideal'))order.splice(1,0,'ideal');}
-  let view=order[0];
+  try{if(!localStorage.getItem('screener_macro_tab_v1')){
+    if(!order.includes('macro'))order.splice(1,0,'macro');
+    localStorage.setItem(TKEY,JSON.stringify(order));
+    localStorage.setItem('screener_macro_tab_v1','1');
+  }}catch(e){if(!order.includes('macro'))order.splice(1,0,'macro');}
+  let view=order.includes(location.hash.slice(1))?location.hash.slice(1):order[0];
   const saveOrder=()=>{try{localStorage.setItem(TKEY,JSON.stringify(order));}catch(e){}};
   function renderTabs(){
     $('#tabs').innerHTML=order.map(v=>`<button data-tab="${v}"${v===view?' class="on"':''}>${esc(tabTitle(v))}</button>`).join('');
@@ -362,6 +372,8 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     const b=document.querySelector(`#tabs [data-tab="${order[i]}"]`);if(b)b.scrollIntoView({inline:'center',block:'nearest'});
   },{passive:true});
   renderTabs();
+  import('./macro.js?v=2.16').then(m=>m.mountMacro(document.getElementById('macro')))
+    .catch(()=>{document.getElementById('macro').textContent='マクロ画面を読み込めません。再読込してください。';});
   import('./ideal.js?v=2.14').then(m=>m.mount(document.getElementById('ideal')))
     .catch(()=>{$('#ideal').textContent='理想配分を読み込めません。更新ボタンで再読込してください。';});
   import('./performance.js?v=2.14').then(m=>m.mount(document.getElementById('hold')))
