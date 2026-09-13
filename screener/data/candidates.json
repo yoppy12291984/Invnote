@@ -1,6 +1,7 @@
 {
  "date": "20260909",
  "count": 58,
+ "ma200_date": "2026-09-09",
  "items": [
   {
    "code": "6619",
@@ -10,7 +11,8 @@
    "mcap_oku": 91.23,
    "price": 161.0,
    "turnover_oku": 3.43,
-   "bs_date": "2026-06-11"
+   "bs_date": "2026-06-11",
+   "ma200_slope_improvement": -9.90015039065214
   },
   {
    "code": "5408",
@@ -20,7 +22,8 @@
    "mcap_oku": 351.79,
    "price": 639.0,
    "turnover_oku": 1.53,
-   "bs_date": "2026-08-07"
+   "bs_date": "2026-08-07",
+   "ma200_slope_improvement": -0.07667412232605919
   },
   {
    "code": "8011",
@@ -30,7 +33,8 @@
    "mcap_oku": 126.24,
    "price": 1302.0,
    "turnover_oku": 2.87,
-   "bs_date": "2026-06-30"
+   "bs_date": "2026-06-30",
+   "ma200_slope_improvement": 1.2758355347149752
   },
   {
    "code": "6986",
@@ -40,7 +44,8 @@
    "mcap_oku": 307.7,
    "price": 730.0,
    "turnover_oku": 3.63,
-   "bs_date": "2026-08-07"
+   "bs_date": "2026-08-07",
+   "ma200_slope_improvement": -4.1665639846233615
   },
   {
    "code": "1899",
@@ -50,7 +55,8 @@
    "mcap_oku": 395.84,
    "price": 4635.0,
    "turnover_oku": 3.81,
-   "bs_date": "2026-08-06"
+   "bs_date": "2026-08-06",
+   "ma200_slope_improvement": -7.174779725449287
   },
   {
    "code": "5269",
@@ -60,7 +66,8 @@
    "mcap_oku": 193.21,
    "price": 362.0,
    "turnover_oku": 1.01,
-   "bs_date": "2026-08-07"
+   "bs_date": "2026-08-07",
+   "ma200_slope_improvement": -0.7383740226340363
   },
   {
    "code": "2168",
@@ -70,7 +77,8 @@
    "mcap_oku": 590.17,
    "price": 1580.0,
    "turnover_oku": 2.6,
-   "bs_date": "2026-07-15"
+   "bs_date": "2026-07-15",
+   "ma200_slope_improvement": -1.639845891463021
   },
   {
    "code": "3895",
@@ -80,7 +88,8 @@
    "mcap_oku": 37.42,
    "price": 480.0,
    "turnover_oku": 1.35,
-   "bs_date": "2026-08-07"
+   "bs_date": "2026-08-07",
+   "ma200_slope_improvement": 2.574588680331913
   },
   {
    "code": "5946",
@@ -90,7 +99,8 @@
    "mcap_oku": 689.83,
    "price": 1999.0,
    "turnover_oku": 1.13,
-   "bs_date": "2026-08-07"
+   "bs_date": "2026-08-07",
+   "ma200_slope_improvement": -0.05405040728427846
   },
   {
    "code": "1663",
@@ -100,7 +110,8 @@
    "mcap_oku": 557.75,
    "price": 1994.0,
    "turnover_oku": 4.61,
-   "bs_date": "2026-08-12"
+   "bs_date": "2026-08-12",
+   "ma200_slope_improvement": -13.473840640145095
   },
   {
    "code": "4548",
@@ -110,7 +121,8 @@
    "mcap_oku": 376.59,
    "price": 700.0,
    "turnover_oku": 1.3,
-   "bs_date": "2026-08-05"
+   "bs_date": "2026-08-05",
+   "ma200_slope_improvement": -2.6220154847633514
   },
   {
    "code": "6463",
@@ -120,7 +132,8 @@
    "mcap_oku": 978.53,
    "price": 1525.0,
    "turnover_oku": 1.96,
-   "bs_date": "2026-08-07"
+   "bs_date": "2026-08-07",
+   "ma200_slope_improvement": -0.5042736160177252
   },
   {
    "code": "4620",
@@ -130,7 +143,8 @@
    "mcap_oku": 299.54,
    "price": 968.0,
    "turnover_oku": 1.27,
-   "bs_date": "2026-08-07"
+   "bs_date": "2026-08-07",
+   "ma200_slope_improvement": -15.984823767347667
   },
   {
    "code": "2484",
@@ -140,7 +154,8 @@
    "mcap_oku": 133.01,
    "price": 153.0,
    "turnover_oku": 1.69,
-   "bs_date": "2026-07-15"
+   "bs_date": "2026-07-15",
+   "ma200_slope_improvement": 10.905699520890122
   },
   {
    "code": "3151",
@@ -150,7 +165,8 @@
    "mcap_oku": 748.87,
    "price": 1586.0,
    "turnover_oku": 1.33,
-   "bs_date": "2026-08-06"
+   "bs_date": "2026-08-06",
+   "ma200_slope_improvement": 1.1220667768182535
   },
   {
    "code": "6419",
@@ -160,7 +176,8 @@
    "mcap_oku": 569.32,
    "price": 3175.0,
    "turnover_oku": 1.87,
-   "bs_date": "2026-07-30"
+   "bs_date": "2026-07-30",
+   "ma200_slope_improvement": -1.0278950946196352
   },
   {
    "code": "6245",
@@ -170,7 +187,8 @@
    "mcap_oku": 275.28,
    "price": 1808.0,
    "turnover_oku": 1.2,
-   "bs_date": "2026-08-07"
+   "bs_date": "2026-08-07",
+   "ma200_slope_improvement": -3.568322422329029
   },
   {
    "code": "6430",
@@ -180,7 +198,8 @@
    "mcap_oku": 357.83,
    "price": 2429.0,
    "turnover_oku": 1.08,
-   "bs_date": "2026-08-07"
+   "bs_date": "2026-08-07",
+   "ma200_slope_improvement": -5.445497076251582
   },
   {
    "code": "3632",
@@ -190,7 +209,8 @@
    "mcap_oku": 698.64,
    "price": 405.0,
    "turnover_oku": 2.49,
-   "bs_date": "2026-08-07"
+   "bs_date": "2026-08-07",
+   "ma200_slope_improvement": 5.647520082953072
   },
   {
    "code": "5541",
@@ -200,7 +220,8 @@
    "mcap_oku": 451.95,
    "price": 2651.0,
    "turnover_oku": 5.72,
-   "bs_date": "2026-08-06"
+   "bs_date": "2026-08-06",
+   "ma200_slope_improvement": -6.528954046064261
   },
   {
    "code": "7239",
@@ -210,7 +231,8 @@
    "mcap_oku": 816.23,
    "price": 2303.0,
    "turnover_oku": 1.84,
-   "bs_date": "2026-08-05"
+   "bs_date": "2026-08-05",
+   "ma200_slope_improvement": -2.3139178753038836
   },
   {
    "code": "3668",
@@ -220,7 +242,8 @@
    "mcap_oku": 526.41,
    "price": 421.0,
    "turnover_oku": 2.24,
-   "bs_date": "2026-08-05"
+   "bs_date": "2026-08-05",
+   "ma200_slope_improvement": -0.2956498978888278
   },
   {
    "code": "6118",
@@ -230,7 +253,8 @@
    "mcap_oku": 693.24,
    "price": 1274.0,
    "turnover_oku": 3.09,
-   "bs_date": "2026-08-28"
+   "bs_date": "2026-08-28",
+   "ma200_slope_improvement": 0.011550297374474106
   },
   {
    "code": "2153",
@@ -240,7 +264,8 @@
    "mcap_oku": 329.14,
    "price": 1831.0,
    "turnover_oku": 1.16,
-   "bs_date": "2026-07-14"
+   "bs_date": "2026-07-14",
+   "ma200_slope_improvement": -2.406197993618342
   },
   {
    "code": "9413",
@@ -250,7 +275,8 @@
    "mcap_oku": 872.91,
    "price": 3325.0,
    "turnover_oku": 2.09,
-   "bs_date": "2026-07-30"
+   "bs_date": "2026-07-30",
+   "ma200_slope_improvement": -11.275474810619679
   },
   {
    "code": "9755",
@@ -260,7 +286,8 @@
    "mcap_oku": 655.5,
    "price": 2858.0,
    "turnover_oku": 1.84,
-   "bs_date": "2026-08-12"
+   "bs_date": "2026-08-12",
+   "ma200_slope_improvement": -0.16860024506841764
   },
   {
    "code": "8841",
@@ -270,7 +297,8 @@
    "mcap_oku": 882.17,
    "price": 1000.0,
    "turnover_oku": 1.63,
-   "bs_date": "2026-08-04"
+   "bs_date": "2026-08-04",
+   "ma200_slope_improvement": -4.869051306122474
   },
   {
    "code": "8141",
@@ -280,7 +308,8 @@
    "mcap_oku": 454.78,
    "price": 1567.0,
    "turnover_oku": 1.75,
-   "bs_date": "2026-07-31"
+   "bs_date": "2026-07-31",
+   "ma200_slope_improvement": 0.6200911673589049
   },
   {
    "code": "6730",
@@ -290,7 +319,8 @@
    "mcap_oku": 120.57,
    "price": 1118.0,
    "turnover_oku": 10.35,
-   "bs_date": "2026-08-05"
+   "bs_date": "2026-08-05",
+   "ma200_slope_improvement": -6.959565566698645
   },
   {
    "code": "6418",
@@ -300,7 +330,8 @@
    "mcap_oku": 321.42,
    "price": 1185.0,
    "turnover_oku": 2.0,
-   "bs_date": "2026-08-06"
+   "bs_date": "2026-08-06",
+   "ma200_slope_improvement": 2.3020914659457103
   },
   {
    "code": "7607",
@@ -310,7 +341,8 @@
    "mcap_oku": 425.75,
    "price": 2978.0,
    "turnover_oku": 1.34,
-   "bs_date": "2026-07-10"
+   "bs_date": "2026-07-10",
+   "ma200_slope_improvement": -0.5621521256382267
   },
   {
    "code": "8103",
@@ -320,7 +352,8 @@
    "mcap_oku": 371.76,
    "price": 961.0,
    "turnover_oku": 1.56,
-   "bs_date": "2026-07-31"
+   "bs_date": "2026-07-31",
+   "ma200_slope_improvement": -2.2686702492368926
   },
   {
    "code": "4725",
@@ -330,7 +363,8 @@
    "mcap_oku": 339.95,
    "price": 1922.0,
    "turnover_oku": 1.19,
-   "bs_date": "2026-08-13"
+   "bs_date": "2026-08-13",
+   "ma200_slope_improvement": -1.4205391618485552
   },
   {
    "code": "3851",
@@ -340,7 +374,8 @@
    "mcap_oku": 75.85,
    "price": 1474.0,
    "turnover_oku": 3.47,
-   "bs_date": "2026-08-07"
+   "bs_date": "2026-08-07",
+   "ma200_slope_improvement": null
   },
   {
    "code": "3431",
@@ -350,7 +385,8 @@
    "mcap_oku": 403.86,
    "price": 1563.0,
    "turnover_oku": 1.22,
-   "bs_date": "2026-08-06"
+   "bs_date": "2026-08-06",
+   "ma200_slope_improvement": -4.176828604216343
   },
   {
    "code": "6276",
@@ -360,7 +396,8 @@
    "mcap_oku": 21.3,
    "price": 370.0,
    "turnover_oku": 1.24,
-   "bs_date": "2026-08-14"
+   "bs_date": "2026-08-14",
+   "ma200_slope_improvement": 5.608700373910125
   },
   {
    "code": "6809",
@@ -370,7 +407,8 @@
    "mcap_oku": 587.91,
    "price": 1708.0,
    "turnover_oku": 1.52,
-   "bs_date": "2026-08-04"
+   "bs_date": "2026-08-04",
+   "ma200_slope_improvement": -8.35921940118447
   },
   {
    "code": "7860",
@@ -380,7 +418,8 @@
    "mcap_oku": 519.56,
    "price": 1235.0,
    "turnover_oku": 1.62,
-   "bs_date": "2026-08-06"
+   "bs_date": "2026-08-06",
+   "ma200_slope_improvement": 1.5189163271766115
   },
   {
    "code": "6905",
@@ -390,7 +429,8 @@
    "mcap_oku": 533.09,
    "price": 1296.0,
    "turnover_oku": 1.78,
-   "bs_date": "2026-06-19"
+   "bs_date": "2026-06-19",
+   "ma200_slope_improvement": -1.2537636514287964
   },
   {
    "code": "2305",
@@ -400,7 +440,8 @@
    "mcap_oku": 302.54,
    "price": 1823.0,
    "turnover_oku": 1.06,
-   "bs_date": "2026-07-13"
+   "bs_date": "2026-07-13",
+   "ma200_slope_improvement": 0.7617019576572459
   },
   {
    "code": "6918",
@@ -410,7 +451,8 @@
    "mcap_oku": 223.37,
    "price": 3600.0,
    "turnover_oku": 2.8,
-   "bs_date": "2026-08-13"
+   "bs_date": "2026-08-13",
+   "ma200_slope_improvement": 0.030624105527787826
   },
   {
    "code": "9739",
@@ -420,7 +462,8 @@
    "mcap_oku": 388.57,
    "price": 2656.0,
    "turnover_oku": 1.0,
-   "bs_date": "2026-08-03"
+   "bs_date": "2026-08-03",
+   "ma200_slope_improvement": 1.6798736269022285
   },
   {
    "code": "3636",
@@ -430,7 +473,8 @@
    "mcap_oku": 808.31,
    "price": 4780.0,
    "turnover_oku": 2.01,
-   "bs_date": "2026-07-29"
+   "bs_date": "2026-07-29",
+   "ma200_slope_improvement": -1.9937838041109046
   },
   {
    "code": "3302",
@@ -440,7 +484,8 @@
    "mcap_oku": 787.11,
    "price": 3065.0,
    "turnover_oku": 1.96,
-   "bs_date": "2026-08-05"
+   "bs_date": "2026-08-05",
+   "ma200_slope_improvement": -1.4201821462289654
   },
   {
    "code": "8052",
@@ -450,7 +495,8 @@
    "mcap_oku": 544.46,
    "price": 2889.0,
    "turnover_oku": 1.76,
-   "bs_date": "2026-07-31"
+   "bs_date": "2026-07-31",
+   "ma200_slope_improvement": -3.6966196217614655
   },
   {
    "code": "3374",
@@ -460,7 +506,8 @@
    "mcap_oku": 144.74,
    "price": 4010.0,
    "turnover_oku": 1.75,
-   "bs_date": "2026-08-07"
+   "bs_date": "2026-08-07",
+   "ma200_slope_improvement": 10.682420076737099
   },
   {
    "code": "2489",
@@ -470,7 +517,8 @@
    "mcap_oku": 161.42,
    "price": 408.0,
    "turnover_oku": 1.51,
-   "bs_date": "2026-08-12"
+   "bs_date": "2026-08-12",
+   "ma200_slope_improvement": 8.656807485107898
   },
   {
    "code": "6459",
@@ -480,7 +528,8 @@
    "mcap_oku": 807.04,
    "price": 1614.0,
    "turnover_oku": 2.37,
-   "bs_date": "2026-08-10"
+   "bs_date": "2026-08-10",
+   "ma200_slope_improvement": -3.2640816088706615
   },
   {
    "code": "1976",
@@ -490,7 +539,8 @@
    "mcap_oku": 795.48,
    "price": 1733.0,
    "turnover_oku": 1.73,
-   "bs_date": "2026-07-31"
+   "bs_date": "2026-07-31",
+   "ma200_slope_improvement": -2.504147476245655
   },
   {
    "code": "6196",
@@ -500,7 +550,8 @@
    "mcap_oku": 267.85,
    "price": 1397.0,
    "turnover_oku": 6.21,
-   "bs_date": "2026-07-30"
+   "bs_date": "2026-07-30",
+   "ma200_slope_improvement": -3.853422892187597
   },
   {
    "code": "4072",
@@ -510,7 +561,8 @@
    "mcap_oku": 338.2,
    "price": 3030.0,
    "turnover_oku": 1.02,
-   "bs_date": "2026-08-12"
+   "bs_date": "2026-08-12",
+   "ma200_slope_improvement": -8.915258343943389
   },
   {
    "code": "1514",
@@ -520,7 +572,8 @@
    "mcap_oku": 383.17,
    "price": 666.0,
    "turnover_oku": 3.26,
-   "bs_date": "2026-07-31"
+   "bs_date": "2026-07-31",
+   "ma200_slope_improvement": -7.78573745240122
   },
   {
    "code": "2325",
@@ -530,7 +583,8 @@
    "mcap_oku": 447.11,
    "price": 4695.0,
    "turnover_oku": 1.32,
-   "bs_date": "2026-08-12"
+   "bs_date": "2026-08-12",
+   "ma200_slope_improvement": -1.8237715184133974
   },
   {
    "code": "4668",
@@ -540,7 +594,8 @@
    "mcap_oku": 186.01,
    "price": 762.0,
    "turnover_oku": 1.33,
-   "bs_date": "2026-07-14"
+   "bs_date": "2026-07-14",
+   "ma200_slope_improvement": 2.3813539603038225
   },
   {
    "code": "8157",
@@ -550,7 +605,8 @@
    "mcap_oku": 748.73,
    "price": 4110.0,
    "turnover_oku": 1.43,
-   "bs_date": "2026-07-31"
+   "bs_date": "2026-07-31",
+   "ma200_slope_improvement": -1.0580081005808317
   },
   {
    "code": "7018",
@@ -560,7 +616,8 @@
    "mcap_oku": 240.95,
    "price": 13460.0,
    "turnover_oku": 4.15,
-   "bs_date": "2026-08-06"
+   "bs_date": "2026-08-06",
+   "ma200_slope_improvement": -18.556631340745277
   },
   {
    "code": "6535",
@@ -570,7 +627,8 @@
    "mcap_oku": 305.12,
    "price": 513.0,
    "turnover_oku": 1.6,
-   "bs_date": "2026-06-11"
+   "bs_date": "2026-06-11",
+   "ma200_slope_improvement": -0.695241579358663
   },
   {
    "code": "6269",
@@ -580,7 +638,8 @@
    "mcap_oku": 47.38,
    "price": 9574.0,
    "turnover_oku": 66.25,
-   "bs_date": "2026-08-07"
+   "bs_date": "2026-08-07",
+   "ma200_slope_improvement": -18.905315455022098
   }
  ]
 }
