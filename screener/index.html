@@ -268,7 +268,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.16";  // 2.16 総合局面と判定根拠
+  const VER="2.17";  // 2.17 指標の意味と金利・信用・利益の読み方
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -372,7 +372,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     const b=document.querySelector(`#tabs [data-tab="${order[i]}"]`);if(b)b.scrollIntoView({inline:'center',block:'nearest'});
   },{passive:true});
   renderTabs();
-  import('./macro.js?v=2.16').then(m=>m.mountMacro(document.getElementById('macro')))
+  import('./macro.js?v=2.17').then(m=>m.mountMacro(document.getElementById('macro')))
     .catch(()=>{document.getElementById('macro').textContent='マクロ画面を読み込めません。再読込してください。';});
   import('./ideal.js?v=2.14').then(m=>m.mount(document.getElementById('ideal')))
     .catch(()=>{$('#ideal').textContent='理想配分を読み込めません。更新ボタンで再読込してください。';});
