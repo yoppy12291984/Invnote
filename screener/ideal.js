@@ -19,7 +19,6 @@ export function mount(root){
  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const yen=v=>v.toLocaleString('ja-JP',{maximumFractionDigits:1});
  let notice='',view='table';
- try{if(localStorage.getItem('screener_ideal_view_v1')==='card')view='card';}catch{}
  function save(next,structural=false){try{localStorage.setItem(KEY,JSON.stringify({version:2,...next}));}catch(e){root.querySelector('#ideal-save').textContent='端末への保存に失敗しました。変更は未確定です。';return false;}plan=next;notice='この端末に保存しました。他の端末とは同期しません。';root.querySelector('#ideal-save').textContent=notice;window.dispatchEvent(new Event('ideal-plan-changed'));return true;}
  function fromScreen(){return {budget:root.querySelector('#ideal-budget').value,items:[...root.querySelectorAll('[data-code]')].map((el,i)=>({...plan.items[i],weight:el.querySelector('[data-field=weight]').value,price:el.querySelector('[data-field=price]').value}))};}
  function draw(){const s=fromScreen(),r=calculate(Number(s.budget)*10000,s.items.map(x=>({...x,weight:x.weight===''?NaN:Number(x.weight),price:x.price===''?NaN:Number(x.price)})));root.querySelector('#ideal-summary').textContent=s.budget===''?'資金を入力すると目安株数が表示されます。':r.error||`${s.items.length}銘柄・株式 ${r.total.toFixed(1)}％・約${yen(r.invested/10000)}万円 ／ 残る現金 約${yen(r.cash/10000)}万円（切捨て残額を含む）`;[...root.querySelectorAll('[data-result]')].forEach((el,i)=>el.textContent=r.items?`${yen(r.items[i].shares)}株 ／ 約${yen(r.items[i].amount)}円`:'— 株');root.querySelectorAll('[data-compact-weight]').forEach((el,i)=>el.textContent=s.items[i].weight===''?'—':s.items[i].weight+'%');root.querySelectorAll('[data-compact-shares]').forEach((el,i)=>el.textContent=r.items?yen(r.items[i].shares)+'株':'—');}
@@ -39,7 +38,7 @@ export function mount(root){
  const expand=(button,open)=>{button.setAttribute('aria-expanded',String(open));root.querySelector('#'+button.getAttribute('aria-controls')).hidden=!open;button.querySelector('.ideal-arrow').textContent=open?'−':'＋';};
  const applyView=()=>{root.dataset.idealView=view;root.querySelectorAll('[data-ideal-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.idealMode===view)));root.querySelectorAll('.ideal-row-toggle').forEach(b=>expand(b,view==='card'));};
  root.querySelectorAll('.ideal-row-toggle').forEach(b=>b.onclick=()=>expand(b,b.getAttribute('aria-expanded')!=='true'));
- root.querySelectorAll('[data-ideal-mode]').forEach(b=>b.onclick=()=>{try{localStorage.setItem('screener_ideal_view_v1',b.dataset.idealMode);}catch{root.querySelector('#ideal-save').textContent='表示形式を保存できませんでした。この画面だけ切り替えます。';}view=b.dataset.idealMode;applyView();});
+ root.querySelectorAll('[data-ideal-mode]').forEach(b=>b.onclick=()=>{view=b.dataset.idealMode;applyView();});
  applyView();
  const editor=root.querySelector('#ideal-editor');let editing=-1;
  function edit(i){editing=i;const r=i<0?{code:'',name:'',weight:0,price:''}:fromScreen().items[i];for(const k of ['code','name','weight','price'])editor.elements[k].value=r[k];root.querySelector('#ideal-editor-title').textContent=i<0?'銘柄を追加':'銘柄を編集';root.querySelector('#ideal-editor-error').textContent='';editor.hidden=false;editor.elements.code.focus();}
