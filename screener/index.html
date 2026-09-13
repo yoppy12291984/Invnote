@@ -88,6 +88,14 @@ table.rows td.nm small{color:var(--mut);font-size:12px}
 table.rows td.nc{font-weight:600;color:var(--ink)}
 table.rows td.mu{color:var(--mut);font-size:12.5px}
 .ma200-improving{color:var(--dn);font-weight:600}
+.mark-blue{--mark:var(--blu)}.mark-green{--mark:var(--dn)}.mark-yellow{--mark:var(--amb)}.mark-red{--mark:var(--up)}
+#cand tr[class*="mark-"] td{background:color-mix(in srgb,var(--mark) 10%,var(--bg))}
+#cand tr[class*="mark-"] td.nm{box-shadow:inset 4px 0 var(--mark);padding-left:9px}
+.pick-label{display:block;font-size:11px;color:var(--blu);white-space:normal;line-height:1.4;margin-top:3px}
+.mark-controls{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;max-width:calc(100vw - 48px)}
+.mark-controls button{min-height:44px;min-width:44px;border:1px solid var(--line);border-radius:7px;padding:6px 10px}
+.mark-controls button[aria-pressed=true]{outline:2px solid var(--ink);outline-offset:1px}
+.mark-controls button[class*="mark-"]{color:var(--mark);background:color-mix(in srgb,var(--mark) 10%,var(--sur))}
 table.rows tr.detail td{text-align:left;white-space:normal;background:var(--sur);padding:8px 10px;cursor:default}
 .links{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
 .links a{font-size:12px;padding:2px 9px;border:1px solid var(--line);border-radius:999px;color:var(--mut)}
@@ -188,8 +196,12 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   <div class="bar">
     <button class="chip" data-f="small">時価総額 ≤500億</button>
     <button class="chip" data-f="thin">売買代金 1〜5億</button>
+    <button class="chip" data-f="proposal">提案10社</button>
     <span class="cnt" id="candCount"></span>
   </div>
+  <p class="hint" id="proposalHint">青：2026/9/13の提案10社（買付済みの意味ではありません）。銘柄をタップして色を変更できます。提案は自動更新されません。</p>
+  <p class="hint" id="markStatus" role="status">自分の色はこの端末・ブラウザに保存。他の端末とは同期しません。</p>
+  <p class="hint">評価値の点検中：福田組などで株式数との不整合を確認。提案の目印は表のNC・PBRの正確性を保証しません。</p>
   <div class="tblwrap"><table class="rows">
     <thead><tr>
       <th data-k="name">銘柄</th>
@@ -241,7 +253,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.5";   // 2.5 検証記録に参考知見（notes_soft）を追加
+  const VER="2.6";   // 2.6 提案10社の目印・端末保存の色分け
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -325,18 +337,28 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   $('#cycle').innerHTML=`<b>${esc(c.M)} ${esc(c.label)}</b>（${esc(c.month)}）　FF ${fmt(c.ff)}%　失業率 ${fmt(c.unrate,1)}%　10-2y ${fmt(c.spread10_2)}　VIX <b>${fmt(c.vix,1)}</b>`;
 
   /* candidates */
-  const filt={small:false,thin:false};
+  const filt={small:false,thin:false,proposal:false};
+  // 2026-09-13時点の裁量提案。既定順位・候補条件とは独立。
+  const proposal=new Set(['2153','3151','6419','5946','6118','1899','4620','6463','9413','8052']);
+  const MARK_KEY='screener_candidate_marks_v1';
+  const markLabels={blue:'青',green:'緑',yellow:'黄',red:'赤',none:'色なし'};
+  let marks={};
+  try{const saved=JSON.parse(localStorage.getItem(MARK_KEY)||'{}');
+    if(saved&&typeof saved==='object'&&!Array.isArray(saved)) for(const [code,value] of Object.entries(saved))
+      if(/^[0-9A-Z]{4,5}$/.test(code)&&Object.hasOwn(markLabels,value)) marks[code]=value;
+  }catch(e){$('#markStatus').textContent='保存した色を読み込めません。この画面では色を変更できます。';}
+  const markFor=code=>marks[code]||(proposal.has(code)?'blue':'none');
   let sortKey='nc',sortDesc=true;
   const rows=$('#candBody');
   if(cand.ma200_date) $('#ma200Hint').textContent+=` 基準日：${cand.ma200_date}。`;
   const improvementText=v=>v==null?'—':v>0?`<span class="ma200-improving">+${fmt(v,2)} pt</span>`:`${fmt(v,2)} pt`;
   function render(){
-    let items=cand.items.filter(x=>(!filt.small||x.mcap_oku<=500)&&(!filt.thin||(x.turnover_oku>=1&&x.turnover_oku<=5)));
+    let items=cand.items.filter(x=>(!filt.small||x.mcap_oku<=500)&&(!filt.thin||(x.turnover_oku>=1&&x.turnover_oku<=5))&&(!filt.proposal||proposal.has(x.code)));
     items.sort((a,b)=>{const va=a[sortKey],vb=b[sortKey];if(va==null)return vb==null?0:1;if(vb==null)return -1;const r=typeof va==='string'?va.localeCompare(vb,'ja'):(va-vb);return sortDesc?-r:r;});
     $('#candCount').textContent=`${items.length} / ${cand.count}`;
     if(!items.length){rows.innerHTML='<tr><td colspan="6" class="empty">条件に合う銘柄がありません</td></tr>';return;}
-    rows.innerHTML=items.map(x=>`<tr class="r" data-code="${esc(x.code)}">
-      <td class="nm"><b>${esc(x.name)}</b><small>${esc(x.code)}　${fmt(x.price,0)}円</small></td>
+    rows.innerHTML=items.map(x=>`<tr class="r mark-${markFor(x.code)}" data-code="${esc(x.code)}">
+      <td class="nm"><b>${esc(x.name)}</b><small>${esc(x.code)}　${fmt(x.price,0)}円</small>${proposal.has(x.code)?'<span class="pick-label">提案10社 · 9/13</span>':''}${Object.hasOwn(marks,x.code)?`<span class="pick-label">自分の色：${markLabels[marks[x.code]]}</span>`:''}</td>
       <td class="nc">${fmt(x.nc)}</td>
       <td class="mu">${fmt(x.pbr)}</td>
       <td class="mu">${improvementText(x.ma200_slope_improvement)}</td>
@@ -344,13 +366,25 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
       <td class="mu">${fmt(x.turnover_oku,1)}億</td></tr>`).join('');
   }
   rows.addEventListener('click',e=>{
+    const paint=e.target.closest('button[data-mark]');
+    if(paint){
+      const code=paint.dataset.code,value=paint.dataset.mark;
+      if(value==='auto') delete marks[code]; else if(Object.hasOwn(markLabels,value)) marks[code]=value; else return;
+      try{localStorage.setItem(MARK_KEY,JSON.stringify(marks));$('#markStatus').textContent='色をこの端末に保存しました。他の端末とは同期しません。';}
+      catch(err){$('#markStatus').textContent='保存できませんでした。色は再読込すると元に戻ります。';}
+      render();
+      const target=Array.from(rows.querySelectorAll('tr.r')).find(r=>r.dataset.code===code);
+      target?.click();
+      rows.querySelector(`button[data-mark="${value}"]`)?.focus();
+      return;
+    }
     const tr=e.target.closest('tr.r'); if(!tr) return;
     const open=tr.nextElementSibling?.classList.contains('detail');
     $$('tr.detail').forEach(d=>d.remove());
     if(open) return;
     const x=cand.items.find(i=>i.code===tr.dataset.code);
     const d=document.createElement('tr'); d.className='detail';
-    d.innerHTML=`<td colspan="6">${linkRow(x.code)}<div class="meta">ネットキャッシュ比率 ${fmt(x.nc)}　PBR ${fmt(x.pbr)}　直近BS ${esc(x.bs_date)}　200MA改善度 ${improvementText(x.ma200_slope_improvement)}</div></td>`;
+    d.innerHTML=`<td colspan="6">${linkRow(x.code)}<div class="meta">ネットキャッシュ比率 ${fmt(x.nc)}　PBR ${fmt(x.pbr)}　直近BS ${esc(x.bs_date)}　200MA改善度 ${improvementText(x.ma200_slope_improvement)}</div><div class="mark-controls" aria-label="${esc(x.name)}の色">${Object.entries({...markLabels,auto:'初期色に戻す'}).map(([value,label])=>`<button class="mark-${value}" data-mark="${value}" data-code="${esc(x.code)}" aria-pressed="${value===(marks[x.code]||'auto')}">${label}</button>`).join('')}</div></td>`;
     tr.after(d);
   });
   $$('#cand thead th').forEach(th=>th.addEventListener('click',()=>{
