@@ -243,6 +243,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 </section>
 <section id="reb" hidden>
   <p class="warn-note" id="rebNote"></p>
+  <div class="bar"><label>色で絞り込み <select id="rebColor"><option value="all">すべて</option><option value="blue">青（大型）</option><option value="green">緑（200日線以上）</option><option value="both">青＋緑（両方）</option></select></label><span id="rebCount" class="meta" aria-live="polite"></span></div>
   <p class="meta" style="padding:0 4px 8px"><span style="color:var(--blu);font-weight:600">青</span>＝時価総額5000億以上　<span style="color:var(--dn);font-weight:600">緑の縦線</span>＝200日線の上（ステージ2入り）</p>
   <div class="tblwrap"><table class="rows">
     <thead><tr>
@@ -268,7 +269,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.20";  // 2.20 カタリストの表・カード切替とタップ展開
+  const VER="2.21";  // 2.21 反転の色絞込・理想とカタリストは表で開始
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -374,7 +375,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   renderTabs();
   import('./macro.js?v=2.18').then(m=>m.mountMacro(document.getElementById('macro')))
     .catch(()=>{document.getElementById('macro').textContent='マクロ画面を読み込めません。再読込してください。';});
-  import('./ideal.js?v=2.19').then(m=>m.mount(document.getElementById('ideal')))
+  import('./ideal.js?v=2.21').then(m=>m.mount(document.getElementById('ideal')))
     .catch(()=>{$('#ideal').textContent='理想配分を読み込めません。更新ボタンで再読込してください。';});
   import('./performance.js?v=2.14').then(m=>m.mount(document.getElementById('hold')))
     .catch(()=>{$('#hold').textContent='運用成績を読み込めません。更新ボタンで再読込してください。保存データは削除していません。';});
@@ -383,7 +384,6 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   load('catalysts').then(data=>{
     const root=$('#catalyst');
     let layout='table';
-    try{if(localStorage.getItem('screener_catalyst_view_v1')==='card')layout='card';}catch(e){}
     root.innerHTML=`<style>
       #catalyst .cat-toggle{display:grid;grid-template-columns:minmax(0,1fr) 65px 45px 16px;gap:6px;align-items:center;width:100%;min-height:48px;padding:10px 8px;text-align:left;border:0;background:transparent;color:var(--ink);font:inherit;cursor:pointer}
       #catalyst .cat-name{min-width:0;display:flex;flex-direction:column;overflow-wrap:anywhere}#catalyst .cat-name .code{font-size:10px}#catalyst .cat-name .name{font-size:13px;white-space:normal;overflow-wrap:anywhere;line-height:1.35}
@@ -411,7 +411,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
         ${/^[0-9A-Z]{4}$/.test(x.code)?linkRow(x.code):''}</div></article>`).join('')||'<p class="empty">該当する調査候補はありません</p>';
       root.querySelectorAll('.cat-toggle').forEach(b=>b.onclick=()=>{const open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));root.querySelector('#'+b.getAttribute('aria-controls')).hidden=!open;b.querySelector('.cat-arrow').textContent=open?'−':'＋';});
     };
-    root.querySelectorAll('[data-cat-mode]').forEach(b=>b.onclick=()=>{layout=b.dataset.catMode;try{localStorage.setItem('screener_catalyst_view_v1',layout);$('#catalystViewStatus').textContent='表示形式をこの端末に保存しました。';}catch(e){$('#catalystViewStatus').textContent='表示形式を保存できませんでした。この画面だけ切り替えます。';}draw();});
+    root.querySelectorAll('[data-cat-mode]').forEach(b=>b.onclick=()=>{layout=b.dataset.catMode;$('#catalystViewStatus').textContent='再読込時は表モードで始まります。';draw();});
     $('#catalystFilter').addEventListener('change',draw);draw();
   }).catch(()=>{$('#catalyst').innerHTML='<p class="empty">カタリスト調査を読み込めません。更新ボタンで再読込してください。</p>';});
 
@@ -537,8 +537,11 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   function renderReb(){
     $('#rebNote').textContent=reb.note||'観察リストです。機械的に買うと検証では負けます（リフト0.67）。最終判断は自分で。';
     let items=[...(reb.items||[])];
+    const color=$('#rebColor').value;
+    items=items.filter(x=>{const blue=x.mcap_oku>=5000,green=x.ma200!=null&&x.ma200>=0;return color==='all'||(color==='blue'&&blue)||(color==='green'&&green)||(color==='both'&&blue&&green);});
+    $('#rebCount').textContent=`${items.length} / ${(reb.items||[]).length}銘柄`;
     items.sort((a,b)=>{const va=a[rebKey],vb=b[rebKey];const r=typeof va==='string'?va.localeCompare(vb,'ja'):((va??0)-(vb??0));return rebDesc?-r:r;});
-    if(!items.length){rebRows.innerHTML='<tr><td colspan="6" class="empty">点灯銘柄はありません</td></tr>';return;}
+    if(!items.length){rebRows.innerHTML='<tr><td colspan="6" class="empty">該当する銘柄はありません</td></tr>';return;}
     rebRows.innerHTML=items.map(x=>{
       const big=x.mcap_oku>=5000, above=x.ma200!=null&&x.ma200>=0;
       return `<tr class="r${big?' big':''}${above?' above':''}" data-code="${esc(x.code)}">
@@ -549,6 +552,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
       <td class="mu ma200">${x.ma200==null?'—':(x.ma200>=0?'+':'')+fmt(x.ma200,0)+'%'}</td>
       <td class="mu mcap">${fmt(x.mcap_oku,0)}億</td></tr>`}).join('');
   }
+  $('#rebColor').addEventListener('change',renderReb);
   rebRows.addEventListener('click',e=>{
     const tr=e.target.closest('tr.r'); if(!tr) return;
     const open=tr.nextElementSibling?.classList.contains('detail');
