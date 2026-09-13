@@ -250,6 +250,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   </table></div>
 </section>
 <section id="catalyst" hidden></section>
+<section id="ideal" hidden></section>
 <section id="radar" hidden></section>
 <section id="rec" hidden></section>
 <section id="hold" hidden></section>
@@ -259,7 +260,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.10";  // 2.10 初期カタリスト2社（SECカーボン・rakumo）を追加
+  const VER="2.12";  // 2.12 ポートフォリオ全体の運用成績・端末内記録
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -284,7 +285,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   }
 
   /* タブ：並び替え・スワイプ */
-  const TABS=[{v:'cand',t:'候補'},{v:'catalyst',t:'カタリスト'},{v:'reb',t:'反転'},{v:'hold',t:'採点'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'radar',t:'レーダー'},{v:'status',t:'検証'},{v:'rec',t:'記録'}];
+  const TABS=[{v:'cand',t:'候補'},{v:'ideal',t:'理想配分'},{v:'catalyst',t:'カタリスト'},{v:'reb',t:'反転'},{v:'hold',t:'運用成績'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'radar',t:'レーダー'},{v:'status',t:'検証'},{v:'rec',t:'記録'}];
   const tdef=v=>TABS.find(x=>x.v===v);
   const TKEY='screener_tabs';
   let order;
@@ -296,6 +297,11 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     localStorage.setItem(TKEY,JSON.stringify(order));
     localStorage.setItem('screener_catalyst_tab_v1','1');
   }}catch(e){if(!order.includes('catalyst'))order.splice(1,0,'catalyst');}
+  try{if(!localStorage.getItem('screener_ideal_tab_v1')){
+    if(!order.includes('ideal'))order.splice(1,0,'ideal');
+    localStorage.setItem(TKEY,JSON.stringify(order));
+    localStorage.setItem('screener_ideal_tab_v1','1');
+  }}catch(e){if(!order.includes('ideal'))order.splice(1,0,'ideal');}
   let view=order[0];
   const saveOrder=()=>{try{localStorage.setItem(TKEY,JSON.stringify(order));}catch(e){}};
   function renderTabs(){
@@ -322,7 +328,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   });
   let sx=0,sy=0,sw=false;
   document.addEventListener('touchstart',e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;
-    sw=!e.target.closest('.tblwrap,.bar,#tabEdit,a,button,details');},{passive:true});
+    sw=!e.target.closest('.tblwrap,.bar,#tabEdit,a,button,details,input,select');},{passive:true});
   document.addEventListener('touchend',e=>{
     if(!sw)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
     if(Math.abs(dx)<70||Math.abs(dy)>50)return;
@@ -331,6 +337,10 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     const b=document.querySelector(`#tabs [data-tab="${order[i]}"]`);if(b)b.scrollIntoView({inline:'center',block:'nearest'});
   },{passive:true});
   renderTabs();
+  import('./ideal.js?v=2.11').then(m=>m.mount(document.getElementById('ideal')))
+    .catch(()=>{$('#ideal').textContent='理想配分を読み込めません。更新ボタンで再読込してください。';});
+  import('./performance.js?v=2.12').then(m=>m.mount(document.getElementById('hold')))
+    .catch(()=>{$('#hold').textContent='運用成績を読み込めません。更新ボタンで再読込してください。保存データは削除していません。';});
 
   // 調査データの失敗を既存タブへ波及させない。
   load('catalysts').then(data=>{
@@ -352,8 +362,8 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     $('#catalystFilter').addEventListener('change',draw);draw();
   }).catch(()=>{$('#catalyst').innerHTML='<p class="empty">カタリスト調査を読み込めません。更新ボタンで再読込してください。</p>';});
 
-  let index,status,cand,hold,themes,cs;
-  try{[index,status,cand,hold,themes]=await Promise.all(['index','status','candidates','holdings','themes'].map(load));}
+  let index,status,cand,themes,cs;
+  try{[index,status,cand,themes]=await Promise.all(['index','status','candidates','themes'].map(load));}
   catch(e){$('#stat').textContent='';$('#candBody').innerHTML=`<tr><td colspan="6" class="empty err">${esc(e.message)}</td></tr>`;return;}
   try{cs=await load('canslim');}catch(e){cs={date:null,count:0,buckets:{},items:[]};}
   let reb,rec;
@@ -557,24 +567,6 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
       `<p class="meta" style="padding:10px 4px">更新 ${esc(rec.updated||'')}　同じ戦略を繰り返し試さないための記録です</p>`;
   }else{
     $('#rec').innerHTML='<p class="empty">検証記録がありません（export_json.py を更新してください）</p>';
-  }
-
-  /* holdings */
-  const hs=$('#hold');
-  if(!hold.items?.length){hs.innerHTML='<p class="empty">採点対象の記録はまだありません</p>';}
-  else{
-    const score=hold.summary||{};
-    const summary=score.return?`<div class="score-summary">
-      <div><b>${esc(score.return)}</b><span>平均リターン</span></div>
-      <div><b>${esc(score.vs_topix)}</b><span>対TOPIX</span></div>
-      <div><b>${esc(score.vs_pool)}</b><span>対プール平均</span></div>
-    </div><p class="score-note">プールに勝った銘柄 ${fmt(score.pool_wins,0)}/${fmt(score.pool_total,0)}</p>`:'';
-    hs.innerHTML=hold.items.map(h=>`
-      <div class="stk" data-s="${h.sell_date?'売却済':'記録'}">
-        <div class="shead"><span class="code">${esc(h.code)}</span><span class="name">${esc(h.name)}</span><span class="cnt">${esc(h.bucket)}</span></div>
-        <div class="slast num">買値 ${fmt(h.price,0)}円　${esc(h.date)}${h.sell_date?`　→ 売却 ${esc(h.sell_date)} ${fmt(h.sell_price,0)}円`:''}${h.note?`　${esc(h.note)}`:''}</div>
-        ${linkRow(h.code)}
-      </div>`).join('')+summary;
   }
 
   /* themes */
