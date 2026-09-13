@@ -133,7 +133,9 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 .hint{font-size:12px;color:var(--mut);padding:0 4px}
 #edit{color:var(--mut);padding:6px;border-radius:8px;display:flex;align-items:center}
 #edit:hover,#edit.on{color:var(--ink);background:var(--soft)}
-#tabEdit{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;margin:0 0 12px}
+#tabEdit{background:var(--bg);color:var(--ink);border:0;border-radius:0;position:fixed;inset:0;width:100%;height:100dvh;max-width:none;max-height:none;padding:0 max(12px,calc((100vw - 736px)/2)) calc(24px + env(safe-area-inset-bottom));margin:0;overflow-y:auto}
+#tabEdit::backdrop{background:var(--bg)}
+.settings-head{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg);padding:calc(10px + env(safe-area-inset-top)) 0 10px;z-index:2;border-bottom:1px solid var(--line);margin-bottom:12px}
 .led{display:flex;flex-direction:column;gap:4px}
 .led .li{display:flex;gap:4px;align-items:center}
 .led .li span{flex:1;min-width:0;overflow-wrap:anywhere;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 8px;font-size:14px}
@@ -194,7 +196,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   <button id="edit" aria-label="タブ設定" aria-expanded="false" aria-controls="tabEdit" style="font-size:13px;white-space:nowrap">⚙ 設定</button>
   <div class="header-meta"><small id="ver"></small><span id="stat">読み込み中</span></div>
 </header>
-<div id="tabEdit" hidden><b>タブ設定</b><div class="led" id="tabLed"></div><p class="ehint">↑↓で並び替え、×で隠す。この端末に保存されます。</p><div id="tabHidden"></div><details><summary>タブ名を変更</summary><p class="ehint">表示名のみ変更します。例：候補 → 現物・清原式、反転 → 信用・反転。抽出条件や売買ルールは変わりません。空欄で元の名前に戻ります（20文字まで）。</p><form id="tabNames"><div id="tabNameFields"></div><button class="chip" type="submit">名前を保存</button><button class="chip" type="button" id="tabNameReset">名前を初期状態に戻す</button></form></details><p id="tabSettingsStatus" class="ehint" role="status"></p></div>
+<dialog id="tabEdit" aria-labelledby="settingsTitle"><div class="settings-head"><b id="settingsTitle">タブ設定</b><button id="settingsClose" class="chip" type="button">閉じる</button></div><div class="led" id="tabLed"></div><p class="ehint">↑↓で並び替え、×で隠す。この端末に保存されます。</p><div id="tabHidden"></div><details><summary>タブ名を変更</summary><p class="ehint">表示名のみ変更します。例：候補 → 現物・清原式、反転 → 信用・反転。抽出条件や売買ルールは変わりません。空欄で元の名前に戻ります（20文字まで）。</p><form id="tabNames"><div id="tabNameFields"></div><button class="chip" type="submit">名前を保存</button><button class="chip" type="button" id="tabNameReset">名前を初期状態に戻す</button></form></details><p id="tabSettingsStatus" class="ehint" role="status"></p></dialog>
 <p class="cycle" id="cycle"></p>
 <nav id="tabs"></nav>
 
@@ -261,7 +263,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.13";  // 2.13 タブ設定から表示名を変更・端末内保存
+  const VER="2.14";  // 2.14 銘柄編集・全画面タブ設定
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -337,7 +339,10 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     saveNames(next);
   });
   $('#tabNameReset').addEventListener('click',()=>saveNames({}));
-  $('#edit').addEventListener('click',()=>{const p=$('#tabEdit');p.hidden=!p.hidden;$('#edit').classList.toggle('on',!p.hidden);$('#edit').setAttribute('aria-expanded',String(!p.hidden));if(!p.hidden){renderLed();nameFields();}});
+  let settingsOverflow='';
+  $('#edit').addEventListener('click',()=>{const p=$('#tabEdit');if(p.open)return;renderLed();nameFields();settingsOverflow=document.body.style.overflow;document.body.style.overflow='hidden';p.showModal();p.scrollTop=0;$('#edit').setAttribute('aria-expanded','true');$('#settingsClose').focus();});
+  $('#settingsClose').addEventListener('click',()=>$('#tabEdit').close());
+  $('#tabEdit').addEventListener('close',()=>{document.body.style.overflow=settingsOverflow;$('#edit').setAttribute('aria-expanded','false');$('#edit').focus();});
   $('#tabEdit').addEventListener('click',e=>{
     const b=e.target.closest('button');if(!b)return;
     if(b.dataset.show){order=[...order,b.dataset.show];}
@@ -357,9 +362,9 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     const b=document.querySelector(`#tabs [data-tab="${order[i]}"]`);if(b)b.scrollIntoView({inline:'center',block:'nearest'});
   },{passive:true});
   renderTabs();
-  import('./ideal.js?v=2.11').then(m=>m.mount(document.getElementById('ideal')))
+  import('./ideal.js?v=2.14').then(m=>m.mount(document.getElementById('ideal')))
     .catch(()=>{$('#ideal').textContent='理想配分を読み込めません。更新ボタンで再読込してください。';});
-  import('./performance.js?v=2.12').then(m=>m.mount(document.getElementById('hold')))
+  import('./performance.js?v=2.14').then(m=>m.mount(document.getElementById('hold')))
     .catch(()=>{$('#hold').textContent='運用成績を読み込めません。更新ボタンで再読込してください。保存データは削除していません。';});
 
   // 調査データの失敗を既存タブへ波及させない。
