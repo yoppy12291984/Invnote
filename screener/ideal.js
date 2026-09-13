@@ -1,3 +1,4 @@
+import {decorate} from './list-marks.js?v=2.24';
 export const defaults=[['2153','E・J',9,1817],['3151','バイタルKSK',9,1571],['4401','ADEKA',8,4375],['1941','中電工',8,5120],['3088','マツキヨココカラ',8,2473.5],['8035','東京エレクトロン',8,51460],['7013','IHI',7,2665],['7974','任天堂',7,8093],['5304','SECカーボン',3,2493],['4060','rakumo',3,1190],['8316','三井住友FG',5,6911],['2768','双日',5,5739]].map(([code,name,weight,price])=>({code,name,weight,price}));
 const KEY='screener_ideal_inputs_v1';
 export function readPlan(){
@@ -40,6 +41,7 @@ export function mount(root){
  root.querySelectorAll('.ideal-row-toggle').forEach(b=>b.onclick=()=>expand(b,b.getAttribute('aria-expanded')!=='true'));
  root.querySelectorAll('[data-ideal-mode]').forEach(b=>b.onclick=()=>{view=b.dataset.idealMode;applyView();});
  applyView();
+ decorate(root);
  const editor=root.querySelector('#ideal-editor');let editing=-1;
  function edit(i){editing=i;const r=i<0?{code:'',name:'',weight:0,price:''}:fromScreen().items[i];for(const k of ['code','name','weight','price'])editor.elements[k].value=r[k];root.querySelector('#ideal-editor-title').textContent=i<0?'銘柄を追加':'銘柄を編集';root.querySelector('#ideal-editor-error').textContent='';editor.hidden=false;editor.elements.code.focus();}
  root.querySelector('#ideal-add').onclick=()=>edit(-1);root.querySelector('#ideal-cancel').onclick=()=>editor.hidden=true;
