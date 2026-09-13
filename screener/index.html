@@ -268,7 +268,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.18";  // 2.18 金利分解・カーブ・信用警戒と設定
+  const VER="2.19";  // 2.19 理想配分の表・カード切替とタップ展開
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -374,7 +374,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   renderTabs();
   import('./macro.js?v=2.18').then(m=>m.mountMacro(document.getElementById('macro')))
     .catch(()=>{document.getElementById('macro').textContent='マクロ画面を読み込めません。再読込してください。';});
-  import('./ideal.js?v=2.14').then(m=>m.mount(document.getElementById('ideal')))
+  import('./ideal.js?v=2.19').then(m=>m.mount(document.getElementById('ideal')))
     .catch(()=>{$('#ideal').textContent='理想配分を読み込めません。更新ボタンで再読込してください。';});
   import('./performance.js?v=2.14').then(m=>m.mount(document.getElementById('hold')))
     .catch(()=>{$('#hold').textContent='運用成績を読み込めません。更新ボタンで再読込してください。保存データは削除していません。';});
