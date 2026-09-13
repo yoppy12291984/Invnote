@@ -270,7 +270,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.23";  // 2.23 反転の余白・理想とカタリストの書体統一
+  const VER="2.24";  // 2.24 理想配分・カタリストの縦線と色設定
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -376,7 +376,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   renderTabs();
   import('./macro.js?v=2.18').then(m=>m.mountMacro(document.getElementById('macro')))
     .catch(()=>{document.getElementById('macro').textContent='マクロ画面を読み込めません。再読込してください。';});
-  import('./ideal.js?v=2.23').then(m=>m.mount(document.getElementById('ideal')))
+  import('./ideal.js?v=2.24').then(m=>m.mount(document.getElementById('ideal')))
     .catch(()=>{$('#ideal').textContent='理想配分を読み込めません。更新ボタンで再読込してください。';});
   import('./performance.js?v=2.14').then(m=>m.mount(document.getElementById('hold')))
     .catch(()=>{$('#hold').textContent='運用成績を読み込めません。更新ボタンで再読込してください。保存データは削除していません。';});
@@ -421,6 +421,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
         <details><summary>懸念点・反証と出典</summary><p>${esc(x.risk)}</p>
         <p>${(x.sources||[]).filter(s=>/^https:\/\//i.test(s.url)).map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)}</a>`).join(' / ')}</p></details></div>
         ${/^[0-9A-Z]{4}$/.test(x.code)?linkRow(x.code):''}</div></article>`).join('')||'<p class="empty">該当する調査候補はありません</p>';
+      import('./list-marks.js?v=2.24').then(m=>m.decorate(root));
       root.querySelectorAll('.cat-toggle').forEach(b=>b.onclick=()=>{const open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));root.querySelector('#'+b.getAttribute('aria-controls')).hidden=!open;b.querySelector('.cat-arrow').textContent=open?'−':'＋';});
       root.querySelectorAll('.cat-rank-form').forEach(f=>f.onsubmit=e=>{e.preventDefault();const rank=Number(f.elements.rank.value),code=f.dataset.rankCode;
         if(!Number.isInteger(rank)||rank<1||rank>order.length){$('#catRankStatus').textContent=`優先度は1〜${order.length}の整数で指定してください。`;return;}
