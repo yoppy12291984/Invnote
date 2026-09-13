@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-09-13T13:46:11+00:00",
+  "generated_at": "2026-09-13T14:06:23+00:00",
   "items": [
     {
       "id": "DFII10",
@@ -313,7 +313,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T13:46:11+00:00",
+      "fetched_at": "2026-09-13T14:06:22+00:00",
       "percentile": 100.0,
       "sample_count": 1248,
       "sample_start": "2021-09-13"
@@ -629,7 +629,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T13:46:10+00:00",
+      "fetched_at": "2026-09-13T14:06:22+00:00",
       "percentile": 99.8,
       "sample_count": 1248,
       "sample_start": "2021-09-13"
@@ -945,7 +945,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T13:46:11+00:00",
+      "fetched_at": "2026-09-13T14:06:22+00:00",
       "percentile": 80.4,
       "sample_count": 1248,
       "sample_start": "2021-09-13"
@@ -1261,7 +1261,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T13:46:11+00:00",
+      "fetched_at": "2026-09-13T14:06:22+00:00",
       "percentile": 62.8,
       "sample_count": 1249,
       "sample_start": "2021-09-13"
@@ -1577,7 +1577,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T13:46:11+00:00",
+      "fetched_at": "2026-09-13T14:06:22+00:00",
       "percentile": 59.9,
       "sample_count": 1249,
       "sample_start": "2021-09-13"
@@ -1905,7 +1905,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T13:46:11+00:00",
+      "fetched_at": "2026-09-13T14:06:22+00:00",
       "percentile": 10.4,
       "sample_count": 787,
       "sample_start": "2023-09-12"
@@ -2233,7 +2233,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T13:46:11+00:00",
+      "fetched_at": "2026-09-13T14:06:23+00:00",
       "percentile": 15.6,
       "sample_count": 787,
       "sample_start": "2023-09-12"
@@ -2561,7 +2561,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T13:46:11+00:00",
+      "fetched_at": "2026-09-13T14:06:23+00:00",
       "percentile": 50.4,
       "sample_count": 1287,
       "sample_start": "2021-09-13"
@@ -2877,7 +2877,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T13:46:11+00:00",
+      "fetched_at": "2026-09-13T14:06:23+00:00",
       "percentile": 98.2,
       "sample_count": 1255,
       "sample_start": "2021-09-13"
@@ -3197,7 +3197,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T13:46:11+00:00",
+      "fetched_at": "2026-09-13T14:06:23+00:00",
       "percentile": 81.7,
       "sample_count": 1246,
       "sample_start": "2021-09-13"
@@ -3245,7 +3245,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T13:46:11+00:00",
+      "fetched_at": "2026-09-13T14:06:23+00:00",
       "percentile": 26.7,
       "sample_count": 60,
       "sample_start": "2021-09-01"
@@ -3293,7 +3293,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-09-13T13:46:11+00:00",
+      "fetched_at": "2026-09-13T14:06:23+00:00",
       "percentile": 59.3,
       "sample_count": 59,
       "sample_start": "2021-09-01"
