@@ -425,7 +425,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="3.5";
+const VER="3.6";
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TAB_DEFS=[{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vHot",t:"直前"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"}];
 const tabDef=v=>TAB_DEFS.find(x=>x.v===v);
@@ -1022,7 +1022,12 @@ function renderHist(){renderChart();
 $("#pfHist").addEventListener("click",e=>{const r=e.target.closest("[data-hs]");if(!r)return;histSel=r.dataset.hs;renderHist()});
 $("#pfSnap").addEventListener("click",()=>{snapshot("manual");save();renderPf();toast("記録しました")});
 $("#pfAdd").addEventListener("click",()=>{const code=$("#pfCode").value.trim().toUpperCase();if(!/^(\d{4}|\d{3}[A-Z])$/.test(code)){$("#pfCode").focus();return}setHolding(code,{shares:$("#pfShares").value,avg:$("#pfAvg").value,price:$("#pfPrice").value});save();["pfCode","pfShares","pfAvg","pfPrice"].forEach(i=>$("#"+i).value="");if(!nm(code))lookup(code).then(d=>{applyLookup(code,d);renderPf()});renderPf();toast("追加しました")});
-$("#pfList").addEventListener("click",e=>{const b=e.target.closest("[data-hdel]");if(!b)return;if(!confirm(`${b.dataset.hdel} を保有から外しますか？`))return;delete S.holdings[b.dataset.hdel];(S.deleted=S.deleted||[]).push("h:"+b.dataset.hdel);save();renderPf()});
+$("#pfList").addEventListener("click",e=>{const b=e.target.closest("[data-hdel]");if(!b)return;
+  const code=b.dataset.hdel;
+  if(!confirm(`${code} を保有から外しますか？`))return;
+  const st=stock(code);
+  if(["保有","買い増し"].includes(st.status)){const p=S.holdings[code];st.status=(p&&p.price>=p.avg)?"利確":"損切";touch(code)}
+  delete S.holdings[code];(S.deleted=S.deleted||[]).push("h:"+code);save();renderPf()});
 
 /* ---------- diary ---------- */
 let dCur=dstr(Date.now()),dT=null;
