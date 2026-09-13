@@ -268,7 +268,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.19";  // 2.19 理想配分の表・カード切替とタップ展開
+  const VER="2.20";  // 2.20 カタリストの表・カード切替とタップ展開
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -382,20 +382,36 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   // 調査データの失敗を既存タブへ波及させない。
   load('catalysts').then(data=>{
     const root=$('#catalyst');
-    root.innerHTML=`<p class="hint">全業種から探す構造変化・カタリスト<br>調査日 ${esc(data.date)} · ${esc(data.edition)}<br>${esc(data.note)}</p>
-      <label>表示 <select id="catalystFilter"><option value="all">すべて</option><option value="deep">深掘り候補</option><option value="watch">監視候補</option></select></label><div id="catalystCards"></div>`;
+    let layout='table';
+    try{if(localStorage.getItem('screener_catalyst_view_v1')==='card')layout='card';}catch(e){}
+    root.innerHTML=`<style>
+      #catalyst .cat-toggle{display:grid;grid-template-columns:minmax(0,1fr) 65px 45px 16px;gap:6px;align-items:center;width:100%;min-height:48px;padding:10px 8px;text-align:left;border:0;background:transparent;color:var(--ink);font:inherit;cursor:pointer}
+      #catalyst .cat-name{min-width:0;display:flex;flex-direction:column;overflow-wrap:anywhere}#catalyst .cat-name .code{font-size:10px}#catalyst .cat-name .name{font-size:13px;white-space:normal;overflow-wrap:anywhere;line-height:1.35}
+      #catalyst .cat-small{font-size:11px;text-align:right}#catalyst .cat-detail{padding:0 12px 12px;overflow-wrap:anywhere}#catalyst .cat-detail[hidden]{display:none}
+      #catalyst .cat-list-head{display:grid;grid-template-columns:minmax(0,1fr) 65px 45px 16px;gap:6px;padding:8px;font-size:11px;color:var(--mut)}#catalyst .cat-list-head span:not(:first-child){text-align:right}
+      #catalyst[data-layout=table] .stk{padding:0;margin:0;border-radius:0;border-left:1px solid var(--line);border-bottom:0}#catalyst[data-layout=table] .stk:last-child{border-bottom:1px solid var(--line)}
+      #catalyst[data-layout=card] .stk{padding:0}#catalyst[data-layout=card] .cat-name .name{font-size:16px}#catalyst[data-layout=card] .cat-toggle{padding:14px 12px}#catalyst[data-layout=card] .cat-list-head{display:none}
+      #catalyst .cat-controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:12px 0}#catalyst [aria-pressed=true]{background:var(--ink);color:var(--sur)}#catalyst .cat-toggle:focus-visible{outline:2px solid currentColor;outline-offset:-2px}
+      </style><p class="hint">調査日 ${esc(data.date)} · ${esc(data.edition)}<br>銘柄をタップして調査内容を開きます。優先度は調査順で、買い順位ではありません。</p>
+      <details><summary>調査の位置づけ・注意事項</summary><p class="hint">全業種から探す構造変化・カタリスト<br>${esc(data.note)}</p></details>
+      <div class="cat-controls"><label>表示 <select id="catalystFilter"><option value="all">すべて</option><option value="deep">深掘り候補</option><option value="watch">監視候補</option></select></label><button type="button" class="chip" data-cat-mode="table">表モード</button><button type="button" class="chip" data-cat-mode="card">カードモード</button></div><p id="catalystViewStatus" class="hint" role="status"></p>
+      <div class="cat-list-head" aria-hidden="true"><span>銘柄</span><span>区分</span><span>優先度</span><span></span></div><div id="catalystCards"></div>`;
     const draw=()=>{
       const mode=$('#catalystFilter').value;
       const items=(data.items||[]).filter(x=>mode==='all'||x.group===mode);
-      $('#catalystCards').innerHTML=items.map(x=>`<article class="stk" style="overflow-wrap:anywhere">
-        <div class="shead"><span class="code">${esc(x.code)}</span><span class="name">${esc(x.name)}</span></div>
+      root.dataset.layout=layout;
+      root.querySelectorAll('[data-cat-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.catMode===layout)));
+      $('#catalystCards').innerHTML=items.map((x,i)=>`<article class="stk" style="overflow-wrap:anywhere">
+        <button type="button" class="cat-toggle" aria-expanded="${layout==='card'}" aria-controls="cat-detail-${i}"><span class="cat-name"><span class="code">${esc(x.code)}</span><span class="name">${esc(x.name)}</span></span><span class="cat-small">${x.group==='deep'?'深掘り':x.group==='watch'?'監視':esc(x.group)}</span><span class="cat-small">${esc(x.rank)}</span><span class="cat-small cat-arrow" aria-hidden="true">${layout==='card'?'−':'＋'}</span></button><div class="cat-detail" id="cat-detail-${i}" ${layout==='card'?'':'hidden'}>
         <p class="slast">${esc(x.status)} · 調査優先度 ${esc(x.rank)}</p>
         <div class="body"><b>変化・カタリスト</b><p>${esc(x.thesis)}</p>
         <b>次に確認すること</b><p>${esc(x.next_check)}</p>
         <details><summary>懸念点・反証と出典</summary><p>${esc(x.risk)}</p>
         <p>${(x.sources||[]).filter(s=>/^https:\/\//i.test(s.url)).map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)}</a>`).join(' / ')}</p></details></div>
-        ${/^[0-9A-Z]{4}$/.test(x.code)?linkRow(x.code):''}</article>`).join('')||'<p class="empty">該当する調査候補はありません</p>';
+        ${/^[0-9A-Z]{4}$/.test(x.code)?linkRow(x.code):''}</div></article>`).join('')||'<p class="empty">該当する調査候補はありません</p>';
+      root.querySelectorAll('.cat-toggle').forEach(b=>b.onclick=()=>{const open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));root.querySelector('#'+b.getAttribute('aria-controls')).hidden=!open;b.querySelector('.cat-arrow').textContent=open?'−':'＋';});
     };
+    root.querySelectorAll('[data-cat-mode]').forEach(b=>b.onclick=()=>{layout=b.dataset.catMode;try{localStorage.setItem('screener_catalyst_view_v1',layout);$('#catalystViewStatus').textContent='表示形式をこの端末に保存しました。';}catch(e){$('#catalystViewStatus').textContent='表示形式を保存できませんでした。この画面だけ切り替えます。';}draw();});
     $('#catalystFilter').addEventListener('change',draw);draw();
   }).catch(()=>{$('#catalyst').innerHTML='<p class="empty">カタリスト調査を読み込めません。更新ボタンで再読込してください。</p>';});
 
