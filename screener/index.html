@@ -111,6 +111,11 @@ table.rows tr.detail td{text-align:left;white-space:normal;background:var(--sur)
 .shead .name{font-weight:600;font-size:16px}
 .shead .cnt{margin-left:auto}
 .slast{font-size:13px;color:var(--mut);margin-top:4px}
+.score-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+.score-summary div{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:9px 8px;text-align:center}
+.score-summary b{display:block;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.score-summary span{display:block;font-size:11px;color:var(--mut);white-space:nowrap}
+.score-note{font-size:11px;color:var(--mut);margin:6px 4px 0}
 .body{font-size:14px;margin-top:6px;white-space:pre-wrap;word-break:break-word}
 .body .k{color:var(--mut);font-size:12px;margin-right:6px}
 .body .warn{color:var(--amb)}
@@ -253,7 +258,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.6";   // 2.6 提案10社の目印・端末保存の色分け
+  const VER="2.7";   // 2.7 採点の重複除去・スマホ向け集計表示
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -531,13 +536,18 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   const hs=$('#hold');
   if(!hold.items?.length){hs.innerHTML='<p class="empty">採点対象の記録はまだありません</p>';}
   else{
-    const seen=new Set();
-    hs.innerHTML=hold.items.filter(h=>{const k=h.code+h.date;if(seen.has(k))return false;seen.add(k);return true;}).map(h=>`
+    const score=hold.summary||{};
+    const summary=score.return?`<div class="score-summary">
+      <div><b>${esc(score.return)}</b><span>平均リターン</span></div>
+      <div><b>${esc(score.vs_topix)}</b><span>対TOPIX</span></div>
+      <div><b>${esc(score.vs_pool)}</b><span>対プール平均</span></div>
+    </div><p class="score-note">プールに勝った銘柄 ${fmt(score.pool_wins,0)}/${fmt(score.pool_total,0)}</p>`:'';
+    hs.innerHTML=hold.items.map(h=>`
       <div class="stk" data-s="${h.sell_date?'売却済':'記録'}">
         <div class="shead"><span class="code">${esc(h.code)}</span><span class="name">${esc(h.name)}</span><span class="cnt">${esc(h.bucket)}</span></div>
         <div class="slast num">買値 ${fmt(h.price,0)}円　${esc(h.date)}${h.sell_date?`　→ 売却 ${esc(h.sell_date)} ${fmt(h.sell_price,0)}円`:''}${h.note?`　${esc(h.note)}`:''}</div>
         ${linkRow(h.code)}
-      </div>`).join('')+(hold.score_text?`<pre>${esc(hold.score_text)}</pre>`:'');
+      </div>`).join('')+summary;
   }
 
   /* themes */
