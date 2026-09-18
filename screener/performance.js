@@ -1,5 +1,5 @@
-import {mountImports} from './performance-import.js?v=2.25';
-import {defaults,calculate,readPlan} from './ideal.js?v=2.25';
+import {mountImports} from './performance-import.js?v=2.28';
+import {defaults,calculate,readPlan} from './ideal.js?v=2.28';
 import {validate,positions,evaluate} from './performance-engine.js?v=2.12';
 const KEY='screener_performance_v1';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
