@@ -191,6 +191,16 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 .macro-card{background:var(--sur);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0;overflow-wrap:anywhere}
 .macro-card p{font-size:13px;line-height:1.65;margin:10px 0}.macro-card small{font-size:11px;line-height:1.6}.macro-card h3{font-size:16px;margin:8px 0}
 .macro-changes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;font-size:12px;margin-top:12px}.macro-changes small{font-size:10px}
+
+/* Table names share the candidate/rebound typography and never stack characters. */
+.stock-list-scroll{max-width:100%;overflow-x:auto}
+#ideal[data-ideal-view=table] .ideal-list-head,#ideal[data-ideal-view=table] .ideal-row-toggle{grid-template-columns:minmax(154px,1fr) 48px 78px 16px;min-width:334px}
+#catalyst[data-layout=table] .cat-list-head,#catalyst[data-layout=table] .cat-toggle{grid-template-columns:minmax(154px,1fr) 65px 45px 16px;min-width:318px}
+#ideal[data-ideal-view=table] .stk{min-width:334px}#catalyst[data-layout=table] .stk{min-width:318px}
+#ideal[data-ideal-view=table] .ideal-row-name .name,#catalyst[data-layout=table] .cat-name .name{display:block;white-space:nowrap;overflow-x:auto;overflow-wrap:normal;scrollbar-width:none;font-family:var(--sans);font-size:14px;font-weight:600;line-height:1.3;letter-spacing:normal}
+#ideal[data-ideal-view=table] .ideal-row-name .code,#catalyst[data-layout=table] .cat-name .code{line-height:1.6;letter-spacing:normal}
+#ideal[data-ideal-view=table] .ideal-list-head,#catalyst[data-layout=table] .cat-list-head{padding:7px 10px}
+
 </style>
 </head>
 <body>
@@ -270,7 +280,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.24";  // 2.24 理想配分・カタリストの縦線と色設定
+  const VER="2.25";  // 2.25 一覧表記統一・テーマ表示切替・灰の説明・運用入力支援
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -374,11 +384,11 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     const b=document.querySelector(`#tabs [data-tab="${order[i]}"]`);if(b)b.scrollIntoView({inline:'center',block:'nearest'});
   },{passive:true});
   renderTabs();
-  import('./macro.js?v=2.18').then(m=>m.mountMacro(document.getElementById('macro')))
+  import('./macro.js?v=2.25').then(m=>m.mountMacro(document.getElementById('macro')))
     .catch(()=>{document.getElementById('macro').textContent='マクロ画面を読み込めません。再読込してください。';});
-  import('./ideal.js?v=2.24').then(m=>m.mount(document.getElementById('ideal')))
+  import('./ideal.js?v=2.25').then(m=>m.mount(document.getElementById('ideal')))
     .catch(()=>{$('#ideal').textContent='理想配分を読み込めません。更新ボタンで再読込してください。';});
-  import('./performance.js?v=2.14').then(m=>m.mount(document.getElementById('hold')))
+  import('./performance.js?v=2.25').then(m=>m.mount(document.getElementById('hold')))
     .catch(()=>{$('#hold').textContent='運用成績を読み込めません。更新ボタンで再読込してください。保存データは削除していません。';});
 
   // 調査データの失敗を既存タブへ波及させない。
@@ -406,7 +416,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
       <details><summary>調査の位置づけ・注意事項</summary><p class="hint">全業種から探す構造変化・カタリスト<br>${esc(data.note)}</p></details>
       <div class="cat-controls"><label>表示 <select id="catalystFilter"><option value="all">すべて</option><option value="deep">深掘り候補</option><option value="watch">監視候補</option></select></label><button type="button" class="chip" data-cat-mode="table">表モード</button><button type="button" class="chip" data-cat-mode="card">カードモード</button></div><p id="catalystViewStatus" class="hint" role="status"></p>
       <p class="hint">優先度は展開して変更できます。変更はこの端末だけに保存され、同じ順位に移すと他の銘柄がずれます。</p><button class="chip" type="button" id="catRankReset">初期の調査順に戻す</button><p class="hint" id="catRankStatus" role="status">${esc(rankNotice)}</p>
-      <div class="cat-list-head" aria-hidden="true"><span>銘柄</span><span>区分</span><span>優先度</span><span></span></div><div id="catalystCards"></div>`;
+      <div class="stock-list-scroll"><div class="cat-list-head" aria-hidden="true"><span>銘柄</span><span>区分</span><span>優先度</span><span></span></div><div id="catalystCards"></div></div>`;
     const draw=()=>{
       const mode=$('#catalystFilter').value;
       const items=order.map(code=>original.find(x=>x.code===code)).filter(x=>x&&(mode==='all'||x.group===mode));
@@ -647,20 +657,18 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     $('#rec').innerHTML='<p class="empty">検証記録がありません（export_json.py を更新してください）</p>';
   }
 
-  /* themes */
-  $('#theme').innerHTML=(themes.items||[]).map(t=>`
-    <div class="stk" data-s="テーマ">
-      <div class="shead"><span class="name">${esc(t.theme_name||t.title)}</span></div>
-      <div class="slast">${esc(t.title)}</div>
-      <div class="body">${esc(t.summary)}
-<span class="k">段階</span>${esc(t.stage)}
-<span class="k">背景</span>${esc(t.driver)}
-<span class="warn">${esc(t.caution)}</span>
-<span class="k">主導</span>${(t.leaders||[]).map(l=>`<a href="${kabutan(String(l).split(' ')[0])}" target="_blank" rel="noopener">${esc(l)}</a>`).join('　')}
-<span class="k">${esc(t.earnings)}　${esc(t.margin)}
-${esc(t.us)}</span></div>
-      ${t.news?.length?`<details><summary>ニュース ${t.news.length}件</summary><ul>${t.news.map(n=>`<li>${esc(n)}</li>`).join('')}</ul></details>`:''}
-    </div>`).join('')||'<p class="empty">テーマの塊はありません</p>';
+  /* themes: view only, preserving research data and order */
+  const themeRoot=$('#theme');let themeMode='table';
+  function drawThemes(){
+    themeRoot.dataset.layout=themeMode;
+    themeRoot.innerHTML='<style>#theme .theme-controls{display:flex;gap:8px;margin:10px 0}#theme [aria-pressed=true]{background:var(--ink);color:var(--sur)}#theme .theme-toggle{display:grid;grid-template-columns:minmax(0,1fr) 80px 20px;align-items:center;gap:8px;text-align:left;width:100%;padding:10px;font:inherit}#theme .theme-title{font-size:14px;font-weight:600;overflow-wrap:anywhere}#theme .theme-stage{font-size:12px;color:var(--mut);overflow-wrap:anywhere}#theme[data-layout=table] .stk{padding:0;margin:0;border-radius:0;background:var(--bg);border-bottom:1px solid var(--line)}#theme .theme-detail{padding:0 12px 12px;overflow-wrap:anywhere}#theme .theme-detail[hidden]{display:none}#theme .theme-head{display:grid;grid-template-columns:minmax(0,1fr) 80px 20px;gap:8px;padding:6px 10px;color:var(--mut);font-size:12px}#theme[data-layout=card] .theme-head{display:none}</style>'+
+      '<div class="theme-controls"><button class="chip" data-theme-mode="table" aria-pressed="'+(themeMode==='table')+'">表モード</button><button class="chip" data-theme-mode="card" aria-pressed="'+(themeMode==='card')+'">カードモード</button></div><p class="hint">テーマをタップすると背景・主導銘柄・ニュースを開けます。</p><div class="theme-head"><span>テーマ</span><span>段階</span><span></span></div>'+
+      (themes.items||[]).map((t,i)=>'<article class="stk"><button class="theme-toggle" aria-expanded="'+(themeMode==='card')+'" aria-controls="theme-detail-'+i+'"><span class="theme-title">'+esc(t.theme_name||t.title)+'</span><span class="theme-stage">'+esc(String(t.stage||'').split(/[（(]/)[0].trim())+'</span><span class="theme-arrow">'+(themeMode==='card'?'−':'＋')+'</span></button><div class="theme-detail" id="theme-detail-'+i+'" '+(themeMode==='card'?'':'hidden')+'><div class="slast">'+esc(t.title)+'</div><div class="body">'+esc(t.summary)+'<p><b>段階</b><br>'+esc(t.stage)+'</p><p><b>背景</b><br>'+esc(t.driver)+'</p><p class="warn">'+esc(t.caution)+'</p><p><b>主導</b><br>'+(t.leaders||[]).map(l=>'<a href="'+kabutan(String(l).split(' ')[0])+'" target="_blank" rel="noopener">'+esc(l)+'</a>').join('　')+'</p><p>'+esc(t.earnings)+' '+esc(t.margin)+'<br>'+esc(t.us)+'</p></div>'+(t.news?.length?'<details><summary>ニュース '+t.news.length+'件</summary><ul>'+t.news.map(n=>'<li>'+esc(n)+'</li>').join('')+'</ul></details>':'')+'</div></article>').join('');
+    if(!(themes.items||[]).length)themeRoot.insertAdjacentHTML('beforeend','<p class="empty">テーマの塊はありません</p>');
+    themeRoot.querySelectorAll('[data-theme-mode]').forEach(button=>button.onclick=()=>{themeMode=button.dataset.themeMode;drawThemes()});
+    themeRoot.querySelectorAll('.theme-toggle').forEach(button=>button.onclick=()=>{const open=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(open));themeRoot.querySelector('#'+button.getAttribute('aria-controls')).hidden=!open;button.querySelector('.theme-arrow').textContent=open?'−':'＋';});
+  }
+  drawThemes();
 
   /* status */
   const st=status.strategies||{};
