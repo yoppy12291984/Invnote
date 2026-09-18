@@ -214,6 +214,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 #startupTab{font:inherit;font-size:16px;max-width:100%;padding:6px;background:var(--sur);color:var(--ink);border:1px solid var(--line);border-radius:6px}
 
 </style>
+<script src="polish.js?v=2.27" defer></script>
 </head>
 <body>
 <div id="app">
@@ -292,7 +293,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.26";  // 2.26 縦線・コンパクト操作・資金欄移動・起動画面設定
+  const VER="2.27";  // 2.26 縦線・コンパクト操作・資金欄移動・起動画面設定
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
