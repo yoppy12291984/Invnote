@@ -224,7 +224,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 #ideal .ideal-row-name .code{white-space:normal;overflow-wrap:anywhere}#ideal .ideal-sector{font-size:11px}
 </style>
 <script src="polish.js?v=2.28" defer></script>
-<script src="updates.js?v=2.31" defer></script>
+<script src="updates.js?v=2.32" defer></script>
 </head>
 <body>
 <div id="app">
@@ -303,7 +303,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.31";  // 変化の要点・テーマ初期カード・列の中央揃え
+  const VER="2.32";  // 候補・カタリスト・反転の更新情報を折り畳む
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
