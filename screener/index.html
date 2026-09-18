@@ -298,7 +298,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.28";  // 2.26 縦線・コンパクト操作・資金欄移動・起動画面設定
+  const VER="2.29";  // 2.26 縦線・コンパクト操作・資金欄移動・起動画面設定
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -591,7 +591,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   let rebKey='dd2y',rebDesc=false;
   const rebRows=$('#rebBody');
   function renderReb(){
-    $('#rebNote').textContent=reb.note||'観察リストです。機械的に買うと検証では負けます（リフト0.67）。最終判断は自分で。';
+    $('#rebNote').textContent=(reb.date?'データ日 '+reb.date+' ／ ':'')+(reb.note||'観察リストです。機械的に買うと検証では負けます（リフト0.67）。最終判断は自分で。');
     let items=[...(reb.items||[])];
     const color=$('#rebColor').value;
     items=items.filter(x=>{const blue=x.mcap_oku>=5000,green=x.ma200!=null&&x.ma200>=0;return color==='all'||(color==='blue'&&blue)||(color==='green'&&green)||(color==='both'&&blue&&green);});
