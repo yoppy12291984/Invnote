@@ -1,3 +1,4 @@
+import {mountCsv} from './performance-csv.js?v=2.28';
 import {validate} from './performance-engine.js?v=2.12';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=v=>v==null?'未確認':v.toLocaleString('ja-JP',{maximumFractionDigits:0})+'円';
@@ -41,5 +42,6 @@ export function mountImports(root,{getState,commit,message}){
  root.querySelector('[data-ledger-check]').onclick=()=>{try{const input=JSON.parse(area.value.trim().replace(/^```(?:json)?\s*|```$/g,''));const result=mergeLedger(getState(),input);pending={input,base:JSON.stringify(getState())};preview.textContent=`開始 ${result.next.start.date}／開始資産 ${yen(result.next.start.capital)}\n新規追加 ${result.added}件\n`+input.events.map(e=>`${e.date} ${e.kind} ${e.code||''} ${e.shares??''}株 ${e.price??e.amount??''}円`).join('\n')+'\n評価日：'+input.points.map(p=>p.date).join('、');save.hidden=false;}catch(e){pending=null;save.hidden=true;preview.textContent=e.message;}};
  save.onclick=()=>{if(!pending)return;try{if(pending.base!==JSON.stringify(getState()))throw Error('記録が変更されました。もう一度内容を確認してください。');const r=mergeLedger(getState(),pending.input);commit(r.next);}catch(e){message(e.message);}};
  root.querySelector('[data-ledger-example]').onclick=()=>{area.value=JSON.stringify({start:{date:'2026-09-18',capital:1000000,topix:null,ideal:[]},events:[{id:'sample-20260918-6136-buy-1',date:'2026-09-18',kind:'buy',code:'6136',shares:100,price:2000,fee:0}],points:[{date:'2026-09-18',prices:{'6136':2000},topix:null}]},null,2);area.oninput();preview.textContent='架空の形式例です。日付・数量・金額・idを実際の明細に置き換えてください。開始資産は株式時価＋現金、開始時の既存保有はその日の時価で記録します。';};
+ mountCsv(root,{getState,commit,merge:mergeLedger});
  refresh();
 }
