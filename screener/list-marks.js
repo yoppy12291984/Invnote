@@ -2,11 +2,8 @@ const labels={blue:'青',green:'緑',yellow:'黄',red:'赤',none:'色なし'};
 export function decorate(root){
  if(!document.getElementById('list-mark-style')){
   const style=document.createElement('style');style.id='list-mark-style';style.textContent=`
-  #ideal .ideal-row-name,#catalyst .cat-name{align-self:stretch;justify-content:center;position:relative;padding-right:8px}
-  #ideal .ideal-row-name:after,#catalyst .cat-name:after{content:'';position:absolute;right:-3px;top:-8px;bottom:-8px;border-right:1px solid var(--line)}
   #ideal .stk[class*="mark-"]>.ideal-row-toggle,#catalyst .stk[class*="mark-"]>.cat-toggle{box-shadow:inset 4px 0 var(--mark);background:color-mix(in srgb,var(--mark) 10%,var(--bg))}
   #ideal .stk[class*="mark-"] .ideal-row-name .name,#catalyst .stk[class*="mark-"] .cat-name .name{color:var(--mark)}
-  #ideal[data-ideal-view=card] .ideal-row-name:after,#catalyst[data-layout=card] .cat-name:after{top:-14px;bottom:-14px}
   `;document.head.append(style);
  }
  const key=`screener_${root.id}_marks_v1`;let marks={};let readError=false;
