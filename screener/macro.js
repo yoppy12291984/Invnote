@@ -1,7 +1,7 @@
 import {indicatorGuide, macroGuide} from './macro-guide.js?v=2.18';
 import {classifyRegime} from './macro-engine.js?v=2.18';
 import {DEFAULTS, validateConfig} from './macro-config.js?v=2.18';
-import {regimePanel, formulaPanel, settingsPanel} from './macro-panel.js?v=2.18';
+import {regimePanel, formulaPanel, settingsPanel} from './macro-panel.js?v=2.25';
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number = value => Number.isFinite(value) ? value.toFixed(2) : '未取得';
 function chart(item) {
