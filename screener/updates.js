@@ -15,6 +15,7 @@
    new MutationObserver(attach).observe(section,{childList:true,subtree:true});attach();
  }
  function render(n,x){
+   const compact=['candidates','catalysts','rebound'].includes(n);
    let lead='';
    if(x.comparison&&n==='themes'){
      const same=JSON.stringify(x.current_topics)===JSON.stringify(x.previous_topics);
@@ -25,7 +26,9 @@
      lead=`<div class="upd-lead"><p><b>${values.length?'前回取得時からの指標変化':'前回取得時から観測値の変更なし'}</b></p><ul>${values.map(({r,c})=>{const units={VIXCLS:'pt',SP500:'pt',DEXJPUS:'円'};const unit=units[r.key]||'%';const delta=typeof c.before==='number'&&typeof c.after==='number'?c.after-c.before:null;return `<li>${esc(r.name)}：<b>${esc(val(c.before))} → ${esc(val(c.after))}${unit}</b>${delta!==null?`（${delta>0?'+':''}${Number(delta.toFixed(3))}${unit==='%'?'%pt':unit}）`:''}</li>`}).join('')}</ul>${x.changed.length>values.length?'<p class="upd-foot">観測日・取得状態だけが変わった指標もあります。詳細は下で確認できます。</p>':''}</div>`;
    }
    if(x.comparison&&n==='radar')lead=`<div class="upd-lead"><p><b>銘柄の入れ替わり：追加${x.added.length}・除外${x.removed.length}</b></p>${x.added.length?`<p>追加例：${esc(x.added.slice(0,5).map(label).join(' ／ '))}${x.added.length>5?' ほか':''}</p>`:''}<p><b>ニュースの新出語</b>：${x.new_words?.length?esc(x.new_words.join(' ／ ')):'なし'}</p><p class="upd-foot">新出語は収集記事の変化です。無関係な記事や表記揺れを含みます。</p></div>`;
-   let out=`<b>今回の更新</b>${lead}<p class="upd-meta">${n==='macro'?'データ生成':'データ基準'}：${esc(date(x.date))}${x.comparison?`<br>比較元：${esc(date(x.previous_date))}（${esc(x.previous_label)}）`:''}</p>`;
+   let out=compact
+     ?`<details class="upd-disclosure" style="margin-top:0"><summary><b>今回の更新</b><span class="upd-meta" style="display:block;font-weight:400">データ基準：${esc(date(x.date))}</span></summary><div class="upd-content">${x.comparison?`<p class="upd-meta">比較元：${esc(date(x.previous_date))}（${esc(x.previous_label)}）</p>`:''}`
+     :`<b>今回の更新</b>${lead}<p class="upd-meta">${n==='macro'?'データ生成':'データ基準'}：${esc(date(x.date))}${x.comparison?`<br>比較元：${esc(date(x.previous_date))}（${esc(x.previous_label)}）`:''}</p>`;
    if(!x.comparison)out+='<p>前回の比較データがありません。今回を基準に、次の公開更新から差分を表示します。</p>';
    else if(n==='themes'){
      const same=JSON.stringify(x.current_topics)===JSON.stringify(x.previous_topics);
@@ -41,7 +44,7 @@
    if(x.crossings?.length)out+=`<details><summary>200日線の上下が変わった銘柄 ${x.crossings.length}件</summary><ul>${x.crossings.map(r=>`<li>${esc(label(r))}：${esc(r.direction)}</li>`).join('')}</ul><p class="upd-foot">2つの基準日の比較です。途中の通過日や、その間の往復は分かりません。</p></details>`;
    out+='<details class="upd-foot"><summary>比較の読み方</summary><p>前回の閲覧ではなく、表示した比較元との差分です。追加・除外は買い・売りの記録ではありません。数値や文章の更新だけで、新しい投資判断が確定したとは扱いません。CAN-SLIMは区分をまたぐ重複を除いた銘柄数です。</p></details>';
    if(n==='candidates')out+='<p class="upd-foot">候補の再抽出は月次処理。週次で株価データを取得しても、この一覧は自動再抽出されません。</p>';
-   return out;
+   return out+(compact?'</div></details>':'');
  }
  async function run(){
    let data;try{const r=await fetch('data/updates.json?v='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error();data=await r.json();}catch{for(const id of Object.keys(tabs))mount(id,'<b>今回の更新</b><p>比較情報を読み込めません。差分は未確認です。</p>');return;}
