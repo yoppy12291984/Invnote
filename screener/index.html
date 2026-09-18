@@ -192,14 +192,26 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 .macro-card p{font-size:13px;line-height:1.65;margin:10px 0}.macro-card small{font-size:11px;line-height:1.6}.macro-card h3{font-size:16px;margin:8px 0}
 .macro-changes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;font-size:12px;margin-top:12px}.macro-changes small{font-size:10px}
 
-/* Table names share the candidate/rebound typography and never stack characters. */
+/* Same 143px name column as candidate/rebound; cell borders, no outer frame. */
 .stock-list-scroll{max-width:100%;overflow-x:auto}
-#ideal[data-ideal-view=table] .ideal-list-head,#ideal[data-ideal-view=table] .ideal-row-toggle{grid-template-columns:minmax(154px,1fr) 48px 78px 16px;min-width:334px}
-#catalyst[data-layout=table] .cat-list-head,#catalyst[data-layout=table] .cat-toggle{grid-template-columns:minmax(154px,1fr) 65px 45px 16px;min-width:318px}
-#ideal[data-ideal-view=table] .stk{min-width:334px}#catalyst[data-layout=table] .stk{min-width:318px}
+#ideal[data-ideal-view=table] .ideal-list-head,#ideal[data-ideal-view=table] .ideal-row-toggle{grid-template-columns:143px 60px minmax(90px,1fr) 20px;min-width:313px;padding:0;gap:0}
+#catalyst[data-layout=table] .cat-list-head,#catalyst[data-layout=table] .cat-toggle{grid-template-columns:143px minmax(65px,1fr) 60px 20px;min-width:288px;padding:0;gap:0}
+#ideal[data-ideal-view=table] .ideal-list>.stk,#catalyst[data-layout=table] #catalystCards>.stk{border:0;border-bottom:1px solid var(--line);border-radius:0;margin:0;padding:0}
+#ideal[data-ideal-view=table] .stk{min-width:313px}#catalyst[data-layout=table] .stk{min-width:288px}
+#ideal[data-ideal-view=table] .ideal-row-toggle>span,#catalyst[data-layout=table] .cat-toggle>span{align-self:stretch;display:flex;flex-direction:column;justify-content:center;padding:7px 10px}
+#ideal[data-ideal-view=table] .ideal-row-toggle>.ideal-arrow,#catalyst[data-layout=table] .cat-toggle>.cat-arrow{padding:7px 2px}
+#ideal[data-ideal-view=table] .ideal-row-name,#catalyst[data-layout=table] .cat-name,#ideal[data-ideal-view=table] [data-compact-weight]{border-right:1px solid var(--line)}
+#ideal[data-ideal-view=table] .ideal-row-number{align-items:center}
+#ideal[data-ideal-view=table] .ideal-list-head>span,#catalyst[data-layout=table] .cat-list-head>span{padding:4px 10px 6px;text-align:center;border-bottom:1px solid var(--line)}
+#ideal[data-ideal-view=table] .ideal-list-head>span:first-child,#catalyst[data-layout=table] .cat-list-head>span:first-child{text-align:left;border-right:1px solid var(--line)}
+#ideal[data-ideal-view=table] .ideal-list-head>span:nth-child(2){border-right:1px solid var(--line)}
 #ideal[data-ideal-view=table] .ideal-row-name .name,#catalyst[data-layout=table] .cat-name .name{display:block;white-space:nowrap;overflow-x:auto;overflow-wrap:normal;scrollbar-width:none;font-family:var(--sans);font-size:14px;font-weight:600;line-height:1.3;letter-spacing:normal}
 #ideal[data-ideal-view=table] .ideal-row-name .code,#catalyst[data-layout=table] .cat-name .code{line-height:1.6;letter-spacing:normal}
-#ideal[data-ideal-view=table] .ideal-list-head,#catalyst[data-layout=table] .cat-list-head{padding:7px 10px}
+#ideal .ideal-view-controls,#catalyst .cat-controls{gap:4px;margin:8px 0}
+#ideal .ideal-view-controls .chip,#catalyst .cat-controls .chip{font-size:12px;min-height:28px;padding:3px 8px;margin:0}
+#catalyst .cat-controls label{font-size:12px;gap:4px}
+#catalyst #catalystFilter{font-size:13px;min-height:28px;padding:3px 6px;max-width:116px;border-radius:6px}
+#startupTab{font:inherit;font-size:16px;max-width:100%;padding:6px;background:var(--sur);color:var(--ink);border:1px solid var(--line);border-radius:6px}
 
 </style>
 </head>
@@ -211,7 +223,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   <button id="edit" aria-label="タブ設定" aria-expanded="false" aria-controls="tabEdit" style="font-size:13px;white-space:nowrap">⚙ 設定</button>
   <div class="header-meta"><small id="ver"></small><span id="stat">読み込み中</span></div>
 </header>
-<dialog id="tabEdit" aria-labelledby="settingsTitle"><div class="settings-head"><b id="settingsTitle">タブ設定</b><button id="settingsClose" class="chip" type="button">閉じる</button></div><div class="led" id="tabLed"></div><p class="ehint">↑↓で並び替え、×で隠す。この端末に保存されます。</p><div id="tabHidden"></div><details><summary>タブ名を変更</summary><p class="ehint">表示名のみ変更します。例：候補 → 現物・清原式、反転 → 信用・反転。抽出条件や売買ルールは変わりません。空欄で元の名前に戻ります（20文字まで）。</p><form id="tabNames"><div id="tabNameFields"></div><button class="chip" type="submit">名前を保存</button><button class="chip" type="button" id="tabNameReset">名前を初期状態に戻す</button></form></details><p id="tabSettingsStatus" class="ehint" role="status"></p></dialog>
+<dialog id="tabEdit" aria-labelledby="settingsTitle"><div class="settings-head"><b id="settingsTitle">タブ設定</b><button id="settingsClose" class="chip" type="button">閉じる</button></div><div style="margin:12px 0"><label for="startupTab">起動時の画面</label> <select id="startupTab"></select><p class="ehint">未設定は候補。非表示のタブは起動画面に選べません。この端末に保存します。</p></div><div class="led" id="tabLed"></div><p class="ehint">↑↓で並び替え、×で隠す。この端末に保存されます。</p><div id="tabHidden"></div><details><summary>タブ名を変更</summary><p class="ehint">表示名のみ変更します。例：候補 → 現物・清原式、反転 → 信用・反転。抽出条件や売買ルールは変わりません。空欄で元の名前に戻ります（20文字まで）。</p><form id="tabNames"><div id="tabNameFields"></div><button class="chip" type="submit">名前を保存</button><button class="chip" type="button" id="tabNameReset">名前を初期状態に戻す</button></form></details><p id="tabSettingsStatus" class="ehint" role="status"></p></dialog>
 <p class="cycle" id="cycle"></p>
 <nav id="tabs"></nav>
 
@@ -280,7 +292,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.25";  // 2.25 一覧表記統一・テーマ表示切替・灰の説明・運用入力支援
+  const VER="2.26";  // 2.26 縦線・コンパクト操作・資金欄移動・起動画面設定
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -333,17 +345,24 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     localStorage.setItem(TKEY,JSON.stringify(order));
     localStorage.setItem('screener_macro_tab_v1','1');
   }}catch(e){if(!order.includes('macro'))order.splice(1,0,'macro');}
-  let view=order.includes(location.hash.slice(1))?location.hash.slice(1):order[0];
+  const START_KEY='screener_start_tab_v1';let startTab='cand';
+  try{const saved=localStorage.getItem(START_KEY);if(tdef(saved))startTab=saved;}catch{}
+  const initialTab=()=>order.includes(startTab)?startTab:order.includes('cand')?'cand':order[0];
+  let view=order.includes(location.hash.slice(1))?location.hash.slice(1):initialTab();
+  function renderStartup(){const el=$('#startupTab');el.innerHTML=order.map(v=>'<option value="'+v+'">'+esc(tabTitle(v))+'</option>').join('');el.value=initialTab();}
+  $('#startupTab').addEventListener('change',e=>{try{localStorage.setItem(START_KEY,e.target.value);startTab=e.target.value;$('#tabSettingsStatus').textContent='起動画面を保存しました。次回の起動から反映します。';}catch{renderStartup();$('#tabSettingsStatus').textContent='起動画面を保存できませんでした。変更は未確定です。';}});
   const saveOrder=()=>{try{localStorage.setItem(TKEY,JSON.stringify(order));}catch(e){}};
   function renderTabs(){
     $('#tabs').innerHTML=order.map(v=>`<button data-tab="${v}"${v===view?' class="on"':''}>${esc(tabTitle(v))}</button>`).join('');
     TABS.forEach(t=>{const s=document.getElementById(t.v); if(s) s.hidden=(t.v!==view);});
   }
   function show(v){if(!order.includes(v))return;view=v;renderTabs();window.scrollTo(0,0);}
+  window.addEventListener('hashchange',()=>{const tab=location.hash.slice(1);if(order.includes(tab))show(tab);});
   $('#tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b)show(b.dataset.tab);});
   $('#reload').addEventListener('click',()=>{$('#reload').classList.add('busy');
     location.replace(location.pathname+'?r='+Date.now());});
   function renderLed(){
+    renderStartup();
     $('#tabLed').innerHTML=order.map((v,i)=>`<div class="li"><span>${esc(tabTitle(v))}</span><button data-mv="-1" data-i="${i}" aria-label="上へ">↑</button><button data-mv="1" data-i="${i}" aria-label="下へ">↓</button><button data-hide="${v}" aria-label="隠す">×</button></div>`).join('');
     const hid=TABS.map(x=>x.v).filter(v=>!order.includes(v));
     $('#tabHidden').innerHTML=hid.map(v=>`<button class="chip" data-show="${v}">${esc(tabTitle(v))} を戻す</button>`).join('');
@@ -386,7 +405,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   renderTabs();
   import('./macro.js?v=2.25').then(m=>m.mountMacro(document.getElementById('macro')))
     .catch(()=>{document.getElementById('macro').textContent='マクロ画面を読み込めません。再読込してください。';});
-  import('./ideal.js?v=2.25').then(m=>m.mount(document.getElementById('ideal')))
+  import('./ideal.js?v=2.26').then(m=>m.mount(document.getElementById('ideal')))
     .catch(()=>{$('#ideal').textContent='理想配分を読み込めません。更新ボタンで再読込してください。';});
   import('./performance.js?v=2.25').then(m=>m.mount(document.getElementById('hold')))
     .catch(()=>{$('#hold').textContent='運用成績を読み込めません。更新ボタンで再読込してください。保存データは削除していません。';});
@@ -407,14 +426,14 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
       #catalyst .cat-name{min-width:0;display:flex;flex-direction:column;overflow-wrap:anywhere}#catalyst .cat-name .code{order:2;font-size:12px;font-weight:400;color:var(--mut);font-variant-numeric:tabular-nums}#catalyst .cat-name .name{order:1;font-size:14px;font-weight:600;white-space:normal;overflow-wrap:anywhere;line-height:1.3}
       #catalyst .cat-small{font-size:12px;text-align:center}#catalyst .cat-detail{padding:0 12px 12px;overflow-wrap:anywhere}#catalyst .cat-detail[hidden]{display:none}
       #catalyst .cat-list-head{display:grid;grid-template-columns:minmax(0,1fr) 65px 45px 16px;gap:6px;padding:8px;font-size:11px;color:var(--mut)}#catalyst .cat-list-head span:not(:first-child){text-align:center}
-      #catalyst .cat-controls label{display:flex;align-items:center;gap:6px;font-size:16px}#catalystFilter{font:inherit;font-size:16px;min-height:40px;padding:6px 8px;background:var(--sur);color:var(--ink);border:1px solid var(--line);border-radius:8px;max-width:155px}
-      #catalyst .cat-controls .chip{min-height:40px;padding:6px 10px;font-size:14px}#catalyst .cat-rank-form{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0}#catalyst .cat-rank-form input{font:inherit;font-size:16px;width:72px;padding:6px;background:var(--sur);color:var(--ink);border:1px solid var(--line);border-radius:6px}
+      #catalyst .cat-controls label{display:flex;align-items:center;gap:4px;font-size:12px}#catalystFilter{font:inherit;font-size:16px;min-height:40px;padding:6px 8px;background:var(--sur);color:var(--ink);border:1px solid var(--line);border-radius:8px;max-width:155px}
+      #catalyst .cat-controls .chip{min-height:28px;padding:3px 8px;font-size:12px}#catalyst .cat-rank-form{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0}#catalyst .cat-rank-form input{font:inherit;font-size:16px;width:72px;padding:6px;background:var(--sur);color:var(--ink);border:1px solid var(--line);border-radius:6px}
       #catalyst[data-layout=table] .stk{background:var(--bg);padding:0;margin:0;border-radius:0;border-left:1px solid var(--line);border-bottom:0}#catalyst[data-layout=table] .stk:last-child{border-bottom:1px solid var(--line)}
       #catalyst[data-layout=card] .stk{padding:0}#catalyst[data-layout=card] .cat-name .name{font-size:14px}#catalyst[data-layout=card] .cat-toggle{padding:14px 12px}#catalyst[data-layout=card] .cat-list-head{display:none}
       #catalyst .cat-controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:12px 0}#catalyst [aria-pressed=true]{background:var(--ink);color:var(--sur)}#catalyst .cat-toggle:focus-visible{outline:2px solid currentColor;outline-offset:-2px}
       </style><p class="hint">調査日 ${esc(data.date)} · ${esc(data.edition)}<br>銘柄をタップして調査内容を開きます。優先度は調査順で、買い順位ではありません。</p>
       <details><summary>調査の位置づけ・注意事項</summary><p class="hint">全業種から探す構造変化・カタリスト<br>${esc(data.note)}</p></details>
-      <div class="cat-controls"><label>表示 <select id="catalystFilter"><option value="all">すべて</option><option value="deep">深掘り候補</option><option value="watch">監視候補</option></select></label><button type="button" class="chip" data-cat-mode="table">表モード</button><button type="button" class="chip" data-cat-mode="card">カードモード</button></div><p id="catalystViewStatus" class="hint" role="status"></p>
+      <div class="cat-controls"><label>表示 <select id="catalystFilter"><option value="all">すべて</option><option value="deep">深掘り候補</option><option value="watch">監視候補</option></select></label><button type="button" class="chip" data-cat-mode="table">表</button><button type="button" class="chip" data-cat-mode="card">カード</button></div><p id="catalystViewStatus" class="hint" role="status"></p>
       <p class="hint">優先度は展開して変更できます。変更はこの端末だけに保存され、同じ順位に移すと他の銘柄がずれます。</p><button class="chip" type="button" id="catRankReset">初期の調査順に戻す</button><p class="hint" id="catRankStatus" role="status">${esc(rankNotice)}</p>
       <div class="stock-list-scroll"><div class="cat-list-head" aria-hidden="true"><span>銘柄</span><span>区分</span><span>優先度</span><span></span></div><div id="catalystCards"></div></div>`;
     const draw=()=>{
@@ -431,7 +450,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
         <details><summary>懸念点・反証と出典</summary><p>${esc(x.risk)}</p>
         <p>${(x.sources||[]).filter(s=>/^https:\/\//i.test(s.url)).map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)}</a>`).join(' / ')}</p></details></div>
         ${/^[0-9A-Z]{4}$/.test(x.code)?linkRow(x.code):''}</div></article>`).join('')||'<p class="empty">該当する調査候補はありません</p>';
-      import('./list-marks.js?v=2.24').then(m=>m.decorate(root));
+      import('./list-marks.js?v=2.26').then(m=>m.decorate(root));
       root.querySelectorAll('.cat-toggle').forEach(b=>b.onclick=()=>{const open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));root.querySelector('#'+b.getAttribute('aria-controls')).hidden=!open;b.querySelector('.cat-arrow').textContent=open?'−':'＋';});
       root.querySelectorAll('.cat-rank-form').forEach(f=>f.onsubmit=e=>{e.preventDefault();const rank=Number(f.elements.rank.value),code=f.dataset.rankCode;
         if(!Number.isInteger(rank)||rank<1||rank>order.length){$('#catRankStatus').textContent=`優先度は1〜${order.length}の整数で指定してください。`;return;}
