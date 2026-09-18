@@ -11,11 +11,21 @@
    const section=document.getElementById(id);if(!section)return;
    const box=document.createElement('aside');box.className='update-digest';box.setAttribute('aria-label','前回からの更新');box.innerHTML=html;
    const added=new Set((entry?.added||[]).map(r=>r.key));
-   const attach=()=>{if(!section.contains(box)){const guide=section.querySelector('.page-guide');if(guide)guide.after(box);else section.prepend(box);}for(const row of section.querySelectorAll('tr.r[data-code]')){if(added.has(row.dataset.code)&&!row.querySelector('.upd-new')){const b=document.createElement('span');b.className='upd-new';b.textContent='追加';b.title='表示した比較元から新しく一覧に入った銘柄';b.style.cssText='font-size:10px;display:inline-block;margin-left:5px;padding:0 4px;border:1px solid currentColor;border-radius:3px;font-weight:400';row.querySelector('.nm b')?.append(b);}}};
+   const attach=()=>{if(!section.contains(box)){const guide=section.querySelector('.page-guide');if(guide&&!['theme','macro','radar'].includes(id))guide.after(box);else section.prepend(box);}for(const row of section.querySelectorAll('tr.r[data-code]')){if(added.has(row.dataset.code)&&!row.querySelector('.upd-new')){const b=document.createElement('span');b.className='upd-new';b.textContent='追加';b.title='表示した比較元から新しく一覧に入った銘柄';b.style.cssText='font-size:10px;display:inline-block;margin-left:5px;padding:0 4px;border:1px solid currentColor;border-radius:3px;font-weight:400';row.querySelector('.nm b')?.append(b);}}};
    new MutationObserver(attach).observe(section,{childList:true,subtree:true});attach();
  }
  function render(n,x){
-   let out=`<b>今回の更新</b><p class="upd-meta">${n==='macro'?'データ生成':'データ基準'}：${esc(date(x.date))}${x.comparison?`<br>比較元：${esc(date(x.previous_date))}（${esc(x.previous_label)}）`:''}</p>`;
+   let lead='';
+   if(x.comparison&&n==='themes'){
+     const same=JSON.stringify(x.current_topics)===JSON.stringify(x.previous_topics);
+     lead=same?'<p>前回からテーマの構成・解説に変更はありません。</p>':`<div class="upd-lead"><p><b>前回 → 今回のテーマ</b></p><p class="upd-before">前回：${esc(x.previous_topics.map(r=>r.name).join(' ／ '))}</p><ul>${x.current_topics.map(r=>`<li><b>今回：${esc(r.name)}</b><br>${esc(val(r.fields.summary||r.fields.stage))}</li>`).join('')}</ul></div>`;
+   }
+   if(x.comparison&&n==='macro'){
+     const values=x.changed.flatMap(r=>r.changes.filter(c=>c.field==='観測値').map(c=>({r,c})));
+     lead=`<div class="upd-lead"><p><b>${values.length?'前回取得時からの指標変化':'前回取得時から観測値の変更なし'}</b></p><ul>${values.map(({r,c})=>{const units={VIXCLS:'pt',SP500:'pt',DEXJPUS:'円'};const unit=units[r.key]||'%';const delta=typeof c.before==='number'&&typeof c.after==='number'?c.after-c.before:null;return `<li>${esc(r.name)}：<b>${esc(val(c.before))} → ${esc(val(c.after))}${unit}</b>${delta!==null?`（${delta>0?'+':''}${Number(delta.toFixed(3))}${unit==='%'?'%pt':unit}）`:''}</li>`}).join('')}</ul>${x.changed.length>values.length?'<p class="upd-foot">観測日・取得状態だけが変わった指標もあります。詳細は下で確認できます。</p>':''}</div>`;
+   }
+   if(x.comparison&&n==='radar')lead=`<div class="upd-lead"><p><b>銘柄の入れ替わり：追加${x.added.length}・除外${x.removed.length}</b></p>${x.added.length?`<p>追加例：${esc(x.added.slice(0,5).map(label).join(' ／ '))}${x.added.length>5?' ほか':''}</p>`:''}<p><b>ニュースの新出語</b>：${x.new_words?.length?esc(x.new_words.join(' ／ ')):'なし'}</p><p class="upd-foot">新出語は収集記事の変化です。無関係な記事や表記揺れを含みます。</p></div>`;
+   let out=`<b>今回の更新</b>${lead}<p class="upd-meta">${n==='macro'?'データ生成':'データ基準'}：${esc(date(x.date))}${x.comparison?`<br>比較元：${esc(date(x.previous_date))}（${esc(x.previous_label)}）`:''}</p>`;
    if(!x.comparison)out+='<p>前回の比較データがありません。今回を基準に、次の公開更新から差分を表示します。</p>';
    else if(n==='themes'){
      const same=JSON.stringify(x.current_topics)===JSON.stringify(x.previous_topics);
