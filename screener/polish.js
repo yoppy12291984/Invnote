@@ -3,7 +3,8 @@
  const notes={cand:'銘柄をタップして詳細と色分けを確認。見出しで並べ替えできます。',cs:'銘柄をタップして条件を確認。見出しで並べ替えできます。',catalyst:'構造変化と次の確認材料を追う一覧です。優先度は調査の順番です。',ideal:'銘柄をタップして配分を編集。運用資金は一覧の下にあります。',hold:'保有の確認と、取引を記録した運用成績を見られます。',theme:'テーマをタップして背景・主導銘柄・ニュースを確認できます。',macro:'金利・信用・景気をあわせて確認。指標ごとの観測日にも注目してください。',radar:'気になる動きを確認し、銘柄ごとの材料を調べる入口です。',rec:'これまでの記録と検証結果を振り返るページです。',status:'戦略ごとの検証結果を確認。実際の口座成績とは区別して見てください。'};
  const searchable={cand:['#candBody tr.r','.nm','銘柄名・コード'],reb:['#rebBody tr.r','.nm','銘柄名・コード'],catalyst:['#catalystCards>.stk','.cat-name','銘柄名・コード'],theme:['article.stk','.theme-title','テーマ名']};
  const style=document.createElement('style');style.textContent=`
- .page-guide{border-left:3px solid var(--amb)}
+ .page-guide{border-left:3px solid var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
+ #cand,#cs{--accent:var(--blu)}#ideal,#hold{--accent:var(--dn)}#catalyst,#theme{--accent:#7850a0}#macro,#radar{--accent:#347c86}[data-theme=dark] #catalyst,[data-theme=dark] #theme{--accent:#b898dc}[data-theme=dark] #macro,[data-theme=dark] #radar{--accent:#78bcc5}#rec,#status{--accent:var(--mut)}
  .quick-find{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:10px 0}
  .quick-find input{flex:1;min-width:100px;width:140px;font:inherit;font-size:16px;color:var(--ink);background:var(--sur);border:1px solid var(--line);border-radius:6px;padding:6px 8px}
  .quick-find .chip{font-size:12px;padding:5px 8px}.quick-find output{font-size:12px;color:var(--mut)}
