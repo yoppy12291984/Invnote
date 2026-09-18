@@ -398,6 +398,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 </section>
 
 <section id="vSet" class="hide">
+  <div class="set"><h3>起動時の画面</h3><select id="startupView" style="font:inherit;font-size:16px;max-width:100%;padding:6px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px"></select><p class="hint" id="startupViewStatus" role="status">未設定はポートフォリオ。この端末に保存します。</p></div>
   <div class="set"><h3>データ</h3><div class="row">
     <button class="btn" id="expJson">JSONを書き出す</button>
     <button class="btn" id="impJson">JSONを読み込む</button>
@@ -426,7 +427,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="3.7"; // 日付・部分保有を区別した履歴、共通AIプロンプト、カレンダー折返し
+const VER="3.8"; // 起動画面設定・口座別評価額・不足理由の表示
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TAB_DEFS=[{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vHot",t:"直前"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"}];
 const tabDef=v=>TAB_DEFS.find(x=>x.v===v);
@@ -760,7 +761,13 @@ function renderTabs(){
   $("#tabs").innerHTML=tabOrder().map(v=>{const t=tabDef(v);return `<button ${t.url?`data-url="${t.url}"`:`data-v="${v}"`}>${esc(t.t)}</button>`}).join("");
   document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v===view||(view==="detail"&&b.dataset.v==="vStocks")));
 }
+const START_VIEW_KEY='invnote_start_tab_v1';let startView='vPf';
+try{const value=localStorage.getItem(START_VIEW_KEY);if(tabDef(value))startView=value;}catch{}
+function initialView(){const visible=tabOrder();return visible.includes(startView)?startView:visible.includes('vPf')?'vPf':visible[0];}
+function renderStartView(){const el=$('#startupView');el.innerHTML=tabOrder().map(v=>'<option value="'+v+'">'+esc(tabDef(v).t)+'</option>').join('');el.value=initialView();}
+$('#startupView').addEventListener('change',e=>{try{localStorage.setItem(START_VIEW_KEY,e.target.value);startView=e.target.value;$('#startupViewStatus').textContent='保存しました。次回の起動から反映します。';}catch{renderStartView();$('#startupViewStatus').textContent='保存できませんでした。変更は未確定です。';}});
 function renderTabLed(){
+  renderStartView();
   const l=tabOrder();
   $("#tabLed").innerHTML=l.map((v,i)=>`<div class="li"><span style="flex:1;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 8px;font-size:14px">${esc(tabDef(v).t)}</span><button data-tmv="-1" data-ti="${i}" aria-label="上へ">↑</button><button data-tmv="1" data-ti="${i}" aria-label="下へ">↓</button><button data-thide="${v}" aria-label="隠す">×</button></div>`).join("");
   const hid=TAB_DEFS.map(x=>x.v).filter(v=>!l.includes(v));
@@ -986,18 +993,35 @@ function setHolding(code,h){const cur=S.holdings[code]||{};
   S.holdings[code]={...cur,shares:num(h.shares,cur.shares),avg:h.avg===undefined?(num(h.shares,cur.shares)===cur.shares?(cur.avg??null):null):num(h.avg,null),price:h.price===undefined?(cur.price??null):num(h.price,null),acct:h.acct||cur.acct||"",upd:Date.now()};
   if(S.deleted&&S.deleted.length)S.deleted=S.deleted.filter(x=>x!=="h:"+code);   // 取り込み直したら削除履歴から外す
 const st=stock(code);if(h.name&&!st.name)st.name=h.name;if(!["保有","買い増し"].includes(st.status)){st.status="保有";touch(code)}}
+/* Display registered positions by account type; credit notional is not net assets. */
+(function(root){
+function number(v){if(typeof v==='string'){v=v.trim();if(!/^(?:\d+(?:\.\d+)?|\d{1,3}(?:,\d{3})+(?:\.\d+)?)$/.test(v))return null;v=Number(v.replace(/,/g,''));}return typeof v==='number'&&Number.isFinite(v)&&v>=0?v:null;}
+function summarize(holdings){
+ const rows=Object.entries(holdings||{}).filter(([c,h])=>h&&number(h.shares)!==0).map(([code,h])=>{
+  const shares=number(h.shares),price=number(h.price),avg=number(h.avg),acct=String(h.acct||'');
+  const kind=/信用|空売|売建/.test(acct)?'credit':/現物|NISA|特定|一般/i.test(acct)?'cash':'unknown';
+  const val=shares!==null&&price>0?shares*price:null,cost=shares!==null&&avg>0?shares*avg:null;
+  const profit=val!==null&&cost!==null&&(kind!=='credit'||/買|売建|空売/.test(acct))?(val-cost)*(/売建|空売/.test(acct)?-1:1):null;
+  return {code,h,shares,price,avg,kind,val,cost,profit};
+ });
+ const groups=['cash','credit','unknown'].map(kind=>{const items=rows.filter(r=>r.kind===kind);return {kind,items,val:items.every(r=>r.val!==null)?items.reduce((n,r)=>n+r.val,0):null,cost:items.every(r=>r.cost!==null)?items.reduce((n,r)=>n+r.cost,0):null,profit:items.every(r=>r.profit!==null)?items.reduce((n,r)=>n+r.profit,0):null,missingPrice:items.filter(r=>!(r.price>0)).map(r=>r.code),missingShares:items.filter(r=>r.shares===null).map(r=>r.code),missingAvg:items.filter(r=>!(r.avg>0)).map(r=>r.code)};}).filter(g=>g.items.length);
+ return {rows,groups};
+}
+const api={number,summarize};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.InvnoteValuation=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
+
 function renderPf(){
-  const rows=Object.entries(S.holdings).filter(([c,h])=>h.shares>0).map(([code,h])=>({code,h,st:stock(code),cost:Number.isFinite(h.avg)&&h.avg>0?h.shares*h.avg:null,val:Number.isFinite(h.price)&&h.price>0?h.shares*h.price:null}));
-  const cashOnly=rows.every(r=>!/信用|空売|売建/.test(r.h.acct||''));
-  const valKnown=cashOnly&&rows.every(r=>r.val!==null),costKnown=cashOnly&&rows.every(r=>r.cost!==null);
-  const tot={val:valKnown?rows.reduce((a,r)=>a+r.val,0):null,cost:costKnown?rows.reduce((a,r)=>a+r.cost,0):null},pl=valKnown&&costKnown?tot.val-tot.cost:null;
-  const dates=[...new Set(rows.map(r=>r.h.pdate||'不明'))];$("#pfDate").textContent=dates.length===1?'価格日 '+dates[0]:'価格日が混在';
-  const money=n=>n===null?'未確認':fmt(n);
-  $("#pfSum").innerHTML=rows.length?'<div><span>登録株式の評価額</span><br><b>'+money(tot.val)+'</b></div><div><span>取得額</span><br><b>'+money(tot.cost)+'</b></div><div><span>含み損益</span><br><b>'+money(pl)+'</b></div><div><span>銘柄数</span><br><b>'+rows.length+'</b></div><p class="hint" style="flex-basis:100%">'+(S.holdingsComplete?'全保有確認済み。':'保有の確認範囲は未確定。')+'価格・取得単価が不足する場合や信用建玉を含む場合は合計を保留します。</p>':'<span>保有銘柄はまだありません</span>';
+  const valuation=InvnoteValuation.summarize(S.holdings),rows=valuation.rows.map(r=>({...r,st:stock(r.code)}));
+  const money=n=>n===null?'計算保留':fmt(n)+'円';
+  const labels={cash:'現物・NISAの評価額',credit:'信用建玉の時価',unknown:'口座未設定の株式時価'};
+  const names=codes=>codes.map(c=>c+' '+nm(c)).join('、');
+  const dates=[...new Set(rows.map(r=>r.h.pdate||'日付不明'))];$('#pfDate').textContent=dates.length===1?'価格日 '+dates[0]:dates.length?'価格日が混在':'';
+  $('#pfSum').innerHTML=rows.length?valuation.groups.map(g=>'<div class="pf-account-summary" data-account-summary="'+g.kind+'" style="flex-basis:100%;border-bottom:1px solid var(--line);padding-bottom:8px"><span>'+labels[g.kind]+'</span><br><b>'+money(g.val)+'</b><p class="hint">'+g.items.length+'銘柄'+(g.kind==='cash'?' ／ 含み損益 '+money(g.profit):'')+'</p>'+ (g.missingPrice.length?'<p class="hint">現在値が未登録：'+esc(names(g.missingPrice))+'。「株価を更新」または現在値つきJSONで補えます。</p>':'')+(g.missingShares.length?'<p class="hint">株数が未登録：'+esc(names(g.missingShares))+'</p>':'')+(g.kind==='cash'&&g.missingAvg.length?'<p class="hint">取得単価が未登録：'+esc(names(g.missingAvg))+'。評価額は計算できますが、含み損益は保留です。</p>':'')+(g.kind==='credit'?'<p class="hint">株数×登録価格の建玉時価です。保証金・借入・費用を差し引いた口座資産ではありません。現物の評価額とは分けています。</p>':g.kind==='unknown'?'<p class="hint">口座区分が未設定のため、現物・信用のどちらにも合算していません。</p>':'')+'</div>').join('')+'<p class="hint" style="flex-basis:100%">登録価格による表示です。'+(S.holdingsComplete?'全保有確認済み。':'保有の確認範囲は未確定。')+(dates.length>1?'価格日が混在しています。':'')+'</p>':'<span>保有銘柄はまだありません</span>';
   rows.sort((a,b)=>(b.val||0)-(a.val||0));
-  $("#pfList").innerHTML=rows.map(r=>{const profit=r.val!==null&&r.cost!==null?r.val-r.cost:null;return '<div class="pf" data-a="'+esc(r.h.acct||'')+'"><span class="nm" data-open="'+esc(r.code)+'"><b>'+esc(r.code)+'</b>'+esc(r.st.name||'—')+(r.h.acct?'<span class="acct">'+esc(r.h.acct)+'</span>':'')+'<small>'+fmt(r.h.shares)+'株 ／ 取得 '+(r.cost===null?'未確認':fmt(r.h.avg))+' ／ 現在 '+(r.val===null?'未確認':fmt(r.h.price))+'</small></span><span class="val">'+money(r.val)+'<small class="pl">'+money(profit)+'</small></span><button class="x" data-hdel="'+esc(r.code)+'">×</button></div>'}).join('');
+  $('#pfList').innerHTML=rows.map(r=>'<div class="pf" data-a="'+esc(r.h.acct||'')+'"><span class="nm" data-open="'+esc(r.code)+'"><b>'+esc(r.code)+'</b>'+esc(r.st.name||'—')+'<span class="acct">'+esc(r.h.acct||'口座未設定')+'</span><small>'+(r.shares===null?'株数未登録':fmt(r.shares)+'株')+' ／ 取得 '+(r.avg>0?fmt(r.avg):'未登録')+' ／ 現在 '+(r.price>0?fmt(r.price):'未登録')+'</small></span><span class="val">'+money(r.val)+'<small class="pl">'+(r.profit===null?'損益未確認':money(r.profit))+'</small></span><button class="x" data-hdel="'+esc(r.code)+'">×</button></div>').join('');
   const watch=stockRows().filter(r=>["監視","候補","打診","気になる"].includes(r.st.status)&&!S.holdings[r.code]).sort((a,b)=>(STATUS.indexOf(a.st.status)-STATUS.indexOf(b.st.status))||((b.st.rank||0)-(a.st.rank||0)));
-  if(valKnown)renderAlloc(rows,tot);else $("#pfAlloc").textContent="価格または口座区分が未確認のため配分計算を保留します。";renderHist();
+  const cash=valuation.groups.find(g=>g.kind==='cash');
+  if(cash&&cash.val!==null){renderAlloc(rows.filter(r=>r.kind==='cash'),{val:cash.val,cost:cash.cost});$('#pfAlloc').insertAdjacentHTML('afterbegin','<p class="hint">配分は現物・NISAの登録分で計算しています。</p>');}else $('#pfAlloc').textContent=cash?'現物・NISAの価格または株数が不足しているため配分を保留します。':'現物・NISAとして登録された保有はありません。';renderHist();
   $("#pfWatch").innerHTML=watch.length?watch.map(r=>`<div class="pf"><span class="nm" data-open="${r.code}"><b>${r.code}</b>${esc(r.st.name)||"—"}<small>${r.st.status}${r.st.sector?" ／ "+esc(r.st.sector):""}${r.ns[0]?" ／ "+esc(r.ns[0].text.split("\n")[0]):""}</small></span>${r.st.rank?stars(r.st.rank):""}</div>`).join(""):`<div class="hint" style="padding:6px 4px">監視・候補の銘柄はありません</div>`;
 }
 let pfBusy=false;
@@ -1251,7 +1275,7 @@ $("#expMd").addEventListener("click",()=>{
 $("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()},quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,listsUpd:Date.now(),sectors:{},holdings:{},pfHistory:[],stockView:S.stockView};save();render();toast("削除しました")}});
 
 /* ---------- init ---------- */
-$("#ver").textContent="v"+VER;load();STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT;applyTheme();renderQuick();autoGrow();show("vPf");$("#gasUrl").value=S.gas||"";ledRender($("#quickLed"),quick());ledRender($("#statusLed"),STATUS);ledRender($("#themeLed"),themes());renderTabs();renderTabLed();if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
+$("#ver").textContent="v"+VER;load();STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT;applyTheme();renderQuick();autoGrow();show(initialView());$("#gasUrl").value=S.gas||"";ledRender($("#quickLed"),quick());ledRender($("#statusLed"),STATUS);ledRender($("#themeLed"),themes());renderTabs();renderTabLed();if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
 if(mem)toast("この環境では保存できません（GitHub Pagesで開くと保存されます）");
 })();
 </script>
