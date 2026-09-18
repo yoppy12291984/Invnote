@@ -1,4 +1,5 @@
-import {defaults,calculate,readPlan} from './ideal.js?v=2.14';
+import {mountImports} from './performance-import.js?v=2.25';
+import {defaults,calculate,readPlan} from './ideal.js?v=2.25';
 import {validate,positions,evaluate} from './performance-engine.js?v=2.12';
 const KEY='screener_performance_v1';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -14,6 +15,7 @@ export function mount(root){
  function commit(next){validate(next);try{localStorage.setItem(KEY,JSON.stringify(next));}catch(e){throw new Error('保存できませんでした。変更は未確定です。ブラウザの保存設定・空き容量を確認してください。');}state=next;broken=false;notice='この端末に保存しました。取引情報は送信されません。';render();}
  function change(fn){try{const next=structuredClone(state);fn(next);commit(next);}catch(e){message(e.message);}}
  function render(){
+  const ledgerOpen=root.querySelector('[data-ledger-panel]')?.open||false;
   root.innerHTML=`<style>
   #hold .perf-box{background:var(--sur);border-radius:10px;padding:12px;margin:10px 0;overflow-wrap:anywhere}
   #hold label{display:block;color:var(--mut);font-size:12px;margin:7px 0}
@@ -22,9 +24,10 @@ export function mount(root){
   #hold .perf-metric b{display:block;font-size:19px}#hold .perf-metric span{color:var(--mut);font-size:12px}#hold button.chip{margin:8px 4px 0 0;padding:7px 10px;white-space:normal}
   #hold [data-message]{color:var(--blu);overflow-wrap:anywhere}#hold small{color:var(--mut)}
   </style><p class="hint">ポートフォリオ全体の運用成績。実際の記録から計算し、理想配分の入力だけでは購入済みにしません。旧清原式の採点記録は実績に移しません。</p>
-  <p role="status" data-message>${esc(notice)}</p><div data-main></div>
+  <p role="status" data-message>${esc(notice)}</p><div data-easy-import></div><details class="perf-box" data-ledger-panel ${ledgerOpen?'open':''}><summary>取引台帳・運用収益率（既存の記録と手動編集）</summary><div data-main></div></details>
   <details class="perf-box"><summary>保存・バックアップ</summary><p class="hint">記録はこの端末・ブラウザだけに保存されます。他端末との同期はありません。ブラウザのデータ削除に備えてバックアップしてください。ファイルには取引情報が含まれます。</p><button class="chip" data-export ${state?'':'disabled'}>バックアップを書き出す</button><label>バックアップを復元（現在の記録を置換）<input data-import type="file" accept=".json,application/json"></label></details>
   <details class="perf-box"><summary>成績の読み方・計算条件</summary><p>損益＝評価資産−開始資産−純入金。配当・税金・費用は記録した金額を現金へ反映します。開始以前の損益は含みません。</p><p>収益率は評価間の変化を連結します。入出金はその日の日初扱いです。入出金日の終値評価が必要で、欠ける場合は収益率・比較差・下落率を表示しません。日中の入出金時刻による差は反映しません。</p><p>TOPIXは入力した指数の騰落率（配当なし・費用なし）です。実運用の配当込み収益率と条件差があります。理想配分は開始日に固定した株数＋現金を保有し続ける仮想比較（売買費用なし）。配当と分割は手動記録です。途中の入出金は比較先を比例拡大・縮小する想定で収益率を比べます。</p><p>最大下落率は記録した評価時点の収益率指数で計算します。日次記録がなければ、その間の下落を見逃します。株価・指数・配当・分割は自動取得しません。</p></details>`;
+  mountImports(root.querySelector('[data-easy-import]'),{getState:()=>state,commit,message});
   const main=root.querySelector('[data-main]');
   if(!state){if(!broken)setup(main);}else dashboard(main);
   root.querySelector('[data-export]').onclick=()=>{if(!state)return;const url=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`portfolio-backup-${today()}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
