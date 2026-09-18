@@ -1,7 +1,7 @@
 import {indicatorGuide, macroGuide} from './macro-guide.js?v=2.18';
 import {classifyRegime} from './macro-engine.js?v=2.18';
 import {DEFAULTS, validateConfig} from './macro-config.js?v=2.18';
-import {regimePanel, formulaPanel, settingsPanel} from './macro-panel.js?v=2.25';
+import {regimePanel, formulaPanel, settingsPanel} from './macro-panel.js?v=2.28';
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number = value => Number.isFinite(value) ? value.toFixed(2) : '未取得';
 function chart(item) {
@@ -35,7 +35,7 @@ export async function mountMacro(root) {
       <div class="macro-grid">${items.map(x => `<article class="macro-card"><small>${escape(x.group)}</small><h3>${escape(x.name)}</h3><strong style="font-size:24px">${number(x.value)} ${escape(x.unit)}</strong><p>観測日：${escape(x.date || '未取得')}<br>${x.status === 'missing' ? 'データ未取得' : x.status === 'cached' ? '保存値を表示' : '取得済み'}${x.stale ? ' ／ 更新遅延・欠損に注意' : ''}</p>${chart(x)}<div class="macro-changes">${[['1w','1週間'],['1m','1か月'],['3m','3か月']].map(([key,label]) => {const d=x.changes?.[key];return `<div><b>${label}</b><br>${d && Number.isFinite(d.value) ? `${d.value>0?'+':''}${number(d.value)} ${x.unit==='%'?'%pt':escape(x.unit)}`:'—'}${d ? `<br><small>${escape(d.from)}比</small>`:''}</div>`;}).join('')}</div><p>${escape(x.meaning)}</p><small>過去約5年の取得範囲内の水準順位：${Number.isFinite(x.percentile)?`${x.percentile}%（下から）／${x.sample_count}観測、${escape(x.sample_start)}以降` : "算出に十分な履歴なし"}。危険確率ではありません。</small>${indicatorGuide(x.id)}<small>${x.frequency==='monthly'?'月次：観測日は対象月。週次比較は表示しません。':'日次：休日・欠測日は直前の観測値で比較します。'}<br>取得日時：${escape(x.fetched_at || 'なし')}${x.error?`<br>${escape(x.error)}`:''}</small><p><a href="https://fred.stlouisfed.org/series/${encodeURIComponent(x.id)}" target="_blank" rel="noopener">FREDの原資料 ↗</a></p></article>`).join('')}</div>
       <p class="hint">${escape(data.note)}<br>変化は各指標の最新観測日から7・30・90日前以前の直近値との差。%表示の指標は%ポイント差です。</p>`;
     const dialog=root.querySelector('#macroSettings');
-    root.querySelector('#macroSettingsOpen').onclick=()=>dialog.showModal();
+    let previousOverflow='';root.querySelector('#macroSettingsOpen').onclick=()=>{previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';dialog.showModal();dialog.scrollTop=0;};dialog.addEventListener('close',()=>{document.body.style.overflow=previousOverflow;root.querySelector('#macroSettingsOpen')?.focus();});
     root.querySelector('#macroSettingsClose').onclick=()=>dialog.close();
     const save=next=>{
       try{localStorage.setItem('screener_macro_config_v2',JSON.stringify(validateConfig(next)));}
