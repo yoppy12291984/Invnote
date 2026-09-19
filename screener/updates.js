@@ -42,6 +42,7 @@
    }
    if(n==='radar'&&x.new_words?.length)out+=`<details><summary>ニュースに新しく現れた語 ${x.new_words.length}件</summary><p>${esc(x.new_words.join(' ／ '))}</p><p class="upd-foot">既存レーダーが前回収集と比較した語です。無関係な記事や表記の揺れも含み、業績への影響を確認済みという意味ではありません。</p></details>`;
    if(x.crossings?.length)out+=`<details><summary>200日線の上下が変わった銘柄 ${x.crossings.length}件</summary><ul>${x.crossings.map(r=>`<li>${esc(label(r))}：${esc(r.direction)}</li>`).join('')}</ul><p class="upd-foot">2つの基準日の比較です。途中の通過日や、その間の往復は分かりません。</p></details>`;
+   if(x.corrections?.length)out+=`<p class="upd-foot">${x.corrections.map(esc).join(' ／ ')}。銘柄の追加・除外には数えていません。</p>`;
    out+='<details class="upd-foot"><summary>比較の読み方</summary><p>前回の閲覧ではなく、表示した比較元との差分です。追加・除外は買い・売りの記録ではありません。数値や文章の更新だけで、新しい投資判断が確定したとは扱いません。CAN-SLIMは区分をまたぐ重複を除いた銘柄数です。</p></details>';
    if(n==='candidates')out+='<p class="upd-foot">候補の再抽出は月次処理。週次で株価データを取得しても、この一覧は自動再抽出されません。</p>';
    return out+(compact?'</div></details>':'');
