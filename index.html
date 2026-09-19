@@ -129,10 +129,15 @@ table.dtab td.x.none{color:var(--line)}
 .pf .x{color:var(--mut);font-size:12px;padding:0 4px}
 #pfSum b{font-size:20px;font-variant-numeric:tabular-nums}#pfSum span{font-size:12px;color:var(--mut)}
 #pfSum .up{color:var(--up)}#pfSum .dn{color:var(--dn)}
-#pfSum .pf-account-summary{flex-basis:100%;min-width:0}#pfSum .pf-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px;align-items:baseline}#pfSum .pf-metrics>div{min-width:0}#pfSum .pf-metrics b{overflow-wrap:anywhere}#pfSum details{margin-top:10px}#pfSum summary{font-size:12px;color:var(--mut);cursor:pointer}
+#pfSum .pf-account-summary{flex-basis:100%;min-width:0}#pfSum .pf-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;align-items:baseline}#pfSum .pf-metrics>div{min-width:0}#pfSum .pf-metrics b{overflow-wrap:anywhere}#pfSum details{margin-top:10px}#pfSum summary{font-size:12px;color:var(--mut);cursor:pointer}
+#pfSum .pf-account-summary+.pf-account-summary{border-top:1px solid var(--line);padding-top:14px}
+#pfSum .pf-account-title{font-size:16px;font-weight:700;line-height:1.4;margin:0 0 10px;padding-left:9px;border-left:3px solid var(--mut);color:var(--ink)}
+#pfSum [data-account-summary="cash"] .pf-account-title{border-left-color:var(--dn);color:var(--dn)}
+#pfSum [data-account-summary="credit"] .pf-account-title{border-left-color:var(--amb);color:var(--amb)}
 /* portfolio extra */
 .pf{border-left:3px solid var(--line);padding-left:8px}
 .pf[data-a="現物"]{border-left-color:var(--dn)}.pf[data-a="信用"]{border-left-color:var(--amb)}.pf[data-a="NISA"]{border-left-color:var(--blu)}
+.pf[data-kind="cash"]{border-left-color:var(--dn)}.pf[data-kind="credit"]{border-left-color:var(--amb)}
 .acct{font-size:10.5px;padding:0 5px;border-radius:3px;margin-left:4px;font-weight:600;letter-spacing:.02em}
 .acct[data-a="現物"]{color:var(--dn);background:color-mix(in srgb,var(--dn) 15%,transparent)}
 .acct[data-a="信用"]{color:var(--amb);background:color-mix(in srgb,var(--amb) 16%,transparent)}
@@ -428,7 +433,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="3.10"; // 写真の集計カード・保有一覧の表示へ復元
+const VER="3.11"; // 現物・信用の区切りと集計間隔を調整
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TAB_DEFS=[{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vHot",t:"直前"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"}];
 const tabDef=v=>TAB_DEFS.find(x=>x.v===v);
@@ -1025,15 +1030,15 @@ function renderPf(){
   $('#pfSum').innerHTML=rows.length?valuation.groups.map(g=>{
     const issues=[g.missingPrice.length?'現在値が未登録：'+names(g.missingPrice):'',g.missingShares.length?'株数が未登録：'+names(g.missingShares):'',g.missingAvg.length?'取得単価が未登録：'+names(g.missingAvg):''].filter(Boolean);
     if(g.assumed.length)issues.push('買建として概算：'+names(g.assumed)+'。売建の場合は各銘柄の売買区分を変更してください。');
-    const title=g.kind==='cash'?(valuation.groups.length>1?'現物・NISA':''):g.kind==='credit'?'信用建玉（現物とは別集計）':'口座未設定（現物・信用とは別集計）';
+    const title=g.kind==='cash'?'現物・NISA':g.kind==='credit'?'信用建玉':'口座未設定';
     const note=g.kind==='credit'?'建玉時価は保証金・借入・費用を差し引いた口座資産ではありません。':g.kind==='unknown'?'口座区分が未設定のため、現物・信用のどちらにも合算していません。':'';
-    return '<div class="pf-account-summary" data-account-summary="'+g.kind+'">'+(title?'<p class="hint">'+title+'</p>':'')+'<div class="pf-metrics"><div><span>'+(g.kind==='credit'?'建玉時価':'評価額')+'</span><br><b>'+amount(g.val)+'</b></div><div><span>取得額</span><br><b>'+amount(g.cost)+'</b></div><div><span>'+ (g.kind==='credit'?'評価損益（費用前'+(g.assumed.length?'・買建仮定':'')+'）':'評価損益') +'</span><br><b class="'+(g.profit===null?'':g.profit>=0?'up':'dn')+'">'+gain(g.profit)+'</b> <span>'+(g.profit!==null&&g.cost>0?(g.profit/g.cost*100).toFixed(1)+'%':'')+'</span></div><div><span>銘柄数</span><br><b>'+g.items.length+'</b></div></div>'+(note?'<p class="hint">'+note+'</p>':'')+'<details><summary>'+(issues.length?'未確認の理由・計算について':'計算について')+'</summary>'+issues.map(t=>'<p class="hint">'+esc(t)+'</p>').join('')+'<p class="hint">登録価格による表示です。'+(S.holdingsComplete?'全保有確認済み。':'保有の確認範囲は未確定。')+(dates.length>1?'価格日が混在しています。':'')+(issues.length?'不足項目を補うと再計算します。現在値は「株価を更新」または現在値つきJSONで補えます。':'')+'</p></details></div>';
+    return '<div class="pf-account-summary" data-account-summary="'+g.kind+'">'+'<h3 class="pf-account-title">'+title+'</h3>'+'<div class="pf-metrics"><div><span>'+(g.kind==='credit'?'建玉時価':'評価額')+'</span><br><b>'+amount(g.val)+'</b></div><div><span>取得額</span><br><b>'+amount(g.cost)+'</b></div><div><span>'+ (g.kind==='credit'?'評価損益（費用前'+(g.assumed.length?'・買建仮定':'')+'）':'評価損益') +'</span><br><b class="'+(g.profit===null?'':g.profit>=0?'up':'dn')+'">'+gain(g.profit)+'</b> <span>'+(g.profit!==null&&g.cost>0?(g.profit/g.cost*100).toFixed(1)+'%':'')+'</span></div><div><span>銘柄数</span><br><b>'+g.items.length+'</b></div></div>'+(note?'<p class="hint">'+note+'</p>':'')+'<details><summary>'+(issues.length?'未確認の理由・計算について':'計算について')+'</summary>'+issues.map(t=>'<p class="hint">'+esc(t)+'</p>').join('')+'<p class="hint">登録価格による表示です。'+(S.holdingsComplete?'全保有確認済み。':'保有の確認範囲は未確定。')+(dates.length>1?'価格日が混在しています。':'')+(issues.length?'不足項目を補うと再計算します。現在値は「株価を更新」または現在値つきJSONで補えます。':'')+'</p></details></div>';
   }).join(''):'<span>保有銘柄はまだありません</span>';
   rows.sort((a,b)=>(b.val||0)-(a.val||0));
   $('#pfList').innerHTML=rows.map(r=>{
     const group=valuation.groups.find(g=>g.kind===r.kind),pct=r.profit!==null&&r.cost>0?' ('+(r.profit/r.cost*100).toFixed(1)+'%)':'';
     const weight=r.val!==null&&group.val>0?(r.val/group.val*100).toFixed(0)+'%'+(valuation.groups.length>1?'（'+(r.kind==='cash'?'現物内':r.kind==='credit'?'信用内':'未設定内')+'）':''):'';
-    return '<div class="pf" data-a="'+esc(r.h.acct||'')+'"><span class="nm" data-open="'+esc(r.code)+'"><b>'+esc(r.code)+'</b>'+esc(r.st.name||'—')+'<span class="acct" data-a="'+esc(r.h.acct||'')+'">'+esc(r.h.acct||'口座未設定')+'</span><small>'+(r.shares===null?'株数未登録':fmt(r.shares)+'株')+' ／ 取得 '+(r.avg>0?fmt(r.avg):'未登録')+' ／ 現在 '+(r.price>0?fmt(r.price):'未登録')+'</small></span><span class="val">'+amount(r.val)+'<small class="pl '+(r.profit===null?'':r.profit>=0?'up':'dn')+'">'+gain(r.profit)+pct+'</small><small>'+weight+'</small>'+(r.kind==='credit'?'<select data-credit-side="'+esc(r.code)+'" aria-label="'+esc(r.code)+'の信用売買区分" style="max-width:125px;font-size:16px;background:var(--sur);color:var(--ink)"><option value="" '+(!r.side?'selected':'')+'>買建仮定</option><option value="buy" '+(r.side==='buy'?'selected':'')+'>買建</option><option value="sell" '+(r.side==='sell'?'selected':'')+'>売建</option></select>':'')+'</span><button class="x" data-hdel="'+esc(r.code)+'">×</button></div>';
+    return '<div class="pf" data-kind="'+r.kind+'" data-a="'+esc(r.h.acct||'')+'"><span class="nm" data-open="'+esc(r.code)+'"><b>'+esc(r.code)+'</b>'+esc(r.st.name||'—')+'<span class="acct" data-a="'+esc(r.h.acct||'')+'">'+esc(r.h.acct||'口座未設定')+'</span><small>'+(r.shares===null?'株数未登録':fmt(r.shares)+'株')+' ／ 取得 '+(r.avg>0?fmt(r.avg):'未登録')+' ／ 現在 '+(r.price>0?fmt(r.price):'未登録')+'</small></span><span class="val">'+amount(r.val)+'<small class="pl '+(r.profit===null?'':r.profit>=0?'up':'dn')+'">'+gain(r.profit)+pct+'</small><small>'+weight+'</small>'+(r.kind==='credit'?'<select data-credit-side="'+esc(r.code)+'" aria-label="'+esc(r.code)+'の信用売買区分" style="max-width:125px;font-size:16px;background:var(--sur);color:var(--ink)"><option value="" '+(!r.side?'selected':'')+'>買建仮定</option><option value="buy" '+(r.side==='buy'?'selected':'')+'>買建</option><option value="sell" '+(r.side==='sell'?'selected':'')+'>売建</option></select>':'')+'</span><button class="x" data-hdel="'+esc(r.code)+'">×</button></div>';
   }).join('');
   const watch=stockRows().filter(r=>["監視","候補","打診","気になる"].includes(r.st.status)&&!S.holdings[r.code]).sort((a,b)=>(STATUS.indexOf(a.st.status)-STATUS.indexOf(b.st.status))||((b.st.rank||0)-(a.st.rank||0)));
   const cash=valuation.groups.find(g=>g.kind==='cash');
