@@ -15,7 +15,7 @@
    new MutationObserver(attach).observe(section,{childList:true,subtree:true});attach();
  }
  function render(n,x){
-   const compact=['candidates','catalysts','rebound'].includes(n);
+   const compact=['candidates','catalysts','rebound','canslim'].includes(n);
    let lead='';
    if(x.comparison&&n==='themes'){
      const same=JSON.stringify(x.current_topics)===JSON.stringify(x.previous_topics);
