@@ -312,6 +312,14 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 #vTodos .todo-progress{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line);font-size:12px;color:var(--mut)}
 #vTodos .todo-progress progress{flex:1;min-width:40px;height:5px;accent-color:var(--ink)}
 #todoEditor>label{display:block;margin:14px 0}
+#todoEditor [hidden]{display:none!important}
+#todoDays .todo-day-option{position:relative;display:inline-flex;cursor:pointer;user-select:none}
+#todoDays .todo-day-option input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+#todoDays .todo-day-option span{display:inline-flex;align-items:center;justify-content:center;gap:5px;box-sizing:border-box;min-width:48px;min-height:44px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--sur);color:var(--mut);font-size:14px}
+#todoDays .todo-day-option span::before{content:'✓';visibility:hidden;font-size:12px}
+#todoDays .todo-day-option input:checked+span{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+#todoDays .todo-day-option input:checked+span::before{visibility:visible}
+#todoDays .todo-day-option input:focus-visible+span{outline:2px solid var(--ink);outline-offset:3px}
 @media(max-width:380px){#vTodos .todo-datebar{gap:4px}#vTodos .todo-datepick{gap:5px;padding:4px}#vTodos .todo-actions .btn{font-size:12px}}
 </style></head>
 <body>
@@ -456,7 +464,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="3.16" /* To doの表記と日付表示をコンパクト化 */; // 現物・信用の区切りと集計間隔を調整
+const VER="3.17" /* 繰り返し曜日の選択を色とチェックで表示 */; // 現物・信用の区切りと集計間隔を調整
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TAB_DEFS=[{v:"vTodos",t:"To do"},{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vHot",t:"直前"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"}];
 const tabDef=v=>{const d=TAB_DEFS.find(x=>x.v===v);if(!d)return;const name=S.tabNames?.[v];return {...d,t:typeof name==='string'&&name.trim()?name.trim().slice(0,24):d.t};};
@@ -1382,7 +1390,7 @@ function renderTodos(){
 function openTodoEditor(id){
  todoEditing=id||'todo:'+crypto.randomUUID();const t=todoRecords().find(r=>r.id===id)?.todo||{title:'',memo:'',freq:'weekly',days:[1,2,3,4,5],date:todoDay};
  const editor=$('#todoEditor');editor.hidden=false;
- editor.innerHTML='<h3>'+(id?'To doを編集':'To doを追加')+'</h3><label>やること<input id="todoTitle" maxlength="160" required style="display:block;width:100%;font:inherit" value="'+esc(t.title)+'"></label><label>メモ<textarea id="todoMemo" style="display:block;width:100%;font:inherit">'+esc(t.memo||'')+'</textarea></label><label>くり返し<select id="todoFreq"><option value="daily">毎日</option><option value="weekdays">平日</option><option value="weekly">曜日を指定</option><option value="date">日付を指定</option></select></label><div id="todoDays" style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0">'+[1,2,3,4,5,6,0].map(d=>'<label><input type="checkbox" value="'+d+'" '+((t.days||[]).includes(d)?'checked':'')+'>'+'日月火水木金土'[d]+'</label>').join('')+'</div><label id="todoDateWrap">日付<input type="date" id="todoDate" value="'+esc(t.date||todoDay)+'"></label><p role="status" id="todoError"></p><button class="btn" type="submit">保存する</button> <button class="btn" type="button" id="todoCancel">編集をやめる</button>';
+ editor.innerHTML='<h3>'+(id?'To doを編集':'To doを追加')+'</h3><label>やること<input id="todoTitle" maxlength="160" required style="display:block;width:100%;font:inherit" value="'+esc(t.title)+'"></label><label>メモ<textarea id="todoMemo" style="display:block;width:100%;font:inherit">'+esc(t.memo||'')+'</textarea></label><label>くり返し<select id="todoFreq"><option value="daily">毎日</option><option value="weekdays">平日</option><option value="weekly">曜日を指定</option><option value="date">日付を指定</option></select></label><div id="todoDays" style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0">'+[1,2,3,4,5,6,0].map(d=>'<label class="todo-day-option"><input type="checkbox" value="'+d+'" '+((t.days||[]).includes(d)?'checked':'')+'><span>'+'日月火水木金土'[d]+'</span></label>').join('')+'</div><label id="todoDateWrap">日付<input type="date" id="todoDate" value="'+esc(t.date||todoDay)+'"></label><p role="status" id="todoError"></p><button class="btn" type="submit">保存する</button> <button class="btn" type="button" id="todoCancel">編集をやめる</button>';
  $('#todoFreq').value=t.freq;const paint=()=>{$('#todoDays').style.display=$('#todoFreq').value==='weekly'?'flex':'none';$('#todoDateWrap').hidden=$('#todoFreq').value!=='date';};$('#todoFreq').onchange=paint;paint();
  $('#todoCancel').onclick=()=>{editor.hidden=true;todoEditing=null;};
  editor.onsubmit=e=>{e.preventDefault();const title=$('#todoTitle').value.trim(),freq=$('#todoFreq').value,days=Array.from(editor.querySelectorAll('#todoDays input:checked')).map(e=>Number(e.value)),date=$('#todoDate').value;
