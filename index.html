@@ -293,42 +293,42 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 #toast.show{opacity:1}
 .hide{display:none!important}
 </style>
-<style>#vTodos .todo-datebar{display:flex;gap:6px;align-items:center;margin:10px 0 6px;max-width:360px}
-#vTodos .todo-arrow{width:36px;height:36px;flex:none;border:0;border-radius:8px;background:transparent;color:var(--mut);font-size:21px;cursor:pointer}
-#vTodos .todo-datepick{position:relative;display:flex;flex-direction:row;gap:8px;justify-content:center;align-items:center;padding:4px 8px;min-height:28px;border-radius:8px;cursor:pointer;background:transparent;min-width:0;flex:1}
-#vTodos .todo-datepick:focus-within{outline:2px solid var(--ink);outline-offset:2px}
-#vTodos .todo-datepick small{font-size:10px;color:var(--mut);white-space:nowrap}
-#vTodos .todo-datepick strong{font-size:14px;font-weight:500;white-space:nowrap}
-#vTodos .todo-datepick input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;box-sizing:border-box}
-#vTodos .todo-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;margin-bottom:12px;max-width:360px}
-#vTodos .todo-week button{display:flex;flex-direction:row;justify-content:center;align-items:center;gap:3px;min-height:34px;padding:4px 0;border:1px solid transparent;border-radius:7px;color:var(--ink);background:transparent;cursor:pointer}
-#vTodos .todo-week button small{font-size:10px;color:var(--mut)}
-#vTodos .todo-week button b{font-size:12px;font-weight:500}
-#vTodos .todo-week button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
-#vTodos .todo-week button[aria-pressed="true"] small{color:inherit}
-#vTodos .todo-week button.is-today:not([aria-pressed="true"]){border-color:var(--line);background:var(--soft)}
-#vTodos .todo-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-#vTodos .todo-actions .todo-spacer{flex:1}
-#vTodos .todo-progress{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line);font-size:12px;color:var(--mut)}
-#vTodos .todo-progress progress{flex:1;min-width:40px;height:5px;accent-color:var(--ink)}
+<style>:is(#vTodos,#calendarTodos) .todo-datebar{display:flex;gap:6px;align-items:center;margin:10px 0 6px;max-width:360px}
+:is(#vTodos,#calendarTodos) .todo-arrow{width:36px;height:36px;flex:none;border:0;border-radius:8px;background:transparent;color:var(--mut);font-size:21px;cursor:pointer}
+:is(#vTodos,#calendarTodos) .todo-datepick{position:relative;display:flex;flex-direction:row;gap:8px;justify-content:center;align-items:center;padding:4px 8px;min-height:28px;border-radius:8px;cursor:pointer;background:transparent;min-width:0;flex:1}
+:is(#vTodos,#calendarTodos) .todo-datepick:focus-within{outline:2px solid var(--ink);outline-offset:2px}
+:is(#vTodos,#calendarTodos) .todo-datepick small{font-size:10px;color:var(--mut);white-space:nowrap}
+:is(#vTodos,#calendarTodos) .todo-datepick strong{font-size:14px;font-weight:500;white-space:nowrap}
+:is(#vTodos,#calendarTodos) .todo-datepick input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;box-sizing:border-box}
+:is(#vTodos,#calendarTodos) .todo-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;margin-bottom:12px;max-width:360px}
+:is(#vTodos,#calendarTodos) .todo-week button{display:flex;flex-direction:row;justify-content:center;align-items:center;gap:3px;min-height:34px;padding:4px 0;border:1px solid transparent;border-radius:7px;color:var(--ink);background:transparent;cursor:pointer}
+:is(#vTodos,#calendarTodos) .todo-week button small{font-size:10px;color:var(--mut)}
+:is(#vTodos,#calendarTodos) .todo-week button b{font-size:12px;font-weight:500}
+:is(#vTodos,#calendarTodos) .todo-week button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+:is(#vTodos,#calendarTodos) .todo-week button[aria-pressed="true"] small{color:inherit}
+:is(#vTodos,#calendarTodos) .todo-week button.is-today:not([aria-pressed="true"]){border-color:var(--line);background:var(--soft)}
+:is(#vTodos,#calendarTodos) .todo-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+:is(#vTodos,#calendarTodos) .todo-actions .todo-spacer{flex:1}
+:is(#vTodos,#calendarTodos) .todo-progress{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line);font-size:12px;color:var(--mut)}
+:is(#vTodos,#calendarTodos) .todo-progress progress{flex:1;min-width:40px;height:5px;accent-color:var(--ink)}
 #todoEditor>label{display:block;margin:14px 0}
 #todoEditor [hidden]{display:none!important}
-#vTodos .todo-section{border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0;background:var(--sur)}
-#vTodos .todo-section h3{font-size:12px;font-weight:600;color:var(--mut);margin:0 0 8px}
-#vTodos .todo-task-row{display:flex;gap:8px;align-items:flex-start;border-bottom:1px solid var(--line);padding:6px 0}
-#vTodos .todo-check{display:grid;place-items:center;flex:0 0 40px;width:40px;min-height:44px;padding:0;border:0;background:transparent;cursor:pointer}
-#vTodos .todo-check-box{display:grid;place-items:center;width:22px;height:22px;box-sizing:border-box;border:2px solid var(--mut);border-radius:6px;background:transparent}
-#vTodos .todo-check svg{width:17px;height:17px;visibility:hidden;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-#vTodos .todo-check[aria-checked="true"] .todo-check-box{background:var(--ink);border-color:var(--ink);color:var(--bg)}
-#vTodos .todo-check[aria-checked="true"] svg{visibility:visible}
-#vTodos .todo-check:focus-visible{outline:2px solid var(--ink);border-radius:8px}
-#vTodos .todo-task-text{flex:1;min-width:0;padding:9px 0}
-#vTodos .todo-task-text b{font-size:14px;font-weight:500;overflow-wrap:anywhere}
-#vTodos .todo-task-text small{display:block;color:var(--mut);font-size:11px;margin-top:3px}
-#vTodos .todo-task-text p{white-space:pre-wrap;font-size:12px;overflow-wrap:anywhere}
-#vTodos .is-done .todo-task-text b{color:var(--mut);text-decoration:line-through}
-#vTodos .todo-quick{display:flex;gap:8px;margin-top:12px}
-#vTodos .todo-quick input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:8px;font:inherit;font-size:14px;padding:10px}
+:is(#vTodos,#calendarTodos) .todo-section{border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0;background:var(--sur)}
+:is(#vTodos,#calendarTodos) .todo-section h3{font-size:12px;font-weight:600;color:var(--mut);margin:0 0 8px}
+:is(#vTodos,#calendarTodos) .todo-task-row{display:flex;gap:8px;align-items:flex-start;border-bottom:1px solid var(--line);padding:6px 0}
+:is(#vTodos,#calendarTodos) .todo-check{display:grid;place-items:center;flex:0 0 40px;width:40px;min-height:44px;padding:0;border:0;background:transparent;cursor:pointer}
+:is(#vTodos,#calendarTodos) .todo-check-box{display:grid;place-items:center;width:22px;height:22px;box-sizing:border-box;border:2px solid var(--mut);border-radius:6px;background:transparent}
+:is(#vTodos,#calendarTodos) .todo-check svg{width:17px;height:17px;visibility:hidden;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+:is(#vTodos,#calendarTodos) .todo-check[aria-checked="true"] .todo-check-box{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+:is(#vTodos,#calendarTodos) .todo-check[aria-checked="true"] svg{visibility:visible}
+:is(#vTodos,#calendarTodos) .todo-check:focus-visible{outline:2px solid var(--ink);border-radius:8px}
+:is(#vTodos,#calendarTodos) .todo-task-text{flex:1;min-width:0;padding:9px 0}
+:is(#vTodos,#calendarTodos) .todo-task-text b{font-size:14px;font-weight:500;overflow-wrap:anywhere}
+:is(#vTodos,#calendarTodos) .todo-task-text small{display:block;color:var(--mut);font-size:11px;margin-top:3px}
+:is(#vTodos,#calendarTodos) .todo-task-text p{white-space:pre-wrap;font-size:12px;overflow-wrap:anywhere}
+:is(#vTodos,#calendarTodos) .is-done .todo-task-text b{color:var(--mut);text-decoration:line-through}
+:is(#vTodos,#calendarTodos) .todo-quick{display:flex;gap:8px;margin-top:12px}
+:is(#vTodos,#calendarTodos) .todo-quick input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:8px;font:inherit;font-size:14px;padding:10px}
 #todoDays .todo-day-option{position:relative;display:inline-flex;cursor:pointer;user-select:none}
 #todoDays .todo-day-option input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
 #todoDays .todo-day-option span{display:inline-flex;align-items:center;justify-content:center;gap:5px;box-sizing:border-box;min-width:48px;min-height:44px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--sur);color:var(--mut);font-size:14px}
@@ -336,7 +336,25 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 #todoDays .todo-day-option input:checked+span{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
 #todoDays .todo-day-option input:checked+span::before{visibility:visible}
 #todoDays .todo-day-option input:focus-visible+span{outline:2px solid var(--ink);outline-offset:3px}
-@media(max-width:380px){#vTodos .todo-datebar{gap:4px}#vTodos .todo-datepick{gap:5px;padding:4px}#vTodos .todo-actions .btn{font-size:12px}}
+@media(max-width:380px){:is(#vTodos,#calendarTodos) .todo-datebar{gap:4px}:is(#vTodos,#calendarTodos) .todo-datepick{gap:5px;padding:4px}:is(#vTodos,#calendarTodos) .todo-actions .btn{font-size:12px}}
+
+/* Routine Investmentと同じ、カードなしの区切り見出しとチェック行。 */
+:is(#vTodos,#calendarTodos) .todo-section{border:0;border-radius:0;padding:0;margin:0 0 24px;background:transparent}
+:is(#vTodos,#calendarTodos) .todo-section h3,.investment-heading{font-size:13px;font-weight:700;letter-spacing:1px;color:var(--mut);margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+:is(#vTodos,#calendarTodos) .todo-task-row{align-items:center;gap:11px;padding:9px 2px;border:0}
+:is(#vTodos,#calendarTodos) .todo-check{flex-basis:24px;width:24px;min-height:32px}
+:is(#vTodos,#calendarTodos) .todo-check-box{width:24px;height:24px}
+:is(#vTodos,#calendarTodos) .todo-check svg{width:12px;height:12px}
+:is(#vTodos,#calendarTodos) .todo-check[aria-checked="true"] .todo-check-box{background:#3a5566;border-color:#3a5566;color:#cfe}
+:is(#vTodos,#calendarTodos) .todo-task-text{padding:0}
+:is(#vTodos,#calendarTodos) [data-tedit]{border:0;background:transparent;padding:4px 8px}
+:is(#vTodos,#calendarTodos) .todo-datepick{flex:none}
+#calendarTodos{margin-bottom:24px}
+.investment-upcoming{margin:24px 0}
+.investment-event{font-size:14px;padding:8px 0;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:8px}
+.investment-date{flex:none;color:var(--mut);font-size:12px}
+.investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
+.investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
 </style></head>
 <body>
 <div id="app">
@@ -426,11 +444,11 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
   </div>
 </section>
 
-<section id="vCal" class="hide">
+<section id="vCal" class="hide"><div id="calendarTodos"></div><h3 class="investment-heading">投資カレンダー</h3>
   <div class="mnav"><button id="mPrev">‹</button><span class="mm" id="mTitle"></span><button id="mNext">›</button><span class="seg" id="calSeg"><button data-m="month" class="on">月</button><button data-m="list">リスト</button></span></div>
   <div id="calGrid" class="grid" style="margin-bottom:12px"></div>
   <div class="evadd"><input type="date" id="evDate"><input class="tt" id="evTitle" placeholder="内容（コードを含めると銘柄に紐づく）"><button class="btn" id="evAdd">追加</button></div>
-  <div id="evList"></div>
+  <div id="evList"></div><section class="investment-upcoming"><h3 class="investment-heading">直近のイベント</h3><div id="investmentUpcoming"></div></section>
   <div class="set" style="margin-top:18px"><h3>まとめて取り込む</h3>
     <p class="hint" style="margin-bottom:6px">1行1件。「2026/10/30 決算 6136 OSG」「10月30日 OSG決算」「10/30 日銀会合」など日付は自動判定。</p>
     <textarea class="aiin" id="evBulk" placeholder="2026/10/30 決算 6136 OSG&#10;11/6 決算 7013 IHI"></textarea>
@@ -480,7 +498,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="3.18" /* Investment型のチェック式To doへ統一 */; // 現物・信用の区切りと集計間隔を調整
+const VER="3.19" /* Investment型のチェック式To doへ統一 */; // 現物・信用の区切りと集計間隔を調整
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TAB_DEFS=[{v:"vTodos",t:"To do"},{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vHot",t:"直前"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"}];
 const tabDef=v=>{const d=TAB_DEFS.find(x=>x.v===v);if(!d)return;const name=S.tabNames?.[v];return {...d,t:typeof name==='string'&&name.trim()?name.trim().slice(0,24):d.t};};
@@ -1264,7 +1282,7 @@ function parseDate(str){
   return null;
 }
 function addEvent(date,title){title=title.replace(/[（(][日月火水木金土][）)]/g,"").replace(/\s+/g," ").trim();if(!date||!title)return false;const cm=title.match(CODE_RE);S.events.push({id:uid(),date,title,code:cm?cm[1]:null});if(cm)stock(cm[1]);return true}
-function renderCal(){
+function renderCal(){mountInvestmentTodos();renderInvestmentUpcoming();
   if(!$("#evDate").value)$("#evDate").value=dstr(Date.now());
   const month=calMode==="month";$("#calGrid").classList.toggle("hide",!month);$("#mPrev").classList.toggle("hide",!month);$("#mNext").classList.toggle("hide",!month);$("#mTitle").classList.toggle("hide",!month);
   if(month){renderGrid();const k=calSel;const es=k?[...S.events,...sqDates()].filter(e=>e.date===k).sort((a,b)=>(a.sq?1:0)-(b.sq?1:0)):[];
@@ -1378,24 +1396,38 @@ function todoDue(t,date){
  return !t.deleted&&(t.freq==='daily'||t.freq==='weekdays'&&wd>=1&&wd<=5||t.freq==='weekly'&&(t.days||[]).includes(wd)||t.freq==='date'&&t.date===date);
 }
 function todoLabel(t){return t.freq==='daily'?'毎日':t.freq==='weekdays'?'平日':t.freq==='date'?t.date:(t.days||[]).map(d=>'日月火水木金土'[d]).join('・');}
-function todoDateHeader(done,total){
- const d=new Date(todoDay+'T12:00:00'),today=todoDate(new Date()),week=new Date(d);week.setDate(d.getDate()-(d.getDay()+6)%7);
- const days=Array.from({length:7},(_,i)=>{const day=new Date(week);day.setDate(week.getDate()+i);return day;});
- return '<div class="todo-datebar"><button class="todo-arrow" data-tprev aria-label="前の日">‹</button><label class="todo-datepick"><small>'+d.getFullYear()+'年'+(todoDay===today?' ・ 今日':'')+'</small><strong>'+ (d.getMonth()+1)+'月'+d.getDate()+'日 <span>（'+'日月火水木金土'[d.getDay()]+'）</span></strong><input type="date" id="todoDay" aria-label="To doの日付" value="'+todoDay+'"></label><button class="todo-arrow" data-tnext aria-label="次の日">›</button></div>'+
- '<div class="todo-week" aria-label="週の日付">'+days.map(day=>{const value=todoDate(day);return '<button type="button" data-tday="'+value+'" aria-label="'+(day.getMonth()+1)+'月'+day.getDate()+'日" aria-pressed="'+(value===todoDay)+'" class="'+(value===today?'is-today':'')+'"><small>'+'日月火水木金土'[day.getDay()]+'</small><b>'+day.getDate()+'</b></button>';}).join('')+'</div>'+
- '<div class="todo-actions"><button class="btn" data-ttoday>今日に戻る</button><span class="todo-spacer"></span><button class="btn" data-tadd>＋ To doを追加</button><button class="btn" data-tmanage>'+(todoManage?'一覧に戻る':'To doを編集')+'</button></div>'+
- '<div class="todo-progress"><span>'+done+' / '+total+' 完了</span><progress aria-label="選択日のTo do完了数" max="'+Math.max(1,total)+'" value="'+done+'"></progress></div>';
+// Routine OS Investmentの並びと寸法を使い、保存はInvnoteの既存経路を維持する。
+function mountInvestmentTodos(){
+ const host=view==='vCal'?$('#calendarTodos'):$('#vTodos');
+ if(!host)return;
+ for(const id of ['todoContent','todoEditor']){const el=$('#'+id);if(el&&el.parentNode!==host)host.appendChild(el);}
+ renderTodos();
+}
+function renderInvestmentUpcoming(){
+ const today=todoDate(new Date());
+ const rows=[...S.events,...sqDates()].filter(e=>e.date>=today).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,8);
+ $('#investmentUpcoming').innerHTML=rows.length?rows.map(e=>{
+  const d=new Date(e.date+'T12:00:00'),diff=Math.round((d-new Date(today+'T12:00:00'))/86400000);
+  return '<div class="investment-event"><span class="investment-date">'+(d.getMonth()+1)+'/'+d.getDate()+'（'+'日月火水木金土'[d.getDay()]+'）</span><span class="investment-title">'+esc(e.title)+'</span><span class="investment-when">'+(diff===0?'今日':diff===1?'明日':'あと'+diff+'日')+'</span></div>';
+ }).join(''):'<p class="hint">今後のイベントはありません。カレンダーの日を選んで追加できます。</p>';
+}
+function todoDateHeader(){
+ const d=new Date(todoDay+'T12:00:00');
+ return '<div class="todo-datebar"><button class="todo-arrow" data-tprev aria-label="前の日">‹</button><button class="btn" data-ttoday>今日</button><button class="todo-arrow" data-tnext aria-label="次の日">›</button><label class="todo-datepick"><strong>'+(d.getMonth()+1)+'/'+d.getDate()+'（'+'日月火水木金土'[d.getDay()]+'）</strong><input type="date" id="todoDay" aria-label="To doの日付" value="'+todoDay+'"></label></div>';
 }
 function renderTodos(){
  const root=$('#todoContent');if(!root)return;
+ const host=view==='vCal'?$('#calendarTodos'):$('#vTodos');if(root.parentNode!==host){host.appendChild(root);host.appendChild($('#todoEditor'));}
  const heading=$('#vTodos h2');if(heading)heading.textContent=tabDef('vTodos').t;
  const tasks=todoRecords().filter(r=>r.todo.type==='task'&&!r.todo.deleted),due=tasks.filter(r=>todoDue(r.todo,todoDay));
  const done=id=>todoRecords().find(r=>r.id==='todo-check:'+id+':'+todoDay)?.todo.done===true;
  const row=r=>'<div class="todo-task-row '+(done(r.id)?'is-done':'')+'">'+(!todoManage?'<button type="button" class="todo-check" role="checkbox" aria-label="'+esc(r.todo.title)+'を完了" aria-checked="'+done(r.id)+'" data-tcheck="'+esc(r.id)+'"><span class="todo-check-box"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 6"/></svg></span></button>':'')+'<div class="todo-task-text"><b>'+esc(r.todo.title)+'</b><small>'+esc(todoLabel(r.todo))+'</small>'+(r.todo.memo?'<p>'+esc(r.todo.memo)+'</p>':'')+'</div><button class="btn" data-tedit="'+esc(r.id)+'" aria-label="'+esc(r.todo.title)+'を編集">⋯</button>'+(todoManage?'<button class="btn" data-tdel="'+esc(r.id)+'">'+(todoDelete===r.id?'もう一度押して削除':'削除')+'</button>':'')+'</div>';
  const section=(title,rows,extra='')=>'<section class="todo-section"><h3>'+title+'</h3>'+rows.map(row).join('')+(!rows.length?'<p class="hint">まだありません。</p>':'')+extra+'</section>';
- root.innerHTML=todoDateHeader(due.filter(r=>done(r.id)).length,due.length)+(todoManage?section('すべて管理',tasks):
+ root.innerHTML=(todoManage?section('すべて管理',tasks)+todoDateHeader():
  section('今日やること',due.filter(r=>r.todo.freq==='date'),'<form id="todoQuickAdd" class="todo-quick"><input aria-label="今日やること" placeholder="今日やることを入力してEnter" maxlength="160" required><button class="btn" type="submit">追加</button></form>')+
  section('ルーチンでやること',due.filter(r=>r.todo.freq!=='date')));
+ if(!todoManage)root.querySelector('.todo-section h3').insertAdjacentHTML('afterend',todoDateHeader());
+ root.insertAdjacentHTML('beforeend','<div class="todo-actions"><button class="btn" data-tadd>＋ やること</button><button class="btn" data-tmanage>'+(todoManage?'一覧に戻る':'すべて管理')+'</button></div>');
  const quick=root.querySelector('#todoQuickAdd');if(quick)quick.onsubmit=e=>{e.preventDefault();const input=quick.querySelector('input'),title=input.value.trim();if(title&&todoWrite('todo:'+crypto.randomUUID(),{type:'task',title,memo:'',freq:'date',days:[],date:todoDay,deleted:false}))renderTodos();};
  root.querySelector('#todoDay').onchange=e=>{if(e.target.value){todoDay=e.target.value;renderTodos();}};
  root.querySelectorAll('[data-tday]').forEach(e=>e.onclick=()=>{todoDay=e.dataset.tday;renderTodos();});
