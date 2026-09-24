@@ -313,6 +313,22 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 #vTodos .todo-progress progress{flex:1;min-width:40px;height:5px;accent-color:var(--ink)}
 #todoEditor>label{display:block;margin:14px 0}
 #todoEditor [hidden]{display:none!important}
+#vTodos .todo-section{border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0;background:var(--sur)}
+#vTodos .todo-section h3{font-size:12px;font-weight:600;color:var(--mut);margin:0 0 8px}
+#vTodos .todo-task-row{display:flex;gap:8px;align-items:flex-start;border-bottom:1px solid var(--line);padding:6px 0}
+#vTodos .todo-check{display:grid;place-items:center;flex:0 0 40px;width:40px;min-height:44px;padding:0;border:0;background:transparent;cursor:pointer}
+#vTodos .todo-check-box{display:grid;place-items:center;width:22px;height:22px;box-sizing:border-box;border:2px solid var(--mut);border-radius:6px;background:transparent}
+#vTodos .todo-check svg{width:17px;height:17px;visibility:hidden;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+#vTodos .todo-check[aria-checked="true"] .todo-check-box{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+#vTodos .todo-check[aria-checked="true"] svg{visibility:visible}
+#vTodos .todo-check:focus-visible{outline:2px solid var(--ink);border-radius:8px}
+#vTodos .todo-task-text{flex:1;min-width:0;padding:9px 0}
+#vTodos .todo-task-text b{font-size:14px;font-weight:500;overflow-wrap:anywhere}
+#vTodos .todo-task-text small{display:block;color:var(--mut);font-size:11px;margin-top:3px}
+#vTodos .todo-task-text p{white-space:pre-wrap;font-size:12px;overflow-wrap:anywhere}
+#vTodos .is-done .todo-task-text b{color:var(--mut);text-decoration:line-through}
+#vTodos .todo-quick{display:flex;gap:8px;margin-top:12px}
+#vTodos .todo-quick input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);color:var(--ink);border-radius:8px;font:inherit;font-size:14px;padding:10px}
 #todoDays .todo-day-option{position:relative;display:inline-flex;cursor:pointer;user-select:none}
 #todoDays .todo-day-option input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
 #todoDays .todo-day-option span{display:inline-flex;align-items:center;justify-content:center;gap:5px;box-sizing:border-box;min-width:48px;min-height:44px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--sur);color:var(--mut);font-size:14px}
@@ -464,7 +480,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="3.17" /* 繰り返し曜日の選択を色とチェックで表示 */; // 現物・信用の区切りと集計間隔を調整
+const VER="3.18" /* Investment型のチェック式To doへ統一 */; // 現物・信用の区切りと集計間隔を調整
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TAB_DEFS=[{v:"vTodos",t:"To do"},{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vHot",t:"直前"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"}];
 const tabDef=v=>{const d=TAB_DEFS.find(x=>x.v===v);if(!d)return;const name=S.tabNames?.[v];return {...d,t:typeof name==='string'&&name.trim()?name.trim().slice(0,24):d.t};};
@@ -1375,15 +1391,18 @@ function renderTodos(){
  const heading=$('#vTodos h2');if(heading)heading.textContent=tabDef('vTodos').t;
  const tasks=todoRecords().filter(r=>r.todo.type==='task'&&!r.todo.deleted),due=tasks.filter(r=>todoDue(r.todo,todoDay));
  const done=id=>todoRecords().find(r=>r.id==='todo-check:'+id+':'+todoDay)?.todo.done===true;
- root.innerHTML=todoDateHeader(due.filter(r=>done(r.id)).length,due.length)+
- (todoManage?tasks:due).map(r=>'<div style="padding:14px 0;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start">'+(!todoManage?'<input type="checkbox" aria-label="'+esc(r.todo.title)+'を完了" data-tcheck="'+esc(r.id)+'" '+(done(r.id)?'checked':'')+' style="width:20px;height:20px;flex-shrink:0">':'')+'<div style="flex:1;min-width:0"><b>'+esc(r.todo.title)+'</b><div class="hint">'+esc(todoLabel(r.todo))+'</div>'+(r.todo.memo?'<p style="white-space:pre-wrap">'+esc(r.todo.memo)+'</p>':'')+'</div><button class="btn" data-tedit="'+esc(r.id)+'">編集</button>'+(todoManage?'<button class="btn" data-tdel="'+esc(r.id)+'">'+(todoDelete===r.id?'もう一度押して削除':'削除')+'</button>':'')+'</div>').join('')+
- (!(todoManage?tasks:due).length?'<p style="margin:24px 0">'+(todoManage?'登録したTo doはありません。':'この日に予定されているTo doはありません。')+'</p>':'');
+ const row=r=>'<div class="todo-task-row '+(done(r.id)?'is-done':'')+'">'+(!todoManage?'<button type="button" class="todo-check" role="checkbox" aria-label="'+esc(r.todo.title)+'を完了" aria-checked="'+done(r.id)+'" data-tcheck="'+esc(r.id)+'"><span class="todo-check-box"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 6"/></svg></span></button>':'')+'<div class="todo-task-text"><b>'+esc(r.todo.title)+'</b><small>'+esc(todoLabel(r.todo))+'</small>'+(r.todo.memo?'<p>'+esc(r.todo.memo)+'</p>':'')+'</div><button class="btn" data-tedit="'+esc(r.id)+'" aria-label="'+esc(r.todo.title)+'を編集">⋯</button>'+(todoManage?'<button class="btn" data-tdel="'+esc(r.id)+'">'+(todoDelete===r.id?'もう一度押して削除':'削除')+'</button>':'')+'</div>';
+ const section=(title,rows,extra='')=>'<section class="todo-section"><h3>'+title+'</h3>'+rows.map(row).join('')+(!rows.length?'<p class="hint">まだありません。</p>':'')+extra+'</section>';
+ root.innerHTML=todoDateHeader(due.filter(r=>done(r.id)).length,due.length)+(todoManage?section('すべて管理',tasks):
+ section('今日やること',due.filter(r=>r.todo.freq==='date'),'<form id="todoQuickAdd" class="todo-quick"><input aria-label="今日やること" placeholder="今日やることを入力してEnter" maxlength="160" required><button class="btn" type="submit">追加</button></form>')+
+ section('ルーチンでやること',due.filter(r=>r.todo.freq!=='date')));
+ const quick=root.querySelector('#todoQuickAdd');if(quick)quick.onsubmit=e=>{e.preventDefault();const input=quick.querySelector('input'),title=input.value.trim();if(title&&todoWrite('todo:'+crypto.randomUUID(),{type:'task',title,memo:'',freq:'date',days:[],date:todoDay,deleted:false}))renderTodos();};
  root.querySelector('#todoDay').onchange=e=>{if(e.target.value){todoDay=e.target.value;renderTodos();}};
  root.querySelectorAll('[data-tday]').forEach(e=>e.onclick=()=>{todoDay=e.dataset.tday;renderTodos();});
  const move=n=>{const d=new Date(todoDay+'T12:00:00');d.setDate(d.getDate()+n);todoDay=todoDate(d);renderTodos();};
  root.querySelector('[data-tprev]').onclick=()=>move(-1);root.querySelector('[data-tnext]').onclick=()=>move(1);root.querySelector('[data-ttoday]').onclick=()=>{todoDay=todoDate(new Date());renderTodos();};
  root.querySelector('[data-tadd]').onclick=()=>openTodoEditor();root.querySelector('[data-tmanage]').onclick=()=>{todoManage=!todoManage;todoDelete=null;renderTodos();};
- root.querySelectorAll('[data-tcheck]').forEach(e=>e.onchange=()=>{const id=e.dataset.tcheck;if(todoWrite('todo-check:'+id+':'+todoDay,{type:'check',taskId:id,date:todoDay,done:e.checked}))renderTodos();else e.checked=!e.checked;});
+ root.querySelectorAll('[data-tcheck]').forEach(e=>e.onclick=()=>{const id=e.dataset.tcheck;if(todoWrite('todo-check:'+id+':'+todoDay,{type:'check',taskId:id,date:todoDay,done:!done(id)}))renderTodos();});
  root.querySelectorAll('[data-tedit]').forEach(e=>e.onclick=()=>openTodoEditor(e.dataset.tedit));
  root.querySelectorAll('[data-tdel]').forEach(e=>e.onclick=()=>{const id=e.dataset.tdel;if(todoDelete!==id){todoDelete=id;renderTodos();return;}const r=todoRecords().find(r=>r.id===id);if(todoWrite(id,{...r.todo,deleted:true})){todoDelete=null;renderTodos();}});
 }
