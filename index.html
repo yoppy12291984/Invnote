@@ -405,6 +405,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
   <div id="impLog" style="margin-top:14px"></div>
 </section>
 
+<section id="vTodos" class="hide"><h2>ToDo</h2><div id="todoContent"></div><form id="todoEditor" hidden style="margin:20px 0;padding:16px;border:1px solid var(--line);border-radius:12px"></form></section>
 <section id="vSet" class="hide">
   <div class="set"><h3>起動時の画面</h3><select id="startupView" style="font:inherit;font-size:16px;max-width:100%;padding:6px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px"></select><p class="hint" id="startupViewStatus" role="status">未設定はポートフォリオ。この端末に保存します。</p></div>
   <div class="set"><h3>データ</h3><div class="row">
@@ -435,9 +436,9 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="3.13" /* 端末管理を設定内へ移動 */; // 現物・信用の区切りと集計間隔を調整
+const VER="3.14" /* 曜日別ToDoと日付ごとの完了記録 */; // 現物・信用の区切りと集計間隔を調整
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
-const TAB_DEFS=[{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vHot",t:"直前"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"}];
+const TAB_DEFS=[{v:"vTodos",t:"ToDo"},{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vHot",t:"直前"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"}];
 const tabDef=v=>TAB_DEFS.find(x=>x.v===v);
 function tabOrder(){const saved=(S.tabOrder||[]).filter(tabDef);return saved.length?saved:TAB_DEFS.map(x=>x.v)}
 const TPL={
@@ -788,7 +789,7 @@ $("#tabLed").addEventListener("click",e=>{const b=e.target.closest("button");if(
 });
 $("#tabHidden").addEventListener("click",e=>{const b=e.target.closest("[data-tshow]");if(!b)return;tabsSave([...tabOrder(),b.dataset.tshow])});
 function show(v){
-  view=v;["vNotes","vStocks","vHot","vPf","vSet","detail","vDiary","vCal","vRules","vImport"].forEach(x=>$("#"+x).classList.toggle("hide",x!==v));
+  view=v;["vTodos","vNotes","vStocks","vHot","vPf","vSet","detail","vDiary","vCal","vRules","vImport"].forEach(x=>$("#"+x).classList.toggle("hide",x!==v));
   $("#cap").classList.toggle("hide",!["vNotes","detail"].includes(v));
   document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v===v||(v==="detail"&&b.dataset.v==="vStocks")));$("#gearBtn").classList.toggle("on",v==="vSet");$("#impBtn").classList.toggle("on",v==="vImport");
   render();
@@ -798,7 +799,7 @@ let beforeSet="vPf";const side=(v)=>{if(view===v){show(beforeSet)}else{if(view!=
 $("#gearBtn").addEventListener("click",()=>side("vSet"));$("#impBtn").addEventListener("click",()=>side("vImport"));
 function render(){
   $("#stat").textContent=`${S.notes.length}メモ／${Object.keys(S.stocks).length}銘柄`;
-  if(view==="vNotes")renderNotes();else if(view==="vStocks")renderStocks();else if(view==="vHot")renderHot();else if(view==="detail")renderDetailNotes();else if(view==="vPf"){renderPf();if(Date.now()-(S.pricesAt||0)>6*36e5)refreshPrices(true)}else if(view==="vDiary")renderDiary();else if(view==="vCal")renderCal();else if(view==="vRules")renderRules();
+  if(view==="vTodos")renderTodos();else if(view==="vNotes")renderNotes();else if(view==="vStocks")renderStocks();else if(view==="vHot")renderHot();else if(view==="detail")renderDetailNotes();else if(view==="vPf"){renderPf();if(Date.now()-(S.pricesAt||0)>6*36e5)refreshPrices(true)}else if(view==="vDiary")renderDiary();else if(view==="vCal")renderCal();else if(view==="vRules")renderRules();
 }
 
 /* ---------- theme / settings ---------- */
@@ -828,6 +829,7 @@ function dl(name,text,type){const a=document.createElement("a");a.href=URL.creat
 $("#expJson").addEventListener("click",()=>dl(`invnote_${dstr(Date.now())}.json`,JSON.stringify(S,null,1),"application/json"));
 $("#impJson").addEventListener("click",()=>$("#impFile").click());
 function mergeIn(d){
+  todoMerge([...(d.todoRecords||[]),...(d.notes||[]).filter(r=>r.kind===TODO_KIND)]);d={...d,notes:(d.notes||[]).filter(r=>r.kind!==TODO_KIND)};
   const ids=new Set(S.notes.map(n=>n.id));let add=0;const del=new Set(S.deleted||[]);
   (d.deleted||[]).forEach(id=>del.add(id));
   (d.notes||[]).forEach(n=>{if(del.has(n.id))return;if(!ids.has(n.id)){S.notes.push(n);add++}else{const i=S.notes.findIndex(x=>x.id===n.id);if((n.edited||n.ts)>(S.notes[i].edited||S.notes[i].ts))S.notes[i]=n}});
@@ -1267,7 +1269,7 @@ $("#fillNames").addEventListener("click",fillAllNames);
 
 /* ---------- GAS sync ---------- */
 let syncT=null,syncing=false;
-const payload=()=>JSON.stringify({notes:S.notes,stocks:S.stocks,deleted:S.deleted||[],diary:S.diary,events:S.events,rules:S.rules,sectors:S.sectors,holdings:S.holdings,pfHistory:S.pfHistory,holdingsAsOf:S.holdingsAsOf,holdingsComplete:S.holdingsComplete,lists:{quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,upd:S.listsUpd||0}});
+const payload=()=>JSON.stringify({notes:S.notes.concat(todoRecords()),stocks:S.stocks,deleted:S.deleted||[],diary:S.diary,events:S.events,rules:S.rules,sectors:S.sectors,holdings:S.holdings,pfHistory:S.pfHistory,holdingsAsOf:S.holdingsAsOf,holdingsComplete:S.holdingsComplete,lists:{quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,upd:S.listsUpd||0}});
 function scheduleSync(){if(!S.gas||editingSync)return;clearTimeout(syncT);syncT=setTimeout(()=>syncNow(true),1500)}
 let editingSync=false;
 async function syncNow(quiet){
@@ -1296,10 +1298,64 @@ $("#expMd").addEventListener("click",()=>{
   const free=S.notes.filter(n=>!n.code);if(free.length){out+="## 銘柄なしのメモ\n\n";free.forEach(n=>out+=noteMd(n)+"\n")}
   dl(`invnote_${dstr(Date.now())}.md`,out,"text/markdown");
 });
-$("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()},quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,listsUpd:Date.now(),sectors:{},holdings:{},pfHistory:[],stockView:S.stockView};save();render();toast("削除しました")}});
+$("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={todoRecords:todoRecords().map(r=>({...r,edited:Math.max(Date.now(),(r.edited||0)+1),todo:{...r.todo,deleted:true,done:false}})),todoTabAdded:true,notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()},quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,listsUpd:Date.now(),sectors:{},holdings:{},pfHistory:[],stockView:S.stockView};save();render();toast("削除しました")}});
+
+/* 曜日別ToDo。同期用notesの型付きレコードを分離し、既存メモ・投資計算へ混ぜない。 */
+const TODO_KIND='invnote-todo-v1';
+const todoDate=d=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+let todoDay=todoDate(new Date()),todoManage=false,todoEditing=null,todoDelete=null;
+function todoRecords(){return S.todoRecords||(S.todoRecords=[]);}
+function todoMerge(records){
+ const map=new Map(todoRecords().map(r=>[r.id,r]));
+ for(const r of records||[]){if(!r||r.kind!==TODO_KIND||typeof r.id!=='string'||!r.todo)continue;const old=map.get(r.id);if(!old||(r.edited||r.ts)>(old.edited||old.ts))map.set(r.id,r);}
+ S.todoRecords=Array.from(map.values());
+}
+function todoWrite(id,data){
+ const before=JSON.stringify(todoRecords()),old=todoRecords().find(r=>r.id===id),stamp=Math.max(Date.now(),(old?.edited||0)+1);
+ const record={id,kind:TODO_KIND,todo:data,ts:old?.ts||stamp,edited:stamp,code:'',text:'ToDo：'+(data.title||data.date||'')+'（最新のToDoタブで操作してください）',tags:[]};
+ S.todoRecords=todoRecords().filter(r=>r.id!==id).concat(record);
+ if(!save()){S.todoRecords=JSON.parse(before);return false;}return true;
+}
+function todoDue(t,date){
+ const wd=new Date(date+'T12:00:00').getDay();
+ return !t.deleted&&(t.freq==='daily'||t.freq==='weekdays'&&wd>=1&&wd<=5||t.freq==='weekly'&&(t.days||[]).includes(wd)||t.freq==='date'&&t.date===date);
+}
+function todoLabel(t){return t.freq==='daily'?'毎日':t.freq==='weekdays'?'平日':t.freq==='date'?t.date:(t.days||[]).map(d=>'日月火水木金土'[d]).join('・');}
+function renderTodos(){
+ const root=$('#todoContent');if(!root)return;
+ const tasks=todoRecords().filter(r=>r.todo.type==='task'&&!r.todo.deleted),due=tasks.filter(r=>todoDue(r.todo,todoDay));
+ const done=id=>todoRecords().find(r=>r.id==='todo-check:'+id+':'+todoDay)?.todo.done===true;
+ root.innerHTML='<div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn" data-tprev aria-label="前の日">‹</button><input type="date" id="todoDay" aria-label="ToDoの日付" value="'+todoDay+'"><button class="btn" data-tnext aria-label="次の日">›</button><button class="btn" data-ttoday>今日</button><button class="btn" data-tadd>＋ ToDoを追加</button><button class="btn" data-tmanage>'+(todoManage?'一覧に戻る':'ToDoを編集')+'</button></div>'+
+ '<p class="hint" style="margin:16px 0">'+due.filter(r=>done(r.id)).length+' / '+due.length+' 完了 ・ '+esc(todoDay)+'</p>'+
+ (todoManage?tasks:due).map(r=>'<div style="padding:14px 0;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start">'+(!todoManage?'<input type="checkbox" aria-label="'+esc(r.todo.title)+'を完了" data-tcheck="'+esc(r.id)+'" '+(done(r.id)?'checked':'')+' style="width:20px;height:20px;flex-shrink:0">':'')+'<div style="flex:1;min-width:0"><b>'+esc(r.todo.title)+'</b><div class="hint">'+esc(todoLabel(r.todo))+'</div>'+(r.todo.memo?'<p style="white-space:pre-wrap">'+esc(r.todo.memo)+'</p>':'')+'</div><button class="btn" data-tedit="'+esc(r.id)+'">編集</button>'+(todoManage?'<button class="btn" data-tdel="'+esc(r.id)+'">'+(todoDelete===r.id?'もう一度押して削除':'削除')+'</button>':'')+'</div>').join('')+
+ (!(todoManage?tasks:due).length?'<p style="margin:24px 0">'+(todoManage?'登録したToDoはありません。':'この日に予定されているToDoはありません。')+'</p>':'');
+ root.querySelector('#todoDay').onchange=e=>{if(e.target.value){todoDay=e.target.value;renderTodos();}};
+ const move=n=>{const d=new Date(todoDay+'T12:00:00');d.setDate(d.getDate()+n);todoDay=todoDate(d);renderTodos();};
+ root.querySelector('[data-tprev]').onclick=()=>move(-1);root.querySelector('[data-tnext]').onclick=()=>move(1);root.querySelector('[data-ttoday]').onclick=()=>{todoDay=todoDate(new Date());renderTodos();};
+ root.querySelector('[data-tadd]').onclick=()=>openTodoEditor();root.querySelector('[data-tmanage]').onclick=()=>{todoManage=!todoManage;todoDelete=null;renderTodos();};
+ root.querySelectorAll('[data-tcheck]').forEach(e=>e.onchange=()=>{const id=e.dataset.tcheck;if(todoWrite('todo-check:'+id+':'+todoDay,{type:'check',taskId:id,date:todoDay,done:e.checked}))renderTodos();else e.checked=!e.checked;});
+ root.querySelectorAll('[data-tedit]').forEach(e=>e.onclick=()=>openTodoEditor(e.dataset.tedit));
+ root.querySelectorAll('[data-tdel]').forEach(e=>e.onclick=()=>{const id=e.dataset.tdel;if(todoDelete!==id){todoDelete=id;renderTodos();return;}const r=todoRecords().find(r=>r.id===id);if(todoWrite(id,{...r.todo,deleted:true})){todoDelete=null;renderTodos();}});
+}
+function openTodoEditor(id){
+ todoEditing=id||'todo:'+crypto.randomUUID();const t=todoRecords().find(r=>r.id===id)?.todo||{title:'',memo:'',freq:'weekly',days:[1,2,3,4,5],date:todoDay};
+ const editor=$('#todoEditor');editor.hidden=false;
+ editor.innerHTML='<h3>'+(id?'ToDoを編集':'ToDoを追加')+'</h3><label>やること<input id="todoTitle" maxlength="160" required style="display:block;width:100%;font:inherit" value="'+esc(t.title)+'"></label><label>メモ<textarea id="todoMemo" style="display:block;width:100%;font:inherit">'+esc(t.memo||'')+'</textarea></label><label>くり返し<select id="todoFreq"><option value="daily">毎日</option><option value="weekdays">平日</option><option value="weekly">曜日を指定</option><option value="date">日付を指定</option></select></label><div id="todoDays" style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0">'+[1,2,3,4,5,6,0].map(d=>'<label><input type="checkbox" value="'+d+'" '+((t.days||[]).includes(d)?'checked':'')+'>'+'日月火水木金土'[d]+'</label>').join('')+'</div><label id="todoDateWrap">日付<input type="date" id="todoDate" value="'+esc(t.date||todoDay)+'"></label><p role="status" id="todoError"></p><button class="btn" type="submit">保存する</button> <button class="btn" type="button" id="todoCancel">編集をやめる</button>';
+ $('#todoFreq').value=t.freq;const paint=()=>{$('#todoDays').style.display=$('#todoFreq').value==='weekly'?'flex':'none';$('#todoDateWrap').hidden=$('#todoFreq').value!=='date';};$('#todoFreq').onchange=paint;paint();
+ $('#todoCancel').onclick=()=>{editor.hidden=true;todoEditing=null;};
+ editor.onsubmit=e=>{e.preventDefault();const title=$('#todoTitle').value.trim(),freq=$('#todoFreq').value,days=Array.from(editor.querySelectorAll('#todoDays input:checked')).map(e=>Number(e.value)),date=$('#todoDate').value;
+  if(!title||freq==='weekly'&&!days.length||freq==='date'&&!date){$('#todoError').textContent='やることと、曜日または日付を入力してください。';return;}
+  if(todoWrite(todoEditing,{type:'task',title,memo:$('#todoMemo').value.trim(),freq,days,date,deleted:false})){editor.hidden=true;todoEditing=null;renderTodos();}
+ };
+ editor.scrollIntoView({block:'nearest'});$('#todoTitle').focus();
+}
+function initTodos(){
+ todoMerge(S.notes.filter(r=>r.kind===TODO_KIND));S.notes=S.notes.filter(r=>r.kind!==TODO_KIND);
+ if(!S.todoTabAdded){if(Array.isArray(S.tabOrder)&&S.tabOrder.length&&!S.tabOrder.includes('vTodos'))S.tabOrder.push('vTodos');S.todoTabAdded=true;S.listsUpd=Date.now();save();}
+}
 
 /* ---------- init ---------- */
-$("#ver").textContent="v"+VER;load();STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT;applyTheme();renderQuick();autoGrow();show(initialView());$("#gasUrl").value=S.gas||"";ledRender($("#quickLed"),quick());ledRender($("#statusLed"),STATUS);ledRender($("#themeLed"),themes());renderTabs();renderTabLed();if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
+$("#ver").textContent="v"+VER;load();initTodos();STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT;applyTheme();renderQuick();autoGrow();show(initialView());$("#gasUrl").value=S.gas||"";ledRender($("#quickLed"),quick());ledRender($("#statusLed"),STATUS);ledRender($("#themeLed"),themes());renderTabs();renderTabLed();if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
 if(mem)toast("この環境では保存できません（GitHub Pagesで開くと保存されます）");
 })();
 </script>
