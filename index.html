@@ -293,7 +293,27 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 #toast.show{opacity:1}
 .hide{display:none!important}
 </style>
-</head>
+<style>#vTodos .todo-datebar{display:grid;grid-template-columns:42px minmax(0,1fr) 42px;gap:12px;align-items:center;margin:18px 0 12px}
+#vTodos .todo-arrow{width:42px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--sur);color:var(--ink);font-size:26px;cursor:pointer}
+#vTodos .todo-datepick{position:relative;display:flex;flex-direction:column;align-items:center;padding:10px 8px;border-radius:14px;cursor:pointer;background:var(--soft);min-width:0}
+#vTodos .todo-datepick:focus-within{outline:2px solid var(--ink);outline-offset:2px}
+#vTodos .todo-datepick small{font-size:11px;color:var(--mut);letter-spacing:.08em}
+#vTodos .todo-datepick strong{font-size:22px;letter-spacing:.02em;font-weight:600;white-space:nowrap}
+#vTodos .todo-datepick input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;box-sizing:border-box}
+#vTodos .todo-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-bottom:16px}
+#vTodos .todo-week button{display:flex;flex-direction:column;align-items:center;gap:5px;min-height:57px;padding:8px 0;border:1px solid transparent;border-radius:12px;color:var(--ink);background:transparent;cursor:pointer}
+#vTodos .todo-week button small{font-size:11px;color:var(--mut)}
+#vTodos .todo-week button b{font-size:16px;font-weight:500}
+#vTodos .todo-week button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+#vTodos .todo-week button[aria-pressed="true"] small{color:inherit}
+#vTodos .todo-week button.is-today:not([aria-pressed="true"]){border-color:var(--line);background:var(--soft)}
+#vTodos .todo-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+#vTodos .todo-actions .todo-spacer{flex:1}
+#vTodos .todo-progress{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line);font-size:12px;color:var(--mut)}
+#vTodos .todo-progress progress{flex:1;min-width:40px;height:5px;accent-color:var(--ink)}
+#todoEditor>label{display:block;margin:14px 0}
+@media(max-width:380px){#vTodos .todo-datebar{gap:8px}#vTodos .todo-datepick strong{font-size:19px}#vTodos .todo-actions .btn{font-size:12px}}
+</style></head>
 <body>
 <div id="app">
 <header><h1 class="wm"><a href="/Invnote/screener/">Screener</a><span>/</span><b>Invnote</b><small id="ver"></small></h1><span style="flex:1"></span><button id="syncBtn" aria-label="同期"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M4 12a8 8 0 0 1 13.7-5.6"/><path d="M17.7 3v3.4h-3.4"/><path d="M6.3 21v-3.4h3.4"/></svg><span>Sync</span></button><button id="impBtn" aria-label="Import"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span>Import</span></button><button id="gearBtn" aria-label="設定"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header>
@@ -418,7 +438,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
     <input id="gasUrl" placeholder="GASウェブアプリのURL（https://script.google.com/macros/s/…/exec）" style="flex:1;min-width:200px;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:6px 8px;font-size:13px">
     <button class="btn" id="syncNow">今すぐ同期</button><button class="btn" id="fillNames">銘柄名を一括補完</button></div>
     <p class="hint" id="syncStat" style="margin-top:8px">URLを入れると、保存のたびに自動で同期します（マージ式・新しい方が勝ち）。銘柄名はJ-Quantsの上場一覧から自動で引きます。</p></div>
-  <div class="set"><h3>タブの並び</h3><div class="led" id="tabLed"></div><p class="hint" style="margin-top:8px">↑↓で並び替え、×で隠す。隠したタブは下のボタンで戻せます。</p><div class="row" id="tabHidden" style="margin-top:8px"></div></div>
+  <div class="set"><h3>タブの名前・並び</h3><div class="led" id="tabLed"></div><p class="hint" style="margin-top:8px">名前を編集すると自動保存します。空欄で元の名前に戻ります。↑↓で並び替え、×で隠す。隠したタブは下のボタンで戻せます。</p><div class="row" id="tabHidden" style="margin-top:8px"></div></div>
   <div class="set"><h3>クイックタグ</h3><div class="led" id="quickLed"></div><p class="hint" style="margin-top:8px">入力欄の下に並ぶボタン。名前は直接書き換え、↑↓で並び替え。</p></div>
   <div class="set"><h3>テーマ</h3><div class="led" id="themeLed"></div><p class="hint" style="margin-top:8px">銘柄に付ける関連テーマ（複数可）。同じテーマ・同じセクターの銘柄が「関連銘柄」として出ます。</p></div>
   <div class="set"><h3>ステータス</h3><div class="led" id="statusLed"></div><p class="hint" style="margin-top:8px">銘柄の状態。名前を変えると既存の銘柄にも反映されます。</p></div>
@@ -436,10 +456,10 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="3.14" /* 曜日別ToDoと日付ごとの完了記録 */; // 現物・信用の区切りと集計間隔を調整
+const VER="3.15" /* タブ名編集とToDoの日付表示を改善 */; // 現物・信用の区切りと集計間隔を調整
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TAB_DEFS=[{v:"vTodos",t:"ToDo"},{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vHot",t:"直前"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"}];
-const tabDef=v=>TAB_DEFS.find(x=>x.v===v);
+const tabDef=v=>{const d=TAB_DEFS.find(x=>x.v===v);if(!d)return;const name=S.tabNames?.[v];return {...d,t:typeof name==='string'&&name.trim()?name.trim().slice(0,24):d.t};};
 function tabOrder(){const saved=(S.tabOrder||[]).filter(tabDef);return saved.length?saved:TAB_DEFS.map(x=>x.v)}
 const TPL={
 "エントリーチェック":`【エントリーチェック】
@@ -778,10 +798,22 @@ $('#startupView').addEventListener('change',e=>{try{localStorage.setItem(START_V
 function renderTabLed(){
   renderStartView();
   const l=tabOrder();
-  $("#tabLed").innerHTML=l.map((v,i)=>`<div class="li"><span style="flex:1;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 8px;font-size:14px">${esc(tabDef(v).t)}</span><button data-tmv="-1" data-ti="${i}" aria-label="上へ">↑</button><button data-tmv="1" data-ti="${i}" aria-label="下へ">↓</button><button data-thide="${v}" aria-label="隠す">×</button></div>`).join("");
+  $("#tabLed").innerHTML=l.map((v,i)=>`<div class="li"><input data-tabname="${v}" aria-label="${esc(TAB_DEFS.find(t=>t.v===v).t)}のタブ名" maxlength="24" placeholder="${esc(TAB_DEFS.find(t=>t.v===v).t)}" value="${esc(S.tabNames?.[v]||'')}" style="flex:1;min-width:0;width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;padding:8px;font-size:16px"><button data-tmv="-1" data-ti="${i}" aria-label="上へ">↑</button><button data-tmv="1" data-ti="${i}" aria-label="下へ">↓</button><button data-thide="${v}" aria-label="隠す">×</button></div>`).join("");
   const hid=TAB_DEFS.map(x=>x.v).filter(v=>!l.includes(v));
   $("#tabHidden").innerHTML=hid.length?`<span class="hint">隠したタブ：</span>`+hid.map(v=>`<button class="chip" data-tshow="${v}">${esc(tabDef(v).t)} を戻す</button>`).join(""):"";
 }
+function saveTabName(e){
+ if(e.isComposing)return;
+ const id=e.target.dataset.tabname;if(!id||!TAB_DEFS.some(t=>t.v===id))return;
+ const before={...(S.tabNames||{})},stamp=S.listsUpd;
+ const name=e.target.value.trim().slice(0,24);if(name===(before[id]||''))return;
+ S.tabNames={...before};if(name)S.tabNames[id]=name;else delete S.tabNames[id];
+ S.listsUpd=Math.max(Date.now(),(stamp||0)+1);
+ if(!save()){S.tabNames=before;S.listsUpd=stamp;e.target.value=before[id]||'';return;}
+ renderTabs();renderStartView();if(e.type==='change')toast('タブ名を保存しました');
+}
+$("#tabLed").addEventListener("input",saveTabName);
+$("#tabLed").addEventListener("change",saveTabName);
 function tabsSave(list){S.tabOrder=list;S.listsUpd=Date.now();editingSync=true;save();editingSync=false;renderTabs();renderTabLed()}
 $("#tabLed").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const l=tabOrder();
   if(b.dataset.thide!==undefined){if(l.length<=1)return;const n=l.filter(v=>v!==b.dataset.thide);tabsSave(n);if(view===b.dataset.thide)show(n[0]);return}
@@ -798,6 +830,7 @@ $("#tabs").addEventListener("click",e=>{const u=e.target.closest("[data-url]");i
 let beforeSet="vPf";const side=(v)=>{if(view===v){show(beforeSet)}else{if(view!=="vSet"&&view!=="vImport")beforeSet=view==="detail"?"vStocks":view;curCode=null;resetCap();show(v)}};
 $("#gearBtn").addEventListener("click",()=>side("vSet"));$("#impBtn").addEventListener("click",()=>side("vImport"));
 function render(){
+  renderTabs();
   $("#stat").textContent=`${S.notes.length}メモ／${Object.keys(S.stocks).length}銘柄`;
   if(view==="vTodos")renderTodos();else if(view==="vNotes")renderNotes();else if(view==="vStocks")renderStocks();else if(view==="vHot")renderHot();else if(view==="detail")renderDetailNotes();else if(view==="vPf"){renderPf();if(Date.now()-(S.pricesAt||0)>6*36e5)refreshPrices(true)}else if(view==="vDiary")renderDiary();else if(view==="vCal")renderCal();else if(view==="vRules")renderRules();
 }
@@ -842,7 +875,7 @@ function mergeIn(d){
   Object.entries(d.holdings||{}).forEach(([k,v])=>{if(del.has("h:"+k)&&!S.holdings[k])return;if(!S.holdings[k]||(v.upd||0)>(S.holdings[k].upd||0))S.holdings[k]=v});
   S.pfHistory=InvnoteHistory.canonical([...S.pfHistory,...(d.pfHistory||[])]);
   if(d.holdingsAsOf&&d.holdingsAsOf>(S.holdingsAsOf||"")){S.holdingsAsOf=d.holdingsAsOf;S.holdingsComplete=d.holdingsComplete===true;}
-  if(d.lists&&(d.lists.upd||0)>(S.listsUpd||0)){S.quick=d.lists.quick;S.status=d.lists.status;S.themes=d.lists.themes||S.themes;if(d.lists.tabOrder)S.tabOrder=d.lists.tabOrder;S.listsUpd=d.lists.upd;STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT}
+  if(d.lists&&(d.lists.upd||0)>(S.listsUpd||0)){S.quick=d.lists.quick;S.status=d.lists.status;S.themes=d.lists.themes||S.themes;if(d.lists.tabOrder)S.tabOrder=d.lists.tabOrder;if(d.lists.tabNames&&typeof d.lists.tabNames==='object'&&!Array.isArray(d.lists.tabNames))S.tabNames=d.lists.tabNames;S.listsUpd=d.lists.upd;STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT}
   S.notes.sort((a,b)=>b.ts-a.ts);return add;
 }
 $("#impFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{
@@ -1269,7 +1302,7 @@ $("#fillNames").addEventListener("click",fillAllNames);
 
 /* ---------- GAS sync ---------- */
 let syncT=null,syncing=false;
-const payload=()=>JSON.stringify({notes:S.notes.concat(todoRecords()),stocks:S.stocks,deleted:S.deleted||[],diary:S.diary,events:S.events,rules:S.rules,sectors:S.sectors,holdings:S.holdings,pfHistory:S.pfHistory,holdingsAsOf:S.holdingsAsOf,holdingsComplete:S.holdingsComplete,lists:{quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,upd:S.listsUpd||0}});
+const payload=()=>JSON.stringify({notes:S.notes.concat(todoRecords()),stocks:S.stocks,deleted:S.deleted||[],diary:S.diary,events:S.events,rules:S.rules,sectors:S.sectors,holdings:S.holdings,pfHistory:S.pfHistory,holdingsAsOf:S.holdingsAsOf,holdingsComplete:S.holdingsComplete,lists:{quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,tabNames:S.tabNames||{},upd:S.listsUpd||0}});
 function scheduleSync(){if(!S.gas||editingSync)return;clearTimeout(syncT);syncT=setTimeout(()=>syncNow(true),1500)}
 let editingSync=false;
 async function syncNow(quiet){
@@ -1298,7 +1331,7 @@ $("#expMd").addEventListener("click",()=>{
   const free=S.notes.filter(n=>!n.code);if(free.length){out+="## 銘柄なしのメモ\n\n";free.forEach(n=>out+=noteMd(n)+"\n")}
   dl(`invnote_${dstr(Date.now())}.md`,out,"text/markdown");
 });
-$("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={todoRecords:todoRecords().map(r=>({...r,edited:Math.max(Date.now(),(r.edited||0)+1),todo:{...r.todo,deleted:true,done:false}})),todoTabAdded:true,notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()},quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,listsUpd:Date.now(),sectors:{},holdings:{},pfHistory:[],stockView:S.stockView};save();render();toast("削除しました")}});
+$("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={todoRecords:todoRecords().map(r=>({...r,edited:Math.max(Date.now(),(r.edited||0)+1),todo:{...r.todo,deleted:true,done:false}})),todoTabAdded:true,notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()},quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,tabNames:S.tabNames,listsUpd:Date.now(),sectors:{},holdings:{},pfHistory:[],stockView:S.stockView};save();render();toast("削除しました")}});
 
 /* 曜日別ToDo。同期用notesの型付きレコードを分離し、既存メモ・投資計算へ混ぜない。 */
 const TODO_KIND='invnote-todo-v1';
@@ -1321,15 +1354,24 @@ function todoDue(t,date){
  return !t.deleted&&(t.freq==='daily'||t.freq==='weekdays'&&wd>=1&&wd<=5||t.freq==='weekly'&&(t.days||[]).includes(wd)||t.freq==='date'&&t.date===date);
 }
 function todoLabel(t){return t.freq==='daily'?'毎日':t.freq==='weekdays'?'平日':t.freq==='date'?t.date:(t.days||[]).map(d=>'日月火水木金土'[d]).join('・');}
+function todoDateHeader(done,total){
+ const d=new Date(todoDay+'T12:00:00'),today=todoDate(new Date()),week=new Date(d);week.setDate(d.getDate()-(d.getDay()+6)%7);
+ const days=Array.from({length:7},(_,i)=>{const day=new Date(week);day.setDate(week.getDate()+i);return day;});
+ return '<div class="todo-datebar"><button class="todo-arrow" data-tprev aria-label="前の日">‹</button><label class="todo-datepick"><small>'+d.getFullYear()+'年'+(todoDay===today?' ・ 今日':'')+'</small><strong>'+ (d.getMonth()+1)+'月'+d.getDate()+'日 <span>（'+'日月火水木金土'[d.getDay()]+'）</span></strong><input type="date" id="todoDay" aria-label="ToDoの日付" value="'+todoDay+'"></label><button class="todo-arrow" data-tnext aria-label="次の日">›</button></div>'+
+ '<div class="todo-week" aria-label="週の日付">'+days.map(day=>{const value=todoDate(day);return '<button type="button" data-tday="'+value+'" aria-label="'+(day.getMonth()+1)+'月'+day.getDate()+'日" aria-pressed="'+(value===todoDay)+'" class="'+(value===today?'is-today':'')+'"><small>'+'日月火水木金土'[day.getDay()]+'</small><b>'+day.getDate()+'</b></button>';}).join('')+'</div>'+
+ '<div class="todo-actions"><button class="btn" data-ttoday>今日に戻る</button><span class="todo-spacer"></span><button class="btn" data-tadd>＋ ToDoを追加</button><button class="btn" data-tmanage>'+(todoManage?'一覧に戻る':'ToDoを編集')+'</button></div>'+
+ '<div class="todo-progress"><span>'+done+' / '+total+' 完了</span><progress aria-label="選択日のToDo完了数" max="'+Math.max(1,total)+'" value="'+done+'"></progress></div>';
+}
 function renderTodos(){
  const root=$('#todoContent');if(!root)return;
+ const heading=$('#vTodos h2');if(heading)heading.textContent=tabDef('vTodos').t;
  const tasks=todoRecords().filter(r=>r.todo.type==='task'&&!r.todo.deleted),due=tasks.filter(r=>todoDue(r.todo,todoDay));
  const done=id=>todoRecords().find(r=>r.id==='todo-check:'+id+':'+todoDay)?.todo.done===true;
- root.innerHTML='<div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn" data-tprev aria-label="前の日">‹</button><input type="date" id="todoDay" aria-label="ToDoの日付" value="'+todoDay+'"><button class="btn" data-tnext aria-label="次の日">›</button><button class="btn" data-ttoday>今日</button><button class="btn" data-tadd>＋ ToDoを追加</button><button class="btn" data-tmanage>'+(todoManage?'一覧に戻る':'ToDoを編集')+'</button></div>'+
- '<p class="hint" style="margin:16px 0">'+due.filter(r=>done(r.id)).length+' / '+due.length+' 完了 ・ '+esc(todoDay)+'</p>'+
+ root.innerHTML=todoDateHeader(due.filter(r=>done(r.id)).length,due.length)+
  (todoManage?tasks:due).map(r=>'<div style="padding:14px 0;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start">'+(!todoManage?'<input type="checkbox" aria-label="'+esc(r.todo.title)+'を完了" data-tcheck="'+esc(r.id)+'" '+(done(r.id)?'checked':'')+' style="width:20px;height:20px;flex-shrink:0">':'')+'<div style="flex:1;min-width:0"><b>'+esc(r.todo.title)+'</b><div class="hint">'+esc(todoLabel(r.todo))+'</div>'+(r.todo.memo?'<p style="white-space:pre-wrap">'+esc(r.todo.memo)+'</p>':'')+'</div><button class="btn" data-tedit="'+esc(r.id)+'">編集</button>'+(todoManage?'<button class="btn" data-tdel="'+esc(r.id)+'">'+(todoDelete===r.id?'もう一度押して削除':'削除')+'</button>':'')+'</div>').join('')+
  (!(todoManage?tasks:due).length?'<p style="margin:24px 0">'+(todoManage?'登録したToDoはありません。':'この日に予定されているToDoはありません。')+'</p>':'');
  root.querySelector('#todoDay').onchange=e=>{if(e.target.value){todoDay=e.target.value;renderTodos();}};
+ root.querySelectorAll('[data-tday]').forEach(e=>e.onclick=()=>{todoDay=e.dataset.tday;renderTodos();});
  const move=n=>{const d=new Date(todoDay+'T12:00:00');d.setDate(d.getDate()+n);todoDay=todoDate(d);renderTodos();};
  root.querySelector('[data-tprev]').onclick=()=>move(-1);root.querySelector('[data-tnext]').onclick=()=>move(1);root.querySelector('[data-ttoday]').onclick=()=>{todoDay=todoDate(new Date());renderTodos();};
  root.querySelector('[data-tadd]').onclick=()=>openTodoEditor();root.querySelector('[data-tmanage]').onclick=()=>{todoManage=!todoManage;todoDelete=null;renderTodos();};
