@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+<script>document.documentElement.classList.add("suite-locked");</script>
+<style>html.suite-locked body{visibility:hidden}</style>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -426,14 +428,14 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 
 <div id="toast"></div>
 
-<script>
+<script type="text/plain" id="suite-original-app">
 (function(){
 "use strict";
 const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="3.11"; // 現物・信用の区切りと集計間隔を調整
+const VER="3.12" /* 端末登録と登録保持 */; // 現物・信用の区切りと集計間隔を調整
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TAB_DEFS=[{v:"vNotes",t:"ノート"},{v:"vStocks",t:"銘柄"},{v:"vHot",t:"直前"},{v:"vPf",t:"ポートフォリオ"},{v:"vDiary",t:"日記"},{v:"vCal",t:"カレンダー"},{v:"vRules",t:"ルール"}];
 const tabDef=v=>TAB_DEFS.find(x=>x.v===v);
@@ -1299,6 +1301,75 @@ $("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。�
 /* ---------- init ---------- */
 $("#ver").textContent="v"+VER;load();STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT;applyTheme();renderQuick();autoGrow();show(initialView());$("#gasUrl").value=S.gas||"";ledRender($("#quickLed"),quick());ledRender($("#statusLed"),STATUS);ledRender($("#themeLed"),themes());renderTabs();renderTabLed();if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
 if(mem)toast("この環境では保存できません（GitHub Pagesで開くと保存されます）");
+})();
+</script>
+<script>window.SuiteDeviceConfig={app:"Invnote",name:"Invnote",url:"https://script.google.com/macros/s/AKfycby8HS4VPWgkc7Ay-rX4GvT60vxKffwW9q9HcIiJgoMGFsSu_HO9ZxtQxXJsHSd1g54/exec",readUrl(){return (JSON.parse(localStorage.getItem("invnote_v1")||'{}').gas);},ensureUrl(url){const s=JSON.parse(localStorage.getItem("invnote_v1")||'{}');if(!s.gas)s.gas=url;localStorage.setItem("invnote_v1",JSON.stringify(s));}};
+/* 端末ごとの登録。通常起動はネットワークを待たず、明示失効だけで再登録する。 */
+(function(){
+ 'use strict';
+ const cfg=window.SuiteDeviceConfig,key='suite-device-v1:'+cfg.app,pendingKey=key+':pending';
+ const nativeFetch=window.fetch.bind(window);let device=null,started=false,locked=true;
+ const parse=k=>{try{return JSON.parse(localStorage.getItem(k)||'null');}catch(_){return null;}};
+ const valid=d=>d&&/^[A-Za-z0-9_-]{43}$/.test(d.token||'');
+ const css=document.createElement('style');css.textContent='html.suite-locked body>*:not(#suite-access){visibility:hidden!important}#suite-access{visibility:visible!important;font:16px/1.7 system-ui,sans-serif;color:#253b3a}#suite-access[hidden]{display:none!important}#suite-access .suite-card{background:#fff;border:1px solid #d9e6e2;border-radius:24px;padding:28px;max-width:460px;margin:8vh auto;box-shadow:0 16px 60px #183c3420}#suite-access input{box-sizing:border-box;width:100%;padding:12px;border:1px solid #b9cfca;border-radius:10px;margin:6px 0 16px;font:inherit}#suite-access button{font:inherit;padding:10px 16px;border:0;border-radius:12px;background:#326f63;color:white;cursor:pointer;margin:4px}#suite-access p{white-space:pre-wrap}#suite-access code{overflow-wrap:anywhere}#suite-access{position:fixed;inset:0;z-index:2147483647;background:#f1f6f3ee;overflow:auto;padding:12px}#suite-device-button{position:fixed;right:12px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:10000;border:1px solid #ccdcd5;border-radius:18px;background:#fff;color:#365c51;padding:7px 12px;font:12px system-ui}';document.head.append(css);
+ const panel=document.createElement('section');panel.id='suite-access';panel.setAttribute('aria-label','端末登録');
+ const card=document.createElement('div');card.className='suite-card';panel.append(card);document.body.append(panel);
+ const manage=document.createElement('button');manage.id='suite-device-button';manage.textContent='端末登録';manage.hidden=true;document.body.append(manage);
+ function text(tag,value){const e=document.createElement(tag);e.textContent=value;return e;}
+ function button(label,fn){const e=text('button',label);e.type='button';e.onclick=fn;return e;}
+ function message(e){return ({invalid_invite:'登録コードが違うか、有効期限が切れています。',device_revoked:'この端末の登録が解除されました。',registration_required:'端末登録が必要です。',manager_required:'管理端末で操作してください。',device_limit:'登録できる端末数の上限です。',invite_limit:'発行済みのコードが多すぎます。24時間後に再試行してください。',storage_error:'端末に登録を保存できません。プライベートブラウズを解除し、保存領域をご確認ください。'})[e.message]||'接続できませんでした。登録は保持しています。通信環境を確認して、もう一度お試しください。';}
+ function endpoint(raw){const u=new URL(raw);if(u.protocol!=='https:'||u.hostname!=='script.google.com'||!/^\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(u.pathname))throw Error('invalid_endpoint');return u;}
+ function readEndpoint(){let u=cfg.url;try{u=cfg.readUrl()||u;}catch(_){}return endpoint(u);}
+ let apiUrl;try{apiUrl=readEndpoint();}catch(_){apiUrl=endpoint(cfg.url);}
+ function save(d){try{localStorage.setItem(key,JSON.stringify(d));}catch(_){throw Error('storage_error');}device=d;}
+ function revoke(){device=null;localStorage.removeItem(key);lock('この端末の登録が解除されました。新しいコードで登録してください。');}
+ async function rpc(op,data={},token=device&&device.token){
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),90000);
+  try{const r=await nativeFetch(apiUrl.origin+apiUrl.pathname,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},credentials:'omit',referrerPolicy:'no-referrer',redirect:'follow',body:JSON.stringify(Object.assign({},data,{suite:1,op,token})),signal:controller.signal});
+   if(!r.ok)throw Error('network_error');const j=await r.json();if(j.suite!==1)throw Error('server_update_required');
+   if(!j.ok){if(j.error==='device_revoked'&&token===(device&&device.token))revoke();throw Error(j.error||'server_error');}return j.result;
+  }finally{clearTimeout(timer);}
+ }
+ // 既存のGET/POSTを本文内へ包む。認証失敗を保存成功として扱わない。
+ window.fetch=async function(input,init={}){
+  const raw=typeof input==='string'?input:input instanceof URL?input.href:input.url;const u=new URL(raw,location.href);
+  if(u.hostname!=='script.google.com')return nativeFetch(input,init);
+  if(u.origin+u.pathname!==apiUrl.origin+apiUrl.pathname)throw Error('別の接続先です。設定を保存してからアプリを開き直してください。');
+  if(locked||!device)throw Error('registration_required');
+  const query=Object.fromEntries(u.searchParams);const result=await rpc('call',{method:(init.method||'GET').toUpperCase(),query,body:init.body||''});
+  let j;try{j=JSON.parse(result.body);}catch(_){}
+  if(j&&(j.ok===false||j.error))throw Error(j.error||'server_error');
+  return new Response(result.body,{status:200,headers:{'Content-Type':'application/json'}});
+ };
+ function open(){
+  locked=false;document.documentElement.classList.remove('suite-locked');panel.hidden=true;manage.hidden=false;
+  manage.textContent=device.manager?'端末管理':'登録済み';
+  if(!started){started=true;cfg.ensureUrl(apiUrl.href);const original=document.getElementById('suite-original-app');const script=document.createElement('script');script.textContent=original.textContent;document.body.append(script);}
+ }
+ function lock(note){
+  locked=true;document.documentElement.classList.add('suite-locked');panel.hidden=false;manage.hidden=true;card.replaceChildren(text('h1',cfg.name),text('p','はじめに、この端末を登録します。次回からはそのまま開けます。'));
+  card.append(text('p','ホーム画面に追加して使う場合は、そのアプリを開いた状態で登録してください。Safariとは別の登録になる場合があります。'));
+  const form=document.createElement('form');const nameLabel=text('label','この端末の名前');const name=document.createElement('input');name.name='deviceName';name.autocomplete='off';name.value='自分の端末';name.maxLength=60;nameLabel.append(name);
+  const codeLabel=text('label','登録コード');const code=document.createElement('input');code.name='registrationCode';code.autocomplete='off';code.autocapitalize='none';code.spellcheck=false;code.required=true;codeLabel.append(code);
+  const submit=text('button','この端末で使う');submit.type='submit';const status=text('p',note||'登録済みの管理端末から、登録コードを発行してください。');status.setAttribute('role','status');form.append(nameLabel,codeLabel,submit,status);card.append(form);
+  form.onsubmit=async e=>{e.preventDefault();submit.disabled=true;try{
+   let p=parse(pendingKey);if(!valid(p)||p.code!==code.value.trim()){const bytes=crypto.getRandomValues(new Uint8Array(32));const token=btoa(String.fromCharCode(...bytes)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');p={token,code:code.value.trim(),name:name.value.trim()};try{localStorage.setItem(pendingKey,JSON.stringify(p));}catch(_){throw Error('storage_error');}}
+   const result=await rpc('register',{code:p.code,name:p.name},p.token);save({token:p.token,manager:result.manager===true});localStorage.removeItem(pendingKey);open();
+  }catch(err){status.textContent=message(err);}finally{submit.disabled=false;}};
+ }
+ async function check(){try{const r=await rpc('check');save(Object.assign({},device,{manager:r.manager===true}));manage.textContent=device.manager?'端末管理':'登録済み';}catch(err){if(device){manage.textContent='登録済み・通信待ち';manage.title=message(err);}}}
+ manage.onclick=async()=>{
+  panel.hidden=false;card.replaceChildren(text('h2',cfg.name+' の端末登録'));card.append(button('アプリに戻る',()=>{panel.hidden=true;}));
+  card.append(text('p','この端末は登録済みです。日数によるログインし直しはありません。端末の保存データを消した場合は再登録が必要です。'));
+  if(!device.manager)return;
+  const status=text('p','');status.setAttribute('role','status');card.append(status);
+  card.append(button('別の端末の登録コードを発行',async()=>{try{const r=await rpc('invite');status.textContent='24時間・1回限りのコード\n'+r.code;}catch(err){status.textContent=message(err);}}));
+  const list=document.createElement('div');card.append(list);
+  try{const rows=await rpc('devices');for(const d of rows){const row=text('p',d.name+(d.manager?'（管理端末）':''));const remove=button('登録を解除',()=>{remove.textContent='もう一度押すと解除';remove.onclick=async()=>{try{await rpc('revoke',{id:d.id});row.remove();}catch(err){status.textContent=message(err);}};});row.append(remove);list.append(row);}}catch(err){status.textContent=message(err);}
+ };
+ device=parse(key);if(valid(device)){open();void check();}
+ else{device=null;lock();const p=parse(pendingKey);if(valid(p))rpc('register',{code:p.code,name:p.name},p.token).then(r=>{save({token:p.token,manager:r.manager===true});localStorage.removeItem(pendingKey);open();}).catch(()=>{});}
+ window.addEventListener('online',()=>{if(device)void check();});document.addEventListener('visibilitychange',()=>{if(!document.hidden&&device)void check();});
 })();
 </script>
 </body>
