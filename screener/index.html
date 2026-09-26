@@ -300,11 +300,12 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 <section id="status" hidden></section>
 <section id="macro" hidden></section>
 <section id="compare" hidden></section>
+<section id="research" hidden></section>
 </div>
 
 <script>
 (async function(){
-  const VER="2.34";  // 公開候補リストの仮想ポートフォリオ比較
+  const VER="2.35";  // 投資調査ワークフローを統合
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -329,7 +330,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   }
 
   /* タブ：並び替え・スワイプ */
-  const TABS=[{v:'cand',t:'候補'},{v:'macro',t:'マクロ'},{v:'ideal',t:'理想配分'},{v:'catalyst',t:'カタリスト'},{v:'reb',t:'反転'},{v:'hold',t:'運用成績'},{v:'compare',t:'戦略比較'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'radar',t:'レーダー'},{v:'status',t:'検証'},{v:'rec',t:'記録'}];
+  const TABS=[{v:'cand',t:'候補'},{v:'macro',t:'マクロ'},{v:'ideal',t:'理想配分'},{v:'catalyst',t:'カタリスト'},{v:'reb',t:'反転'},{v:'hold',t:'運用成績'},{v:'compare',t:'戦略比較'},{v:'research',t:'投資調査'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'radar',t:'レーダー'},{v:'status',t:'検証'},{v:'rec',t:'記録'}];
   const tdef=v=>TABS.find(x=>x.v===v);
   const NAME_KEY='screener_tab_names_v1';
   let tabNames={};
@@ -362,6 +363,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     if(!order.includes('compare'))order.splice(order.includes('hold')?order.indexOf('hold')+1:order.length,0,'compare');
     localStorage.setItem(TKEY,JSON.stringify(order));localStorage.setItem('screener_compare_tab_v1','1');
   }}catch(e){if(!order.includes('compare'))order.push('compare');}
+  try{if(!localStorage.getItem('screener_research_tab_v1')){if(!order.includes('research'))order.splice(order.indexOf('cand')>=0?order.indexOf('cand')+1:order.length,0,'research');localStorage.setItem(TKEY,JSON.stringify(order));localStorage.setItem('screener_research_tab_v1','1');}}catch{if(!order.includes('research'))order.push('research');}
   try{const saved=localStorage.getItem(START_KEY);if(tdef(saved))startTab=saved;}catch{}
   const initialTab=()=>order.includes(startTab)?startTab:order.includes('cand')?'cand':order[0];
   let view=order.includes(location.hash.slice(1))?location.hash.slice(1):initialTab();
@@ -419,6 +421,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     const b=document.querySelector(`#tabs [data-tab="${order[i]}"]`);if(b)b.scrollIntoView({inline:'center',block:'nearest'});
   },{passive:true});
   renderTabs();
+  import('./research-tab.js?v=2.35').then(m=>m.mount(document.getElementById('research'))).catch(()=>{document.getElementById('research').textContent='投資調査を読み込めません。再読込してください。';});
   import('./strategy-comparison.js?v=2.34').then(m=>m.mount(document.getElementById('compare')))
     .catch(()=>{document.getElementById('compare').textContent='戦略比較を読み込めません。再読込してください。';});
   import('./macro.js?v=2.28').then(m=>m.mountMacro(document.getElementById('macro')))
