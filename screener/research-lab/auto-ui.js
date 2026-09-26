@@ -5,10 +5,11 @@
  [...main.children].filter(n=>n.id!=='researchFeed').forEach(n=>advanced.append(n));
  sources.id='sourceResearch';sources.innerHTML='<summary>開示一覧・出典・8項目の調査メモを詳しく見る</summary>';const feed=document.querySelector('#researchFeed');if(feed)sources.append(feed);
  home.id='autoResearch';main.append(home,sources,advanced);
- const choices=['購入を検討','待つ','見送る','保有中','売却を検討'];
+ const choices=['購入を検討','待つ','見送る','保有中'];
+ const savedChoices=[...choices,'売却を検討'];
  const storageKey='research-personal-v1';let personal={version:1,cash:null,assets:null,lossBudget:null,maxWeight:null,returnRequired:null,holdings:[],decisions:[]},saveError='';
  try{const raw=localStorage.getItem(storageKey);if(raw){const p=JSON.parse(raw);if(!validPersonal(p))throw Error();personal=p;}}catch{saveError='個人設定を読めませんでした。元の保存内容は上書きせず、バックアップを確認してください。';}
- function validPersonal(p){return p&&p.version===1&&['cash','assets','lossBudget','maxWeight','returnRequired'].every(k=>p[k]===null||(typeof p[k]==='number'&&Number.isFinite(p[k])&&p[k]>=0&&(k!=='maxWeight'||p[k]<=100)))&&Array.isArray(p.holdings)&&p.holdings.length<=100&&p.holdings.every(h=>h&&/^[0-9A-Z]{4}$/.test(h.code)&&typeof h.name==='string')&&Array.isArray(p.decisions)&&p.decisions.length<=500&&p.decisions.every(d=>d&&/^[0-9A-Z]{4}$/.test(d.code)&&choices.includes(d.choice)&&typeof d.at==='string'&&typeof d.researchAsOf==='string');}
+ function validPersonal(p){return p&&p.version===1&&['cash','assets','lossBudget','maxWeight','returnRequired'].every(k=>p[k]===null||(typeof p[k]==='number'&&Number.isFinite(p[k])&&p[k]>=0&&(k!=='maxWeight'||p[k]<=100)))&&Array.isArray(p.holdings)&&p.holdings.length<=100&&p.holdings.every(h=>h&&/^[0-9A-Z]{4}$/.test(h.code)&&typeof h.name==='string')&&Array.isArray(p.decisions)&&p.decisions.length<=500&&p.decisions.every(d=>d&&/^[0-9A-Z]{4}$/.test(d.code)&&savedChoices.includes(d.choice)&&typeof d.at==='string'&&typeof d.researchAsOf==='string');}
  const finite=n=>typeof n==='number'&&Number.isFinite(n),num=n=>finite(n)?n.toLocaleString('ja-JP',{maximumFractionDigits:2}):'未確認';
  const link=(url,label)=>{try{const u=new URL(url);if(u.protocol==='https:')return `<a href="${esc(u.href)}" target="_blank" rel="noopener noreferrer">${esc(label)}</a>`;}catch{}return esc(label);};
  let data=null;
