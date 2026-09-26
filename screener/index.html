@@ -305,7 +305,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
 <script>
 (async function(){
-  const VER="2.37";  // 投資調査ワークフローを統合
+  const VER="2.38";  // 投資調査ワークフローを統合
   /* Invnote と同じテーマ設定を読む（localStorage invnote_v1 の theme） */
   try{const S=JSON.parse(localStorage.getItem("invnote_v1")||"{}");
     if(S.theme==="dark"){document.documentElement.dataset.theme="dark";document.querySelector('meta[name=theme-color]').content="#12171C";}}catch(e){}
@@ -421,7 +421,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     const b=document.querySelector(`#tabs [data-tab="${order[i]}"]`);if(b)b.scrollIntoView({inline:'center',block:'nearest'});
   },{passive:true});
   renderTabs();
-  import('./research-tab.js?v=2.37').then(m=>m.mount(document.getElementById('research'))).catch(()=>{document.getElementById('research').textContent='投資調査を読み込めません。再読込してください。';});
+  import('./research-tab.js?v=2.38').then(m=>m.mount(document.getElementById('research'))).catch(()=>{document.getElementById('research').textContent='投資調査を読み込めません。再読込してください。';});
   import('./strategy-comparison.js?v=2.34').then(m=>m.mount(document.getElementById('compare')))
     .catch(()=>{document.getElementById('compare').textContent='戦略比較を読み込めません。再読込してください。';});
   import('./macro.js?v=2.28').then(m=>m.mountMacro(document.getElementById('macro')))
