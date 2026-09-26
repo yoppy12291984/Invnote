@@ -1,0 +1,37 @@
+(function(root){
+ 'use strict';const D=root.RRDecisionModel;
+ const $=id=>document.getElementById(id),safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),f=(v,n=1)=>Number.isFinite(v)?v.toLocaleString('ja-JP',{maximumFractionDigits:n,minimumFractionDigits:n}):'保留';
+ function render(r,esc,onChange=()=>{}){
+  const d=r.decision;
+  const field=(key,label,number=false)=>`<label>${label}${number?`<input type="number" step="any" data-d="${key}" value="${esc(d[key]??'')}">`:`<textarea data-d="${key}">${esc(d[key])}</textarea>`}</label>`;
+  $('decision').innerHTML=`
+  <section><h2>${esc(r.name)}：何が起きれば投資仮説が成立するか</h2><p class="muted">${esc(d.origin)}</p>
+  ${field('thesis','投資仮説（分析上の仮説）')}<div class="grid">${field('gap','会社予想・市場期待との差／未立証の部分')}${field('essential','欠けると成立しない前提')}</div>
+  <details><summary>財務の耐久力・還元経路・価格を分けて確認</summary><div class="grid">${field('survival','会社が耐えられるか')}${field('delivery','株主へ価値が届くか')}${field('valuation','この価格で買う際の弱点')}${field('counter','最も強い反論・撤回条件')}</div></details></section>
+  <section><h2>株価が要求する利益を逆算する</h2><p>選んだPERごとに必要EPSを逆算します。市場の真の期待を特定する計算でも、目標達成の予測でもありません。</p>
+  <div class="fields">${field('eps','比較の起点EPS（円）',true)}${field('per','比較の中心PER（倍）',true)}${field('target','検討する株価上昇率（%）',true)}</div>
+  <details><summary>EPSの対象期・出典／PERの仮定を確認</summary><div class="grid">${field('epsPeriod','起点EPSの対象期と資料日')}${field('epsSource','起点EPSの出典URL')}${field('perBasis','PERの設定理由')}</div><p>会社の今期予想と、評価日から12か月先のEPSは別です。起点値の変更時は対象期・根拠も更新してください。中心PERは株価を変更しても自動で追随しません。</p></details>
+  <div id="requirements" class="scroll" aria-live="polite"></div>
+  <h3>EPSとPERの組み合わせで損益はどう変わるか</h3><p class="muted">全セルは機械的な感応度。EPSの変化は起点EPS比、PERは中心PER比です。色は損益の方向で、起こりやすさではありません。利益と倍率が同時に悪化する組み合わせも表示します。</p><div id="heatmap" class="scroll"></div>
+  <h3>選んだ前提の幅でも成立するか</h3><div class="fields">${field('lowGrowth','EPS変化の下端（%）',true)}${field('highGrowth','EPS変化の上端（%）',true)}${field('lowPer','PERの下端（中心比・倍）',true)}${field('highPer','PERの上端（中心比・倍）',true)}</div><p id="robustness" aria-live="polite"></p><p class="muted">初期範囲は全社共通の操作用仮定で、銘柄別のリスク推定ではありません。入力した長方形の範囲の端点を計算。信頼区間・最大損失・成功確率ではありません。各組み合わせの実現可能性は別途確認が必要です。</p></section>
+  <section><h2>重大な懸念を、他の長所で相殺しない</h2><p id="gateResult" role="status"></p><div class="grid">${d.checks.map((c,i)=>`<div class="item"><label>${esc(c.label)}<select data-check="${i}:state">${[['open','未解決'],['clear','確認済み：重大懸念を認めず'],['concern','重大な懸念あり']].map(([v,l])=>`<option value="${v}" ${c.state===v?'selected':''}>${l}</option>`).join('')}</select></label><label>判断の根拠・確認日・条件<textarea data-check="${i}:note">${esc(c.note)}</textarea></label></div>`).join('')}</div><p class="muted">「未解決」は危険と確認した意味ではありません。「確認済み」も安全保証ではなく、範囲と日付を根拠に記入します。点数が高くてもこの欄を自動で通過させません。</p></section>
+  <section><h2>証拠の重複と、次の一手</h2><div class="grid">${field('dependency','同じ発信元・共通原因に依存する証拠')}${field('next','次に確認する問い／資料取得・待機・予測不能／答えによる判断変更')}</div>
+  <details><summary>元の根拠・出典を照合する（資料数を確度に変換しません）</summary>${r.evidence.map((e,i)=>`<div class="item"><strong>資料${i+1} · ${esc(e.date)}</strong><p>${esc(e.note)}</p>${/^https?:\/\//.test(e.url)?`<a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">出典を開く</a>`:`<span>${esc(e.url)}</span>`}</div>`).join('')}</details></section>
+  <section><h2>同じ経済状況に沿ったケースを作る</h2><p>将来EPSとPERを同じ需要・費用・金利などの前提から設定します。実在4社の将来値は未設定です。上の感応度から都合のよいセルを予測として採用しないでください。</p>
+  <div class="grid">${d.cases.map((c,i)=>`<div class="item"><h3>${esc(c.label)}</h3><div class="fields">${['eps','per','months'].map((k,j)=>`<label>${['将来EPS（円）','将来PER（倍）','成立まで（月）'][j]}<input type="number" step="any" data-case="${i}:${k}" value="${esc(c[k]??'')}"></label>`).join('')}</div><label>利益・倍率・時期が両立する理由／出典<textarea data-case="${i}:note">${esc(c.note)}</textarea></label><p id="case${i}"></p></div>`).join('')}</div><p class="muted">赤字・ゼロEPSではPER法を保留します。赤字ケースの価値をゼロと決めず、純資産・事業別評価など別の方法が必要です。発生確率・配当・税・費用は未算入。旧株価シナリオとの自動連動はありません。</p></section>
+  <section><h2>自分の保有全体で耐えられるか</h2>${field('common','他銘柄と同時に悪化しうる要因（相関の実測とは別）')}<div class="fields">${field('amount','検討する現物投資額（円）',true)}${field('assets','比較する金融資産総額（円）',true)}${field('shock','この銘柄の仮定下落率（%）',true)}</div><p id="impact" aria-live="polite"></p><p class="muted">任意入力。過去に共有された保有・現金を現在値として転記していません。単一の現物ポジションの寄与だけを計算し、他銘柄の同時下落は別途加算が必要です。信用の追証・金利・返済期限はこの計算の対象外です。</p></section>`;
+  $('decision').oninput=e=>{const t=e.target;if(t.dataset.d){const k=t.dataset.d;d[k]=t.type==='number'?(t.value===''?null:Number(t.value)):t.value;if(k==='eps'){d.epsPeriod='手動仮定（対象期を記入）';d.epsSource='';for(const key of ['epsPeriod','epsSource'])document.querySelector(`[data-d="${key}"]`).value=d[key];}if(k==='per'){d.perBasis='手動仮定（設定理由を記入）';document.querySelector('[data-d="perBasis"]').value=d.perBasis;}}if(t.dataset.check){const[i,k]=t.dataset.check.split(':');d.checks[i][k]=t.value;}if(t.dataset.case){const[i,k]=t.dataset.case.split(':');d.cases[i][k]=k==='note'?t.value:t.value===''?null:Number(t.value);}refresh(r);onChange();};
+  refresh(r);
+ }
+ function refresh(r){if(!$('requirements'))return;const d=r.decision,p=r.price;
+  const factors=[.8,1,1.2],rows=factors.map(x=>{const per=D.positive(d.per)?d.per*x:null,z=D.required(p,d.eps,per,d.target),zero=D.required(p,d.eps,per,0);return `<tr><td>${f(per,2)}倍（中心×${x}）</td><td>${f(zero?.eps,2)}円</td><td>${f(z?.eps,2)}円</td><td>${f(z?.growth)}%</td></tr>`;}).join('');
+  $('requirements').innerHTML=`<p>基準株価 ${f(p,2)}円 ／ ${safe(r.date)||'基準日未設定'} ／ 評価期間 ${f(r.horizon,0)}か月 ／ 検討上昇率 ${f(d.target)}%</p><table><caption>設定倍率ごとの必要EPS</caption><thead><tr><th>仮定PER</th><th>損益分岐EPS</th><th>検討上昇率に必要なEPS</th><th>起点EPSからの変化</th></tr></thead><tbody>${rows}</tbody></table>`;
+  const pf=[.6,.8,1,1.2],eg=[-30,-20,0,20,30,50];
+  $('heatmap').innerHTML=`<table><caption>株価リターンの感応度（配当・費用なし）</caption><thead><tr><th>EPS変化／仮定PER</th>${pf.map(x=>`<th>${f(D.positive(d.per)?d.per*x:null,2)}倍<br>中心×${x}</th>`).join('')}</tr></thead><tbody>${eg.map(g=>`<tr><th scope="row">${g>0?'+':''}${g}%<br>${D.positive(d.eps)?f(d.eps*(1+g/100),2):'保留'}円</th>${pf.map(x=>{const z=D.outcome(p,D.positive(d.eps)?d.eps*(1+g/100):null,D.positive(d.per)?d.per*x:null);return `<td class="${z?(z.ret>=0?'gain':'loss'):''}">${z?(z.ret>0?'+':'')+f(z.ret)+'%':'保留'}</td>`;}).join('')}</tr>`).join('')}</tbody></table>`;
+  const z=D.range(p,d.eps,d.per,d.lowGrowth,d.highGrowth,d.lowPer,d.highPer);$('robustness').textContent=z?`入力範囲の損益：${f(z.low)}% 〜 ${f(z.high)}%。${z.low>=0?'この範囲の下端でも損益は非負。ただし範囲外の悪化は含みません。':z.high<0?'この範囲では上端でも損失になります。':'この範囲には損失となる組み合わせがあり、前提への依存が残ります。'}`:'正の株価・EPS・PER、EPS変化は−100%超、PER係数は正、各下端≦上端で入力してください。';
+  const concern=d.checks.filter(c=>c.state==='concern').length,open=d.checks.filter(c=>c.state==='open'||!c.note.trim()).length;$('gateResult').textContent=concern?`重大懸念 ${concern}件：解消根拠が得られるまで判断を保留。合計点による相殺はしません。`:open?`未解決・根拠未記入 ${open}件：投資判断は未完。`:'この確認欄では重大懸念の記録なし。価格・時期・損益を含む投資判断は別途必要です。';
+  d.cases.forEach((c,i)=>{const v=D.outcome(p,c.eps,c.per),time=D.positive(c.months);$('case'+i).textContent=v?`仮定株価 ${f(v.price,2)}円 ／ 損益 ${f(v.ret)}%。${!time?'成立時期は保留。':!Number.isInteger(r.horizon)||r.horizon<1?'評価期間が不正のため期間内判定は保留。':c.months>r.horizon?'評価期間外：期間内のリターンとして比較できません。':'設定上は評価期間内。'}${!c.note.trim()?' 根拠未記入。':''}`:'将来EPS・PERは未設定、またはPER法を適用できない値です。';});
+  const imp=D.impact(d.amount,d.assets,d.shock);$('impact').textContent=imp?`このポジションの仮定損失 ${f(imp.loss,0)}円 ／ 金融資産全体への寄与 −${f(imp.total)}%。他の保有の損失は含みません。`:'投資額・金融資産総額・仮定下落率を入力すると損失寄与を表示します（現物投資額≦総額、下落率0〜100%）。';
+ }
+ root.RRDecisionUI={render,refresh};
+})(window);
