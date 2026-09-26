@@ -35,3 +35,5 @@ new ResizeObserver(charts).observe($('quality'));render();
 $('research').onclick=()=>{if(!confirm('現在の画面を9/26調査版へ置き換えます。編集済み記録は先に書き出してください。保存するまで既存のブラウザー記録は保持されます。'))return;records=initial();selected=0;isDemo=false;realRecords=null;render();$('status').textContent='調査版を読み込みました。保存するには「現在の評価を記録」を押してください。';};
 
 for(const id of ['price','date'])$(id).addEventListener('input',()=>{records[selected].asset[0]=null;const el=document.querySelector('[data-score="asset:0"]');if(el)el.value='';$('status').textContent='株価・基準日を変更したため換金資産比率の点を保留しました。新しい時価総額で再計算して採点してください。';charts();});
+
+$('importButton').onclick=()=>$('import').click();
