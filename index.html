@@ -50,6 +50,18 @@ header h1 small{font-size:11px;font-weight:500;color:var(--mut);margin-left:6px;
 #stat{font-size:11.5px;color:var(--mut);font-variant-numeric:tabular-nums;padding:8px 4px 0;white-space:nowrap}
 #gearBtn,#impBtn,#syncBtn{color:var(--mut);padding:6px;border-radius:8px;display:flex;align-items:center;gap:5px}#impBtn,#syncBtn{padding:5px 10px 5px 7px;font-size:13px;font-weight:600;letter-spacing:.01em}
 #syncBtn.busy svg{animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}#syncBtn:hover{color:var(--ink);background:var(--soft)}#gearBtn:hover,#gearBtn.on,#impBtn:hover,#impBtn.on{color:var(--ink);background:var(--soft)}
+header{padding-right:max(16px,env(safe-area-inset-right));padding-left:max(16px,env(safe-area-inset-left))}
+#gearBtn,#impBtn,#syncBtn{flex-shrink:0;min-height:44px;justify-content:center;white-space:nowrap}
+#gearBtn{width:44px;padding:0}
+@media(max-width:480px){
+ header{display:grid;grid-template-columns:minmax(0,1fr) max-content max-content 44px;gap:4px}
+ header>span{display:none}
+ .wm{margin-left:0;min-width:0}
+ .wm a,.wm b{font-size:14px;padding:8px 3px}
+ header h1 small{display:none}
+ #syncBtn,#impBtn{font-size:12px;min-width:44px;padding:5px 6px}
+ #syncBtn svg,#impBtn svg{display:none}
+}
 
 /* capture */
 #cap{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px 10px;margin-bottom:14px}
@@ -512,7 +524,7 @@ const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
-const VER="3.21" /* Investment型のチェック式To doへ統一 */; // 現物・信用の区切りと集計間隔を調整
+const VER="3.22" /* スマホのヘッダー操作を画面内へ */;
 const QUICK=["注目","仮説","懸念","決算","執行","検証"];
 const TAB_DEFS=[{v:"vPf",t:"P/F"},{v:"vHot",t:"Buy"},{v:"vStocks",t:"Stock"},{v:"vDiary",t:"Diary"},{v:"vNotes",t:"Notes"},{v:"vCal",t:"Calendar"},{v:"vTodos",t:"To do"},{v:"vRules",t:"ルール"}];
 function migrateTabs(){
