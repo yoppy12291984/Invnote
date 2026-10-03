@@ -11,7 +11,7 @@ function validBundle(d){
 }
 function replaceResearch(d){
  D=d;notes=D.notes;R=D.ratings;ratings=Object.fromEntries(R.rows.map(x=>[x.code,x]));all=Object.entries(notes);themes=[...new Set(all.flatMap(([,n])=>n.themes))].sort((a,b)=>a.localeCompare(b,'ja'));
- watch=new Set([...watch].filter(c=>Object.hasOwn(notes,c)));
+ try{const saved=JSON.parse(localStorage.getItem(KEY)||'[]');watch=new Set((Array.isArray(saved)?saved:[]).filter(c=>Object.hasOwn(notes,c)));}catch{watch=new Set([...watch].filter(c=>Object.hasOwn(notes,c)));}
 }
 function companyTools(code,mode){
  if(!/^[0-9A-Z]{4,5}$/.test(code||''))return;

@@ -1554,7 +1554,7 @@ function workspaceGo(){
  else if(allowed.includes(h))show(h);
 }
 if(workspaceMode){
- const css=document.createElement('style');css.textContent='#tabs{display:none!important}.app{max-width:none!important}';document.head.append(css);
+ const css=document.createElement('style');css.textContent='#tabs,header .wm{display:none!important}.app{max-width:none!important}';document.head.append(css);
  window.addEventListener('hashchange',workspaceGo);
  window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==parent)return;if(e.data?.type==='workspace:refresh')workspacePublish();});
  new MutationObserver(()=>{if(document.documentElement.classList.contains('suite-locked'))parent.postMessage({type:'invnote:locked'},location.origin);}).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
