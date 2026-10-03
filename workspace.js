@@ -99,6 +99,7 @@ route=function(){
  for(const f of Object.values(frames)){f.setAttribute('scrolling','no');if(!f.hidden)f.contentWindow?.postMessage({type:'workspace:measure'},location.origin);}
  actions.querySelectorAll('a').forEach(a=>{if(a.hash===location.hash)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
  paintAppearance();
+ window.scrollTo(0,0);
 };
 // Replace the original event listener; otherwise an old route can overwrite settings.
 window.removeEventListener('hashchange',workspaceRoute);window.addEventListener('hashchange',route);
