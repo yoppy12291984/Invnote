@@ -321,7 +321,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   const pct=v=>v==null?'—':(v>=0?'+':'')+(v*100).toFixed(1)+'%';
   const kabutan=c=>`https://kabutan.jp/stock/?code=${c}`;
   const tv=c=>`https://jp.tradingview.com/chart/?symbol=TSE%3A${c}`;
-  const linkRow=c=>`<div class="links"><a href="${kabutan(c)}" target="_blank" rel="noopener">株探</a><a href="${tv(c)}" target="_blank" rel="noopener">TradingView</a></div>`;
+  const linkRow=c=>`<div class="links"><a href="../#company/${encodeURIComponent(c)}" ${parent!==window?'data-workspace-company="'+esc(c)+'"':''}>note</a><a href="${kabutan(c)}" target="_blank" rel="noopener">株探</a><a href="${tv(c)}" target="_blank" rel="noopener">TradingView</a></div>`;
 
   async function load(name){
     const r=await fetch(`data/${name}.json?v=${Date.now()}`,{cache:'no-store'});
@@ -331,7 +331,10 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
   /* タブ：並び替え・スワイプ */
   const TABS=[{v:'cand',t:'候補'},{v:'macro',t:'マクロ'},{v:'ideal',t:'理想配分'},{v:'catalyst',t:'カタリスト'},{v:'reb',t:'反転'},{v:'hold',t:'運用成績'},{v:'compare',t:'戦略比較'},{v:'research',t:'投資調査'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'radar',t:'レーダー'},{v:'status',t:'検証'},{v:'rec',t:'記録'}];
+  const workspaceMode=parent!==window&&new URLSearchParams(location.search).get('workspace')==='1';
   const tdef=v=>TABS.find(x=>x.v===v);
+  const visibleTab=v=>order.includes(v)||(workspaceMode&&!!tdef(v));
+  if(workspaceMode){const style=document.createElement('style');style.textContent='#tabs{display:none!important}';document.head.append(style);}
   const NAME_KEY='screener_tab_names_v1';
   let tabNames={};
   try{const names=JSON.parse(localStorage.getItem(NAME_KEY)||'{}');
@@ -366,7 +369,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   try{if(!localStorage.getItem('screener_research_tab_v1')){if(!order.includes('research'))order.splice(order.indexOf('cand')>=0?order.indexOf('cand')+1:order.length,0,'research');localStorage.setItem(TKEY,JSON.stringify(order));localStorage.setItem('screener_research_tab_v1','1');}}catch{if(!order.includes('research'))order.push('research');}
   try{const saved=localStorage.getItem(START_KEY);if(tdef(saved))startTab=saved;}catch{}
   const initialTab=()=>order.includes(startTab)?startTab:order.includes('cand')?'cand':order[0];
-  let view=order.includes(location.hash.slice(1))?location.hash.slice(1):initialTab();
+  let view=visibleTab(location.hash.slice(1))?location.hash.slice(1):initialTab();
   function renderStartup(){const el=$('#startupTab');el.innerHTML=order.map(v=>'<option value="'+v+'">'+esc(tabTitle(v))+'</option>').join('');el.value=initialTab();}
   $('#startupTab').addEventListener('change',e=>{try{localStorage.setItem(START_KEY,e.target.value);startTab=e.target.value;$('#tabSettingsStatus').textContent='起動画面を保存しました。次回の起動から反映します。';}catch{renderStartup();$('#tabSettingsStatus').textContent='起動画面を保存できませんでした。変更は未確定です。';}});
   const saveOrder=()=>{try{localStorage.setItem(TKEY,JSON.stringify(order));}catch(e){}};
@@ -374,11 +377,12 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     $('#tabs').innerHTML=order.map(v=>`<button data-tab="${v}"${v===view?' class="on"':''}>${esc(tabTitle(v))}</button>`).join('');
     TABS.forEach(t=>{const s=document.getElementById(t.v); if(s) s.hidden=(t.v!==view);});
   }
-  function show(v){if(!order.includes(v))return;view=v;renderTabs();window.scrollTo(0,0);}
-  window.addEventListener('hashchange',()=>{const tab=location.hash.slice(1);if(order.includes(tab))show(tab);});
+  function show(v){if(!visibleTab(v))return;view=v;renderTabs();window.scrollTo(0,0);}
+  window.addEventListener('hashchange',()=>{const tab=location.hash.slice(1);if(visibleTab(tab))show(tab);});
+  document.addEventListener('click',e=>{const a=e.target.closest('[data-workspace-company]');if(workspaceMode&&a){e.preventDefault();parent.postMessage({type:'screener:company',code:a.dataset.workspaceCompany},location.origin);}});
   $('#tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b)show(b.dataset.tab);});
   $('#reload').addEventListener('click',()=>{$('#reload').classList.add('busy');
-    location.replace(location.pathname+'?r='+Date.now());});
+    location.replace(location.pathname+'?'+(workspaceMode?'workspace=1&':'')+'r='+Date.now()+location.hash);});
   function renderLed(){
     renderStartup();
     $('#tabLed').innerHTML=order.map((v,i)=>`<div class="li"><span>${esc(tabTitle(v))}</span><button data-mv="-1" data-i="${i}" aria-label="上へ">↑</button><button data-mv="1" data-i="${i}" aria-label="下へ">↓</button><button data-hide="${v}" aria-label="隠す">×</button></div>`).join('');
