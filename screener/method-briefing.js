@@ -3,6 +3,17 @@
  const iso=x=>/^\d{8}$/.test(String(x))?`${x.slice(0,4)}-${x.slice(4,6)}-${x.slice(6)}`:String(x||'');
  const esc=x=>String(x??'未確認').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const num=x=>typeof x==='number'&&Number.isFinite(x)?String(Math.round(x*100)/100):'未確認';
+ function bottom(r,crossing){
+  const finite=x=>typeof x==='number'&&Number.isFinite(x);
+  let state='判定材料不足',tone='muted';
+  if(finite(r.ma50)&&finite(r.ma200)){
+   if(crossing==='200日線の下へ'||r.ma50<0){state='反発の失速に注意';tone='caution';}
+   else if(r.ma50>0&&r.ma200>0){state='反発の兆候あり・底固めは未確認';tone='positive';}
+   else if(r.ma50>0){state='短期反発・長期の回復待ち';tone='watch';}
+   else{state='移動平均線付近・方向待ち';tone='watch';}
+  }
+  return {state,tone,evidence:`50日線比 ${num(r.ma50)}%、200日線比 ${num(r.ma200)}%。${crossing?`前回比較：${crossing}。`:''}`,missing:'安値の切り上げ・底固めの期間・反発時の出来高は、この一覧データでは未確認。',next:'日足で安値の切り上げと直近戻り高値の突破、上昇時の出来高を確認。直近安値の更新なら底打ち仮説を見直す。'};
+ }
  function build(kind,data,diff,today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'})){
   const date=iso(data.date), monthly=kind==='candidates';
   const age=(Date.parse(today)-Date.parse(date))/86400000;
@@ -19,7 +30,10 @@
    const selected=[...up.slice(0,2),...down.slice(0,1)].map(x=>({r:rows.find(r=>String(r.code)===String(x.key)),x})).filter(x=>x.r);
    result.cards=selected.map(({r,x})=>card(r,`${x.direction}。基準日時点の200日線比 ${num(r.ma200)}%、50日線比 ${num(r.ma50)}%。`,x.direction.includes('上')?'200日線の上を維持できるか、上昇時の出来高と直近決算を確認。':'200日線を回復できるかを確認。反発が崩れていないか先に点検。','2時点の比較です。途中の通過日や反発の持続は未確認。'));
    if(!result.cards.length)result.cards=rows.filter(r=>added.has(String(r.code))).slice(0,2).map(r=>card(r,'比較元から新しく抽出一覧に入りました。','下落の原因・直近決算と、反発時の出来高を確認。','一覧への追加だけでは底打ちを確認できません。'));
-   result.selection='表示順：200日線の上への変化を2社、下への変化を1社。変化がなければ新規追加から2社。';
+   if(!result.cards.length)result.cards=rows.slice(0,2).map(r=>card(r,'継続候補の反発状況を点検。','直近の日足と決算を確認。','新たな底打ちを確認したという意味ではありません。'));
+   for(const c of result.cards){c.bottom=bottom(rows.find(r=>String(r.code)===c.code),crosses.find(x=>String(x.key)===c.code)?.direction);c.next=c.bottom.next;}
+   result.bottomGuide='底打ちチェック：移動平均線との位置から反発の兆候を整理します。底固めの確認には日足・出来高が必要で、底打ち確定とは表示しません。';
+   result.selection='表示順：200日線の上への変化を2社、下への変化を1社。変化がなければ新規追加から2社、それもなければ既存一覧の先頭2社。';
   }else if(kind==='canslim'){
    const strict=(data.items||[]).filter(r=>r.bucket==='厳密');
    result.headline=strict.length?'厳密条件の候補を優先確認':'厳密条件は0件。ブレイクを待って確認';
@@ -48,8 +62,8 @@
  }
  function render(kind,data,diff){
   const b=build(kind,data,diff);
-  return `<section class="method-brief" aria-label="今回の注目点"><p class="brief-kicker">${b.monthly?'MONTHLY':'WEEKLY'} FOCUS · ${esc(b.date)}</p><h3>${esc(b.headline)}</h3>${b.notice?`<p class="brief-warning">${esc(b.notice)}</p>`:''}<p>${esc(b.action)}</p><p class="brief-period">${esc(b.change)}</p>${b.cards.map(c=>`<article class="brief-stock"><h4>${esc(c.name)} <small>${esc(c.code)}</small></h4><p><b>注目理由</b> ${esc(c.why)}</p><p class="brief-next"><b>次に見る</b> ${esc(c.next)}</p><details><summary>見直す条件・注意点</summary><p>${esc(c.risk)}</p></details></article>`).join('')}<details class="brief-period"><summary>注目点の選び方</summary><p>${esc(b.selection)} 既存データからの要約で、新たな決算精査や売買指示ではありません。</p></details></section>`;
+  return `<section class="method-brief" aria-label="今回の注目点"><p class="brief-kicker">${b.monthly?'MONTHLY':'WEEKLY'} FOCUS · ${esc(b.date)}</p><h3>${esc(b.headline)}</h3>${b.notice?`<p class="brief-warning">${esc(b.notice)}</p>`:''}<p>${esc(b.action)}</p><p class="brief-period">${esc(b.change)}</p>${b.bottomGuide?`<p class="brief-period">${esc(b.bottomGuide)}</p>`:''}${b.cards.map(c=>`<article class="brief-stock"><h4>${esc(c.name)} <small>${esc(c.code)}</small></h4>${c.bottom?`<div class="brief-bottom" data-state="${esc(c.bottom.tone)}"><b>底打ちの見方：${esc(c.bottom.state)}</b><p>${esc(c.bottom.missing)}</p></div>`:''}<p><b>注目理由</b> ${esc(c.why)}</p><p class="brief-next"><b>次に見る</b> ${esc(c.next)}</p><details><summary>見直す条件・注意点</summary><p>${esc(c.risk)}</p></details></article>`).join('')}<details class="brief-period"><summary>注目点の選び方</summary><p>${esc(b.selection)} 既存データからの要約で、新たな決算精査や売買指示ではありません。</p></details></section>`;
  }
- if(typeof module!=='undefined')module.exports={build,render};
+ if(typeof module!=='undefined')module.exports={build,render,bottom};
  else root.MethodBriefing={build,render};
 })(globalThis);
