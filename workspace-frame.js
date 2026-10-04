@@ -29,7 +29,7 @@
 function installFeatureSwipe(root,onSwipe){
  let start=null,suppressUntil=0;
  root.addEventListener('touchstart',e=>{
-  start=null;if(e.touches.length!==1||e.target.closest('input,textarea,select,[contenteditable="true"],canvas'))return;
+  start=null;if(e.touches.length!==1||e.target.closest('input,textarea,select,[contenteditable="true"],canvas,#calGrid,#diaryBox,.dnav,#diaryGrid,#diaryTable'))return;
   for(let el=e.target;el&&el!==root;el=el.parentElement){if(el.scrollWidth>el.clientWidth+2&&['auto','scroll'].includes(getComputedStyle(el).overflowX))return;}
   const t=e.touches[0];start={x:t.clientX,y:t.clientY,time:Date.now()};
  },{passive:true});

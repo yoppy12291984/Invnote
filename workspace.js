@@ -87,7 +87,7 @@ const defaultAreaLabels={today:'Today',discover:'Search',notebook:'Note',review:
 const tabSettingsKey='invnote-workspace-tabs-v1';
 let tabSettings={};
 try{const value=JSON.parse(localStorage.getItem(tabSettingsKey)||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))tabSettings=value;}catch{}
-function tabOption(key,label){const value=tabSettings[key];return {label:typeof value?.label==='string'&&value.label.trim()?value.label.trim().slice(0,30):label,hidden:value?.hidden===true};}
+function tabOption(key,label){const value=tabSettings[key];return {label:typeof value?.label==='string'&&value.label.trim()?value.label.trim().slice(0,30):label,hidden:typeof value?.hidden==='boolean'?value.hidden:key==='today/inv:vTodos'};}
 function applyTabSettings(){
  for(const [area,items] of Object.entries(defaultSections)){
   sections[area]=items.filter(([id])=>!tabOption(area+'/'+id,'').hidden).map(([id,label])=>[id,tabOption(area+'/'+id,label).label]);
