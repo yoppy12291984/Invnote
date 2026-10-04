@@ -222,18 +222,29 @@ function installFeatureSwipe(root,onSwipe){
 
 installFeatureSwipe(app,swipeFeature);
 
-// Keep the mobile navigation anchored to the visible viewport and reserve its height.
+// Never lift the navigation by the keyboard height: Safari already moves fixed UI.
 const mainNavigation=document.querySelector('nav[aria-label="メインナビゲーション"]');
+function navigationEditing(){
+ let el=document.activeElement;
+ try{while(el?.tagName==='IFRAME')el=el.contentDocument?.activeElement;}catch{}
+ return !!el&&(el.isContentEditable||el.matches('textarea,select,input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"])'));
+}
 function measureNavigation(){
  const viewport=window.visualViewport;
- const offset=viewport?Math.max(0,window.innerHeight-viewport.height-viewport.offsetTop):0;
- document.documentElement.style.setProperty('--workspace-nav-offset',offset+'px');
- document.documentElement.style.setProperty('--workspace-nav-space',(mainNavigation.getBoundingClientRect().height+offset+24)+'px');
+ const touch=window.matchMedia('(pointer: coarse)').matches||navigator.maxTouchPoints>0;
+ const keyboardGap=viewport&&viewport.scale===1?window.innerHeight-viewport.height:0;
+ const hidden=touch&&(navigationEditing()||keyboardGap>140);
+ mainNavigation.hidden=hidden;
+ document.documentElement.style.setProperty('--workspace-nav-offset','0px');
+ document.documentElement.style.setProperty('--workspace-nav-space',(hidden?24:mainNavigation.getBoundingClientRect().height+24)+'px');
 }
 new ResizeObserver(measureNavigation).observe(mainNavigation);
 window.addEventListener('resize',measureNavigation);
 window.visualViewport?.addEventListener('resize',measureNavigation);
 window.visualViewport?.addEventListener('scroll',measureNavigation);
+document.addEventListener('focusin',measureNavigation);
+document.addEventListener('focusout',()=>setTimeout(measureNavigation,0));
+window.addEventListener('message',e=>{if(e.origin===location.origin&&Object.values(frames).some(f=>f.contentWindow===e.source)&&e.data?.type==='workspace:focus')measureNavigation();});
 measureNavigation();
 
 // Warm the shared Screener renderer without changing the visible route or frame.

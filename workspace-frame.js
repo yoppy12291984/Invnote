@@ -45,6 +45,8 @@ function installFeatureSwipe(root,onSwipe){
 }
 
  function start(){
+  document.addEventListener('focusin',()=>post({type:'workspace:focus'}));
+  document.addEventListener('focusout',()=>setTimeout(()=>post({type:'workspace:focus'}),0));
   installFeatureSwipe(document, direction=>post({type:"workspace:swipe",direction}));
   const root=document.getElementById('app');if(root){new ResizeObserver(schedule).observe(root);new MutationObserver(schedule).observe(root,{childList:true,subtree:true,attributes:true});}
   window.addEventListener('resize',schedule);window.addEventListener('hashchange',schedule);
