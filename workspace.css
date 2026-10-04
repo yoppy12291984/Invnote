@@ -150,3 +150,5 @@ html[data-workspace] h2:not([style]),html[data-workspace] h3:not([style]),html[d
 /* Compact demand-map theme picker, matching discovery filters. */
 #app .map-picker{gap:6px}
 #app .map-picker .action{min-height:32px;padding:5px 9px;font-size:12px;line-height:1.5;border-radius:5px}
+
+nav[aria-label="メインナビゲーション"][hidden]{display:none!important}
