@@ -71,3 +71,34 @@ body>header{padding-top:calc(18px + env(safe-area-inset-top,0px));padding-left:m
 
 .workspace-version{display:block;width:max-content;font-size:10px;line-height:1.5;font-weight:400;letter-spacing:0;color:var(--sub);text-decoration:none;margin-top:2px}
 .workspace-release ul{padding-left:20px;font-size:13px;margin:12px 0}
+
+/* Portfolio-inspired hierarchy: blue navigation, teal facts, gold attention. */
+:root{--read-blue:#315f97;--read-teal:#23715c;--read-gold:#866019;--read-blue-bg:#edf3fa;--read-teal-bg:#edf6f2;--read-gold-bg:#faf4e7}
+:root[data-theme=dark]{--sub:#a9b5c2;--mut:#a9b5c2;--read-blue:#8fb7ed;--read-teal:#70c9ad;--read-gold:#e3bc69;--read-blue-bg:#202e3e;--read-teal-bg:#20342f;--read-gold-bg:#342e22}
+main>h2,.workspace-setting>h2{color:var(--read-teal);border-left:3px solid var(--read-teal);padding-left:10px;line-height:1.5}
+main>h2.heading-next,main>h2.heading-caution{color:var(--read-gold);border-left-color:var(--read-gold)}
+.heading-next+.card,.heading-caution+.card{border-left:3px solid var(--read-gold)}
+.company-card{border-top:2px solid var(--read-blue)}
+.company-card .open{color:var(--ink)}
+.card p,.detail-body{line-height:1.9}
+.score{margin:8px 0 12px;color:var(--sub)}
+.score b:first-of-type,.rating-pair>div:first-child b{color:var(--read-blue)}
+.score b:last-of-type,.rating-pair>div:last-child b{color:var(--read-teal)}
+.rating-pair>div{border-left:3px solid var(--read-blue);padding:6px 12px;background:var(--read-blue-bg);border-radius:0 8px 8px 0;flex:1}
+.rating-pair>div+div{border-left-color:var(--read-teal);background:var(--read-teal-bg)}
+.pill{background:var(--read-blue-bg);color:var(--read-blue)}
+.research-section{margin:10px 0;padding:14px 16px;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--read-blue);border-radius:10px}
+.research-section summary{color:var(--read-blue)}
+.research-section[data-section="facts"],.research-section[data-section="business"]{border-left-color:var(--read-teal)}
+.research-section[data-section="facts"] summary,.research-section[data-section="business"] summary{color:var(--read-teal)}
+.research-section[data-section="counter"],.research-section[data-section="valuation"]{border-left-color:var(--read-gold)}
+.research-section[data-section="counter"] summary,.research-section[data-section="valuation"] summary{color:var(--read-gold)}
+.tools a{border-left:3px solid var(--read-blue);color:var(--read-blue)}
+.tools small{margin-top:4px;color:var(--sub)}
+.chips[aria-label="テーマ"] button[aria-pressed=true]{color:var(--read-blue);border-bottom-color:var(--read-blue)}
+.eyebrow,.source{color:var(--read-blue)}
+[data-theme=dark] .hero .stats b{color:var(--read-teal)}
+html[data-workspace] h2:not([style]),html[data-workspace] h3:not([style]),html[data-workspace] .sub:not([style]){color:var(--read-teal)}
+html[data-workspace] th{color:var(--read-blue)}
+html[data-workspace] .hint,html[data-workspace] .meta{color:var(--mut)}
+html[data-workspace] summary{color:var(--read-blue)}
