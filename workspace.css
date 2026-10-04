@@ -146,3 +146,7 @@ main>h2.heading-updates{color:var(--custom-updates,var(--read-blue));border-left
 .palette-row input[type=color]{width:56px;height:36px;min-width:56px;border:1px solid var(--line);border-radius:6px;padding:3px;background:var(--paper);cursor:pointer}
 .palette-preview{margin:16px 0;padding:16px;background:var(--paper);color:var(--ink)}
 html[data-workspace] h2:not([style]),html[data-workspace] h3:not([style]),html[data-workspace] .sub:not([style]){color:var(--custom-heading,var(--read-gold))}
+
+/* Compact demand-map theme picker, matching discovery filters. */
+#app .map-picker{gap:6px}
+#app .map-picker .action{min-height:32px;padding:5px 9px;font-size:12px;line-height:1.5;border-radius:5px}
