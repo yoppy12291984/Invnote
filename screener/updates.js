@@ -50,9 +50,10 @@
  async function run(){
    let data;try{const r=await fetch('data/updates.json?v='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error();data=await r.json();}catch{for(const id of Object.keys(tabs))mount(id,'<b>今回の更新</b><p>比較情報を読み込めません。差分は未確認です。</p>');return;}
    await Promise.all(Object.entries(tabs).map(async([id,[name]])=>{
-     const entry=data.sources?.[name];let valid=false;
-     try{const r=await fetch(`data/${name}.json?v=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw Error();const hash=await crypto.subtle.digest('SHA-256',await r.arrayBuffer());valid=entry?.hash===[...new Uint8Array(hash)].map(x=>x.toString(16).padStart(2,'0')).join('');}catch{}
-     mount(id,valid?render(name,entry):'<b>今回の更新</b><p>現在のデータと比較情報が揃っていません。公開更新中、または比較情報が未取得です。時間を置いて再読込してください。</p>',valid?entry:null);
+     const entry=data.sources?.[name];let valid=false,payload;
+     try{const r=await fetch(`data/${name}.json?v=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw Error();const bytes=await r.arrayBuffer();const hash=await crypto.subtle.digest('SHA-256',bytes);valid=entry?.hash===[...new Uint8Array(hash)].map(x=>x.toString(16).padStart(2,'0')).join('');if(valid)payload=JSON.parse(new TextDecoder().decode(bytes));}catch{valid=false;}
+     const brief=valid&&['candidates','rebound','canslim','catalysts'].includes(name)&&window.MethodBriefing?MethodBriefing.render(name,payload,entry):'';
+     mount(id,valid?brief+render(name,entry):'<b>今回の注目点</b><p>現在のデータと比較情報が揃っていません。公開更新中、または比較情報が未取得です。時間を置いて再読込してください。</p>',valid?entry:null);
    }));
  }
  run();
