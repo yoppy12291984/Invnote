@@ -51,6 +51,7 @@ window.addEventListener('message',e=>{
   const h=e.data.height;if(!frameHost.hidden&&!frames[kind].hidden&&Number.isFinite(h)&&h>=100&&h<100000)frames[kind].style.height=Math.ceil(h)+'px';return;
  }
  if(e.data?.type==='workspace:meta'&&kind==='scr'){featureMeta=String(e.data.text||'');const el=document.getElementById('feature-meta');if(el)el.textContent=featureMeta;return;}
+ if(e.data?.type==='workspace:painted'){frames[kind].style.visibility='visible';return;}
  if(e.data?.type==='workspace:ready'){
   frames[kind].contentWindow.postMessage({type:'workspace:theme',theme:effectiveAppearance()},location.origin);return;
  }
