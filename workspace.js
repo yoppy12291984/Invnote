@@ -6,8 +6,48 @@ let appearanceMode=null,invReady=false,syncTimer,featureMeta='';
 try{const saved=localStorage.getItem('invnote-workspace-appearance');if(['light','dark','system'].includes(saved))appearanceMode=saved;}catch{}
 const systemAppearance=matchMedia('(prefers-color-scheme: dark)');
 const effectiveAppearance=()=>appearanceMode==='system'||!appearanceMode?(systemAppearance.matches?'dark':'light'):appearanceMode;
+const paletteKey='invnote-workspace-colors-v1';
+const paletteFields=[
+ ['cardline','銘柄カード上の線','--custom-cardline','#b63832','#f17c73'],
+ ['updates','最近の研究更新','--custom-updates','#315f97','#8fb7ed'],
+ ['short','3か月の点数','--custom-short','#866019','#efc35b'],
+ ['long','12か月の点数','--custom-long','#23715c','#70c9ad'],
+ ['bodycount','本文ありの件数','--custom-bodycount','#70c9ad','#70c9ad'],
+ ['registered','登録の件数','--custom-registered','#70c9ad','#70c9ad'],
+ ['accent','選択中のタブ・ボタン','--green','#245e49','#6e9bd6'],
+ ['icons','上の操作アイコン','--custom-icons','#243b35','#e6eaee'],
+ ['heading','通常の見出し','--custom-heading','#b63832','#f17c73'],
+ ['tag','テーマの文字','--custom-tag','#315f97','#8fb7ed'],
+ ['tagbg','テーマの背景','--custom-tagbg','#edf3fa','#202e3e'],
+ ['bg','画面の背景','--bg','#f5f4ef','#12171c'],
+ ['card','カードの背景','--paper','#ffffff','#1b2229'],
+ ['text','本文の文字','--ink','#243b35','#e6eaee'],
+ ['muted','補足の文字','--sub','#64716b','#a9b5c2'],
+ ['border','境界線','--line','#dce2db','#2b343d'],
+ ['hero','Todayの先頭カード背景','--custom-hero','#245e49','#232c35'],
+ ['herotext','Todayの先頭カード文字','--custom-herotext','#f2f5ee','#e6eaee'],
+ ['herolabel','Todayの先頭カード小見出し','--custom-herolabel','#efc35b','#efc35b']
+];
+let palettePrefs={};try{const p=JSON.parse(localStorage.getItem(paletteKey)||'{}');if(p&&typeof p==='object'&&!Array.isArray(p))palettePrefs=p;}catch{}
+function colorValue(field,mode=effectiveAppearance()){const value=palettePrefs[mode]?.[field[0]];return /^#[0-9a-f]{6}$/i.test(value||'')?value:field[mode==='dark'?4:3];}
+function paintPalette(){
+ const style=document.documentElement.style;
+ for(const field of paletteFields)style.setProperty(field[2],colorValue(field));
+ style.setProperty('--sur',style.getPropertyValue('--paper'));style.setProperty('--mut',style.getPropertyValue('--sub'));
+ document.querySelectorAll('[data-palette]').forEach(input=>{const field=paletteFields.find(f=>f[0]===input.dataset.palette);if(field)input.value=colorValue(field);});
+ const mode=document.getElementById('palette-mode');if(mode)mode.textContent=effectiveAppearance()==='dark'?'ダークの配色':'ライトの配色';
+}
+function savePalette(){try{localStorage.setItem(paletteKey,JSON.stringify(palettePrefs));return true;}catch{document.getElementById('palette-result').textContent='保存できませんでした。端末の保存容量・設定を確認してください。';return false;}}
+function renderPaletteSettings(){
+ const panel=document.createElement('section');panel.className='workspace-setting';panel.innerHTML=`<h2>配色</h2><p><b id="palette-mode"></b>を編集。変更はすぐ反映され、この端末に保存します。ライトとダークは別々に設定できます。</p><details open><summary>線・見出し・数字</summary>${paletteFields.slice(0,11).map(colorRow).join('')}</details><details><summary>背景・文字</summary>${paletteFields.slice(11).map(colorRow).join('')}</details><article class="card company-card palette-preview"><small>配色のプレビュー</small><p>銘柄カードの本文</p><div class="score">3か月 <b>6</b> / 12か月 <b>7</b></div><span class="pill">テーマ</span></article><button class="action" id="palette-reset">このモードの配色を標準に戻す</button><p id="palette-result" role="status"></p>`;
+ app.append(panel);paintPalette();
+ panel.querySelectorAll('[data-palette]').forEach(input=>input.addEventListener('input',()=>{const mode=effectiveAppearance();palettePrefs[mode]={...palettePrefs[mode],[input.dataset.palette]:input.value};paintAppearance();if(savePalette())document.getElementById('palette-result').textContent='保存しました。';}));
+ document.getElementById('palette-reset').onclick=()=>{delete palettePrefs[effectiveAppearance()];paintAppearance();if(savePalette())document.getElementById('palette-result').textContent='標準の配色に戻しました。';};
+ function colorRow(f){return `<label class="palette-row"><span>${esc(f[1])}</span><input type="color" data-palette="${f[0]}" aria-label="${esc(f[1])}" value="${colorValue(f)}"></label>`;}
+}
 function paintAppearance(){
  const resolved=effectiveAppearance();document.documentElement.dataset.theme=resolved;
+ paintPalette();
  document.querySelector('meta[name=color-scheme]')?.setAttribute('content',resolved);
  for(const f of Object.values(frames))f.contentWindow?.postMessage({type:'workspace:theme',theme:resolved},location.origin);
  const button=document.getElementById('workspace-theme');if(button){button.setAttribute('aria-label',resolved==='dark'?'ライトモードにする':'ダークモードにする');button.setAttribute('aria-pressed',String(resolved==='dark'));}
@@ -140,7 +180,7 @@ route=function(){
    app.insertAdjacentHTML('beforeend',`<section class="workspace-setting workspace-release"><h2>アプリのバージョン</h2><p><b>ver${esc(appRelease.version)}</b></p><small>更新日 ${esc(appRelease.date)} · ビルド ${esc(appRelease.build)}</small><ul>${appRelease.changes.map(change=>`<li>${esc(change)}</li>`).join('')}</ul><p class="muted">この端末で読み込んでいる画面のバージョンです。決算データや同期の日時とは別です。</p></section>`);
    app.insertAdjacentHTML('beforeend','<section class="workspace-setting"><h2>アプリの表示</h2><div class="appearance-options"><button class="action" data-appearance="light">ライト</button><button class="action" data-appearance="dark">ダーク</button><button class="action" data-appearance="system">端末に合わせる</button></div><p class="muted">Today・Search・Note・Review 共通の配色です。</p></section><section class="workspace-setting"><h2>同期</h2><p class="muted">登録済みの端末と、メモ・日記・四季報を同期します。</p><div class="workspace-setting-actions"><button class="action" id="settings-sync">今すぐ同期</button><a class="action" href="#import">取り込み</a></div></section>');
    app.querySelectorAll('[data-appearance]').forEach(b=>b.onclick=()=>setAppearance(b.dataset.appearance));document.getElementById('settings-sync').onclick=syncWorkspace;
-   renderTabSettings();
+   renderPaletteSettings();renderTabSettings();
   }
   embedded('inv',h==='settings'?'vSet':'vImport');
   document.querySelectorAll('nav a').forEach(a=>a.removeAttribute('aria-current'));

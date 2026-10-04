@@ -2,6 +2,8 @@
 (()=>{
  if(parent===window||new URLSearchParams(location.search).get('workspace')!=='1')return;
  document.documentElement.dataset.workspace='true';
+ function copyPalette(){try{const source=parent.document.documentElement.style;for(const name of source){if((name.startsWith('--custom-')||['--bg','--paper','--sur','--ink','--sub','--mut','--line','--green'].includes(name))&&/^#[0-9a-f]{6}$/i.test(source.getPropertyValue(name)))document.documentElement.style.setProperty(name,source.getPropertyValue(name));}}catch{}}
+ copyPalette();
  // Apply the shell theme before the embedded body is parsed.
  try{const theme=parent.document.documentElement.dataset.theme;if(['light','dark'].includes(theme))document.documentElement.dataset.theme=theme;}catch{}
  const kind=location.pathname.includes('/screener/')?'scr':'inv';
@@ -18,7 +20,7 @@
  window.addEventListener('message',e=>{
   if(e.origin!==location.origin||e.source!==parent)return;
   if(e.data?.type==='workspace:theme'&&['light','dark'].includes(e.data.theme)){
-   document.documentElement.dataset.theme=e.data.theme;schedule();
+   document.documentElement.dataset.theme=e.data.theme;copyPalette();schedule();
    requestAnimationFrame(()=>post({type:'workspace:painted'}));
    // The research subview listens to the root theme mutation through its own adapter.
   }
