@@ -49,3 +49,18 @@ html[data-workspace] #suite-access{background:var(--bg)!important;color:var(--in
 .workspace-back{margin-bottom:18px}
 .workspace-setting-actions{display:flex;gap:8px;flex-wrap:wrap}
 nav[aria-label="メインナビゲーション"] a{display:flex;align-items:center;justify-content:center;min-height:44px;font-size:15px;font-weight:600;letter-spacing:.01em}
+
+/* Compact text tabs; retain touch targets without pill-shaped outlines. */
+.workspace-tabs{gap:18px;padding:0 0 4px;margin:0 0 18px;border-bottom:1px solid var(--line);overscroll-behavior-x:contain;touch-action:pan-x pan-y}
+.workspace-tabs a.action{border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--sub);padding:7px 1px;min-height:42px;font-size:13px;font-weight:500}
+.workspace-tabs a.action[aria-current=page]{background:transparent;color:var(--ink);border-bottom-color:var(--green);font-weight:650}
+.chips[aria-label="テーマ"]{gap:4px 16px;flex-wrap:wrap;overflow:visible;padding:0;margin:0 0 22px}
+.chips[aria-label="テーマ"] button{border:0;border-bottom:1px solid transparent;border-radius:0;background:transparent;color:var(--sub);padding:5px 1px;min-height:40px;font-size:13px}
+.chips[aria-label="テーマ"] button[aria-pressed=true]{background:transparent;color:var(--ink);border-bottom-color:var(--green);font-weight:650}
+nav[aria-label="メインナビゲーション"]{gap:4px;padding:8px 16px calc(16px + env(safe-area-inset-bottom,0px));}
+nav[aria-label="メインナビゲーション"] a{flex:1;max-width:180px;min-height:54px;padding:5px 6px;flex-direction:column;gap:4px;font-size:11px;line-height:1.2;border-radius:10px;font-weight:500}
+nav[aria-label="メインナビゲーション"] a[aria-current=page]{background:transparent;color:var(--green)}
+nav[aria-label="メインナビゲーション"] svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
+#app{touch-action:auto}
+#app .chips,#app .table-wrap,html[data-workspace] .tblwrap{touch-action:pan-x pan-y pinch-zoom}
+html[data-workspace] body{touch-action:auto}

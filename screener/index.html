@@ -225,7 +225,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 </style>
 <script src="polish.js?v=2.28" defer></script>
 <script src="updates.js?v=2.34" defer></script>
-<link rel="stylesheet" href="../workspace.css?v=82d3bdc6589c"><script src="../workspace-frame.js?v=2ae0d08463b4"></script></head>
+<link rel="stylesheet" href="../workspace.css?v=ab17a9cd94c5"><script src="../workspace-frame.js?v=ab21bac57a57"></script></head>
 <body>
 <div id="app">
 <header>
@@ -234,7 +234,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   <button id="edit" aria-label="タブ設定" aria-expanded="false" aria-controls="tabEdit" style="font-size:13px;white-space:nowrap">⚙ 設定</button>
   <div class="header-meta"><small id="ver"></small><span id="stat">読み込み中</span></div>
 </header>
-<dialog id="tabEdit" aria-labelledby="settingsTitle"><div class="settings-head"><b id="settingsTitle">タブ設定</b><button id="settingsClose" class="chip" type="button">閉じる</button></div><div style="margin:12px 0"><label for="startupTab">起動時の画面</label> <select id="startupTab"></select><p class="ehint">未設定は候補。非表示のタブは起動画面に選べません。この端末に保存します。</p></div><div class="led" id="tabLed"></div><p class="ehint">↑↓で並び替え、×で隠す。この端末に保存されます。</p><div id="tabHidden"></div><details><summary>タブ名を変更</summary><p class="ehint">表示名のみ変更します。例：候補 → 現物・清原式、反転 → 信用・反転。抽出条件や売買ルールは変わりません。空欄で元の名前に戻ります（20文字まで）。</p><form id="tabNames"><div id="tabNameFields"></div><button class="chip" type="submit">名前を保存</button><button class="chip" type="button" id="tabNameReset">名前を初期状態に戻す</button></form></details><p id="tabSettingsStatus" class="ehint" role="status"></p></dialog>
+<dialog id="tabEdit" aria-labelledby="settingsTitle"><div class="settings-head"><b id="settingsTitle">タブ設定</b><button id="settingsClose" class="chip" type="button">閉じる</button></div><div style="margin:12px 0"><label for="startupTab">起動時の画面</label> <select id="startupTab"></select><p class="ehint">未設定は清原式。非表示のタブは起動画面に選べません。この端末に保存します。</p></div><div class="led" id="tabLed"></div><p class="ehint">↑↓で並び替え、×で隠す。この端末に保存されます。</p><div id="tabHidden"></div><details><summary>タブ名を変更</summary><p class="ehint">表示名のみ変更します。例：清原式 → 現物、逆張り → 信用。抽出条件や売買ルールは変わりません。空欄で元の名前に戻ります（20文字まで）。</p><form id="tabNames"><div id="tabNameFields"></div><button class="chip" type="submit">名前を保存</button><button class="chip" type="button" id="tabNameReset">名前を初期状態に戻す</button></form></details><p id="tabSettingsStatus" class="ehint" role="status"></p></dialog>
 <p class="cycle" id="cycle"></p>
 <nav id="tabs"></nav>
 
@@ -330,7 +330,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   }
 
   /* タブ：並び替え・スワイプ */
-  const TABS=[{v:'cand',t:'候補'},{v:'macro',t:'マクロ'},{v:'ideal',t:'理想配分'},{v:'catalyst',t:'カタリスト'},{v:'reb',t:'反転'},{v:'hold',t:'運用成績'},{v:'compare',t:'戦略比較'},{v:'research',t:'投資調査'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'radar',t:'レーダー'},{v:'status',t:'検証'},{v:'rec',t:'記録'}];
+  const TABS=[{v:'cand',t:'清原式'},{v:'macro',t:'マクロ'},{v:'ideal',t:'理想配分'},{v:'catalyst',t:'カタリスト'},{v:'reb',t:'逆張り'},{v:'hold',t:'運用成績'},{v:'compare',t:'戦略比較'},{v:'research',t:'投資調査'},{v:'cs',t:'CAN-SLIM'},{v:'theme',t:'テーマ'},{v:'radar',t:'レーダー'},{v:'status',t:'検証'},{v:'rec',t:'記録'}];
   const workspaceMode=parent!==window&&new URLSearchParams(location.search).get('workspace')==='1';
   const tdef=v=>TABS.find(x=>x.v===v);
   const visibleTab=v=>order.includes(v)||(workspaceMode&&!!tdef(v));
