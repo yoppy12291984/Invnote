@@ -60,7 +60,7 @@ window.addEventListener('message',e=>{
  if(e.origin!==location.origin||e.source!==frames.inv?.contentWindow)return;
  const m=e.data;
  if(m?.type==='invnote:company'&&/^[0-9A-Z]{4,5}$/.test(m.code)){location.hash='company/'+m.code;return;}
- if(m?.type==='invnote:locked'){invReady=false;replaceResearch(initialData);personalStocks=[];researchHash='';route();status.textContent='設定から端末登録を確認してください。';return;}
+ if(m?.type==='invnote:locked'){invReady=false;replaceResearch(initialData);personalStocks=[];researchHash='';if(!['#settings','#import'].includes(location.hash))route();status.textContent='設定から端末登録を確認してください。';return;}
  if(m?.type!=='invnote:state')return;
  invReady=true;if(!appearanceMode&&['light','dark'].includes(m.theme))appearanceMode=m.theme;paintAppearance();
  const nextStocks=Array.isArray(m.stocks)?m.stocks.filter(s=>/^[0-9A-Z]{4,5}$/.test(s.code)&&typeof s.name==='string'&&typeof s.status==='string'):[];
@@ -69,7 +69,7 @@ window.addEventListener('message',e=>{
  if(validBundle(m.bundle)){replaceResearch(m.bundle);researchHash=m.researchHash;status.textContent=`四季報 ${all.length}社 · ${syncTime?'Invnote 最終同期 '+new Date(syncTime).toLocaleString('ja-JP'):'端末の保存データ'}`;}
  else {replaceResearch(initialData);researchHash='';status.textContent=m.bundle?'四季報の形式を確認できませんでした。設定・同期を確認してください。':'四季報はまだ同期されていません。設定・同期から読み込めます。';}
  // Keep active search text and personal edits intact when only sync time changed.
- if(changed)route();
+ if(changed&&!['#settings','#import'].includes(location.hash))route();
 });
 // A single header owns appearance, sync, import and settings for all four areas.
 utilities.remove();document.querySelector('header .private')?.remove();
@@ -81,6 +81,32 @@ document.getElementById('workspace-sync').onclick=syncWorkspace;
 document.getElementById('workspace-theme').onclick=()=>setAppearance(effectiveAppearance()==='dark'?'light':'dark');
 frameHost.className='workspace-frame-host';frameHost.removeAttribute('style');
 sections.notebook=sections.notebook.filter(([id])=>!['inv:vSet','inv:vImport'].includes(id));
+const defaultSections=JSON.parse(JSON.stringify(sections));
+const defaultAreaLabels={today:'Today',discover:'Search',notebook:'Note',review:'Review'};
+const tabSettingsKey='invnote-workspace-tabs-v1';
+let tabSettings={};
+try{const value=JSON.parse(localStorage.getItem(tabSettingsKey)||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))tabSettings=value;}catch{}
+function tabOption(key,label){const value=tabSettings[key];return {label:typeof value?.label==='string'&&value.label.trim()?value.label.trim().slice(0,30):label,hidden:value?.hidden===true};}
+function applyTabSettings(){
+ for(const [area,items] of Object.entries(defaultSections)){
+  sections[area]=items.filter(([id])=>!tabOption(area+'/'+id,'').hidden).map(([id,label])=>[id,tabOption(area+'/'+id,label).label]);
+  if(!sections[area].length)sections[area]=[items[0]];
+ }
+ const allHidden=Object.keys(defaultAreaLabels).every(area=>tabOption(area,'').hidden);
+ document.querySelectorAll('nav a[data-view]').forEach(a=>{const area=a.dataset.view,option=tabOption(area,defaultAreaLabels[area]);a.hidden=option.hidden&&!(allHidden&&area==='today');a.querySelector('span').textContent=option.label;});
+}
+function renderTabSettings(){
+ const row=(key,label)=>{const value=tabOption(key,label);return `<div class="workspace-tab-row"><label><input type="checkbox" data-tab-visible="${esc(key)}" ${value.hidden?'':'checked'}> 表示</label><label class="workspace-tab-name">${esc(label)}<input aria-label="${esc(label)}の表示名" data-tab-name="${esc(key)}" value="${esc(value.label)}" maxlength="30"></label></div>`;};
+ const panel=document.createElement('section');panel.className='workspace-setting';panel.innerHTML='<h2>タブの名前・表示</h2><p class="muted">下のメニューと各画面の上のタブを変更できます。この端末に保存します。非表示にしても記録は消えません。</p><form id="workspace-tab-form"><details open><summary>下のメニュー</summary>'+Object.entries(defaultAreaLabels).map(([area,label])=>row(area,label)).join('')+'</details>'+Object.entries(defaultSections).map(([area,items])=>`<details><summary>${esc(tabOption(area,defaultAreaLabels[area]).label)} の上のタブ</summary>${items.map(([id,label])=>row(area+'/'+id,label)).join('')}</details>`).join('')+'<p id="workspace-tab-result" role="status"></p><div class="workspace-setting-actions"><button class="action primary" type="submit">タブ設定を保存</button><button class="action" type="button" id="workspace-tab-reset">標準に戻す</button></div></form>';app.append(panel);
+ panel.querySelector('form').onsubmit=e=>{
+  e.preventDefault();const next={};panel.querySelectorAll('[data-tab-name]').forEach(input=>{const key=input.dataset.tabName;next[key]={label:input.value.trim().slice(0,30),hidden:!Array.from(panel.querySelectorAll('[data-tab-visible]')).find(el=>el.dataset.tabVisible===key).checked};});
+  const result=panel.querySelector('#workspace-tab-result');
+  if(Object.keys(defaultAreaLabels).every(key=>next[key].hidden)||Object.entries(defaultSections).some(([area,items])=>items.every(([id])=>next[area+'/'+id].hidden))){result.textContent='下のメニューと各画面のタブは、それぞれ1つ以上表示してください。';return;}
+  try{localStorage.setItem(tabSettingsKey,JSON.stringify(next));tabSettings=next;applyTabSettings();result.textContent='タブ設定を保存しました。';}catch{result.textContent='保存できませんでした。';}
+ };
+ panel.querySelector('#workspace-tab-reset').onclick=()=>{try{localStorage.removeItem(tabSettingsKey);tabSettings={};applyTabSettings();route();}catch{panel.querySelector('#workspace-tab-result').textContent='保存できませんでした。';}};
+}
+applyTabSettings();
 const tabPositions=new Map();
 app.addEventListener('scroll',e=>{const bar=e.target;if(bar.matches?.('.workspace-tabs'))tabPositions.set(bar.dataset.area,bar.scrollLeft);},true);
 function restoreTabPosition(){
@@ -111,10 +137,12 @@ route=function(){
    app.insertAdjacentHTML('beforeend',`<section class="workspace-setting workspace-release"><h2>アプリのバージョン</h2><p><b>ver${esc(appRelease.version)}</b></p><small>更新日 ${esc(appRelease.date)} · ビルド ${esc(appRelease.build)}</small><ul>${appRelease.changes.map(change=>`<li>${esc(change)}</li>`).join('')}</ul><p class="muted">この端末で読み込んでいる画面のバージョンです。決算データや同期の日時とは別です。</p></section>`);
    app.insertAdjacentHTML('beforeend','<section class="workspace-setting"><h2>アプリの表示</h2><div class="appearance-options"><button class="action" data-appearance="light">ライト</button><button class="action" data-appearance="dark">ダーク</button><button class="action" data-appearance="system">端末に合わせる</button></div><p class="muted">Today・Search・Note・Review 共通の配色です。</p></section><section class="workspace-setting"><h2>同期</h2><p class="muted">登録済みの端末と、メモ・日記・四季報を同期します。</p><div class="workspace-setting-actions"><button class="action" id="settings-sync">今すぐ同期</button><a class="action" href="#import">取り込み</a></div></section>');
    app.querySelectorAll('[data-appearance]').forEach(b=>b.onclick=()=>setAppearance(b.dataset.appearance));document.getElementById('settings-sync').onclick=syncWorkspace;
+   renderTabSettings();
   }
   embedded('inv',h==='settings'?'vSet':'vImport');
   document.querySelectorAll('nav a').forEach(a=>a.removeAttribute('aria-current'));
  }else{workspaceRoute();
+  if(h==='today/inv:vCal'){app.querySelector('.section-top')?.remove();app.querySelector('.eyebrow')?.remove();app.querySelector('h1')?.remove();}
   if(h.includes('/scr:')){const heading=app.querySelector('.section-top');if(heading){const meta=document.createElement('p');meta.id='feature-meta';meta.className='muted';meta.style.fontSize='12px';meta.textContent=featureMeta;heading.append(meta);const b=document.createElement('button');b.className='action';b.textContent='データを再読込';b.onclick=()=>frames.scr.contentWindow.postMessage({type:'workspace:reload'},location.origin);heading.append(b);}}
  }
  for(const f of Object.values(frames)){f.setAttribute('scrolling','no');if(!f.hidden)f.contentWindow?.postMessage({type:'workspace:measure'},location.origin);}
