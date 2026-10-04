@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "asOf": "2026-10-05T08:27:25.358108+09:00",
+  "jobs": {
+    "weekly": {
+      "label": "週次スクリーニング",
+      "period": "2026-10-03",
+      "status": "running",
+      "updatedAt": "2026-10-05T08:22:45.506527+09:00",
+      "step": "canslim"
+    },
+    "monthly": {
+      "label": "月次スクリーニング",
+      "period": null,
+      "status": "unverified",
+      "updatedAt": null,
+      "step": null
+    },
+    "daily": {
+      "label": "日次開示・価格確認",
+      "period": "2026-10-05",
+      "status": "complete",
+      "updatedAt": "2026-10-05T07:03:58.529830+09:00",
+      "step": null
+    }
+  },
+  "note": "公開データの更新状況です。四季報は認証付き同期、研究日・採点基準日は各ノートで確認してください。"
+}
