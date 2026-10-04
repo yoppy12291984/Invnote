@@ -169,6 +169,26 @@ function swipeFeature(direction){
  if(next>=0&&next<list.length)location.hash=(area||'today')+'/'+list[next][0];
 }
 window.addEventListener('message',e=>{if(e.origin===location.origin&&Object.values(frames).some(f=>e.source===f.contentWindow&&!f.hidden)&&e.data?.type==='workspace:swipe'&&[-1,1].includes(e.data.direction))swipeFeature(e.data.direction);});
+let updateHealth=null;
+function renderUpdateHealth(){
+ const hash=location.hash.slice(1);
+ if(!['','today','today/updates'].includes(hash)||document.getElementById('update-health'))return;
+ const box=document.createElement('section');box.id='update-health';box.className='workspace-setting';
+ const title=document.createElement('h2');title.textContent='データ更新状況';box.append(title);
+ if(!updateHealth){const p=document.createElement('p');p.textContent='更新状況を確認中…';box.append(p);}
+ else if(updateHealth.unavailable){const p=document.createElement('p');p.textContent='更新状況を取得できませんでした。';box.append(p);}
+ else{
+  for(const key of ['daily','weekly','monthly']){
+   const job=updateHealth.jobs?.[key];if(!job)continue;
+   const p=document.createElement('p');
+   const label={complete:'配信確認済み',running:'更新中',failed:'未完・再確認が必要',partial:'一部未完',unverified:'未確認'}[job.status]||'未確認';
+   p.textContent=job.label+'：'+label+'（対象 '+(job.period||'未確認')+'）';box.append(p);
+  }
+  const p=document.createElement('p');p.className='muted';p.textContent='確認時点：'+(updateHealth.asOf||'未確認')+'。四季報の研究日・採点基準日とは別です。';box.append(p);
+ }
+ const anchor=app.querySelector('.hero');if(anchor)anchor.after(box);else app.append(box);
+}
+fetch('screener/data/update-health.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(data=>{updateHealth=data;document.getElementById('update-health')?.remove();renderUpdateHealth();}).catch(()=>{updateHealth={unavailable:true};document.getElementById('update-health')?.remove();renderUpdateHealth();});
 const workspaceRoute=route;
 route=function(){
  const oldBar=app.querySelector('.workspace-tabs');if(oldBar)tabPositions.set(oldBar.dataset.area,oldBar.scrollLeft);
@@ -198,6 +218,7 @@ route=function(){
  actions.querySelectorAll('a').forEach(a=>{if(a.hash===location.hash)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
  restoreTabPosition();
  paintAppearance();
+ renderUpdateHealth();
  window.scrollTo(0,0);
 };
 // Replace the original event listener; otherwise an old route can overwrite settings.
