@@ -87,6 +87,7 @@ const defaultAreaLabels={today:'Today',discover:'Search',notebook:'Note',review:
 const tabSettingsKey='invnote-workspace-tabs-v1';
 let tabSettings={};
 try{const value=JSON.parse(localStorage.getItem(tabSettingsKey)||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))tabSettings=value;}catch{}
+if(tabSettings['discover/inv:vHot']&&!tabSettings['notebook/inv:vHot'])tabSettings['notebook/inv:vHot']=tabSettings['discover/inv:vHot'];
 function tabOption(key,label){const value=tabSettings[key];return {label:typeof value?.label==='string'&&value.label.trim()?value.label.trim().slice(0,30):label,hidden:typeof value?.hidden==='boolean'?value.hidden:key==='today/inv:vTodos'};}
 function applyTabSettings(){
  for(const [area,items] of Object.entries(defaultSections)){
@@ -129,6 +130,7 @@ const workspaceRoute=route;
 route=function(){
  const oldBar=app.querySelector('.workspace-tabs');if(oldBar)tabPositions.set(oldBar.dataset.area,oldBar.scrollLeft);
  const h=location.hash.slice(1);
+ if(h==='discover/inv:vHot'){location.replace('#notebook/inv:vHot');return;}
  if(h==='notebook/inv:vSet'){location.replace('#settings');return;}
  if(h==='notebook/inv:vImport'){location.replace('#import');return;}
  if(h==='settings'||h==='import'){
@@ -143,6 +145,9 @@ route=function(){
   embedded('inv',h==='settings'?'vSet':'vImport');
   document.querySelectorAll('nav a').forEach(a=>a.removeAttribute('aria-current'));
  }else{workspaceRoute();
+  if(h==='notebook/inv:vHot'){
+   const entry=document.createElement('section');entry.className='workspace-setting';entry.innerHTML='<p>購入前に確認したい銘柄を、自分でまとめるリストです。保有中の銘柄も追加できます。</p><p class="muted">登録銘柄を開く →「個人メモ・登録情報」→「購入前リストに追加」を押してください。未登録なら「＋ 銘柄を追加」からコード・名前を登録できます。</p><a class="action" href="#notebook/inv:vStocks">登録銘柄から選ぶ・新しく登録する</a>';app.append(entry);
+  }
   if(h==='today/inv:vCal'){app.querySelector('.section-top')?.remove();app.querySelector('.eyebrow')?.remove();app.querySelector('h1')?.remove();}
   if(h.includes('/scr:')){const heading=app.querySelector('.section-top');if(heading){const meta=document.createElement('p');meta.id='feature-meta';meta.className='muted';meta.style.fontSize='12px';meta.textContent=featureMeta;heading.append(meta);const b=document.createElement('button');b.className='action';b.textContent='データを再読込';b.onclick=()=>frames.scr.contentWindow.postMessage({type:'workspace:reload'},location.origin);heading.append(b);}}
  }
@@ -173,3 +178,17 @@ function installFeatureSwipe(root,onSwipe){
 }
 
 installFeatureSwipe(app,swipeFeature);
+
+// Keep the mobile navigation anchored to the visible viewport and reserve its height.
+const mainNavigation=document.querySelector('nav[aria-label="メインナビゲーション"]');
+function measureNavigation(){
+ const viewport=window.visualViewport;
+ const offset=viewport?Math.max(0,window.innerHeight-viewport.height-viewport.offsetTop):0;
+ document.documentElement.style.setProperty('--workspace-nav-offset',offset+'px');
+ document.documentElement.style.setProperty('--workspace-nav-space',(mainNavigation.getBoundingClientRect().height+offset+24)+'px');
+}
+new ResizeObserver(measureNavigation).observe(mainNavigation);
+window.addEventListener('resize',measureNavigation);
+window.visualViewport?.addEventListener('resize',measureNavigation);
+window.visualViewport?.addEventListener('scroll',measureNavigation);
+measureNavigation();

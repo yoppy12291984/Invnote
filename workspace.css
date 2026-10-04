@@ -117,3 +117,10 @@ nav[aria-label="メインナビゲーション"] a[hidden]{display:none}
 .workspace-tab-name input{width:100%;min-width:0;min-height:44px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
 
 main>h2.heading-updates{color:var(--read-gold);border-left-color:var(--read-gold)}
+
+/* Opaque navigation and measured clearance for iPhone's dynamic viewport. */
+nav[aria-label="メインナビゲーション"]{bottom:var(--workspace-nav-offset,0px);background:var(--bg);z-index:1000;isolation:isolate;transform:translateZ(0);backdrop-filter:none}
+.workspace-frame-host{margin-bottom:var(--workspace-nav-space,calc(110px + env(safe-area-inset-bottom,0px)))}
+body>main{padding-bottom:var(--workspace-nav-space,calc(110px + env(safe-area-inset-bottom,0px)))!important}
+body>main:has(+.workspace-frame-host:not([hidden])){padding-bottom:12px!important}
+html{scroll-padding-bottom:var(--workspace-nav-space,110px)}
