@@ -68,3 +68,6 @@ html[data-workspace] body{touch-action:auto}
 /* The standalone iPhone viewport extends behind the status bar. */
 body>header{padding-top:calc(18px + env(safe-area-inset-top,0px));padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
 @media(max-width:600px){body>header{padding-top:calc(14px + env(safe-area-inset-top,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+
+.workspace-version{display:block;width:max-content;font-size:10px;line-height:1.5;font-weight:400;letter-spacing:0;color:var(--sub);text-decoration:none;margin-top:2px}
+.workspace-release ul{padding-left:20px;font-size:13px;margin:12px 0}
