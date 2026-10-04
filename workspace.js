@@ -3,7 +3,7 @@
 const appRelease=JSON.parse(document.getElementById('app-release').textContent);
 let personalStocks=[],researchHash='',syncTime=0;
 let appearanceMode=null,invReady=false,syncTimer,featureMeta='';
-try{const saved=localStorage.getItem('invnote-workspace-appearance');if(['light','dark','system'].includes(saved))appearanceMode=saved;}catch{}
+try{const saved=localStorage.getItem('invnote-workspace-appearance');if(['light','dark','system'].includes(saved))appearanceMode=saved;else{const last=localStorage.getItem('invnote-workspace-resolved-theme');if(['light','dark'].includes(last))appearanceMode=last;}}catch{}
 const systemAppearance=matchMedia('(prefers-color-scheme: dark)');
 const effectiveAppearance=()=>appearanceMode==='system'||!appearanceMode?(systemAppearance.matches?'dark':'light'):appearanceMode;
 const paletteKey='invnote-workspace-colors-v1';
@@ -48,6 +48,9 @@ function renderPaletteSettings(){
 function paintAppearance(){
  const resolved=effectiveAppearance();document.documentElement.dataset.theme=resolved;
  paintPalette();
+ document.documentElement.style.colorScheme=resolved;
+ document.querySelector('meta[name=theme-color]')?.setAttribute('content',document.documentElement.style.getPropertyValue('--bg'));
+ try{localStorage.setItem('invnote-workspace-resolved-theme',resolved);}catch{}
  document.querySelector('meta[name=color-scheme]')?.setAttribute('content',resolved);
  for(const f of Object.values(frames))f.contentWindow?.postMessage({type:'workspace:theme',theme:resolved},location.origin);
  const button=document.getElementById('workspace-theme');if(button){button.setAttribute('aria-label',resolved==='dark'?'ライトモードにする':'ダークモードにする');button.setAttribute('aria-pressed',String(resolved==='dark'));}
