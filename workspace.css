@@ -64,3 +64,7 @@ nav[aria-label="メインナビゲーション"] svg{width:21px;height:21px;fill
 #app{touch-action:auto}
 #app .chips,#app .table-wrap,html[data-workspace] .tblwrap{touch-action:pan-x pan-y pinch-zoom}
 html[data-workspace] body{touch-action:auto}
+
+/* The standalone iPhone viewport extends behind the status bar. */
+body>header{padding-top:calc(18px + env(safe-area-inset-top,0px));padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
+@media(max-width:600px){body>header{padding-top:calc(14px + env(safe-area-inset-top,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}

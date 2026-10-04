@@ -41,7 +41,7 @@ function companyTools(code,mode){
 const baseNotebook=notebook;
 notebook=function(){baseNotebook();
  const el=document.createElement('section');el.innerHTML='<h2>登録銘柄から開く</h2><p class="muted">調査本文と個人メモは、同じ銘柄ページにまとめています。</p><div class="toolbar"><input aria-label="登録銘柄の検索" id="personal-search" placeholder="銘柄名・コード"><span id="personal-count"></span></div><div id="personal-results" class="grid"></div>';app.append(el);
- const draw=()=>{const q=document.getElementById('personal-search').value.trim().toLowerCase();const rows=personalStocks.filter(s=>(s.code+' '+s.name).toLowerCase().includes(q));document.getElementById('personal-count').textContent=rows.length+'社';document.getElementById('personal-results').innerHTML=rows.map(s=>`<article class="card"><small>${esc(s.code)} · ${esc(s.status)}</small><div><button class="open" data-company="${esc(s.code)}">${esc(s.name)} →</button></div><small>${notes[s.code]?'調査本文あり':'個人メモ・登録情報'}</small></article>`).join('');};document.getElementById('personal-search').oninput=draw;draw();
+ const draw=()=>{const q=document.getElementById('personal-search').value.trim().toLowerCase();const rows=personalStocks.filter(s=>(s.code+' '+s.name).toLowerCase().includes(q));document.getElementById('personal-count').textContent=rows.length+'社';document.getElementById('personal-results').innerHTML=rows.map(s=>`<article class="card"><small>${esc(s.code)} · ${esc(s.status)}</small><div><button class="open" data-company="${esc(s.code)}">${esc(s.name)}</button></div><small>${notes[s.code]?'調査本文あり':'個人メモ・登録情報'}</small></article>`).join('');};document.getElementById('personal-search').oninput=draw;draw();
 };
 window.addEventListener('message',e=>{
  const kind=Object.keys(frames).find(k=>e.source===frames[k].contentWindow);
