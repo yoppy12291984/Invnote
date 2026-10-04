@@ -82,10 +82,10 @@ main>h2.heading-next,main>h2.heading-caution{color:var(--read-gold);border-left-
 .company-card .open{color:var(--ink)}
 .card p,.detail-body{line-height:1.9}
 .score{margin:8px 0 12px;color:var(--sub)}
-.score b:first-of-type,.rating-pair>div:first-child b{color:var(--read-red)}
-.score b:last-of-type,.rating-pair>div:last-child b{color:var(--read-gold)}
-.rating-pair>div{border-left:3px solid var(--read-red);padding:6px 12px;background:var(--read-red-bg);border-radius:0 8px 8px 0;flex:1}
-.rating-pair>div+div{border-left-color:var(--read-gold);background:var(--read-gold-bg)}
+.score b:first-of-type,.rating-pair>div:first-child b{color:var(--read-gold)}
+.score b:last-of-type,.rating-pair>div:last-child b{color:var(--read-teal)}
+.rating-pair>div{border-left:3px solid var(--read-gold);padding:6px 12px;background:var(--read-gold-bg);border-radius:0 8px 8px 0;flex:1}
+.rating-pair>div+div{border-left-color:var(--read-teal);background:var(--read-teal-bg)}
 .pill{background:var(--read-blue-bg);color:var(--read-blue)}
 .research-section{margin:10px 0;padding:14px 16px;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--read-blue);border-radius:10px}
 .research-section summary{color:var(--read-blue)}
@@ -97,8 +97,8 @@ main>h2.heading-next,main>h2.heading-caution{color:var(--read-gold);border-left-
 .tools small{margin-top:4px;color:var(--sub)}
 .chips[aria-label="テーマ"] button[aria-pressed=true]{color:var(--read-blue);border-bottom-color:var(--read-blue)}
 .eyebrow,.source{color:var(--read-blue)}
-.hero .stats>div:first-child b{color:#f17c73}
-.hero .stats>div:last-child b{color:#efc35b}
+.hero .stats>div:first-child b{color:#70c9ad}
+.hero .stats>div:last-child b{color:#70c9ad}
 .hero .eyebrow,[data-theme=dark] .hero .eyebrow{color:#efc35b}
 .research-section[data-section="change"]{border-left-color:var(--read-red)}
 .research-section[data-section="change"] summary{color:var(--read-red)}
@@ -115,3 +115,5 @@ nav[aria-label="メインナビゲーション"] a[hidden]{display:none}
 .workspace-tab-row>label:first-child{display:flex;align-items:center;gap:7px;min-height:44px;white-space:nowrap}
 .workspace-tab-name{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1;font-size:12px;color:var(--sub)}
 .workspace-tab-name input{width:100%;min-width:0;min-height:44px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+
+main>h2.heading-updates{color:var(--read-gold);border-left-color:var(--read-gold)}

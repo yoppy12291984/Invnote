@@ -2,6 +2,8 @@
 (()=>{
  if(parent===window||new URLSearchParams(location.search).get('workspace')!=='1')return;
  document.documentElement.dataset.workspace='true';
+ // Apply the shell theme before the embedded body is parsed.
+ try{const theme=parent.document.documentElement.dataset.theme;if(['light','dark'].includes(theme))document.documentElement.dataset.theme=theme;}catch{}
  const kind=location.pathname.includes('/screener/')?'scr':'inv';
  let lastHeight=0,lastMeta='',pending=false;
  const post=data=>parent.postMessage({...data,kind},location.origin);
@@ -17,6 +19,7 @@
   if(e.origin!==location.origin||e.source!==parent)return;
   if(e.data?.type==='workspace:theme'&&['light','dark'].includes(e.data.theme)){
    document.documentElement.dataset.theme=e.data.theme;schedule();
+   requestAnimationFrame(()=>post({type:'workspace:painted'}));
    // The research subview listens to the root theme mutation through its own adapter.
   }
   if(e.data?.type==='workspace:measure'){lastHeight=0;schedule();}
