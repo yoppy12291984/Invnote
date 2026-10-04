@@ -108,3 +108,10 @@ html[data-workspace] h2:not([style]),html[data-workspace] h3:not([style]),html[d
 html[data-workspace] th{color:var(--read-blue)}
 html[data-workspace] .hint,html[data-workspace] .meta{color:var(--mut)}
 html[data-workspace] summary{color:var(--read-blue)}
+/* Calendar starts at the investment calendar; tasks remain in To do. */
+html[data-workspace] #vCal #calendarTodos{display:none!important}
+nav[aria-label="メインナビゲーション"] a[hidden]{display:none}
+.workspace-tab-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--line)}
+.workspace-tab-row>label:first-child{display:flex;align-items:center;gap:7px;min-height:44px;white-space:nowrap}
+.workspace-tab-name{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1;font-size:12px;color:var(--sub)}
+.workspace-tab-name input{width:100%;min-width:0;min-height:44px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
