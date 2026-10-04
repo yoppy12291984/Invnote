@@ -192,3 +192,17 @@ window.addEventListener('resize',measureNavigation);
 window.visualViewport?.addEventListener('resize',measureNavigation);
 window.visualViewport?.addEventListener('scroll',measureNavigation);
 measureNavigation();
+
+// Warm the shared Screener renderer without changing the visible route or frame.
+function preloadScreener(){
+ if(frames.scr)return;
+ const f=document.createElement('iframe');
+ f.title='Screenerの既存機能';f.hidden=true;f.setAttribute('scrolling','no');
+ f.style.cssText='display:none;visibility:hidden;width:100%;border:0';
+ const url=new URL('screener/index.html',location.href);
+ const version=new URL(frames.inv.src).searchParams.get('v');
+ url.searchParams.set('workspace','1');if(version)url.searchParams.set('v',version);url.hash='ideal';
+ f.src=url.href;frames.scr=f;frameHost.append(f);
+}
+if('requestIdleCallback' in window)requestIdleCallback(preloadScreener,{timeout:1200});
+else setTimeout(preloadScreener,300);
