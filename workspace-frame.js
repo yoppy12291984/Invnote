@@ -22,7 +22,25 @@
   if(e.data?.type==='workspace:measure'){lastHeight=0;schedule();}
   if(e.data?.type==='workspace:reload'&&kind==='scr')location.reload();
  });
+
+function installFeatureSwipe(root,onSwipe){
+ let start=null,suppressUntil=0;
+ root.addEventListener('touchstart',e=>{
+  start=null;if(e.touches.length!==1||e.target.closest('input,textarea,select,[contenteditable="true"],canvas'))return;
+  for(let el=e.target;el&&el!==root;el=el.parentElement){if(el.scrollWidth>el.clientWidth+2&&['auto','scroll'].includes(getComputedStyle(el).overflowX))return;}
+  const t=e.touches[0];start={x:t.clientX,y:t.clientY,time:Date.now()};
+ },{passive:true});
+ root.addEventListener('touchend',e=>{
+  if(!start)return;const initial=start;start=null;const t=e.changedTouches[0];if(!t)return;
+  const dx=t.clientX-initial.x,dy=t.clientY-initial.y;
+  if(Date.now()-initial.time<700&&Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.8){suppressUntil=Date.now()+400;onSwipe(dx<0?1:-1);}
+ },{passive:true});
+ root.addEventListener('touchcancel',()=>{start=null;},{passive:true});
+ root.addEventListener('click',e=>{if(Date.now()<suppressUntil){e.preventDefault();e.stopPropagation();}},true);
+}
+
  function start(){
+  installFeatureSwipe(document, direction=>post({type:"workspace:swipe",direction}));
   const root=document.getElementById('app');if(root){new ResizeObserver(schedule).observe(root);new MutationObserver(schedule).observe(root,{childList:true,subtree:true,attributes:true});}
   window.addEventListener('resize',schedule);window.addEventListener('hashchange',schedule);
   post({type:'workspace:ready'});schedule();

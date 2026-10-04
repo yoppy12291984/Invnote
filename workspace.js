@@ -79,8 +79,26 @@ document.getElementById('workspace-sync').onclick=syncWorkspace;
 document.getElementById('workspace-theme').onclick=()=>setAppearance(effectiveAppearance()==='dark'?'light':'dark');
 frameHost.className='workspace-frame-host';frameHost.removeAttribute('style');
 sections.notebook=sections.notebook.filter(([id])=>!['inv:vSet','inv:vImport'].includes(id));
+const tabPositions=new Map();
+app.addEventListener('scroll',e=>{const bar=e.target;if(bar.matches?.('.workspace-tabs'))tabPositions.set(bar.dataset.area,bar.scrollLeft);},true);
+function restoreTabPosition(){
+ const bar=app.querySelector('.workspace-tabs');if(!bar)return;
+ bar.scrollLeft=tabPositions.get(bar.dataset.area)||0;
+ const active=bar.querySelector('[aria-current=page]');if(!active)return;
+ const bounds=bar.getBoundingClientRect(), item=active.getBoundingClientRect();
+ if(item.left<bounds.left)bar.scrollLeft-=bounds.left-item.left+8;
+ else if(item.right>bounds.right)bar.scrollLeft+=item.right-bounds.right+8;
+ tabPositions.set(bar.dataset.area,bar.scrollLeft);
+}
+function swipeFeature(direction){
+ const [area,sub]=location.hash.slice(1).split('/'),list=sections[area||'today'];if(!list)return;
+ const index=Math.max(0,list.findIndex(([id])=>id===sub)),next=index+direction;
+ if(next>=0&&next<list.length)location.hash=(area||'today')+'/'+list[next][0];
+}
+window.addEventListener('message',e=>{if(e.origin===location.origin&&Object.values(frames).some(f=>e.source===f.contentWindow&&!f.hidden)&&e.data?.type==='workspace:swipe'&&[-1,1].includes(e.data.direction))swipeFeature(e.data.direction);});
 const workspaceRoute=route;
 route=function(){
+ const oldBar=app.querySelector('.workspace-tabs');if(oldBar)tabPositions.set(oldBar.dataset.area,oldBar.scrollLeft);
  const h=location.hash.slice(1);
  if(h==='notebook/inv:vSet'){location.replace('#settings');return;}
  if(h==='notebook/inv:vImport'){location.replace('#import');return;}
@@ -98,9 +116,28 @@ route=function(){
  }
  for(const f of Object.values(frames)){f.setAttribute('scrolling','no');if(!f.hidden)f.contentWindow?.postMessage({type:'workspace:measure'},location.origin);}
  actions.querySelectorAll('a').forEach(a=>{if(a.hash===location.hash)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+ restoreTabPosition();
  paintAppearance();
  window.scrollTo(0,0);
 };
 // Replace the original event listener; otherwise an old route can overwrite settings.
 window.removeEventListener('hashchange',workspaceRoute);window.addEventListener('hashchange',route);
 paintAppearance();embedded('inv','vPf');route();
+
+function installFeatureSwipe(root,onSwipe){
+ let start=null,suppressUntil=0;
+ root.addEventListener('touchstart',e=>{
+  start=null;if(e.touches.length!==1||e.target.closest('input,textarea,select,[contenteditable="true"],canvas'))return;
+  for(let el=e.target;el&&el!==root;el=el.parentElement){if(el.scrollWidth>el.clientWidth+2&&['auto','scroll'].includes(getComputedStyle(el).overflowX))return;}
+  const t=e.touches[0];start={x:t.clientX,y:t.clientY,time:Date.now()};
+ },{passive:true});
+ root.addEventListener('touchend',e=>{
+  if(!start)return;const initial=start;start=null;const t=e.changedTouches[0];if(!t)return;
+  const dx=t.clientX-initial.x,dy=t.clientY-initial.y;
+  if(Date.now()-initial.time<700&&Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.8){suppressUntil=Date.now()+400;onSwipe(dx<0?1:-1);}
+ },{passive:true});
+ root.addEventListener('touchcancel',()=>{start=null;},{passive:true});
+ root.addEventListener('click',e=>{if(Date.now()<suppressUntil){e.preventDefault();e.stopPropagation();}},true);
+}
+
+installFeatureSwipe(app,swipeFeature);
