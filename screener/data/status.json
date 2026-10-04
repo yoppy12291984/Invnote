@@ -1,13 +1,13 @@
 {
- "updated": "2026-09-26 07:20",
+ "updated": "2026-10-05 08:59",
  "cycle": {
-  "month": "2026-08",
+  "month": "2026-09",
   "M": "M2",
   "label": "業績相場",
-  "ff": 3.63,
-  "unrate": 4.1,
+  "ff": 3.75,
+  "unrate": 4.2,
   "spread10_2": 0.41,
-  "vix": 15.2
+  "vix": 15.8
  },
  "strategies": {
   "kiyohara": {
