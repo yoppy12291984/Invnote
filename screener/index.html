@@ -225,7 +225,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 </style>
 <script src="polish.js?v=2.28" defer></script>
 <script src="updates.js?v=2.34" defer></script>
-<link rel="stylesheet" href="../workspace.css?v=941f05d229ae"><script src="../workspace-frame.js?v=cd15d9d5a884"></script></head>
+<link rel="stylesheet" href="../workspace.css?v=941f05d229ae"><script src="../workspace-frame.js?v=c2b2ccd18239"></script></head>
 <body>
 <div id="app">
 <header>
@@ -418,7 +418,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   document.addEventListener('touchstart',e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;
     sw=!e.target.closest('.tblwrap,.bar,#tabEdit,a,button,details,input,select');},{passive:true});
   document.addEventListener('touchend',e=>{
-    if(!sw)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(workspaceMode||!sw)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
     if(Math.abs(dx)<70||Math.abs(dy)>50)return;
     const i=order.indexOf(view)+(dx<0?1:-1);if(i<0||i>=order.length)return;
     show(order[i]);
