@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=90dccd6eb7bd"><script src="workspace-frame.js?v=90dccd6eb7bd"></script></head>
+</style><link rel="stylesheet" href="workspace.css?v=8057aff1e6d9"><script src="workspace-frame.js?v=8057aff1e6d9"></script></head>
 <body>
 <div id="app">
 <header><h1 class="wm"><a href="/Invnote/screener/">Screener</a><span>/</span><b>Invnote</b><small id="ver"></small></h1><span style="flex:1"></span><button id="syncBtn" aria-label="同期"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M4 12a8 8 0 0 1 13.7-5.6"/><path d="M17.7 3v3.4h-3.4"/><path d="M6.3 21v-3.4h3.4"/></svg><span>Sync</span></button><button id="impBtn" aria-label="Import"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span>Import</span></button><button id="gearBtn" aria-label="設定"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header>
@@ -1677,7 +1677,15 @@ if(mem)toast("この環境では保存できません（GitHub Pagesで開くと
    return;
   }
   const status=text('p','');status.setAttribute('role','status');card.append(status);
-  card.append(button('別の端末の登録コードを発行',async()=>{try{const r=await rpc('invite');status.textContent='24時間・1回限りのコード\n'+r.code;}catch(err){status.textContent=message(err);}}));
+  card.append(text('p','自分用は管理権限も引き継ぎます。家族用は通常の利用権限です。コードは24時間・1回限り。新しいアイコンでデータを確認するまで、古いアイコンは残してください。'));
+  function inviteButton(label,op,isManager){
+   const b=button(label,async()=>{b.disabled=true;status.textContent='コードを発行しています…';try{
+    const r=await rpc(op);if(r.manager!==isManager)throw Error('server_update_required');
+    status.textContent=(isManager?'自分用・管理権限付き':'家族用・通常権限')+'\n24時間・1回限りのコード\n'+r.code;
+   }catch(err){status.textContent=err.message==='server_update_required'||err.message==='unknown_action'?'サーバーの更新が必要です。コードはまだ使わず、更新完了後に再試行してください。':message(err);}finally{b.disabled=false;}});card.append(b);
+  }
+  inviteButton('自分の端末を追加・引き継ぐ','inviteManager',true);
+  inviteButton('家族などの端末を追加','invite',false);
   const list=document.createElement('div');card.append(list);
   try{const rows=await rpc('devices');for(const d of rows){const row=text('p',d.name+(d.manager?'（管理端末）':''));const remove=button('登録を解除',()=>{remove.textContent='もう一度押すと解除';remove.onclick=async()=>{try{await rpc('revoke',{id:d.id});row.remove();}catch(err){status.textContent=message(err);}};});row.append(remove);list.append(row);}}catch(err){status.textContent=message(err);}
  }
