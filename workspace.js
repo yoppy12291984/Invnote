@@ -3,6 +3,26 @@
 const appRelease=JSON.parse(document.getElementById('app-release').textContent);
 let personalStocks=[],researchHash='',syncTime=0;
 let appearanceMode=null,invReady=false,syncTimer,featureMeta='';
+let transferDialog=null,transferRequest='',transferTimer,transferReady=false,transferSubmitting=false;
+function openTransferDialog(){
+ if(!transferDialog){
+  transferDialog=document.createElement('dialog');transferDialog.className='workspace-transfer-dialog';transferDialog.setAttribute('aria-labelledby','transfer-dialog-title');
+  transferDialog.innerHTML='<h2 id="transfer-dialog-title">引き継ぎコードを入力</h2><p>新しいアイコンで、発行されたコードを入力してください。</p><form><label>この端末の名前<input name="deviceName" value="自分のiPhone" maxlength="60" autocomplete="off"></label><label>引き継ぎコード<input name="transferCode" required autocomplete="off" autocapitalize="none" spellcheck="false"></label><p role="status"></p><div class="workspace-setting-actions"><button class="action" type="submit">この端末に引き継ぐ</button><button class="action" type="button" data-close>戻る</button></div><p class="muted">登録に成功するまで、今の登録とデータを保持します。</p></form>';
+  document.body.append(transferDialog);
+  transferDialog.querySelector('[data-close]').onclick=()=>{if(!transferSubmitting)transferDialog.close();};
+  transferDialog.addEventListener('cancel',e=>{if(transferSubmitting)e.preventDefault();});
+  transferDialog.addEventListener('close',()=>{transferDialog.querySelector('[name=transferCode]').value='';});
+  transferDialog.querySelector('form').onsubmit=e=>{
+   e.preventDefault();if(!transferReady||transferSubmitting)return;
+   transferSubmitting=true;transferRequest=crypto.randomUUID();transferDialog.querySelectorAll('button').forEach(b=>b.disabled=true);transferDialog.querySelector('[role=status]').textContent='引き継いでいます…';
+   frames.inv.contentWindow.postMessage({type:'workspace:transfer-submit',requestId:transferRequest,code:transferDialog.querySelector('[name=transferCode]').value,name:transferDialog.querySelector('[name=deviceName]').value},location.origin);
+   clearTimeout(transferTimer);transferTimer=setTimeout(()=>{transferSubmitting=false;transferDialog.querySelectorAll('button').forEach(b=>b.disabled=false);transferDialog.querySelector('[role=status]').textContent='応答を確認できませんでした。同じコードで再試行できます。';},100000);
+  };
+ }
+ transferDialog.querySelector('[role=status]').textContent=transferReady?'':'接続を準備しています…';transferDialog.querySelector('[type=submit]').disabled=!transferReady;
+ if(!transferDialog.open)transferDialog.showModal();
+ frames.inv?.contentWindow.postMessage({type:'workspace:transfer-ready-check'},location.origin);
+}
 try{const saved=localStorage.getItem('invnote-workspace-appearance');if(['light','dark','system'].includes(saved))appearanceMode=saved;else{const last=localStorage.getItem('invnote-workspace-resolved-theme');if(['light','dark'].includes(last))appearanceMode=last;}}catch{}
 const systemAppearance=matchMedia('(prefers-color-scheme: dark)');
 const effectiveAppearance=()=>appearanceMode==='system'||!appearanceMode?(systemAppearance.matches?'dark':'light'):appearanceMode;
@@ -101,6 +121,13 @@ notebook=function(){baseNotebook();
 window.addEventListener('message',e=>{
  const kind=Object.keys(frames).find(k=>e.source===frames[k].contentWindow);
  if(e.origin!==location.origin||!kind)return;
+ if(kind==='inv'&&e.data?.type==='workspace:transfer-ready'){transferReady=true;if(transferDialog?.open&&!transferSubmitting){transferDialog.querySelector('[type=submit]').disabled=false;transferDialog.querySelector('[role=status]').textContent='';}return;}
+ if(kind==='inv'&&e.data?.type==='workspace:transfer-dialog'){openTransferDialog();return;}
+ if(kind==='inv'&&e.data?.type==='workspace:transfer-result'&&e.data.requestId===transferRequest){
+  clearTimeout(transferTimer);transferSubmitting=false;transferDialog.querySelectorAll('button').forEach(b=>b.disabled=false);
+  if(e.data.ok){transferDialog.close();status.textContent=e.data.manager?'管理端末として引き継ぎました。':'この端末への引き継ぎが完了しました。';syncWorkspace();}
+  else transferDialog.querySelector('[role=status]').textContent=e.data.message||'コードを確認してください。';return;
+ }
  if(e.data?.type==='workspace:height'){
   if(frames[kind].dataset.registering==='true')return;
   const h=e.data.height;if(!frameHost.hidden&&!frames[kind].hidden&&Number.isFinite(h)&&h>=100&&h<100000)frames[kind].style.height=Math.ceil(h)+'px';return;
@@ -219,7 +246,7 @@ route=function(){
    app.insertAdjacentHTML('beforeend','<section class="workspace-setting"><h2>アプリの表示</h2><div class="appearance-options"><button class="action" data-appearance="light">ライト</button><button class="action" data-appearance="dark">ダーク</button><button class="action" data-appearance="system">端末に合わせる</button></div><p class="muted">Today・Search・Note・Review 共通の配色です。</p></section><section class="workspace-setting"><h2>同期</h2><p class="muted">登録済みの端末と、メモ・日記・四季報を同期します。</p><div class="workspace-setting-actions"><button class="action" id="settings-sync">今すぐ同期</button><a class="action" href="#import">取り込み</a></div></section>');
    app.querySelectorAll('[data-appearance]').forEach(b=>b.onclick=()=>setAppearance(b.dataset.appearance));document.getElementById('settings-sync').onclick=syncWorkspace;
    const transfer=document.createElement('section');transfer.className='workspace-setting';transfer.innerHTML='<h2>ホーム画面への引き継ぎ</h2><p>この端末で同期してから、Safariの共有メニューでホーム画面に追加してください。</p><p class="muted">追加したアイコンを開き、端末登録が表示されたら同じ保存先の登録コードで登録します。同期済みのメモ・保有・四季報・Newsを自動で読み込みます。完了まで旧アイコンは残してください。</p><button class="action" id="transfer-sync">引き継ぎ前に同期</button><p class="muted">未同期の変更は、旧アプリ側で同期が必要です。配色・監視リストなど端末内だけの設定は別管理です。</p>';app.append(transfer);document.getElementById('transfer-sync').onclick=syncWorkspace;
-   const enterTransfer=document.createElement('button');enterTransfer.className='action';enterTransfer.textContent='引き継ぎコードを入力';enterTransfer.onclick=()=>{embedded('inv','vSet');frames.inv.contentWindow.postMessage({type:'workspace:enter-transfer'},location.origin);frameHost.scrollIntoView({block:'start'});};transfer.append(enterTransfer);
+   const enterTransfer=document.createElement('button');enterTransfer.className='action';enterTransfer.textContent='引き継ぎコードを入力';enterTransfer.onclick=openTransferDialog;transfer.append(enterTransfer);
    const transferHelp=document.createElement('p');transferHelp.className='muted';transferHelp.textContent='新しいホーム画面アイコンで登録画面が出ない場合は、このボタンから入力できます。すでに管理端末として使えている場合は再入力不要です。';transfer.append(transferHelp);
    renderPaletteSettings();renderTabSettings();
   }
