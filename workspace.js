@@ -328,7 +328,7 @@ function preloadScreener(){
  f.style.cssText='display:none;visibility:hidden;width:100%;border:0';
  const url=new URL('screener/index.html',location.href);
  const version=new URL(frames.inv.src).searchParams.get('v');
- url.searchParams.set('workspace','1');if(version)url.searchParams.set('v',version);url.hash='ideal';
+ url.searchParams.set('workspace','1');if(version)url.searchParams.set('v',version);
  f.src=url.href;frames.scr=f;frameHost.append(f);
 }
 if('requestIdleCallback' in window)requestIdleCallback(preloadScreener,{timeout:1200});
