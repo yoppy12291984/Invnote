@@ -3,7 +3,7 @@
 const appRelease=JSON.parse(document.getElementById('app-release').textContent);
 let personalStocks=[],researchHash='',syncTime=0;
 let appearanceMode=null,invReady=false,syncTimer,featureMeta='';
-let transferDialog=null,transferRequest='',transferTimer,transferReady=false,transferSubmitting=false;
+let transferDialog=null,transferSubmitting=false;
 function openTransferDialog(){
  if(!transferDialog){
   transferDialog=document.createElement('dialog');transferDialog.className='workspace-transfer-dialog';transferDialog.setAttribute('aria-labelledby','transfer-dialog-title');
@@ -12,16 +12,21 @@ function openTransferDialog(){
   transferDialog.querySelector('[data-close]').onclick=()=>{if(!transferSubmitting)transferDialog.close();};
   transferDialog.addEventListener('cancel',e=>{if(transferSubmitting)e.preventDefault();});
   transferDialog.addEventListener('close',()=>{transferDialog.querySelector('[name=transferCode]').value='';});
-  transferDialog.querySelector('form').onsubmit=e=>{
-   e.preventDefault();if(!transferReady||transferSubmitting)return;
-   transferSubmitting=true;transferRequest=crypto.randomUUID();transferDialog.querySelectorAll('button').forEach(b=>b.disabled=true);transferDialog.querySelector('[role=status]').textContent='引き継いでいます…';
-   frames.inv.contentWindow.postMessage({type:'workspace:transfer-submit',requestId:transferRequest,code:transferDialog.querySelector('[name=transferCode]').value,name:transferDialog.querySelector('[name=deviceName]').value},location.origin);
-   clearTimeout(transferTimer);transferTimer=setTimeout(()=>{transferSubmitting=false;transferDialog.querySelectorAll('button').forEach(b=>b.disabled=false);transferDialog.querySelector('[role=status]').textContent='応答を確認できませんでした。同じコードで再試行できます。';},100000);
+  transferDialog.querySelector('form').onsubmit=async e=>{
+   e.preventDefault();if(transferSubmitting)return;
+   transferSubmitting=true;transferDialog.querySelectorAll('button').forEach(b=>b.disabled=true);transferDialog.querySelector('[role=status]').textContent='登録を確認しています…（最大45秒）';
+   try{
+    await window.SuiteTransfer.register(window.SuiteDeviceConfig,transferDialog.querySelector('[name=transferCode]').value,transferDialog.querySelector('[name=deviceName]').value);
+    // Restart the app with the saved credential; its existing restore flow loads cloud data first.
+    transferDialog.querySelector('[name=transferCode]').value='';
+    location.reload();
+   }catch(err){
+    transferDialog.querySelector('[role=status]').textContent=({invalid_invite:'コードが違うか、有効期限が切れています。',storage_error:'登録を保存できません。Safariの保存設定をご確認ください。',server_update_required:'登録先の応答を確認できませんでした。更新を確認してください。',device_limit:'登録端末数の上限です。管理端末でご確認ください。'})[err.message]||'通信を確認できませんでした。同じコードで再試行できます。今の登録とデータは保持しています。';
+   }finally{transferSubmitting=false;transferDialog.querySelectorAll('button').forEach(b=>b.disabled=false);}
   };
  }
- transferDialog.querySelector('[role=status]').textContent=transferReady?'':'接続を準備しています…';transferDialog.querySelector('[type=submit]').disabled=!transferReady;
+ transferDialog.querySelector('[role=status]').textContent='';transferDialog.querySelector('[type=submit]').disabled=false;
  if(!transferDialog.open)transferDialog.showModal();
- frames.inv?.contentWindow.postMessage({type:'workspace:transfer-ready-check'},location.origin);
 }
 try{const saved=localStorage.getItem('invnote-workspace-appearance');if(['light','dark','system'].includes(saved))appearanceMode=saved;else{const last=localStorage.getItem('invnote-workspace-resolved-theme');if(['light','dark'].includes(last))appearanceMode=last;}}catch{}
 const systemAppearance=matchMedia('(prefers-color-scheme: dark)');
@@ -121,13 +126,7 @@ notebook=function(){baseNotebook();
 window.addEventListener('message',e=>{
  const kind=Object.keys(frames).find(k=>e.source===frames[k].contentWindow);
  if(e.origin!==location.origin||!kind)return;
- if(kind==='inv'&&e.data?.type==='workspace:transfer-ready'){transferReady=true;if(transferDialog?.open&&!transferSubmitting){transferDialog.querySelector('[type=submit]').disabled=false;transferDialog.querySelector('[role=status]').textContent='';}return;}
  if(kind==='inv'&&e.data?.type==='workspace:transfer-dialog'){openTransferDialog();return;}
- if(kind==='inv'&&e.data?.type==='workspace:transfer-result'&&e.data.requestId===transferRequest){
-  clearTimeout(transferTimer);transferSubmitting=false;transferDialog.querySelectorAll('button').forEach(b=>b.disabled=false);
-  if(e.data.ok){transferDialog.close();status.textContent=e.data.manager?'管理端末として引き継ぎました。':'この端末への引き継ぎが完了しました。';syncWorkspace();}
-  else transferDialog.querySelector('[role=status]').textContent=e.data.message||'コードを確認してください。';return;
- }
  if(e.data?.type==='workspace:height'){
   if(frames[kind].dataset.registering==='true')return;
   const h=e.data.height;if(!frameHost.hidden&&!frames[kind].hidden&&Number.isFinite(h)&&h>=100&&h<100000)frames[kind].style.height=Math.ceil(h)+'px';return;
