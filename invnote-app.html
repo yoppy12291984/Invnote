@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=8b46723c6613"><script src="workspace-frame.js?v=8b46723c6613"></script></head>
+</style><link rel="stylesheet" href="workspace.css?v=e32280770a1c"><script src="workspace-frame.js?v=e32280770a1c"></script></head>
 <body>
 <div id="app">
 <header><h1 class="wm"><a href="/Invnote/screener/">Screener</a><span>/</span><b>Invnote</b><small id="ver"></small></h1><span style="flex:1"></span><button id="syncBtn" aria-label="同期"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M4 12a8 8 0 0 1 13.7-5.6"/><path d="M17.7 3v3.4h-3.4"/><path d="M6.3 21v-3.4h3.4"/></svg><span>Sync</span></button><button id="impBtn" aria-label="Import"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span>Import</span></button><button id="gearBtn" aria-label="設定"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header>
@@ -974,7 +974,16 @@ function mergeIn(d){
   const eids=new Set((S.events||[]).map(e=>e.id));(d.events||[]).forEach(e=>{if(!del.has(e.id)&&!eids.has(e.id))S.events.push(e)});S.events=S.events.filter(e=>!del.has(e.id));
   if(d.rules&&(d.rules.upd||0)>(S.rules.upd||0))S.rules=d.rules;
   Object.entries(d.sectors||{}).forEach(([k,v])=>{if(!S.sectors[k]||(v.upd||0)>(S.sectors[k].upd||0))S.sectors[k]=v});
-  Object.entries(d.holdings||{}).forEach(([k,v])=>{if(del.has("h:"+k)&&!S.holdings[k])return;if(!S.holdings[k]||(v.upd||0)>(S.holdings[k].upd||0))S.holdings[k]=v});
+  Object.entries(d.holdings||{}).forEach(([k,v])=>{
+    if(del.has("h:"+k)&&!S.holdings[k]){
+      // A server-side re-add cancels an old device tombstone, not a newer local deletion.
+      const removedAt=(S.holdingDeletedAt||{})[k]||0,positionAt=v.positionUpd||v.upd||0;
+      if((d.deleted||[]).includes('h:'+k)||removedAt>=positionAt)return;
+      del.delete('h:'+k);
+    }
+    if(!S.holdings[k]||(v.upd||0)>(S.holdings[k].upd||0))S.holdings[k]=v;
+  });
+  S.deleted=[...del].slice(-500);
   S.pfHistory=InvnoteHistory.canonical([...S.pfHistory,...(d.pfHistory||[])]);
   if(d.holdingsAsOf&&d.holdingsAsOf>(S.holdingsAsOf||"")){S.holdingsAsOf=d.holdingsAsOf;S.holdingsComplete=d.holdingsComplete===true;}
   if(d.lists&&(d.lists.upd||0)>(S.listsUpd||0)){S.quick=d.lists.quick;S.status=d.lists.status;S.themes=d.lists.themes||S.themes;if(d.lists.tabsVersion===1&&d.lists.tabOrder)S.tabOrder=d.lists.tabOrder;if(d.lists.tabsVersion===1&&d.lists.tabNames&&typeof d.lists.tabNames==='object'&&!Array.isArray(d.lists.tabNames))S.tabNames=d.lists.tabNames;S.listsUpd=d.lists.upd;STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT}
@@ -1086,10 +1095,10 @@ function importParsedChecked(d){
     const snap=S.pfHistory.find(x=>x.date===observation.date),i=S.pfHistory.indexOf(snap);
     if(!histOnly){
       if(observation.complete){
-        for(const code of Object.keys(S.holdings))if(!observation.h[code]||observation.h[code].s===0){delete S.holdings[code];(S.deleted=S.deleted||[]).push('h:'+code);}
+        for(const code of Object.keys(S.holdings))if(!observation.h[code]||observation.h[code].s===0){delete S.holdings[code];(S.deleted=S.deleted||[]).push('h:'+code);(S.holdingDeletedAt=S.holdingDeletedAt||{})[code]=Date.now();}
       }
       for(const x of d.holdings||[]){const c=String(x.code).trim().toUpperCase();
-        if(x.shares===0){delete S.holdings[c];(S.deleted=S.deleted||[]).push('h:'+c);continue;}
+        if(x.shares===0){delete S.holdings[c];(S.deleted=S.deleted||[]).push('h:'+c);(S.holdingDeletedAt=S.holdingDeletedAt||{})[c]=Date.now();continue;}
         setHolding(c,x);S.holdings[c].observedDate=observation.date;
         if(x.price!==undefined)S.holdings[c].pdate=observation.date;
       }
@@ -1140,6 +1149,8 @@ const fmt=n=>Math.round(n).toLocaleString("ja-JP");
 function setHolding(code,h){const cur=S.holdings[code]||{};
   const num=(v,d)=>{const x=Number(v);return (v===""||v===null||v===undefined||isNaN(x))?(d||0):x};
   S.holdings[code]={...cur,shares:num(h.shares,cur.shares),avg:h.avg===undefined?(num(h.shares,cur.shares)===cur.shares?(cur.avg??null):null):num(h.avg,null),price:h.price===undefined?(cur.price??null):num(h.price,null),acct:h.acct||cur.acct||"",upd:Date.now()};
+  S.holdings[code].positionUpd=Date.now();
+  if(S.holdingDeletedAt)delete S.holdingDeletedAt[code];
   if(S.deleted&&S.deleted.length)S.deleted=S.deleted.filter(x=>x!=="h:"+code);   // 取り込み直したら削除履歴から外す
 if(h.acct&&h.acct!==cur.acct)delete S.holdings[code].side;
 const st=stock(code);if(h.name&&!st.name)st.name=h.name;if(!["保有","買い増し"].includes(st.status)){st.status="保有";touch(code)}}
@@ -1303,7 +1314,7 @@ $("#pfList").addEventListener("click",e=>{const b=e.target.closest("[data-hdel]"
   const st=stock(code);
   // 保有削除だけでは実売却・利確・損切を推測しない。
   S.holdingsAsOf=dstr(Date.now());S.holdingsComplete=false;
-  delete S.holdings[code];(S.deleted=S.deleted||[]).push("h:"+code);save();renderPf()});
+  delete S.holdings[code];(S.deleted=S.deleted||[]).push("h:"+code);(S.holdingDeletedAt=S.holdingDeletedAt||{})[code]=Date.now();save();renderPf()});
 
 /* ---------- diary ---------- */
 let dCur=dstr(Date.now()),dT=null;
