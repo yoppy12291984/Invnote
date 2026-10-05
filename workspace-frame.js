@@ -19,6 +19,11 @@
  const schedule=()=>{if(!pending){pending=true;requestAnimationFrame(measure);}};
  window.addEventListener('message',e=>{
   if(e.origin!==location.origin||e.source!==parent)return;
+  // Only the loaded child changes its own hash. Parent writes during initial
+  // about:blank navigation can interrupt the pending document on mobile browsers.
+  if(e.data?.type==='workspace:navigate'&&typeof e.data.tab==='string'&&/^[A-Za-z0-9_/-]+$/.test(e.data.tab)){
+   location.hash=e.data.tab;schedule();
+  }
   if(e.data?.type==='workspace:theme'&&['light','dark'].includes(e.data.theme)){
    document.documentElement.dataset.theme=e.data.theme;copyPalette();schedule();
    requestAnimationFrame(()=>post({type:'workspace:painted'}));

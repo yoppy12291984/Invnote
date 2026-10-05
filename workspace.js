@@ -2,7 +2,7 @@
 'use strict';
 const appRelease=JSON.parse(document.getElementById('app-release').textContent);
 let personalStocks=[],researchHash='',syncTime=0;
-let appearanceMode=null,invReady=false,syncTimer,featureMeta='';
+let appearanceMode=null,invReady=false,syncTimer,featureMeta='',syncPending=false,invLocked=false;
 let transferDialog=null,transferSubmitting=false;
 function openTransferDialog(){
  if(!transferDialog){
@@ -84,7 +84,14 @@ function paintAppearance(){
 function setAppearance(mode){appearanceMode=mode;try{localStorage.setItem('invnote-workspace-appearance',mode)}catch{status.textContent='配色を保存できませんでした。';}paintAppearance();}
 systemAppearance.addEventListener('change',()=>{if(appearanceMode==='system')paintAppearance()});
 function syncWorkspace(){
- const b=document.getElementById('workspace-sync');if(!invReady){status.textContent='端末の登録・読み込みを確認してください。';location.hash='settings';return;}
+ const b=document.getElementById('workspace-sync');
+ if(!invReady){
+  if(invLocked){status.textContent='この画面では端末登録を確認できません。引き継ぎコードで登録してください。';openTransferDialog();return;}
+  syncPending=true;b.disabled=true;status.textContent='データ画面の読み込み後に同期します…';
+  frames.inv?.contentWindow.postMessage({type:'workspace:refresh'},location.origin);
+  clearTimeout(syncTimer);syncTimer=setTimeout(()=>{syncPending=false;b.disabled=false;status.textContent='データ画面を読み込めませんでした。画面を再読み込みしてください。';},15000);return;
+ }
+ syncPending=false;
  b.disabled=true;status.textContent='同期中…';frames.inv.contentWindow.postMessage({type:'workspace:sync'},location.origin);
  clearTimeout(syncTimer);syncTimer=setTimeout(()=>{b.disabled=false;status.textContent='同期に時間がかかっています。接続設定を確認してください。';},45000);
 }
@@ -134,6 +141,7 @@ window.addEventListener('message',e=>{
  if(e.data?.type==='workspace:meta'&&kind==='scr'){featureMeta=String(e.data.text||'');const el=document.getElementById('feature-meta');if(el)el.textContent=featureMeta;return;}
  if(e.data?.type==='workspace:painted'){frames[kind].style.visibility='visible';return;}
  if(e.data?.type==='workspace:ready'){
+  const tab=frames[kind].dataset.workspaceTab;if(tab)frames[kind].contentWindow.postMessage({type:'workspace:navigate',tab},location.origin);
   frames[kind].contentWindow.postMessage({type:'workspace:theme',theme:effectiveAppearance()},location.origin);return;
  }
  if(kind==='inv'&&e.data?.type==='workspace:registration-open'){frames.inv.dataset.registering='true';frames.inv.style.height=Math.max(380,window.innerHeight-90)+'px';frames.inv.style.minHeight='380px';frameHost.scrollIntoView({block:'start'});return;}
@@ -145,9 +153,9 @@ window.addEventListener('message',e=>{
  if(e.origin!==location.origin||e.source!==frames.inv?.contentWindow)return;
  const m=e.data;
  if(m?.type==='invnote:company'&&/^[0-9A-Z]{4,5}$/.test(m.code)){location.hash='company/'+m.code;return;}
- if(m?.type==='invnote:locked'){invReady=false;replaceResearch(initialData);personalStocks=[];researchHash='';if(!['#settings','#import'].includes(location.hash))route();status.textContent='設定から端末登録を確認してください。';return;}
+ if(m?.type==='invnote:locked'){invReady=false;invLocked=true;syncPending=false;clearTimeout(syncTimer);document.getElementById('workspace-sync').disabled=false;replaceResearch(initialData);personalStocks=[];researchHash='';if(!['#settings','#import'].includes(location.hash))route();status.textContent='設定から引き継ぎコードを入力してください。';return;}
  if(m?.type!=='invnote:state')return;
- invReady=true;if(!appearanceMode&&['light','dark'].includes(m.theme))appearanceMode=m.theme;paintAppearance();
+ invReady=true;invLocked=false;if(syncPending){syncPending=false;clearTimeout(syncTimer);queueMicrotask(syncWorkspace);}if(!appearanceMode&&['light','dark'].includes(m.theme))appearanceMode=m.theme;paintAppearance();
  const nextStocks=Array.isArray(m.stocks)?m.stocks.filter(s=>/^[0-9A-Z]{4,5}$/.test(s.code)&&typeof s.name==='string'&&typeof s.status==='string'):[];
  const changed=m.researchHash!==researchHash||JSON.stringify(nextStocks)!==JSON.stringify(personalStocks);
  personalStocks=nextStocks;syncTime=m.lastSync||0;
@@ -316,7 +324,7 @@ measureNavigation();
 function preloadScreener(){
  if(frames.scr)return;
  const f=document.createElement('iframe');
- f.title='Screenerの既存機能';f.hidden=true;f.setAttribute('scrolling','no');
+ f.title='Screenerの既存機能';f.hidden=true;f.dataset.workspaceTab='ideal';f.setAttribute('scrolling','no');
  f.style.cssText='display:none;visibility:hidden;width:100%;border:0';
  const url=new URL('screener/index.html',location.href);
  const version=new URL(frames.inv.src).searchParams.get('v');
