@@ -102,6 +102,7 @@ window.addEventListener('message',e=>{
  const kind=Object.keys(frames).find(k=>e.source===frames[k].contentWindow);
  if(e.origin!==location.origin||!kind)return;
  if(e.data?.type==='workspace:height'){
+  if(frames[kind].dataset.registering==='true')return;
   const h=e.data.height;if(!frameHost.hidden&&!frames[kind].hidden&&Number.isFinite(h)&&h>=100&&h<100000)frames[kind].style.height=Math.ceil(h)+'px';return;
  }
  if(e.data?.type==='workspace:meta'&&kind==='scr'){featureMeta=String(e.data.text||'');const el=document.getElementById('feature-meta');if(el)el.textContent=featureMeta;return;}
@@ -109,7 +110,8 @@ window.addEventListener('message',e=>{
  if(e.data?.type==='workspace:ready'){
   frames[kind].contentWindow.postMessage({type:'workspace:theme',theme:effectiveAppearance()},location.origin);return;
  }
- if(kind==='inv'&&e.data?.type==='workspace:registration-open'){frameHost.scrollIntoView({block:'start'});return;}
+ if(kind==='inv'&&e.data?.type==='workspace:registration-open'){frames.inv.dataset.registering='true';frames.inv.style.height=Math.max(380,window.innerHeight-90)+'px';frames.inv.style.minHeight='380px';frameHost.scrollIntoView({block:'start'});return;}
+ if(kind==='inv'&&e.data?.type==='workspace:registration-close'){delete frames.inv.dataset.registering;frames.inv.style.minHeight='540px';frames.inv.contentWindow.postMessage({type:'workspace:measure'},location.origin);return;}
  if(kind==='inv'&&e.data?.type==='workspace:restore-status'){status.textContent=String(e.data.message||'引き継ぎを確認してください。');return;}
  if(kind==='inv'&&e.data?.type==='workspace:sync-result'){clearTimeout(syncTimer);document.getElementById('workspace-sync').disabled=false;status.textContent=String(e.data.message||'同期を確認してください。');return;}
  if(kind==='inv'&&e.data?.type==='invnote:navigate'&&e.data.route==='notebook/inv:vStocks'){location.hash=e.data.route;return;}
