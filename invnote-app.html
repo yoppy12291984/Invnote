@@ -9,8 +9,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#12171C">
 <meta name="apple-mobile-web-app-title" content="Invnote">
-<link rel="apple-touch-icon" href="invnote-icon.png?v=silver-no-line-20261004">
-<link rel="icon" href="invnote-icon.svg?v=silver-no-line-20261004" type="image/svg+xml">
+<link rel="apple-touch-icon" href="invnote-icon.png?v=navy-gold-chart-20261005">
+<link rel="icon" href="invnote-icon.svg?v=navy-gold-chart-20261005" type="image/svg+xml">
 <title>Invnote</title>
 <style>
 :root{
@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=d53867f78252"><script src="workspace-frame.js?v=d53867f78252"></script></head>
+</style><link rel="stylesheet" href="workspace.css?v=8c16f3e27341"><script src="workspace-frame.js?v=8c16f3e27341"></script></head>
 <body>
 <div id="app">
 <header><h1 class="wm"><a href="/Invnote/screener/">Screener</a><span>/</span><b>Invnote</b><small id="ver"></small></h1><span style="flex:1"></span><button id="syncBtn" aria-label="同期"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M4 12a8 8 0 0 1 13.7-5.6"/><path d="M17.7 3v3.4h-3.4"/><path d="M6.3 21v-3.4h3.4"/></svg><span>Sync</span></button><button id="impBtn" aria-label="Import"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span>Import</span></button><button id="gearBtn" aria-label="設定"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header>
@@ -532,7 +532,7 @@ function migrateTabs(){
  const primary=TAB_DEFS.slice(0,6).map(t=>t.v),old=Array.isArray(S.tabOrder)?S.tabOrder:TAB_DEFS.map(t=>t.v);
  S.tabOrder=[...primary,...old.filter(v=>!primary.includes(v)&&TAB_DEFS.some(t=>t.v===v))];
  S.tabNames={...(S.tabNames||{})};primary.forEach(v=>delete S.tabNames[v]);
- S.tabsVersion=1;S.listsUpd=Math.max(Date.now(),(S.listsUpd||0)+1);save();
+ S.tabsVersion=1;if(!S.restorePending)S.listsUpd=Math.max(Date.now(),(S.listsUpd||0)+1);save();
 }
 const tabDef=v=>{const d=TAB_DEFS.find(x=>x.v===v);if(!d)return;const name=S.tabNames?.[v];return {...d,t:typeof name==='string'&&name.trim()?name.trim().slice(0,24):d.t};};
 function tabOrder(){const saved=(S.tabOrder||[]).filter(tabDef);return saved.length?saved:TAB_DEFS.map(x=>x.v)}
@@ -1431,18 +1431,43 @@ let syncT=null,syncing=false;
 const payload=()=>JSON.stringify({notes:S.notes.concat(todoRecords()),stocks:S.stocks,deleted:S.deleted||[],diary:S.diary,events:S.events,rules:S.rules,sectors:S.sectors,holdings:S.holdings,pfHistory:S.pfHistory,holdingsAsOf:S.holdingsAsOf,holdingsComplete:S.holdingsComplete,lists:{quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,tabNames:S.tabNames||{},tabsVersion:1,upd:S.listsUpd||0}});
 function scheduleSync(){if(!S.gas||editingSync)return;clearTimeout(syncT);syncT=setTimeout(()=>syncNow(true),1500)}
 let editingSync=false;
-async function syncNow(quiet){
-  if(!S.gas||syncing)return;syncing=true;const st=$("#syncStat");if(!quiet)st.textContent="同期中…";$("#syncBtn").classList.add("busy");
-  try{
-    const r=await fetch(S.gas+"?action=load&sess="+Date.now());const d=await r.json();
-    if(d&&d.notes)mergeIn(d);
-    const p=await fetch(S.gas,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:payload()});
-    const res=await p.json();if(!res.ok)throw new Error(res.error||"save failed");
-    S.lastSync=Date.now();editingSync=true;save();editingSync=false;const ae=document.activeElement;if(!(ae&&(ae.tagName==="TEXTAREA"||ae.tagName==="INPUT")))render();
-    st.textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(!quiet)toast("同期しました");
-  }catch(e){st.textContent="同期に失敗："+(e.message||e);if(!quiet)toast("同期に失敗しました")}
-  syncing=false;$("#syncBtn").classList.remove("busy");
+function validSyncData(d){
+  return d&&typeof d==='object'&&!Array.isArray(d)&&Array.isArray(d.notes)
+    &&d.notes.every(n=>n&&typeof n==='object'&&typeof n.id==='string')
+    &&['stocks','diary','holdings','sectors','rules','lists'].every(k=>d[k]===undefined||(d[k]&&typeof d[k]==='object'&&!Array.isArray(d[k])))
+    &&['events','deleted','pfHistory','todoRecords'].every(k=>d[k]===undefined||Array.isArray(d[k]));
 }
+function restoreNotice(message,failed=false){
+  let box=document.getElementById('invnote-restore-status');
+  if(!box){box=document.createElement('div');box.id='invnote-restore-status';box.setAttribute('role','status');box.style.cssText='margin:12px;padding:14px;border:1px solid var(--line);border-radius:10px;font-size:14px;line-height:1.7';document.querySelector('header').after(box);}
+  box.replaceChildren(document.createTextNode(message));
+  if(failed){const retry=document.createElement('button');retry.className='btn';retry.textContent='再読み込み';retry.onclick=()=>syncNow(false);box.append(document.createElement('br'),retry);}
+  if(parent!==window)parent.postMessage({type:'workspace:restore-status',message,failed},location.origin);
+}
+async function syncNow(quiet){
+  if(!S.gas||syncing)return;syncing=true;const first=!S.lastSync,st=$("#syncStat");let downloaded=false;
+  if(first)restoreNotice('登録済みの保存先から、メモ・保有・四季報・Newsを引き継いでいます…');
+  if(!quiet)st.textContent="同期中…";$("#syncBtn").classList.add("busy");
+  try{
+    const r=await fetch(S.gas+"?action=load&sess="+Date.now());if(!r.ok)throw Error('保存先のデータを取得できませんでした');const d=await r.json();
+    if(!validSyncData(d))throw Error('保存先のデータ形式を確認できません。送信せずに停止しました');
+    mergeIn(d);downloaded=true;S.restorePending=false;
+    // Persist the fetched records before any upload. A failed upload must not discard restoration.
+    editingSync=true;try{save(true);}finally{editingSync=false;}
+    const p=await fetch(S.gas,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:payload()});if(!p.ok)throw Error('同期先への保存に失敗しました');
+    const res=await p.json();if(!res.ok)throw new Error(res.error||"save failed");
+    S.lastSync=Date.now();editingSync=true;try{save(true);}finally{editingSync=false;}
+    const ae=document.activeElement;if(!(ae&&(ae.tagName==="TEXTAREA"||ae.tagName==="INPUT")))render();
+    st.textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;
+    if(first||document.getElementById('invnote-restore-status'))restoreNotice('引き継ぎ・同期が完了しました。メモ '+S.notes.length+'件、登録銘柄 '+Object.keys(S.stocks).length+'社。');
+    if(!quiet)toast("同期しました");
+  }catch(e){
+    st.textContent="同期に失敗："+(e.message||e);
+    if(first||document.getElementById('invnote-restore-status'))restoreNotice((downloaded?'データを取得しましたが、同期の完了を確認できません。':'引き継ぎは未完です。保存先への送信はしていません。')+'通信を確認して再読み込みしてください。',true);
+    if(!quiet)toast("同期に失敗しました");
+  }finally{syncing=false;$("#syncBtn").classList.remove("busy");}
+}
+
 $("#gasUrl").addEventListener("change",e=>{S.gas=e.target.value.trim();editingSync=true;save();editingSync=false;if(S.gas)syncNow(false)});
 $("#syncNow").addEventListener("click",()=>syncNow(false));
 $("#syncBtn").addEventListener("click",()=>{if(!S.gas){toast("設定でGAS同期のURLを入れてください");return}syncNow(false)});
@@ -1536,7 +1561,7 @@ function openTodoEditor(id){
 }
 function initTodos(){
  todoMerge(S.notes.filter(r=>r.kind===TODO_KIND));S.notes=S.notes.filter(r=>r.kind!==TODO_KIND);
- if(!S.todoTabAdded){if(Array.isArray(S.tabOrder)&&S.tabOrder.length&&!S.tabOrder.includes('vTodos'))S.tabOrder.push('vTodos');S.todoTabAdded=true;S.listsUpd=Date.now();save();}
+ if(!S.todoTabAdded){if(Array.isArray(S.tabOrder)&&S.tabOrder.length&&!S.tabOrder.includes('vTodos'))S.tabOrder.push('vTodos');S.todoTabAdded=true;if(!S.restorePending)S.listsUpd=Date.now();save();}
 }
 
 /* Runs inside the original, authenticated Invnote application scope. */
@@ -1579,7 +1604,7 @@ queueMicrotask(()=>{workspaceGo();workspacePublish();});
 if(mem)toast("この環境では保存できません（GitHub Pagesで開くと保存されます）");
 })();
 </script>
-<script>window.SuiteDeviceConfig={app:"Invnote",name:"Invnote",settingsTarget:"#vSet",url:"https://script.google.com/macros/s/AKfycby8HS4VPWgkc7Ay-rX4GvT60vxKffwW9q9HcIiJgoMGFsSu_HO9ZxtQxXJsHSd1g54/exec",readUrl(){return (JSON.parse(localStorage.getItem("invnote_v1")||'{}').gas);},ensureUrl(url){const s=JSON.parse(localStorage.getItem("invnote_v1")||'{}');if(!s.gas)s.gas=url;localStorage.setItem("invnote_v1",JSON.stringify(s));}};
+<script>window.SuiteDeviceConfig={app:"Invnote",name:"Invnote",settingsTarget:"#vSet",url:"https://script.google.com/macros/s/AKfycby8HS4VPWgkc7Ay-rX4GvT60vxKffwW9q9HcIiJgoMGFsSu_HO9ZxtQxXJsHSd1g54/exec",readUrl(){return (JSON.parse(localStorage.getItem("invnote_v1")||'{}').gas);},ensureUrl(url){const existing=localStorage.getItem("invnote_v1");const s=JSON.parse(existing||'{}');if(!existing)s.restorePending=true;if(!s.gas)s.gas=url;localStorage.setItem("invnote_v1",JSON.stringify(s));}};
 /* 端末ごとの登録。通常起動はネットワークを待たず、明示失効だけで再登録する。 */
 (function(){
  'use strict';
@@ -1629,7 +1654,7 @@ if(mem)toast("この環境では保存できません（GitHub Pagesで開くと
  }
  function lock(note){
   locked=true;document.documentElement.classList.add('suite-locked');panel.hidden=false;settings.open=false;settingsBody.replaceChildren();card.replaceChildren(text('h1',cfg.name),text('p','はじめに、この端末を登録します。次回からはそのまま開けます。'));
-  card.append(text('p','ホーム画面に追加して使う場合は、そのアプリを開いた状態で登録してください。Safariとは別の登録になる場合があります。'));
+  card.append(text('p','ホーム画面に追加したアプリを開いて登録してください。Safariとは別の登録になる場合があります。同じ保存先の登録コードで登録すると、同期済みのメモ・保有・四季報・Newsを自動で引き継ぎます。旧アプリは先に同期し、引き継ぎ完了まで残してください。'));
   const form=document.createElement('form');const nameLabel=text('label','この端末の名前');const name=document.createElement('input');name.name='deviceName';name.autocomplete='off';name.value='自分の端末';name.maxLength=60;nameLabel.append(name);
   const codeLabel=text('label','登録コード');const code=document.createElement('input');code.name='registrationCode';code.autocomplete='off';code.autocapitalize='none';code.spellcheck=false;code.required=true;codeLabel.append(code);
   const submit=text('button','この端末で使う');submit.type='submit';const status=text('p',note||'登録済みの管理端末から、登録コードを発行してください。');status.setAttribute('role','status');form.append(nameLabel,codeLabel,submit,status);card.append(form);
