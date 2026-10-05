@@ -109,6 +109,7 @@ window.addEventListener('message',e=>{
  if(e.data?.type==='workspace:ready'){
   frames[kind].contentWindow.postMessage({type:'workspace:theme',theme:effectiveAppearance()},location.origin);return;
  }
+ if(kind==='inv'&&e.data?.type==='workspace:registration-open'){frameHost.scrollIntoView({block:'start'});return;}
  if(kind==='inv'&&e.data?.type==='workspace:restore-status'){status.textContent=String(e.data.message||'引き継ぎを確認してください。');return;}
  if(kind==='inv'&&e.data?.type==='workspace:sync-result'){clearTimeout(syncTimer);document.getElementById('workspace-sync').disabled=false;status.textContent=String(e.data.message||'同期を確認してください。');return;}
  if(kind==='inv'&&e.data?.type==='invnote:navigate'&&e.data.route==='notebook/inv:vStocks'){location.hash=e.data.route;return;}
@@ -216,6 +217,8 @@ route=function(){
    app.insertAdjacentHTML('beforeend','<section class="workspace-setting"><h2>アプリの表示</h2><div class="appearance-options"><button class="action" data-appearance="light">ライト</button><button class="action" data-appearance="dark">ダーク</button><button class="action" data-appearance="system">端末に合わせる</button></div><p class="muted">Today・Search・Note・Review 共通の配色です。</p></section><section class="workspace-setting"><h2>同期</h2><p class="muted">登録済みの端末と、メモ・日記・四季報を同期します。</p><div class="workspace-setting-actions"><button class="action" id="settings-sync">今すぐ同期</button><a class="action" href="#import">取り込み</a></div></section>');
    app.querySelectorAll('[data-appearance]').forEach(b=>b.onclick=()=>setAppearance(b.dataset.appearance));document.getElementById('settings-sync').onclick=syncWorkspace;
    const transfer=document.createElement('section');transfer.className='workspace-setting';transfer.innerHTML='<h2>ホーム画面への引き継ぎ</h2><p>この端末で同期してから、Safariの共有メニューでホーム画面に追加してください。</p><p class="muted">追加したアイコンを開き、端末登録が表示されたら同じ保存先の登録コードで登録します。同期済みのメモ・保有・四季報・Newsを自動で読み込みます。完了まで旧アイコンは残してください。</p><button class="action" id="transfer-sync">引き継ぎ前に同期</button><p class="muted">未同期の変更は、旧アプリ側で同期が必要です。配色・監視リストなど端末内だけの設定は別管理です。</p>';app.append(transfer);document.getElementById('transfer-sync').onclick=syncWorkspace;
+   const enterTransfer=document.createElement('button');enterTransfer.className='action';enterTransfer.textContent='引き継ぎコードを入力';enterTransfer.onclick=()=>{embedded('inv','vSet');frames.inv.contentWindow.postMessage({type:'workspace:enter-transfer'},location.origin);frameHost.scrollIntoView({block:'start'});};transfer.append(enterTransfer);
+   const transferHelp=document.createElement('p');transferHelp.className='muted';transferHelp.textContent='新しいホーム画面アイコンで登録画面が出ない場合は、このボタンから入力できます。すでに管理端末として使えている場合は再入力不要です。';transfer.append(transferHelp);
    renderPaletteSettings();renderTabSettings();
   }
   embedded('inv',h==='settings'?'vSet':'vImport');
