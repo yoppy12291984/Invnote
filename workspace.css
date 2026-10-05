@@ -157,7 +157,10 @@ nav[aria-label="メインナビゲーション"][hidden]{display:none!important}
 .news-masthead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:25px 0 12px;border-bottom:2px solid var(--ink)}
 .news-masthead .eyebrow{font-size:10px;letter-spacing:.18em;color:var(--sub)}
 .news-masthead h1{font-size:clamp(38px,7vw,56px);line-height:1.05;letter-spacing:-.055em;font-weight:650;margin:6px 0 0;color:var(--ink)}
-.news-dot{color:var(--custom-tag,var(--read-blue))}
+.company-intro{margin:20px 0 24px;padding:18px 20px;border:1px solid var(--line);border-radius:12px;background:var(--paper);font-size:15px;line-height:1.85}
+.company-intro small{display:block;font-size:12px;font-weight:600;color:var(--sub)}
+.company-intro p{margin:6px 0 16px}.company-intro p:last-child{margin-bottom:0}
+.company-intro .source{font-size:11px;display:inline-block;margin-right:14px}
 .news-archive-link{font-size:12px;letter-spacing:.04em;color:var(--sub);white-space:nowrap;text-decoration:none;padding-bottom:5px}
 .news-intro{font-size:13px;color:var(--sub);margin:12px 0 25px}
 .news-date{font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:.12em;color:var(--sub);padding:20px 0 8px}
