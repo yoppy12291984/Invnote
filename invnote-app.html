@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=74b91d705b8f"><script src="workspace-frame.js?v=74b91d705b8f"></script></head>
+</style><link rel="stylesheet" href="workspace.css?v=8b46723c6613"><script src="workspace-frame.js?v=8b46723c6613"></script></head>
 <body>
 <div id="app">
 <header><h1 class="wm"><a href="/Invnote/screener/">Screener</a><span>/</span><b>Invnote</b><small id="ver"></small></h1><span style="flex:1"></span><button id="syncBtn" aria-label="同期"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M4 12a8 8 0 0 1 13.7-5.6"/><path d="M17.7 3v3.4h-3.4"/><path d="M6.3 21v-3.4h3.4"/></svg><span>Sync</span></button><button id="impBtn" aria-label="Import"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span>Import</span></button><button id="gearBtn" aria-label="設定"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header>
@@ -981,7 +981,9 @@ function mergeIn(d){
   S.notes.sort((a,b)=>b.ts-a.ts);return add;
 }
 $("#impFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{
-  const add=mergeIn(JSON.parse(t));save();render();toast(`${add}件を追加しました`);e.target.value="";
+  const d=JSON.parse(t);
+  if(Array.isArray(d.stocks)||Array.isArray(d.holdings)){const r=importParsed(d);toast(r.msg);$("#impLog").innerHTML=`<div class="set"><b>${esc(r.msg)}</b><div class="hint">${r.detail}</div></div>`;}
+  else{const add=mergeIn(d);save();render();toast(`${add}件を追加しました`);}e.target.value="";
 }).catch(()=>toast("読み込めませんでした（JSON形式を確認）"))});
 
 /* Snapshot observations are not executions. Shared by Invnote and its tests. */
@@ -1061,8 +1063,10 @@ $("#copyPrompt").addEventListener("click",()=>navigator.clipboard.writeText(AI_P
 function importParsed(d){const before=JSON.stringify(S);try{return importParsedChecked(d)}catch(e){S=JSON.parse(before);throw e}}
 function importParsedChecked(d){
   const observation=InvnoteHistory.validateImport(d,dstr(Date.now()));
-  const latest=InvnoteHistory.canonical(S.pfHistory).at(-1)?.date;
-  const histOnly=observation&&observation.date<(S.holdingsAsOf||latest||(Object.keys(S.holdings).length?dstr(Date.now()):""));
+  // Price refresh snapshots are not confirmations of the owned quantities.
+  const confirmedDates=[S.holdingsAsOf,...Object.values(S.holdings).map(h=>h.observedDate),...InvnoteHistory.canonical(S.pfHistory).filter(h=>h.why==='import'||h.why==='manual').map(h=>h.date)].filter(InvnoteHistory.dayOK);
+  const latest=confirmedDates.sort().at(-1)||'';
+  const histOnly=observation&&observation.date<latest;
   if(observation&&!observation.complete&&!histOnly)for(const [c,row] of Object.entries(observation.h))if(S.holdings[c]?.acct&&row.ac&&S.holdings[c].acct!==row.ac)throw Error(c+' は既存保有と口座区分が異なります。部分画像で別口座を上書きできません。全口座の保有を確認してください。');
   let ns=0,ss=0,ds=0,es=0,pending=[];
   (d.stocks||[]).forEach(x=>{
@@ -1092,14 +1096,14 @@ function importParsedChecked(d){
       S.holdingsAsOf=observation.date;S.holdingsComplete=snap.complete;
     }
     hs=(d.holdings||[]).length;
-    diffTxt=(histOnly?'過去日の確認記録です。現在の保有・ステータスは変更していません。<br>':'')+
+    diffTxt=(histOnly?'履歴のみ保存：保有確認日 '+esc(latest)+' より古いため、現在のポートフォリオは変更していません。<br>':'ポートフォリオに反映しました（保有確認日 '+esc(observation.date)+'）。<br>')+
       (snap.complete?'全保有の確認':'一部の保有確認（記載のない銘柄は売却扱いにしません）')+'<br>'+
       InvnoteHistory.diff(S.pfHistory[i-1],snap).map(x=>esc(x.c+' '+nm(x.c)+' '+x.txt)).join('<br>');
   }
   (d.diary||[]).forEach(x=>{if(!x.text)return;const k=/^\d{4}-\d{2}-\d{2}$/.test(x.date||"")?x.date:dstr(Date.now());const cur=(S.diary[k]||{}).t||"";S.diary[k]={t:cur?cur.trimEnd()+"\n\n"+String(x.text).trim():String(x.text).trim(),upd:Date.now()};ds++});
   (d.events||[]).forEach(x=>{if(x.date&&x.title&&addEvent(String(x.date),String(x.title)+(x.code?" "+x.code:"")))es++});
   S.notes.sort((a,b)=>b.ts-a.ts);save(true);render();
-  return {msg:`メモ${ns}・銘柄${ss}・保有${hs}・日記${ds}・予定${es} を取り込みました`+(pending.length?`　／コード不明：${pending.join("、")}`:""),detail:(typeof diffTxt!=="undefined"&&diffTxt)?"前回からの変化：<br>"+diffTxt:""};
+  return {msg:(observation?(histOnly?'保有は履歴のみ保存（現在の保有は変更なし）。':'ポートフォリオに反映。'):'')+`メモ${ns}・銘柄${ss}・保有${hs}・日記${ds}・予定${es} を取り込みました`+(pending.length?`　／コード不明：${pending.join("、")}`:""),detail:(typeof diffTxt!=="undefined"&&diffTxt)?"前回からの変化：<br>"+diffTxt:""};
 }
 function parseAiJson(t){t=t.trim().replace(/^```(?:json)?\s*|```$/g,"").trim();const i=t.indexOf("{"),j=t.lastIndexOf("}");if(i>=0&&j>i)t=t.slice(i,j+1);return JSON.parse(t)}
 $("#aiImport").addEventListener("click",()=>{
@@ -1225,6 +1229,9 @@ function gaps(rows){
 }
 function snapshot(reason,day){
   day=day||dstr(Date.now());const h={};
+  const confirmed=InvnoteHistory.canonical(S.pfHistory).find(x=>x.date===day&&(x.why==='import'||x.why==='manual'));
+  if(reason==='price'&&confirmed)return confirmed;
+  if(reason==='manual')S.holdingsAsOf=day;
   Object.entries(S.holdings).forEach(([c,x])=>{h[c]={s:x.shares,a:Number.isFinite(x.avg)?x.avg:null,p:x.pdate===day&&x.price>0?x.price:null,ac:x.acct||'',side:x.side||''}});
   S.pfHistory=InvnoteHistory.upsert(S.pfHistory,{date:day,h,complete:S.holdingsComplete===true},Date.now(),uid(),reason);
   return S.pfHistory.find(x=>x.date===day);
@@ -1289,13 +1296,13 @@ function renderHist(){renderChart();
 
 $("#pfHist").addEventListener("click",e=>{const r=e.target.closest("[data-hs]");if(!r)return;histSel=r.dataset.hs;renderHist()});
 $("#pfSnap").addEventListener("click",()=>{snapshot("manual");save();renderPf();toast("記録しました")});
-$("#pfAdd").addEventListener("click",()=>{const code=$("#pfCode").value.trim().toUpperCase();if(!/^(\d{4}|\d{3}[A-Z])$/.test(code)){$("#pfCode").focus();return}S.holdingsComplete=false;setHolding(code,{shares:$("#pfShares").value,avg:$("#pfAvg").value,price:$("#pfPrice").value});save();["pfCode","pfShares","pfAvg","pfPrice"].forEach(i=>$("#"+i).value="");if(!nm(code))lookup(code).then(d=>{applyLookup(code,d);renderPf()});renderPf();toast("追加しました")});
+$("#pfAdd").addEventListener("click",()=>{const code=$("#pfCode").value.trim().toUpperCase();if(!/^(\d{4}|\d{3}[A-Z])$/.test(code)){$("#pfCode").focus();return}S.holdingsAsOf=dstr(Date.now());S.holdingsComplete=false;setHolding(code,{shares:$("#pfShares").value,avg:$("#pfAvg").value,price:$("#pfPrice").value});save();["pfCode","pfShares","pfAvg","pfPrice"].forEach(i=>$("#"+i).value="");if(!nm(code))lookup(code).then(d=>{applyLookup(code,d);renderPf()});renderPf();toast("追加しました")});
 $("#pfList").addEventListener("click",e=>{const b=e.target.closest("[data-hdel]");if(!b)return;
   const code=b.dataset.hdel;
   if(!confirm(`${code} を保有から外しますか？`))return;
   const st=stock(code);
   // 保有削除だけでは実売却・利確・損切を推測しない。
-  S.holdingsComplete=false;
+  S.holdingsAsOf=dstr(Date.now());S.holdingsComplete=false;
   delete S.holdings[code];(S.deleted=S.deleted||[]).push("h:"+code);save();renderPf()});
 
 /* ---------- diary ---------- */
