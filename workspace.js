@@ -65,6 +65,17 @@ function syncWorkspace(){
 }
 const initialData=JSON.parse(JSON.stringify(D));
 function validBundle(d){
+ if(d?.news!==undefined){
+  if(!d.news||!Array.isArray(d.news.entries))return false;
+  const ids=new Set();
+  for(const n of d.news.entries){
+   if(!n||!['id','date','category','headline','summary','caution','asOf'].every(k=>typeof n[k]==='string')||!/^\d{4}-\d{2}-\d{2}$/.test(n.date)||ids.has(n.id))return false;
+   if(!['actions','body','codes'].every(k=>Array.isArray(n[k])&&n[k].every(x=>typeof x==='string'))||!n.codes.every(c=>/^[0-9A-Z]{4,5}$/.test(c)))return false;
+   if(!Array.isArray(n.sources)||!n.sources.every(s=>s&&typeof s.title==='string'&&typeof s.url==='string'&&/^https:\/\//.test(s.url)))return false;
+   ids.add(n.id);
+  }
+ }
+
  if(!d||!d.notes||typeof d.notes!=='object'||Array.isArray(d.notes)||!d.ratings||!Array.isArray(d.ratings.rows)||!d.coverage)return false;
  if(!['body_notes','registered','legacy_references'].every(k=>Number.isInteger(d.coverage[k])&&d.coverage[k]>=0))return false;
  if(!d.ratings.horizons?.['3m']||!d.ratings.horizons?.['12m']||!Array.isArray(d.ratings.evaluation_rules))return false;
@@ -186,7 +197,7 @@ function renderUpdateHealth(){
   }
   const p=document.createElement('p');p.className='muted';p.textContent='確認時点：'+(updateHealth.asOf||'未確認')+'。四季報の研究日・採点基準日とは別です。';box.append(p);
  }
- const anchor=app.querySelector('.hero');if(anchor)anchor.after(box);else app.append(box);
+ app.append(box);
 }
 fetch('screener/data/update-health.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(data=>{updateHealth=data;document.getElementById('update-health')?.remove();renderUpdateHealth();}).catch(()=>{updateHealth={unavailable:true};document.getElementById('update-health')?.remove();renderUpdateHealth();});
 const workspaceRoute=route;
