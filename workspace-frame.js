@@ -22,7 +22,9 @@
   // Only the loaded child changes its own hash. Parent writes during initial
   // about:blank navigation can interrupt the pending document on mobile browsers.
   if(e.data?.type==='workspace:navigate'&&typeof e.data.tab==='string'&&/^[A-Za-z0-9_/-]+$/.test(e.data.tab)){
-   location.hash=e.data.tab;schedule();
+   const next='#'+e.data.tab;
+   if(location.hash!==next){const oldURL=location.href;history.replaceState(null,'',next);window.dispatchEvent(new HashChangeEvent('hashchange',{oldURL,newURL:location.href}));}
+   schedule();
   }
   if(e.data?.type==='workspace:theme'&&['light','dark'].includes(e.data.theme)){
    document.documentElement.dataset.theme=e.data.theme;copyPalette();schedule();
