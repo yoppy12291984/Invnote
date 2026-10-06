@@ -187,3 +187,7 @@ nav[aria-label="メインナビゲーション"][hidden]{display:none!important}
 
 .workspace-transfer-dialog{box-sizing:border-box;width:calc(100% - 28px);max-width:440px;max-height:85vh;max-height:85dvh;overflow:auto;border:1px solid var(--line);border-radius:18px;padding:22px;background:var(--paper);color:var(--ink);margin:auto}.workspace-transfer-dialog::backdrop{background:#0009}.workspace-transfer-dialog h2{margin:0 0 12px;font-size:20px}.workspace-transfer-dialog p{font-size:13px;line-height:1.6}.workspace-transfer-dialog label{display:block;font-size:14px;margin:16px 0}.workspace-transfer-dialog input{display:block;box-sizing:border-box;width:100%;min-height:48px;margin-top:7px;padding:10px;font-size:16px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}.workspace-transfer-dialog [role=status]{min-height:20px;overflow-wrap:anywhere}
 
+
+.company-facts{margin:16px 0;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.company-facts-main{display:flex;flex-wrap:wrap;gap:12px 28px}.company-facts-main>span{display:grid;gap:4px;font-size:12px}.company-facts-main strong{font-size:19px;font-weight:600}.company-index-tags{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.company-index-tags>span{font-size:11px;border:1px solid var(--line);border-radius:5px;padding:4px 7px}.company-facts details{font-size:12px;color:var(--muted)}.company-facts details summary{cursor:pointer}.company-facts details p{font-size:12px;margin:8px 0}
+
