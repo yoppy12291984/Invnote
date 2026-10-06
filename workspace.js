@@ -97,6 +97,15 @@ function syncWorkspace(){
 }
 const initialData=JSON.parse(JSON.stringify(D));
 function validBundle(d){
+ if(d?.companyProfiles!==undefined){
+  const ps=d.companyProfiles,day=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x),url=x=>typeof x==='string'&&/^https:\/\//.test(x);
+  if(!ps||typeof ps!=='object'||Array.isArray(ps))return false;
+  for(const [c,p] of Object.entries(ps)){
+   if(!/^[0-9A-Z]{4,5}$/.test(c)||!p||typeof p.market!=='string'||typeof p.marketAsOf!=='string'||!url(p.marketSource))return false;
+   if(p.marketCap!==null&&(!p.marketCap||!Number.isFinite(p.marketCap.oku)||p.marketCap.oku<=0||!day(p.marketCap.asOf)||typeof p.marketCap.basis!=='string'||!url(p.marketCap.source)))return false;
+   if(!p.indices||!['nikkei225','topix','growth250'].every(k=>{const x=p.indices[k];return x&&[true,false,null].includes(x.member)&&typeof x.asOf==='string'&&typeof x.source==='string'&&(x.member===null||(day(x.asOf)&&url(x.source)));}))return false;
+  }
+ }
  if(d?.news!==undefined){
   if(!d.news||!Array.isArray(d.news.entries))return false;
   const ids=new Set();
