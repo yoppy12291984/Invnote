@@ -1,11 +1,23 @@
 {
   "schema": 1,
-  "attemptedAt": "2026-10-10T07:03:01+09:00",
-  "windowStart": "2026-10-03",
-  "windowEnd": "2026-10-09",
+  "attemptedAt": "2026-10-12T07:03:30+09:00",
+  "windowStart": "2026-10-05",
+  "windowEnd": "2026-10-11",
   "status": "ok",
-  "lastCompleteAt": "2026-10-10T07:03:01+09:00",
+  "lastCompleteAt": "2026-10-12T07:03:30+09:00",
   "coverage": [
+    {
+      "date": "2026-10-11",
+      "status": "ok",
+      "rows": 0,
+      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261011.html"
+    },
+    {
+      "date": "2026-10-10",
+      "status": "ok",
+      "rows": 0,
+      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261010.html"
+    },
     {
       "date": "2026-10-09",
       "status": "ok",
@@ -35,18 +47,6 @@
       "status": "ok",
       "rows": 198,
       "source": "https://www.release.tdnet.info/inbs/I_list_001_20261005.html"
-    },
-    {
-      "date": "2026-10-04",
-      "status": "ok",
-      "rows": 0,
-      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261004.html"
-    },
-    {
-      "date": "2026-10-03",
-      "status": "ok",
-      "rows": 0,
-      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261003.html"
     }
   ],
   "scope": "TDnet公開一覧。IR専用発表・EDINET・Xは網羅しない。見出し分類は方向や割安性の判定ではない。",
