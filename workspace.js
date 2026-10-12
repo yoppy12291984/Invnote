@@ -97,6 +97,11 @@ function syncWorkspace(){
 }
 const initialData=JSON.parse(JSON.stringify(D));
 function validBundle(d){
+ if(d?.purchaseRanking!=null){
+  const p=d.purchaseRanking;
+  if(!p||typeof p.date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(p.date)||!['scope','caution'].every(k=>typeof p[k]==='string')||!Array.isArray(p.rows))return false;
+  const codes=new Set();for(const row of p.rows){if(!row||!/^[0-9A-Z]{4,5}$/.test(row.code)||typeof row.reason!=='string'||codes.has(row.code))return false;codes.add(row.code);}
+ }
  if(d?.companyProfiles!==undefined){
   const ps=d.companyProfiles,day=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x),url=x=>typeof x==='string'&&/^https:\/\//.test(x);
   if(!ps||typeof ps!=='object'||Array.isArray(ps))return false;
@@ -289,7 +294,7 @@ paintAppearance();embedded('inv','vPf');route();
 function installFeatureSwipe(root,onSwipe){
  let start=null,suppressUntil=0;
  root.addEventListener('touchstart',e=>{
-  start=null;if(e.touches.length!==1||e.target.closest('input,textarea,select,[contenteditable="true"],canvas'))return;
+  start=null;if(e.touches.length!==1||e.target.closest('input,textarea,select,[contenteditable="true"],[data-no-feature-swipe],canvas'))return;
   for(let el=e.target;el&&el!==root;el=el.parentElement){if(el.scrollWidth>el.clientWidth+2&&['auto','scroll'].includes(getComputedStyle(el).overflowX))return;}
   const t=e.touches[0];start={x:t.clientX,y:t.clientY,time:Date.now()};
  },{passive:true});
