@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=f0bc883c96c2"><script src="workspace-frame.js?v=f0bc883c96c2"></script></head>
+</style><link rel="stylesheet" href="workspace.css?v=7193893e5f55"><script src="workspace-frame.js?v=7193893e5f55"></script></head>
 <body>
 <div id="app">
 <header><h1 class="wm"><a href="/Invnote/screener/">Screener</a><span>/</span><b>Invnote</b><small id="ver"></small></h1><span style="flex:1"></span><button id="syncBtn" aria-label="同期"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M4 12a8 8 0 0 1 13.7-5.6"/><path d="M17.7 3v3.4h-3.4"/><path d="M6.3 21v-3.4h3.4"/></svg><span>Sync</span></button><button id="impBtn" aria-label="Import"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg><span>Import</span></button><button id="gearBtn" aria-label="設定"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header>
@@ -445,7 +445,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 
 <section id="vPf" class="hide">
   <div id="pfSum" class="set" style="display:flex;gap:16px;flex-wrap:wrap;align-items:baseline"></div>
-  <div class="sub" style="display:flex;align-items:center;gap:10px">保有<span style="flex:1"></span><span class="hint" id="pfDate"></span><button class="chip" id="pfRefresh">株価を更新</button></div><div id="pfList"></div>
+  <div class="sub" style="display:flex;align-items:center;gap:10px">保有<span style="flex:1"></span><span class="hint" id="pfDate"></span><button class="chip" id="pfRefresh">株価を更新</button></div><div id="pfList" data-no-feature-swipe></div>
   <div class="sub">配分</div><div id="pfAlloc" class="set"></div>
   <div class="sub" style="display:flex;align-items:center;gap:10px">推移<span style="flex:1"></span><span class="seg" id="chSeg"><button data-c="pl" class="on">含み損益</button><button data-c="val">評価額</button><button data-c="topix">vs TOPIX</button></span></div>
   <div id="pfChart" class="set"></div>
@@ -470,11 +470,11 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
   </div>
 </section>
 
-<section id="vCal" class="hide"><div id="calendarTodos"></div><h3 class="investment-heading">投資カレンダー</h3>
+<section id="vCal" class="hide"><div id="calendarTodos"></div><section class="investment-upcoming"><h3 class="investment-heading">直近のイベント</h3><div id="investmentUpcoming"></div></section><h3 class="investment-heading">投資カレンダー</h3>
   <div class="mnav"><button id="mPrev">‹</button><span class="mm" id="mTitle"></span><button id="mNext">›</button><span class="seg" id="calSeg"><button data-m="month" class="on">月</button><button data-m="list">リスト</button></span></div>
   <div id="calGrid" class="grid" style="margin-bottom:12px"></div>
   <div class="evadd"><input type="date" id="evDate"><input class="tt" id="evTitle" placeholder="内容（コードを含めると銘柄に紐づく）"><button class="btn" id="evAdd">追加</button></div>
-  <div id="evList"></div><section class="investment-upcoming"><h3 class="investment-heading">直近のイベント</h3><div id="investmentUpcoming"></div></section>
+  <div id="evList"></div>
   <div class="set" style="margin-top:18px"><h3>まとめて取り込む</h3>
     <p class="hint" style="margin-bottom:6px">1行1件。「2026/10/30 決算 6136 OSG」「10月30日 OSG決算」「10/30 日銀会合」など日付は自動判定。</p>
     <textarea class="aiin" id="evBulk" placeholder="2026/10/30 決算 6136 OSG&#10;11/6 決算 7013 IHI"></textarea>
@@ -1539,7 +1539,7 @@ $("#rulesEdit").addEventListener("click",()=>{if(rulesEditing){const t=$("#rules
 /* ---------- swipe ---------- */
 const ORDER=()=>tabOrder().filter(v=>!tabDef(v).url);
 let sx=0,sy=0,sw=false;
-document.addEventListener("touchstart",e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;sw=!e.target.closest("input,select,.chips,nav#tabs,.tblwrap")&&!(e.target.closest("textarea")&&!e.target.closest("#diaryBox"))},{passive:true});
+document.addEventListener("touchstart",e=>{const t=e.touches[0];sx=t.clientX;sy=t.clientY;sw=!e.target.closest("input,select,.chips,nav#tabs,.tblwrap,[data-no-feature-swipe]")&&!(e.target.closest("textarea")&&!e.target.closest("#diaryBox"))},{passive:true});
 document.addEventListener("touchend",e=>{if(!sw)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(Math.abs(dx)<70||Math.abs(dy)>50)return;
   if(view==="vDiary"&&e.target.closest("#diaryBox,.dnav,#diaryGrid")){clearTimeout(dT);diarySave();dCur=shiftDay(dCur,dx<0?1:-1);renderDiary();return}
   if(view==="vDiary"&&e.target.closest("#diaryTable")){dtM=shiftM(dtM,dx<0?1:-1);renderDiaryTable();return}
