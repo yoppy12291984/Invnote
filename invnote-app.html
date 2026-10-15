@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=d17ece311764"><script src="workspace-frame.js?v=d17ece311764"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=ce31000c6d14"><script src="workspace-frame.js?v=ce31000c6d14"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -1810,6 +1810,35 @@ function initTodos(){
 /* Runs inside the original, authenticated Invnote application scope. */
 const workspaceMode=parent!==window&&new URLSearchParams(location.search).get('workspace')==='1';
 let workspaceOpening=false;
+// Research-only import: no file-picker dependency and no portfolio/settings mutation.
+function researchImportRecord(text,state,validate){
+ if(text.length>12000000)throw Error('研究データが大きすぎます。');
+ const d=JSON.parse(text),id='investment-research-bundle-v1';
+ if(!d||Object.keys(d).some(k=>k!=='notes')||!Array.isArray(d.notes)||d.notes.length!==1)throw Error('研究専用JSONを貼り付けてください。');
+ const n=d.notes[0];
+ if(n?.id!==id||n.kind!==id||typeof n.text!=='string'||typeof n.researchHash!=='string'||!/^[a-f0-9]{64}$/.test(n.researchHash)||!Number.isFinite(n.ts)||!Number.isFinite(n.edited)||!validate(n.researchBundle))throw Error('研究データの形式を確認してください。');
+ if((state.deleted||[]).includes(id))throw Error('この研究データは削除済みです。復元方針を確認してください。');
+ const old=state.notes.find(x=>x.id===id);
+ if(old?.researchHash===n.researchHash)return {notes:state.notes,changed:false};
+ if(old&&(old.edited||old.ts)>=n.edited)throw Error('端末の研究データの方が新しいため、取り込みませんでした。');
+ return {notes:[...state.notes.filter(x=>x.id!==id),n].sort((a,b)=>b.ts-a.ts),changed:true};
+}
+function installResearchPaste(){
+ const host=document.querySelector('#impJson')?.closest('.set');if(!host)return;
+ const panel=document.createElement('details');panel.className='workspace-advanced';
+ panel.innerHTML='<summary>研究データを貼り付けて取り込む</summary><p class="hint">四季報・採点・News・ランキング専用。ファイル選択が開かないときにも使えます。保有や接続設定は変更しません。</p><label for="researchPaste">研究データJSON</label><textarea id="researchPaste" rows="5" spellcheck="false" autocomplete="off" style="width:100%;box-sizing:border-box;font-size:16px"></textarea><button class="btn" id="researchPasteApply">研究データを取り込む</button><p role="status" id="researchPasteStatus"></p>';
+ host.append(panel);
+ panel.querySelector('button').onclick=()=>{
+  const input=panel.querySelector('textarea'),status=panel.querySelector('[role=status]');
+  const before=S.notes;
+  try{
+   if(S.restorePending||document.documentElement.classList.contains('suite-locked'))throw Error('端末の登録・復元を完了してから取り込んでください。');
+   const result=researchImportRecord(input.value,S,parent.validBundle);
+   if(result.changed){S.notes=result.notes;save(true);render();}
+   input.value='';workspacePublish();status.textContent=result.changed?'研究データを端末に保存しました。上部の同期で他の端末へ反映できます。':'同じ研究データは取り込み済みです。';
+  }catch(e){S.notes=before;status.textContent=e instanceof SyntaxError?'JSONとして読み取れません。内容を確認してください。':e.message;}
+ };
+}
 function workspacePublish(){
  if(!workspaceMode)return;
  const bundle=S.notes.filter(n=>n.kind==='investment-research-bundle-v1'&&n.researchBundle).sort((a,b)=>(b.edited||b.ts)-(a.edited||a.ts))[0];
@@ -1823,6 +1852,7 @@ function workspaceGo(){
  else if(allowed.includes(h))show(h);
 }
 if(workspaceMode){
+ installResearchPaste();
  const css=document.createElement('style');css.textContent='#tabs,header .wm{display:none!important}.app{max-width:none!important}';document.head.append(css);
  window.addEventListener('hashchange',workspaceGo);
  window.addEventListener('message',async e=>{
