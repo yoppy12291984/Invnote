@@ -257,6 +257,7 @@ route=function(){
  document.getElementById('feature-reload-help')?.remove();
  const oldBar=app.querySelector('.workspace-tabs');if(oldBar)tabPositions.set(oldBar.dataset.area,oldBar.scrollLeft);
  const h=location.hash.slice(1);
+ if(h==='discover/scr:catalyst'||h==='discover/scr:macro'){location.replace('#review/'+h.split('/')[1]);return;}
  if(h==='discover/inv:vHot'){location.replace('#notebook/inv:vHot');return;}
  if(h==='notebook/inv:vSet'){location.replace('#settings');return;}
  if(h==='notebook/inv:vImport'){location.replace('#import');return;}
@@ -286,6 +287,7 @@ route=function(){
  restoreTabPosition();
  paintAppearance();
  renderUpdateHealth();
+ renderNewsMacro();
  window.scrollTo(0,0);
 };
 // Replace the original event listener; otherwise an old route can overwrite settings.
@@ -348,3 +350,16 @@ function preloadScreener(){
 }
 if('requestIdleCallback' in window)requestIdleCallback(preloadScreener,{timeout:1200});
 else setTimeout(preloadScreener,300);
+
+async function renderNewsMacro(){
+ const el=document.getElementById('news-macro');if(!el)return;
+ const fmt=v=>{const d=new Date(v);return Number.isFinite(+d)?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(d):'未取得';};
+ try{
+  const [data,engine,configModule]=await Promise.all([fetch('screener/data/macro.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json();}),import('./screener/macro-engine.js?v=2.18'),import('./screener/macro-config.js?v=2.18')]);
+  if(!el.isConnected)return;
+  let config=configModule.DEFAULTS;try{const v=localStorage.getItem('screener_macro_config_v2');if(v)config=configModule.validateConfig(JSON.parse(v));}catch{}
+  const r=engine.classifyRegime(data.items,Date.now(),config),dates=data.items.filter(x=>x.frequency==='daily'&&x.date).map(x=>x.date).sort(),monthly=data.items.filter(x=>x.frequency==='monthly'&&x.date).map(x=>x.date.slice(0,7)),bad=data.items.filter(x=>x.status!=='fresh');
+  const age=Date.now()-Date.parse(data.generated_at),late=!Number.isFinite(age)||age>36*3600000;
+  el.innerHTML=`<details class="news-story"><summary><span class="news-category">MARKET · 自動判定</span><span class="news-headline">${esc(r.label)}${late?' · 更新待ち':''}</span><span class="news-expand">＋</span></summary><div class="news-body"><p>${esc(r.reason)}</p><p>最終取得処理：${esc(fmt(data.generated_at))} 日本時間 · 毎朝7時</p><p>日次指標：${esc(dates[0]||'未取得')}〜${esc(dates.at(-1)||'未取得')}<br>月次統計：${esc([...new Set(monthly)].join(' / ')||'未取得')}</p><p>${late?'取得処理が古いため、直近の変動を反映していない可能性があります。':''}${bad.length?esc(bad.map(x=>x.name).join('・'))+'は未取得または保存値です。':''}</p><p>${esc(r.actions)}</p><small>取得可能な指標による暫定判定。発表直後のニュース、企業利益、日本市場全体の需給は別途調査します。灰は安全の意味ではありません。</small><p><a href="#review/scr:macro">指標と判定根拠</a> · <a href="#review/history">月次分類の履歴</a></p></div></details>`;
+ }catch{if(el.isConnected)el.innerHTML='<p class="muted">市場環境を取得できません。自動判定は未確認です。</p>';}
+}
