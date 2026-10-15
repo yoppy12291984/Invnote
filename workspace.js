@@ -97,6 +97,11 @@ function syncWorkspace(){
 }
 const initialData=JSON.parse(JSON.stringify(D));
 function validBundle(d){
+ if(d?.kiyoharaRanking!=null){
+  const p=d.kiyoharaRanking;
+  if(!p||!['date','priceDate','scope','caution'].every(k=>typeof p[k]==='string')||!Array.isArray(p.rows)||p.rows.length>3)return false;
+  const codes=new Set();for(const x of p.rows){if(!x||!/^[0-9A-Z]{4,5}$/.test(x.code)||codes.has(x.code)||!['name','reason','detail','counter','next','evidence_confidence'].every(k=>typeof x[k]==='string')||![x.short_3m,x.long_12m].every(v=>Number.isInteger(v)&&v>=1&&v<=10))return false;codes.add(x.code);}
+ }
  if(d?.purchaseRanking!=null){
   const p=d.purchaseRanking;
   if(!p||typeof p.date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(p.date)||!['scope','caution'].every(k=>typeof p[k]==='string')||!Array.isArray(p.rows))return false;
@@ -377,7 +382,10 @@ async function renderNewsMacro(){
 
 async function renderMethodRankings(){
  const el=document.getElementById('method-rankings');if(!el)return;
+ const privateRank=D.kiyoharaRanking;
+ const privateHTML=privateRank?.rows?.length?'<h2>清原式 · 個社調査 TOP 3</h2>'+`<p class="muted">調査 ${esc(privateRank.date)} · ${esc(privateRank.priceDate)}終値基準<br>${esc(privateRank.scope)}</p><p class="muted">${esc(privateRank.caution)}</p>`+privateRank.rows.map((x,i)=>`<details class="card"><summary>${i+1}位 ${esc(x.name)} · ${esc(x.code)}</summary><p>${esc(x.detail)}</p><p>3か月 ${x.short_3m}/10 · 12か月 ${x.long_12m}/10 · 根拠 ${esc(x.evidence_confidence)}</p><p>${esc(x.reason)}</p><p><b>反証</b> ${esc(x.counter)}</p><p><b>次の確認</b> ${esc(x.next)}</p><p>個社研究順位は今回から比較開始。旧NC順位との上下比較はしません。</p><button class="open" data-company="${esc(x.code)}">会社の調査を読む</button></details>`).join(''):'';
+ el.innerHTML=privateHTML;
  try{const r=await fetch('screener/data/method-rankings.json',{cache:'no-store'});if(!r.ok)throw Error();const d=await r.json();if(!el.isConnected)return;
- el.innerHTML='<h2>手法別 TOP 3</h2><p class="muted">既存スクリーニング順。購入推奨や個社精査の順位とは別です。</p>'+d.groups.map(g=>`<details class="card"><summary>${esc(g.name)} · ${esc(g.priceDate)} 終値基準</summary><p>${esc(g.rule)} · 前回 ${esc(g.previousDate||'比較開始')}</p>${g.rows.map((x,i)=>`<p><b>${i+1}位 ${esc(x.name)}（${esc(x.code)}）</b><br>${x.previousRank==null?'初登場／比較開始':x.previousRank===i+1?'→ 据置':x.previousRank>i+1?'↑ '+(x.previousRank-i-1):'↓ '+(i+1-x.previousRank)} · ${esc(x.detail)}</p>`).join('')}<a href="#discover/scr:${g.route}">一覧と根拠を見る</a></details>`).join('')+'<h2>総合 TOP 10</h2>';
- }catch{if(el.isConnected)el.textContent='手法別順位は取得できませんでした。';}
+ el.innerHTML=privateHTML+'<h2>手法別スクリーニング TOP 3</h2><p class="muted">以下は既存抽出順。個社調査による清原式の順位とは別です。</p>'+d.groups.filter(g=>!(privateHTML&&g.route==='cand')).map(g=>`<details class="card"><summary>${esc(g.name)} · ${esc(g.priceDate)} 終値基準</summary><p>${esc(g.rule)} · 前回 ${esc(g.previousDate||'比較開始')}</p>${g.rows.map((x,i)=>`<p><b>${i+1}位 ${esc(x.name)}（${esc(x.code)}）</b><br>${x.previousRank==null?'初登場／比較開始':x.previousRank===i+1?'→ 据置':x.previousRank>i+1?'↑ '+(x.previousRank-i-1):'↓ '+(i+1-x.previousRank)} · ${esc(x.detail)}</p>`).join('')}<a href="#discover/scr:${g.route}">一覧と根拠を見る</a></details>`).join('')+'<h2>総合 TOP 10</h2>';
+ }catch{if(el.isConnected)el.innerHTML=privateHTML+'<p>スクリーニング順位は取得できませんでした。</p><h2>総合 TOP 10</h2>';}
 }
