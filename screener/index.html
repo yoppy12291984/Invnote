@@ -378,7 +378,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     $('#tabs').innerHTML=order.map(v=>`<button data-tab="${v}"${v===view?' class="on"':''}>${esc(tabTitle(v))}</button>`).join('');
     TABS.forEach(t=>{const s=document.getElementById(t.v); if(s) s.hidden=(t.v!==view);});
   }
-  function show(v){if(!visibleTab(v))return;view=v;renderTabs();window.scrollTo(0,0);}
+  function show(v){if(!visibleTab(v))return;view=v;renderTabs();window.screenerRefreshMeta?.();window.scrollTo(0,0);}
   window.addEventListener('hashchange',()=>{const tab=location.hash.slice(1);if(visibleTab(tab))show(tab);});
   document.addEventListener('click',e=>{const a=e.target.closest('[data-workspace-company]');if(workspaceMode&&a){e.preventDefault();parent.postMessage({type:'screener:company',code:a.dataset.workspaceCompany},location.origin);}});
   $('#tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b)show(b.dataset.tab);});
@@ -503,9 +503,16 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
   /* header */
   $('#ver').textContent=`v${VER}　${cand.date}`;
-  $('#stat').textContent=`更新 ${index.updated}`;
+  const metaDate=value=>{const t=String(value||'');return /^\d{8}$/.test(t)?t.slice(0,4)+'-'+t.slice(4,6)+'-'+t.slice(6):/^\d{4}-\d{2}-\d{2}/.test(t)?t.slice(0,10):'未確認';};
+  window.screenerRefreshMeta=()=>{
+    const data={cand:cand,reb:reb,cs:cs,theme:themes,radar:rad,status:status,rec:rec}[view];
+    $('#stat').textContent=data?'データ日 '+metaDate(data.date||data.as_of||data.generated_at||data.updated):'';
+    if(workspaceMode)parent.postMessage({type:'workspace:meta',kind:'scr',text:$('#stat').textContent},location.origin);
+  };
+  window.screenerRefreshMeta();
   const c=index.cycle||{};
-  $('#cycle').innerHTML=`<b>${esc(c.M)} ${esc(c.label)}</b>（${esc(c.month)}）　FF ${fmt(c.ff)}%　失業率 ${fmt(c.unrate,1)}%　10-2y ${fmt(c.spread10_2)}　VIX <b>${fmt(c.vix,1)}</b>`;
+  $('#cycle').innerHTML=`<details><summary>過去の相場分類（${esc(c.month||'対象月不明')}）</summary><p>${esc(c.label||'未確認')}：分類コード ${esc(c.M||'—')}。銘柄一覧のデータ日とは別の、過去の月次判定です。現在の相場判断には使わず、最新の指標はマクロ画面で確認してください。</p><p>当時の記録：米政策金利 ${fmt(c.ff)}% ／ 失業率 ${fmt(c.unrate,1)}% ／ 米10年−2年金利差 ${fmt(c.spread10_2)} ／ VIX ${fmt(c.vix,1)}</p></details>`;
+
 
   /* candidates */
   const filt={small:false,thin:false,proposal:false};
