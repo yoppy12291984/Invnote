@@ -617,7 +617,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   renderCs();
 
   /* 反転（大型の急落からの立ち上がり） */
-  let rebKey='dd2y',rebDesc=false;
+  let rebKey=reb.method==='halfprice-double-bottom-15-30-v1'?'rank':'dd2y',rebDesc=false;
   const rebRows=$('#rebBody');
   function renderReb(){
     $('#rebNote').textContent=(reb.date?'データ日 '+reb.date+' ／ ':'')+(reb.note||'観察リストです。機械的に買うと検証では負けます（リフト0.67）。最終判断は自分で。');
@@ -630,7 +630,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     rebRows.innerHTML=items.map(x=>{
       const big=x.mcap_oku>=5000, above=x.ma200!=null&&x.ma200>=0;
       return `<tr class="r${big?' big':''}${above?' above':''}" data-code="${esc(x.code)}">
-      <td class="nm"><b>${esc(x.name)}</b><small>${esc(x.code)}　${fmt(x.price,0)}円</small></td>
+      <td class="nm"><b>${esc(x.name)}</b><small>${esc(x.code)}　${fmt(x.price,0)}円</small>${x.stage?`<small>${esc(x.stage)} · ${esc(x.fundamental)}</small>`:''}</td>
       <td class="nc">${fmt(x.dd2y,0)}%</td>
       <td class="mu">${x.dd6m==null?'—':fmt(x.dd6m,0)+'%'}</td>
       <td class="mu">${x.ma50>=0?'+':''}${fmt(x.ma50,0)}%</td>
@@ -646,6 +646,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     const x=(reb.items||[]).find(i=>i.code===tr.dataset.code);
     const d=document.createElement('tr'); d.className='detail';
     d.innerHTML=`<td colspan="6">${linkRow(x.code)}<div class="meta">${x.ma200!=null&&x.ma200>=0?'200日線の上＝ステージ2入り（確認）':'200日線の下＝ステージ1後半（先行）'}${x.mcap_oku>=5000?'　／　時価総額5000億以上':''}<br>2年高値から${fmt(x.dd2y,0)}%${x.dd6m!=null?`　半年高値から${fmt(x.dd6m,0)}%`:''}　50日線比${x.ma50>=0?'+':''}${fmt(x.ma50,0)}%</div></td>`;
+    if(x.stage)d.innerHTML=`<td colspan="6">${linkRow(x.code)}<div class="meta">${esc(x.stage)}／${esc(x.reason)}<br>底から${esc(x.bottomAge)}営業日／戻り${fmt(x.reboundPct,1)}%／出来高は前20日平均の${fmt(x.volumeRatio,2)}倍<br>${esc(reb.rankingRule)}<br>${esc(reb.scope)}</div></td>`;
     tr.after(d);
   });
   $('#reb').querySelectorAll('thead th').forEach(th=>th.addEventListener('click',()=>{
