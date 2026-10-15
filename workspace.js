@@ -363,3 +363,10 @@ async function renderNewsMacro(){
   el.innerHTML=`<details class="news-story"><summary><span class="news-category">MARKET · 自動判定</span><span class="news-headline">${esc(r.label)}${late?' · 更新待ち':''}</span><span class="news-expand">＋</span></summary><div class="news-body"><p>${esc(r.reason)}</p><p>最終取得処理：${esc(fmt(data.generated_at))} 日本時間 · 毎朝7時</p><p>日次指標：${esc(dates[0]||'未取得')}〜${esc(dates.at(-1)||'未取得')}<br>月次統計：${esc([...new Set(monthly)].join(' / ')||'未取得')}</p><p>${late?'取得処理が古いため、直近の変動を反映していない可能性があります。':''}${bad.length?esc(bad.map(x=>x.name).join('・'))+'は未取得または保存値です。':''}</p><p>${esc(r.actions)}</p><small>取得可能な指標による暫定判定。発表直後のニュース、企業利益、日本市場全体の需給は別途調査します。灰は安全の意味ではありません。</small><p><a href="#review/scr:macro">指標と判定根拠</a> · <a href="#review/history">月次分類の履歴</a></p></div></details>`;
  }catch{if(el.isConnected)el.innerHTML='<p class="muted">市場環境を取得できません。自動判定は未確認です。</p>';}
 }
+
+async function renderMethodRankings(){
+ const el=document.getElementById('method-rankings');if(!el)return;
+ try{const r=await fetch('screener/data/method-rankings.json',{cache:'no-store'});if(!r.ok)throw Error();const d=await r.json();if(!el.isConnected)return;
+ el.innerHTML='<h2>手法別 TOP 3</h2><p class="muted">既存スクリーニング順。購入推奨や個社精査の順位とは別です。</p>'+d.groups.map(g=>`<details class="card"><summary>${esc(g.name)} · ${esc(g.priceDate)} 終値基準</summary><p>${esc(g.rule)} · 前回 ${esc(g.previousDate||'比較開始')}</p>${g.rows.map((x,i)=>`<p><b>${i+1}位 ${esc(x.name)}（${esc(x.code)}）</b><br>${x.previousRank==null?'初登場／比較開始':x.previousRank===i+1?'→ 据置':x.previousRank>i+1?'↑ '+(x.previousRank-i-1):'↓ '+(i+1-x.previousRank)} · ${esc(x.detail)}</p>`).join('')}<a href="#discover/scr:${g.route}">一覧と根拠を見る</a></details>`).join('')+'<h2>総合 TOP 10</h2>';
+ }catch{if(el.isConnected)el.textContent='手法別順位は取得できませんでした。';}
+}
