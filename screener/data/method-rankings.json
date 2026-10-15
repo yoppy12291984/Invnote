@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-15",
+  "groups": [
+    {
+      "name": "清原式",
+      "route": "cand",
+      "rule": "NC比率の高い順。保存済みBSを使用。",
+      "priceDate": "2026-10-14",
+      "previousDate": null,
+      "rows": [
+        {
+          "code": "6269",
+          "name": "三井海洋開発",
+          "detail": "nc: 2.88",
+          "previousRank": null
+        },
+        {
+          "code": "6619",
+          "name": "ダブル・スコープ",
+          "detail": "nc: 2.02",
+          "previousRank": null
+        },
+        {
+          "code": "8011",
+          "name": "三陽商会",
+          "detail": "nc: 1.68",
+          "previousRank": null
+        }
+      ]
+    },
+    {
+      "name": "逆張り",
+      "route": "reb",
+      "rule": "2年高値からの下落率が大きい順。反転の確度ではありません。",
+      "priceDate": "2026-10-14",
+      "previousDate": null,
+      "rows": [
+        {
+          "code": "3350",
+          "name": "メタプラネット",
+          "detail": "dd2y: -85.0",
+          "previousRank": null
+        },
+        {
+          "code": "4819",
+          "name": "デジタルガレージ",
+          "detail": "dd2y: -53.0",
+          "previousRank": null
+        },
+        {
+          "code": "5032",
+          "name": "ＡＮＹＣＯＬＯＲ",
+          "detail": "dd2y: -53.0",
+          "previousRank": null
+        }
+      ]
+    },
+    {
+      "name": "CAN-SLIM",
+      "route": "cs",
+      "rule": "既存スコア順（各区分を含む）。区分と買い条件は別途確認。",
+      "priceDate": "2026-10-14",
+      "previousDate": null,
+      "rows": [
+        {
+          "code": "2810",
+          "name": "ハウス食品グループ本社",
+          "detail": "score: 98.76 · S2初期",
+          "previousRank": null
+        },
+        {
+          "code": "8876",
+          "name": "リログループ",
+          "detail": "score: 95.18 · S2初期",
+          "previousRank": null
+        },
+        {
+          "code": "2371",
+          "name": "カカクコム",
+          "detail": "score: 94.58 · S2初期",
+          "previousRank": null
+        }
+      ]
+    }
+  ]
+}
