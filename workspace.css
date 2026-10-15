@@ -191,3 +191,6 @@ nav[aria-label="メインナビゲーション"][hidden]{display:none!important}
 .company-facts{margin:16px 0;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .company-facts-main{display:flex;flex-wrap:wrap;gap:12px 28px}.company-facts-main>span{display:grid;gap:4px;font-size:12px}.company-facts-main strong{font-size:19px;font-weight:600}.company-index-tags{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.company-index-tags>span{font-size:11px;border:1px solid var(--line);border-radius:5px;padding:4px 7px}.company-facts details{font-size:12px;color:var(--muted)}.company-facts details summary{cursor:pointer}.company-facts details p{font-size:12px;margin:8px 0}
 
+
+/* Prominent date dividers in News and Archive. */
+.news-date{font-size:17px;font-weight:700;letter-spacing:.08em;color:var(--ink);border-left:4px solid var(--green);border-bottom:1px solid var(--line);background:var(--paper);padding:12px 16px;margin:30px 0 8px;border-radius:0 8px 8px 0;line-height:1.4}
