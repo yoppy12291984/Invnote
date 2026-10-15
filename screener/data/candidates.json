@@ -50,8 +50,8 @@
    "dividend_yield": null,
    "dividend_forecast": null,
    "dividend_disclosed": "2026-08-21",
-   "dividend_fy_end": null,
-   "dividend_note": "会社予想未確認"
+   "dividend_fy_end": "2027-03-31",
+   "dividend_note": "株式分割・併合後の配当基準を確認待ち"
   },
   {
    "code": "5408",
@@ -175,11 +175,11 @@
    "turnover_oku": 3.3,
    "bs_date": "2026-08-05",
    "ma200_slope_improvement": -3.710298737266049,
-   "dividend_yield": null,
-   "dividend_forecast": null,
+   "dividend_yield": 3.48,
+   "dividend_forecast": 20.0,
    "dividend_disclosed": "2026-09-24",
-   "dividend_fy_end": null,
-   "dividend_note": "会社予想未確認"
+   "dividend_fy_end": "2027-03-31",
+   "dividend_note": "会社予想年間配当 ÷ 基準日終値（税引前）"
   },
   {
    "code": "3932",
@@ -226,7 +226,7 @@
    "dividend_yield": null,
    "dividend_forecast": null,
    "dividend_disclosed": "2026-08-06",
-   "dividend_fy_end": null,
+   "dividend_fy_end": "2026-12-31",
    "dividend_note": "会社予想未確認"
   },
   {
@@ -274,7 +274,7 @@
    "dividend_yield": null,
    "dividend_forecast": null,
    "dividend_disclosed": "2026-09-29",
-   "dividend_fy_end": null,
+   "dividend_fy_end": "2027-03-31",
    "dividend_note": "会社予想未確認"
   },
   {
@@ -530,7 +530,7 @@
    "dividend_yield": null,
    "dividend_forecast": null,
    "dividend_disclosed": "2026-09-28",
-   "dividend_fy_end": null,
+   "dividend_fy_end": "2027-06-30",
    "dividend_note": "会社予想未確認"
   },
   {
@@ -866,7 +866,7 @@
    "dividend_yield": null,
    "dividend_forecast": null,
    "dividend_disclosed": "2026-08-28",
-   "dividend_fy_end": null,
+   "dividend_fy_end": "2026-09-30",
    "dividend_note": "会社予想未確認"
   },
   {
@@ -879,11 +879,11 @@
    "turnover_oku": 1.53,
    "bs_date": "2026-07-31",
    "ma200_slope_improvement": 0.4702684980647742,
-   "dividend_yield": null,
-   "dividend_forecast": null,
+   "dividend_yield": 3.14,
+   "dividend_forecast": 20.0,
    "dividend_disclosed": "2026-10-09",
-   "dividend_fy_end": null,
-   "dividend_note": "会社予想未確認"
+   "dividend_fy_end": "2027-03-31",
+   "dividend_note": "会社予想年間配当 ÷ 基準日終値（税引前）"
   },
   {
    "code": "2130",
@@ -898,7 +898,7 @@
    "dividend_yield": null,
    "dividend_forecast": null,
    "dividend_disclosed": "2026-09-30",
-   "dividend_fy_end": null,
+   "dividend_fy_end": "2027-03-31",
    "dividend_note": "会社予想未確認"
   },
   {
@@ -950,5 +950,5 @@
    "dividend_note": "会社予想年間配当 ÷ 基準日終値（税引前）"
   }
  ],
- "generatedAt": "2026-10-15T13:32:02.113545+09:00"
+ "generatedAt": "2026-10-15T13:34:37.574972+09:00"
 }
