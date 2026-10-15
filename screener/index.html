@@ -254,6 +254,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
       <th data-k="name">銘柄</th>
       <th data-k="nc" aria-sort="descending">NC比率</th>
       <th data-k="pbr">PBR</th>
+      <th data-k="dividend_yield">予想配当利回り</th>
       <th data-k="ma200_slope_improvement">200MA改善度</th>
       <th data-k="mcap_oku">時価総額</th>
       <th data-k="turnover_oku">売買代金</th>
@@ -534,11 +535,12 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     let items=cand.items.filter(x=>(!filt.small||x.mcap_oku<=500)&&(!filt.thin||(x.turnover_oku>=1&&x.turnover_oku<=5))&&(!filt.proposal||proposal.has(x.code)));
     items.sort((a,b)=>{const va=a[sortKey],vb=b[sortKey];if(va==null)return vb==null?0:1;if(vb==null)return -1;const r=typeof va==='string'?va.localeCompare(vb,'ja'):(va-vb);return sortDesc?-r:r;});
     $('#candCount').textContent=`${items.length} / ${cand.count}`;
-    if(!items.length){rows.innerHTML='<tr><td colspan="6" class="empty">条件に合う銘柄がありません</td></tr>';return;}
+    if(!items.length){rows.innerHTML='<tr><td colspan="7" class="empty">条件に合う銘柄がありません</td></tr>';return;}
     rows.innerHTML=items.map(x=>`<tr class="r mark-${markFor(x.code)}" data-code="${esc(x.code)}">
       <td class="nm"><b>${esc(x.name)}</b><small>${esc(x.code)}　${fmt(x.price,0)}円</small>${proposal.has(x.code)?'<span class="pick-label">提案10社 · 9/13</span>':''}${Object.hasOwn(marks,x.code)?`<span class="pick-label">自分の色：${markLabels[marks[x.code]]}</span>`:''}</td>
       <td class="nc">${fmt(x.nc)}</td>
       <td class="mu">${fmt(x.pbr)}</td>
+      <td class="mu">${x.dividend_yield==null?'—':fmt(x.dividend_yield,2)+'%'}</td>
       <td class="mu">${improvementText(x.ma200_slope_improvement)}</td>
       <td class="mu">${fmt(x.mcap_oku,0)}億</td>
       <td class="mu">${fmt(x.turnover_oku,1)}億</td></tr>`).join('');
@@ -562,7 +564,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
     if(open) return;
     const x=cand.items.find(i=>i.code===tr.dataset.code);
     const d=document.createElement('tr'); d.className='detail';
-    d.innerHTML=`<td colspan="6">${linkRow(x.code)}<div class="meta">ネットキャッシュ比率 ${fmt(x.nc)}　PBR ${fmt(x.pbr)}　直近BS ${esc(x.bs_date)}　200MA改善度 ${improvementText(x.ma200_slope_improvement)}</div><div class="mark-controls" aria-label="${esc(x.name)}の色">${Object.entries({...markLabels,auto:'初期色に戻す'}).map(([value,label])=>`<button class="mark-${value}" data-mark="${value}" data-code="${esc(x.code)}" aria-pressed="${value===(marks[x.code]||'auto')}">${label}</button>`).join('')}</div></td>`;
+    d.innerHTML=`<td colspan="7">${linkRow(x.code)}<div class="meta">ネットキャッシュ比率 ${fmt(x.nc)}　PBR ${fmt(x.pbr)}　予想年間配当 ${x.dividend_forecast==null?'—':fmt(x.dividend_forecast,2)+'円'}（開示 ${esc(x.dividend_disclosed||'未確認')}／期末 ${esc(x.dividend_fy_end||'未確認')}）　${esc(x.dividend_note||'会社予想未確認')}　直近BS ${esc(x.bs_date)}　200MA改善度 ${improvementText(x.ma200_slope_improvement)}</div><div class="mark-controls" aria-label="${esc(x.name)}の色">${Object.entries({...markLabels,auto:'初期色に戻す'}).map(([value,label])=>`<button class="mark-${value}" data-mark="${value}" data-code="${esc(x.code)}" aria-pressed="${value===(marks[x.code]||'auto')}">${label}</button>`).join('')}</div></td>`;
     tr.after(d);
   });
   $$('#cand thead th').forEach(th=>th.addEventListener('click',()=>{
