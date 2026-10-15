@@ -430,7 +430,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   import('./research-tab.js?v=2.42').then(m=>m.mount(document.getElementById('research'))).catch(()=>{document.getElementById('research').textContent='投資調査を読み込めません。再読込してください。';});
   import('./strategy-comparison.js?v=2.34').then(m=>m.mount(document.getElementById('compare')))
     .catch(()=>{document.getElementById('compare').textContent='戦略比較を読み込めません。再読込してください。';});
-  import('./macro.js?v=2.28').then(m=>m.mountMacro(document.getElementById('macro')))
+  import('./macro.js?v=1.49').then(m=>m.mountMacro(document.getElementById('macro')))
     .catch(()=>{document.getElementById('macro').textContent='マクロ画面を読み込めません。再読込してください。';});
   import('./ideal.js?v=2.28').then(m=>m.mount(document.getElementById('ideal')))
     .catch(()=>{$('#ideal').textContent='理想配分を読み込めません。更新ボタンで再読込してください。';});
@@ -512,7 +512,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   };
   window.screenerRefreshMeta();
   const c=index.cycle||{};
-  $('#cycle').innerHTML=`<details><summary>過去の相場分類（${esc(c.month||'対象月不明')}）</summary><p>${esc(c.label||'未確認')}：分類コード ${esc(c.M||'—')}。銘柄一覧のデータ日とは別の、過去の月次判定です。現在の相場判断には使わず、最新の指標はマクロ画面で確認してください。</p><p>当時の記録：米政策金利 ${fmt(c.ff)}% ／ 失業率 ${fmt(c.unrate,1)}% ／ 米10年−2年金利差 ${fmt(c.spread10_2)} ／ VIX ${fmt(c.vix,1)}</p></details>`;
+  $('#cycle').innerHTML='';
 
 
   /* candidates */

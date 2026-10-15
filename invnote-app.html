@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=28fe51aa8cbe"><script src="workspace-frame.js?v=28fe51aa8cbe"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=431603602069"><script src="workspace-frame.js?v=431603602069"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -424,7 +424,7 @@ function mount(){
  const host=document.querySelector('main');if(!host)return;
  const tabs=host.querySelector('.workspace-tabs');if(!tabs)return;
  if(!el){el=document.createElement('section');el.id='market-agenda';el.className='market-agenda';}
- if(tabs.nextElementSibling!==el)tabs.after(el);
+ const newsEnd=host.querySelector('.news-footer');if(newsEnd){if(newsEnd.previousElementSibling!==el)newsEnd.before(el);}else if(tabs.nextElementSibling!==el)tabs.after(el);
  const now=new Date(),rows=upcoming(now),expired=dateJST(now)>'2026-12-18';
  const body='<div class="market-kicker">MARKET CALENDAR · 日本時間</div>'+(expired?'<p>登録済み日程の対象期間が終了しました。新しい公式日程の確認が必要です。</p>':rows.length?rows.map(e=>'<details><summary><span>'+esc(e.title)+'</span><span class="market-when">'+label(e,now)+' · '+e.date.slice(5).replace('-','/')+'</span></summary><p>'+esc(e.detail)+'</p><small><a href="'+e.source+'" target="_blank" rel="noopener noreferrer">公式日程 ↗</a> · 10/15確認</small></details>').join(''):'<p>今後14日以内の登録済み重要予定はありません。</p>')+'<div class="market-tools"><a href="#today/inv:vCal">カレンダーを見る ↗</a><button type="button" data-market-export>スマホのカレンダーに追加</button></div><small>12/18までの主要予定。アプリ内アラート／端末カレンダー用の7日前・前日通知。通知の有効化は端末側で確認してください。</small>';
  if(el.dataset.day!==dateJST(now)||el.dataset.signature!==rows.map(e=>e.id).join(',')){el.innerHTML=body;el.dataset.day=dateJST(now);el.dataset.signature=rows.map(e=>e.id).join(',');}
