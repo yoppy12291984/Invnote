@@ -15,7 +15,7 @@
   return {state,tone,evidence:`50日線比 ${num(r.ma50)}%、200日線比 ${num(r.ma200)}%。${crossing?`前回比較：${crossing}。`:''}`,missing:'安値の切り上げ・底固めの期間・反発時の出来高は、この一覧データでは未確認。',next:'日足で安値の切り上げと直近戻り高値の突破、上昇時の出来高を確認。直近安値の更新なら底打ち仮説を見直す。'};
  }
  function build(kind,data,diff,today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'})){
-  const date=iso(data.date), monthly=kind==='candidates';
+  const date=iso(data.priceDate||data.date), monthly=false;
   const age=(Date.parse(today)-Date.parse(date))/86400000;
   const stale=!Number.isFinite(age)||age<0||(monthly?date.slice(0,7)!==today.slice(0,7):age>7);
   const rows=[...new Map((data.items||[]).map(r=>[String(r.code),r])).values()];
@@ -44,9 +44,9 @@
    result.selection='表示順：厳密→柔軟→S2初期。同区分では新規追加、続いて既存の表示順位。';
   }else if(kind==='candidates'){
    const changes=diff?.comparison?(diff.added.length+diff.removed.length+diff.changed.length):null;
-   result.headline=changes===0?'前回との変更なし。次の月次抽出を待つ':'月次の入れ替わりと資産の中身を確認';
-   result.action='月次で候補の入れ替わりを確認。気になる会社は、現金・有価証券・負債と直近決算を読む。';
-   result.cards=rows.filter(r=>added.has(String(r.code))).slice(0,2).map(r=>card(r,`月次一覧に新規追加。NC比率 ${num(r.nc)}、PBR ${num(r.pbr)}倍。`,'換金性・負債・赤字による資産流出を一次資料で確認。','低PBR・高NCだけで購入判断はしません。'));
+   result.headline=changes===0?'前回との変更なし。次の週次抽出を待つ':'週次の入れ替わりと資産の中身を確認';
+   result.action='週次で候補の入れ替わりを確認。気になる会社は、現金・有価証券・負債と直近決算を読む。';
+   result.cards=rows.filter(r=>added.has(String(r.code))).slice(0,2).map(r=>card(r,`週次一覧に新規追加。NC比率 ${num(r.nc)}、PBR ${num(r.pbr)}倍。`,'換金性・負債・赤字による資産流出を一次資料で確認。','低PBR・高NCだけで購入判断はしません。'));
    result.selection='新規追加がある場合だけ先頭2社を表示。変更のない月に注目銘柄を無理に作りません。';
   }else if(kind==='catalysts'){
    const changed=new Set((diff?.changed||[]).filter(r=>r.changes.some(c=>['仮説','次の確認','懸念・反証','状態'].includes(c.field))).map(r=>String(r.key)));
