@@ -254,6 +254,7 @@ function renderUpdateHealth(){
 fetch('screener/data/update-health.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(data=>{updateHealth=data;document.getElementById('update-health')?.remove();renderUpdateHealth();}).catch(()=>{updateHealth={unavailable:true};document.getElementById('update-health')?.remove();renderUpdateHealth();});
 const workspaceRoute=route;
 route=function(){
+ document.getElementById('feature-reload-help')?.remove();
  const oldBar=app.querySelector('.workspace-tabs');if(oldBar)tabPositions.set(oldBar.dataset.area,oldBar.scrollLeft);
  const h=location.hash.slice(1);
  if(h==='discover/inv:vHot'){location.replace('#notebook/inv:vHot');return;}
@@ -278,7 +279,7 @@ route=function(){
    const entry=document.createElement('section');entry.className='workspace-setting';entry.innerHTML='<p>購入前に確認したい銘柄を、自分でまとめるリストです。保有中の銘柄も追加できます。</p><p class="muted">登録銘柄を開く →「個人メモ・登録情報」→「購入前リストに追加」を押してください。未登録なら「＋ 銘柄を追加」からコード・名前を登録できます。</p><a class="action" href="#notebook/inv:vStocks">登録銘柄から選ぶ・新しく登録する</a>';app.append(entry);
   }
   if(h==='today/inv:vCal'){app.querySelector('.section-top')?.remove();app.querySelector('.eyebrow')?.remove();app.querySelector('h1')?.remove();}
-  if(h.includes('/scr:')){const heading=app.querySelector('.section-top');if(heading){const meta=document.createElement('p');meta.id='feature-meta';meta.className='muted';meta.style.fontSize='12px';meta.textContent=featureMeta;heading.append(meta);const help=document.createElement('details');help.style.fontSize='12px';const summary=document.createElement('summary');summary.textContent='表示がおかしいとき';help.append(summary);const note=document.createElement('p');note.textContent='公開済みデータを読み直します。株価の取得や銘柄の再計算は行いません。';help.append(note);const b=document.createElement('button');b.className='action';b.textContent='表示を再読み込み';b.onclick=()=>frames.scr.contentWindow.postMessage({type:'workspace:reload'},location.origin);help.append(b);heading.append(help);}}
+  if(h.includes('/scr:')){const heading=app.querySelector('.section-top');if(heading){const meta=document.createElement('p');meta.id='feature-meta';meta.className='muted';meta.style.fontSize='12px';meta.textContent=featureMeta;heading.append(meta);const help=document.createElement('details');help.id='feature-reload-help';help.style.cssText='font-size:12px;margin-top:24px';const summary=document.createElement('summary');summary.textContent='表示がおかしいとき';help.append(summary);const note=document.createElement('p');note.textContent='公開済みデータを読み直します。株価の取得や銘柄の再計算は行いません。';help.append(note);const b=document.createElement('button');b.className='action';b.textContent='表示を再読み込み';b.onclick=()=>frames.scr.contentWindow.postMessage({type:'workspace:reload'},location.origin);help.append(b);frameHost.append(help);}}
  }
  for(const f of Object.values(frames)){f.setAttribute('scrolling','no');if(!f.hidden)f.contentWindow?.postMessage({type:'workspace:measure'},location.origin);}
  actions.querySelectorAll('a').forEach(a=>{if(a.hash===location.hash)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
@@ -343,7 +344,7 @@ function preloadScreener(){
  const url=new URL('screener/index.html',location.href);
  const version=new URL(frames.inv.src).searchParams.get('v');
  url.searchParams.set('workspace','1');if(version)url.searchParams.set('v',version);
- f.src=url.href;frames.scr=f;frameHost.append(f);
+ f.src=url.href;frames.scr=f;frameHost.insertBefore(f,document.getElementById('feature-reload-help'));
 }
 if('requestIdleCallback' in window)requestIdleCallback(preloadScreener,{timeout:1200});
 else setTimeout(preloadScreener,300);
