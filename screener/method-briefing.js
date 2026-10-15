@@ -23,6 +23,14 @@
   const result={date,stale,monthly,headline:'',action:'',cards:[],selection:'',change:diff?.comparison?`${iso(diff.previous_date)} → ${date}：追加${diff.added.length}・除外${diff.removed.length}・変更${diff.changed.length}銘柄`:'前回との比較は未確認です。',notice:stale?'更新待ち：以下は保存済みデータの注目点です。現在の株価・開示を確認してから判断してください。':''};
   const card=(r,why,next,risk)=>({code:String(r.code),name:r.name,why,next,risk});
   if(kind==='rebound'){
+   if(data.method==='halfprice-double-bottom-15-30-v1'){
+    result.headline='大型株の半値・二番底反転を待つ';
+    result.action=data.note;result.selection=data.rankingRule;
+    result.change='旧下落率ランキングから方法変更。旧順位との上下比較はしません。';
+    result.cards=rows.slice(0,3).map(r=>card(r,`${r.stage}。${r.reason}`,'点灯前は待機。点灯後もNAV・正常利益など割安根拠と下落原因を個社確認。','半年超過の優位は未確立。順位は進行順で購入推奨順ではありません。'));
+    if(!rows.length)result.headline='条件に合う監視候補なし（保存データ基準）';
+    return result;
+   }
    const crosses=diff?.comparison?(diff.crossings||[]):[];
    const up=crosses.filter(x=>x.direction==='200日線の上へ'),down=crosses.filter(x=>x.direction==='200日線の下へ');
    result.headline=up.length?`${up[0].name}など${up.length}社、200日線の上へ`:'新規候補の反発が続くかを確認';
