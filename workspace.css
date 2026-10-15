@@ -194,3 +194,15 @@ nav[aria-label="メインナビゲーション"][hidden]{display:none!important}
 
 /* Prominent date dividers in News and Archive. */
 .news-date{font-size:17px;font-weight:700;letter-spacing:.08em;color:var(--ink);border-left:4px solid var(--green);border-bottom:1px solid var(--line);background:var(--paper);padding:12px 16px;margin:30px 0 8px;border-radius:0 8px 8px 0;line-height:1.4}
+
+/* News: restrained navy, blue and warm gold with distinct information roles. */
+:root{--calendar-accent:#9b681e;--market-accent:#315f97;--news-tint:rgba(49,95,151,.055);--calendar-tint:rgba(155,104,30,.05)}
+:root[data-theme="dark"]{--calendar-accent:#e3bd78;--market-accent:#96bde9;--news-tint:rgba(110,155,214,.075);--calendar-tint:rgba(227,189,120,.045)}
+.market-agenda{background:var(--calendar-tint);border-top:2px solid var(--calendar-accent)!important;padding:16px!important;border-radius:10px}
+#news-macro{border-left:3px solid var(--market-accent);background:var(--news-tint);padding:0 16px;border-radius:0 10px 10px 0;margin:20px 0}
+#news-macro .news-category{color:var(--market-accent)}
+.news-date{color:var(--market-accent);border-left-color:var(--market-accent);background:var(--news-tint)}
+.news-masthead{border-bottom-color:var(--market-accent)}
+.news-story[open]{background:var(--news-tint);border-radius:8px}
+.news-body h3{color:var(--market-accent)}
+.news-caution{border-left:3px solid var(--calendar-accent);padding-left:14px}
