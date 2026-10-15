@@ -4,29 +4,11 @@
     {
       "name": "清原式",
       "route": "cand",
-      "rule": "NC比率の高い順。保存済みBSを使用。",
+      "rule": "個社調査による選定を準備中。NC比率だけの順位は撤回しました。資産・本業利益・現在価格・反証を確認して選定します。",
       "priceDate": "2026-10-14",
       "previousDate": null,
-      "rows": [
-        {
-          "code": "6269",
-          "name": "三井海洋開発",
-          "detail": "nc: 2.88",
-          "previousRank": null
-        },
-        {
-          "code": "6619",
-          "name": "ダブル・スコープ",
-          "detail": "nc: 2.02",
-          "previousRank": null
-        },
-        {
-          "code": "8011",
-          "name": "三陽商会",
-          "detail": "nc: 1.68",
-          "previousRank": null
-        }
-      ]
+      "rows": [],
+      "status": "research_pending"
     },
     {
       "name": "逆張り",
