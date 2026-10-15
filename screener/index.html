@@ -506,7 +506,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   const metaDate=value=>{const t=String(value||'');return /^\d{8}$/.test(t)?t.slice(0,4)+'-'+t.slice(4,6)+'-'+t.slice(6):/^\d{4}-\d{2}-\d{2}/.test(t)?t.slice(0,10):'未確認';};
   window.screenerRefreshMeta=()=>{
     const data={cand:cand,reb:reb,cs:cs,theme:themes,radar:rad,status:status,rec:rec}[view];
-    $('#stat').textContent=data?'データ日 '+metaDate(data.date||data.as_of||data.generated_at||data.updated):'';
+    $('#stat').textContent=data?(data.priceDate?'株価基準日 '+metaDate(data.priceDate)+(data.generatedAt?' · 作成 '+metaDate(data.generatedAt):''):'データ日 '+metaDate(data.date||data.as_of||data.generated_at||data.updated))+(data.financialNote?' · '+data.financialNote:''):'';
     if(workspaceMode)parent.postMessage({type:'workspace:meta',kind:'scr',text:$('#stat').textContent},location.origin);
   };
   window.screenerRefreshMeta();
