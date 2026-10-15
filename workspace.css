@@ -198,7 +198,7 @@ nav[aria-label="メインナビゲーション"][hidden]{display:none!important}
 /* News: restrained navy, blue and warm gold with distinct information roles. */
 :root{--calendar-accent:#9b681e;--market-accent:#315f97;--news-tint:rgba(49,95,151,.055);--calendar-tint:rgba(155,104,30,.05)}
 :root[data-theme="dark"]{--calendar-accent:#e3bd78;--market-accent:#96bde9;--news-tint:rgba(110,155,214,.075);--calendar-tint:rgba(227,189,120,.045)}
-.market-agenda{background:var(--calendar-tint);border-top:2px solid var(--calendar-accent)!important;padding:16px!important;border-radius:10px}
+.market-agenda{background:var(--calendar-tint);border-top:2px solid var(--calendar-accent)!important;padding:16px!important;border-radius:0}
 #news-macro{border-left:3px solid var(--market-accent);background:var(--news-tint);padding:0 16px;border-radius:0 10px 10px 0;margin:20px 0}
 #news-macro .news-category{color:var(--market-accent)}
 .news-date{color:var(--market-accent);border-left-color:var(--market-accent);background:var(--news-tint)}
@@ -206,3 +206,10 @@ nav[aria-label="メインナビゲーション"][hidden]{display:none!important}
 .news-story[open]{background:var(--news-tint);border-radius:8px}
 .news-body h3{color:var(--market-accent)}
 .news-caution{border-left:3px solid var(--calendar-accent);padding-left:14px}
+
+/* Category identity is conveyed by both text and colour. */
+:root{--news-market:#315f97;--news-research:#23735f;--news-portfolio:#94651f}
+:root[data-theme="dark"]{--news-market:#96bde9;--news-research:#79cfb5;--news-portfolio:#e3bd78}
+.news-story[data-news-kind="market"] .news-category{color:var(--news-market)}
+.news-story[data-news-kind="research"] .news-category{color:var(--news-research)}
+.news-story[data-news-kind="portfolio"] .news-category{color:var(--news-portfolio)}
