@@ -224,7 +224,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 #ideal .ideal-row-name .code{white-space:normal;overflow-wrap:anywhere}#ideal .ideal-sector{font-size:11px}
 </style>
 <script src="polish.js?v=2.28" defer></script>
-<script src="method-briefing.js?v=1.15" defer></script>
+<script src="method-briefing.js?v=1.58" defer></script>
 <script src="updates.js?v=1.14" defer></script>
 <link rel="stylesheet" href="../workspace.css?v=0021fc33ec1a"><script src="../workspace-frame.js?v=014229e23d13"></script></head>
 <body>
@@ -280,7 +280,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 <section id="reb" hidden>
   <p class="warn-note" id="rebNote"></p>
   <div class="bar"><label>色で絞り込み <select id="rebColor"><option value="all">すべて</option><option value="blue">青（大型）</option><option value="green">緑（200日線以上）</option><option value="both">青＋緑（両方）</option></select></label><span id="rebCount" class="meta" aria-live="polite"></span></div>
-  <p class="meta" style="padding:0 4px 8px"><span style="color:var(--blu);font-weight:600">青</span>＝時価総額5000億以上　<span style="color:var(--dn);font-weight:600">緑の縦線</span>＝200日線の上（ステージ2入り）</p>
+  <p class="meta" style="padding:0 4px 8px"><span style="color:var(--blu);font-weight:600">青</span>＝時価総額5000億以上　<span style="color:var(--dn);font-weight:600">緑の縦線</span>＝200日線の上（買い条件ではありません）</p>
   <div class="tblwrap"><table class="rows">
     <thead><tr>
       <th data-k="name">銘柄</th>
@@ -618,6 +618,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 
   /* 反転（大型の急落からの立ち上がり） */
   let rebKey=reb.method==='halfprice-double-bottom-15-30-v1'?'rank':'dd2y',rebDesc=false;
+  if(rebKey==='rank')$('#reb').querySelectorAll('thead th').forEach(t=>t.removeAttribute('aria-sort'));
   const rebRows=$('#rebBody');
   function renderReb(){
     $('#rebNote').textContent=(reb.date?'データ日 '+reb.date+' ／ ':'')+(reb.note||'観察リストです。機械的に買うと検証では負けます（リフト0.67）。最終判断は自分で。');
