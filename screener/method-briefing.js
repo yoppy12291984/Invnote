@@ -26,7 +26,7 @@
    if(data.method==='halfprice-double-bottom-15-30-v1'){
     result.headline='大型株の半値・二番底反転を待つ';
     result.action=data.note;result.selection=data.rankingRule;
-    result.change='旧下落率ランキングから方法変更。旧順位との上下比較はしません。';
+    result.change='分割基準修正後のルールで再計算。ランキングはパターンの進行順で、期待利益の順位ではありません。';
     result.cards=rows.slice(0,3).map(r=>card(r,`${r.stage}。${r.reason}`,'点灯前は待機。点灯後もNAV・正常利益など割安根拠と下落原因を個社確認。','半年超過の優位は未確立。順位は進行順で購入推奨順ではありません。'));
     if(!rows.length)result.headline='条件に合う監視候補なし（保存データ基準）';
     return result;
