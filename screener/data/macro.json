@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-15T21:59:58+00:00",
+  "generated_at": "2026-10-16T22:18:25+00:00",
   "items": [
     {
       "id": "DFII10",
@@ -10,30 +10,26 @@
       "meaning": "上昇は将来利益の評価倍率に下押しする要因。企業の利益成長と併せて見る。",
       "source": "https://fred.stlouisfed.org/series/DFII10",
       "frequency": "daily",
-      "value": 2.84,
-      "date": "2026-10-14",
+      "value": 2.78,
+      "date": "2026-10-15",
       "changes": {
         "1w": {
-          "value": -0.08,
-          "from": "2026-10-07",
-          "to": "2026-10-14"
+          "value": -0.09,
+          "from": "2026-10-08",
+          "to": "2026-10-15"
         },
         "1m": {
-          "value": 0.24,
-          "from": "2026-09-14",
-          "to": "2026-10-14"
+          "value": 0.16,
+          "from": "2026-09-15",
+          "to": "2026-10-15"
         },
         "3m": {
-          "value": 0.49,
-          "from": "2026-07-16",
-          "to": "2026-10-14"
+          "value": 0.47,
+          "from": "2026-07-17",
+          "to": "2026-10-15"
         }
       },
       "history": [
-        {
-          "date": "2026-07-06",
-          "value": 2.24
-        },
         {
           "date": "2026-07-07",
           "value": 2.3
@@ -313,14 +309,18 @@
         {
           "date": "2026-10-14",
           "value": 2.84
+        },
+        {
+          "date": "2026-10-15",
+          "value": 2.78
         }
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-15T21:59:57+00:00",
-      "percentile": 99.0,
+      "fetched_at": "2026-10-16T22:18:24+00:00",
+      "percentile": 98.8,
       "sample_count": 1248,
-      "sample_start": "2021-10-15"
+      "sample_start": "2021-10-18"
     },
     {
       "id": "DGS10",
@@ -330,30 +330,26 @@
       "meaning": "名目の長期金利。実質金利と期待インフレを分けて確認する。",
       "source": "https://fred.stlouisfed.org/series/DGS10",
       "frequency": "daily",
-      "value": 5.19,
-      "date": "2026-10-14",
+      "value": 5.1,
+      "date": "2026-10-15",
       "changes": {
         "1w": {
-          "value": -0.09,
-          "from": "2026-10-07",
-          "to": "2026-10-14"
+          "value": -0.12,
+          "from": "2026-10-08",
+          "to": "2026-10-15"
         },
         "1m": {
-          "value": 0.22,
-          "from": "2026-09-14",
-          "to": "2026-10-14"
+          "value": 0.1,
+          "from": "2026-09-15",
+          "to": "2026-10-15"
         },
         "3m": {
-          "value": 0.62,
-          "from": "2026-07-16",
-          "to": "2026-10-14"
+          "value": 0.55,
+          "from": "2026-07-17",
+          "to": "2026-10-15"
         }
       },
       "history": [
-        {
-          "date": "2026-07-06",
-          "value": 4.48
-        },
         {
           "date": "2026-07-07",
           "value": 4.55
@@ -633,14 +629,18 @@
         {
           "date": "2026-10-14",
           "value": 5.19
+        },
+        {
+          "date": "2026-10-15",
+          "value": 5.1
         }
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-15T21:59:57+00:00",
-      "percentile": 99.1,
+      "fetched_at": "2026-10-16T22:18:24+00:00",
+      "percentile": 98.8,
       "sample_count": 1248,
-      "sample_start": "2021-10-15"
+      "sample_start": "2021-10-18"
     },
     {
       "id": "DGS2",
@@ -650,30 +650,26 @@
       "meaning": "近い将来の政策金利見通しを強く反映。10年金利と同じ期間で比較する。",
       "source": "https://fred.stlouisfed.org/series/DGS2",
       "frequency": "daily",
-      "value": 4.82,
-      "date": "2026-10-14",
+      "value": 4.77,
+      "date": "2026-10-15",
       "changes": {
         "1w": {
-          "value": 0.05,
-          "from": "2026-10-07",
-          "to": "2026-10-14"
+          "value": 0.02,
+          "from": "2026-10-08",
+          "to": "2026-10-15"
         },
         "1m": {
-          "value": 0.17,
-          "from": "2026-09-14",
-          "to": "2026-10-14"
+          "value": 0.1,
+          "from": "2026-09-15",
+          "to": "2026-10-15"
         },
         "3m": {
-          "value": 0.66,
-          "from": "2026-07-16",
-          "to": "2026-10-14"
+          "value": 0.59,
+          "from": "2026-07-17",
+          "to": "2026-10-15"
         }
       },
       "history": [
-        {
-          "date": "2026-07-06",
-          "value": 4.13
-        },
         {
           "date": "2026-07-07",
           "value": 4.19
@@ -953,14 +949,18 @@
         {
           "date": "2026-10-14",
           "value": 4.82
+        },
+        {
+          "date": "2026-10-15",
+          "value": 4.77
         }
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-15T21:59:57+00:00",
-      "percentile": 89.1,
+      "fetched_at": "2026-10-16T22:18:24+00:00",
+      "percentile": 87.0,
       "sample_count": 1248,
-      "sample_start": "2021-10-15"
+      "sample_start": "2021-10-18"
     },
     {
       "id": "T10YIE",
@@ -970,30 +970,26 @@
       "meaning": "市場価格から得られる指標。インフレ予想に加えて流動性などの影響も含む。",
       "source": "https://fred.stlouisfed.org/series/T10YIE",
       "frequency": "daily",
-      "value": 2.32,
-      "date": "2026-10-15",
+      "value": 2.35,
+      "date": "2026-10-16",
       "changes": {
         "1w": {
-          "value": -0.03,
-          "from": "2026-10-08",
-          "to": "2026-10-15"
+          "value": 0.02,
+          "from": "2026-10-09",
+          "to": "2026-10-16"
         },
         "1m": {
-          "value": -0.06,
-          "from": "2026-09-15",
-          "to": "2026-10-15"
+          "value": 0.02,
+          "from": "2026-09-16",
+          "to": "2026-10-16"
         },
         "3m": {
-          "value": 0.08,
+          "value": 0.11,
           "from": "2026-07-17",
-          "to": "2026-10-15"
+          "to": "2026-10-16"
         }
       },
       "history": [
-        {
-          "date": "2026-07-07",
-          "value": 2.25
-        },
         {
           "date": "2026-07-08",
           "value": 2.25
@@ -1273,14 +1269,18 @@
         {
           "date": "2026-10-15",
           "value": 2.32
+        },
+        {
+          "date": "2026-10-16",
+          "value": 2.35
         }
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-15T21:59:57+00:00",
-      "percentile": 45.5,
+      "fetched_at": "2026-10-16T22:18:24+00:00",
+      "percentile": 59.5,
       "sample_count": 1249,
-      "sample_start": "2021-10-15"
+      "sample_start": "2021-10-18"
     },
     {
       "id": "T10Y2Y",
@@ -1290,30 +1290,26 @@
       "meaning": "負の値は逆イールド。差の拡大だけでは景気回復と判断できない。",
       "source": "https://fred.stlouisfed.org/series/T10Y2Y",
       "frequency": "daily",
-      "value": 0.33,
-      "date": "2026-10-15",
+      "value": 0.35,
+      "date": "2026-10-16",
       "changes": {
         "1w": {
-          "value": -0.14,
-          "from": "2026-10-08",
-          "to": "2026-10-15"
+          "value": -0.09,
+          "from": "2026-10-09",
+          "to": "2026-10-16"
         },
         "1m": {
-          "value": 0.0,
-          "from": "2026-09-15",
-          "to": "2026-10-15"
+          "value": 0.08,
+          "from": "2026-09-16",
+          "to": "2026-10-16"
         },
         "3m": {
-          "value": -0.04,
+          "value": -0.02,
           "from": "2026-07-17",
-          "to": "2026-10-15"
+          "to": "2026-10-16"
         }
       },
       "history": [
-        {
-          "date": "2026-07-07",
-          "value": 0.36
-        },
         {
           "date": "2026-07-08",
           "value": 0.35
@@ -1593,14 +1589,18 @@
         {
           "date": "2026-10-15",
           "value": 0.33
+        },
+        {
+          "date": "2026-10-16",
+          "value": 0.35
         }
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-15T21:59:57+00:00",
-      "percentile": 60.7,
+      "fetched_at": "2026-10-16T22:18:24+00:00",
+      "percentile": 62.3,
       "sample_count": 1249,
-      "sample_start": "2021-10-15"
+      "sample_start": "2021-10-18"
     },
     {
       "id": "BAMLH0A0HYM2",
@@ -1610,30 +1610,26 @@
       "meaning": "低格付け社債の上乗せ利回り。拡大は信用リスクへの警戒の強まりを示す材料。",
       "source": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
       "frequency": "daily",
-      "value": 3.25,
-      "date": "2026-10-14",
+      "value": 3.23,
+      "date": "2026-10-15",
       "changes": {
         "1w": {
-          "value": 0.16,
-          "from": "2026-10-07",
-          "to": "2026-10-14"
+          "value": 0.08,
+          "from": "2026-10-08",
+          "to": "2026-10-15"
         },
         "1m": {
-          "value": 0.54,
-          "from": "2026-09-14",
-          "to": "2026-10-14"
+          "value": 0.47,
+          "from": "2026-09-15",
+          "to": "2026-10-15"
         },
         "3m": {
-          "value": 0.54,
-          "from": "2026-07-16",
-          "to": "2026-10-14"
+          "value": 0.5,
+          "from": "2026-07-17",
+          "to": "2026-10-15"
         }
       },
       "history": [
-        {
-          "date": "2026-07-06",
-          "value": 2.72
-        },
         {
           "date": "2026-07-07",
           "value": 2.67
@@ -1921,14 +1917,18 @@
         {
           "date": "2026-10-14",
           "value": 3.25
+        },
+        {
+          "date": "2026-10-15",
+          "value": 3.23
         }
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-15T21:59:57+00:00",
-      "percentile": 76.8,
+      "fetched_at": "2026-10-16T22:18:25+00:00",
+      "percentile": 74.8,
       "sample_count": 786,
-      "sample_start": "2023-10-16"
+      "sample_start": "2023-10-17"
     },
     {
       "id": "BAMLC0A4CBBB",
@@ -1938,30 +1938,26 @@
       "meaning": "投資適格社債の上乗せ利回り。HYと同時に拡大しているかを確認する。",
       "source": "https://fred.stlouisfed.org/series/BAMLC0A4CBBB",
       "frequency": "daily",
-      "value": 1.04,
-      "date": "2026-10-14",
+      "value": 1.05,
+      "date": "2026-10-15",
       "changes": {
         "1w": {
-          "value": 0.02,
-          "from": "2026-10-07",
-          "to": "2026-10-14"
+          "value": 0.03,
+          "from": "2026-10-08",
+          "to": "2026-10-15"
         },
         "1m": {
-          "value": 0.06,
-          "from": "2026-09-14",
-          "to": "2026-10-14"
+          "value": 0.07,
+          "from": "2026-09-15",
+          "to": "2026-10-15"
         },
         "3m": {
           "value": 0.08,
-          "from": "2026-07-16",
-          "to": "2026-10-14"
+          "from": "2026-07-17",
+          "to": "2026-10-15"
         }
       },
       "history": [
-        {
-          "date": "2026-07-06",
-          "value": 0.94
-        },
         {
           "date": "2026-07-07",
           "value": 0.94
@@ -2249,14 +2245,18 @@
         {
           "date": "2026-10-14",
           "value": 1.04
+        },
+        {
+          "date": "2026-10-15",
+          "value": 1.05
         }
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-15T21:59:58+00:00",
-      "percentile": 46.2,
+      "fetched_at": "2026-10-16T22:18:25+00:00",
+      "percentile": 48.4,
       "sample_count": 786,
-      "sample_start": "2023-10-16"
+      "sample_start": "2023-10-17"
     },
     {
       "id": "VIXCLS",
@@ -2266,30 +2266,26 @@
       "meaning": "米株オプションが示す予想変動率。水準だけで底打ちとは判断しない。",
       "source": "https://fred.stlouisfed.org/series/VIXCLS",
       "frequency": "daily",
-      "value": 16.87,
-      "date": "2026-10-14",
+      "value": 16.46,
+      "date": "2026-10-15",
       "changes": {
         "1w": {
-          "value": 1.79,
-          "from": "2026-10-07",
-          "to": "2026-10-14"
+          "value": 1.05,
+          "from": "2026-10-08",
+          "to": "2026-10-15"
         },
         "1m": {
-          "value": -0.23,
-          "from": "2026-09-14",
-          "to": "2026-10-14"
+          "value": -0.74,
+          "from": "2026-09-15",
+          "to": "2026-10-15"
         },
         "3m": {
-          "value": 0.14,
-          "from": "2026-07-16",
-          "to": "2026-10-14"
+          "value": -2.31,
+          "from": "2026-07-17",
+          "to": "2026-10-15"
         }
       },
       "history": [
-        {
-          "date": "2026-07-06",
-          "value": 15.57
-        },
         {
           "date": "2026-07-07",
           "value": 16.13
@@ -2577,14 +2573,18 @@
         {
           "date": "2026-10-14",
           "value": 16.87
+        },
+        {
+          "date": "2026-10-15",
+          "value": 16.46
         }
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-15T21:59:58+00:00",
-      "percentile": 42.5,
+      "fetched_at": "2026-10-16T22:18:25+00:00",
+      "percentile": 38.3,
       "sample_count": 1287,
-      "sample_start": "2021-10-15"
+      "sample_start": "2021-10-18"
     },
     {
       "id": "SP500",
@@ -2594,30 +2594,26 @@
       "meaning": "米大型株の価格指数。HY拡大と株高の同時進行を確認する。配当込みではない。",
       "source": "https://fred.stlouisfed.org/series/SP500",
       "frequency": "daily",
-      "value": 7718.94,
-      "date": "2026-10-14",
+      "value": 7744.06,
+      "date": "2026-10-15",
       "changes": {
         "1w": {
-          "value": -82.83,
-          "from": "2026-10-07",
-          "to": "2026-10-14"
+          "value": -21.3,
+          "from": "2026-10-08",
+          "to": "2026-10-15"
         },
         "1m": {
-          "value": 98.96,
-          "from": "2026-09-14",
-          "to": "2026-10-14"
+          "value": 158.33,
+          "from": "2026-09-15",
+          "to": "2026-10-15"
         },
         "3m": {
-          "value": 185.17,
-          "from": "2026-07-16",
-          "to": "2026-10-14"
+          "value": 286.37,
+          "from": "2026-07-17",
+          "to": "2026-10-15"
         }
       },
       "history": [
-        {
-          "date": "2026-07-06",
-          "value": 7537.43
-        },
         {
           "date": "2026-07-07",
           "value": 7503.85
@@ -2901,14 +2897,18 @@
         {
           "date": "2026-10-14",
           "value": 7718.94
+        },
+        {
+          "date": "2026-10-15",
+          "value": 7744.06
         }
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-15T21:59:58+00:00",
-      "percentile": 98.2,
+      "fetched_at": "2026-10-16T22:18:24+00:00",
+      "percentile": 98.7,
       "sample_count": 1254,
-      "sample_start": "2021-10-15"
+      "sample_start": "2021-10-18"
     },
     {
       "id": "DEXJPUS",
@@ -3225,10 +3225,10 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-15T21:59:57+00:00",
-      "percentile": 89.9,
-      "sample_count": 1247,
-      "sample_start": "2021-10-15"
+      "fetched_at": "2026-10-16T22:18:25+00:00",
+      "percentile": 89.8,
+      "sample_count": 1246,
+      "sample_start": "2021-10-18"
     },
     {
       "id": "FEDFUNDS",
@@ -3273,7 +3273,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-15T21:59:58+00:00",
+      "fetched_at": "2026-10-16T22:18:25+00:00",
       "percentile": 37.5,
       "sample_count": 60,
       "sample_start": "2021-10-01"
@@ -3321,7 +3321,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-15T21:59:58+00:00",
+      "fetched_at": "2026-10-16T22:18:25+00:00",
       "percentile": 72.9,
       "sample_count": 59,
       "sample_start": "2021-10-01"
