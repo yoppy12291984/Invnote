@@ -1,24 +1,20 @@
 {
- "updated": "2026-10-05 08:59",
- "cycle": {
-  "month": "2026-09",
-  "M": "M2",
-  "label": "業績相場",
-  "ff": 3.75,
-  "unrate": 4.2,
-  "spread10_2": 0.41,
-  "vix": 15.8
- },
- "strategies": {
-  "kiyohara": {
-   "last3m": 0.1194,
-   "last3m_topix": 0.013,
-   "months": 212
+  "updated": "2026-10-05 08:59",
+  "cycle": {
+    "month": "2026-09",
+    "M": "M2",
+    "label": "業績相場",
+    "ff": 3.75,
+    "unrate": 4.2,
+    "spread10_2": 0.41,
+    "vix": 15.8
   },
-  "lowpbr": {
-   "last3m": 0.1105,
-   "last3m_topix": 0.013,
-   "months": 208
-  }
- }
+  "strategies": {
+    "lowpbr": {
+      "last3m": 0.1105,
+      "last3m_topix": 0.013,
+      "months": 208
+    }
+  },
+  "kiyoharaLegacyNote": "旧20年検証は分割・開示基準未監査につき成績採用停止。"
 }
