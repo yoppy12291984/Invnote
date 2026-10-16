@@ -280,6 +280,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 <section id="reb" hidden>
   <p class="warn-note" id="rebNote"></p>
   <div id="rebBacktest" class="meta" aria-label="逆張りの過去検証結果"></div>
+  <section id="rebForward" class="meta" aria-label="逆張りの固定後の前向き検証"></section>
   <div class="bar"><label>色で絞り込み <select id="rebColor"><option value="all">すべて</option><option value="blue">青（大型）</option><option value="green">緑（200日線以上）</option><option value="both">青＋緑（両方）</option></select></label><span id="rebCount" class="meta" aria-live="polite"></span></div>
   <p class="meta" style="padding:0 4px 8px"><span style="color:var(--blu);font-weight:600">青</span>＝時価総額5000億以上　<span style="color:var(--dn);font-weight:600">緑の縦線</span>＝200日線の上（買い条件ではありません）</p>
   <div class="tblwrap"><table class="rows">
@@ -622,6 +623,14 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   if(rebKey==='rank')$('#reb').querySelectorAll('thead th').forEach(t=>t.removeAttribute('aria-sort'));
   const rebRows=$('#rebBody');
   function renderReb(){
+    const fw=reb.forward, froot=$('#rebForward');
+    const pct=v=>typeof v==='number'&&Number.isFinite(v)?`${v>0?'+':''}${fmt(v,2)}%`:'—';
+    const stateNames={entry_pending:'購入日待ち',holding:'120営業日未経過',completed:'半年評価済み',missing:'価格・係数不足',data_review:'データ訂正・確認待ち'};
+    if(fw){
+      const s=fw.summary;
+      const rows=[...fw.records].reverse().map(r=>`<tr><td>${esc(r.name)}<br>${esc(r.code)}<br>${r.cohort==='late'?'後追い記録・主集計外':r.cohort==='prospective'?'前向き記録':'購入前・区分確定待ち'}</td><td>${esc(r.signalDate)}<br><small>初回記録 ${esc(r.recordedAt)}</small></td><td>${esc(r.entryDate||'次の取引日待ち')}<br>${r.entryOpen==null?'—':fmt(r.entryOpen,2)+'円'}</td><td>${esc(r.exitDate||'日付未確定')}<br>${r.status==='holding'?'あと'+esc(r.remainingSessions)+'営業日':esc(stateNames[r.status]||r.status)}<br>${esc(r.issue||'')}</td><td>${r.status==='completed'?pct(r.netReturn):'—'}</td><td>${pct(r.markReturn)}</td></tr>`).join('');
+      froot.innerHTML=`<h3>ルール固定後の前向き検証（仮想売買）</h3><p>開始対象：${esc(fw.startDate)}以降の点灯 ／ 価格基準日 ${esc(fw.asOf)}<br>最終確認 ${esc(fw.checkedAt)}<br>ルール版 ${esc(fw.version)}（変更検知時は停止）</p><p><b>半年後にプラスになった割合 ${s.positiveRate==null?'—':fmt(s.positiveRate,2)+'%'} ／ 平均利益率 ${pct(s.meanReturn)}</b><br>中央値 ${pct(s.medianReturn)} ／ 評価済み ${esc(s.evaluated)}件・利益 ${esc(s.positive)}件<br>記録総数 ${esc(s.signals)}件 ／ 保有中 ${esc(s.holding)}件 ／ 購入日待ち ${esc(s.pending)}件 ／ 確認待ち ${esc(s.unresolved)}件 ／ 後追い ${esc(s.late)}件</p><p>${s.evaluated===0?'まだ半年評価が完了した取引はありません。0%という意味ではありません。':s.sampleInsufficient?'サンプル不足（30件未満）。':''}</p><p>${esc(fw.note)}</p><details><summary>更新・欠測・遅れの扱い</summary><p>${esc(fw.operations)} 日付未確定の売却日は、保存済み取引カレンダーが揃ってから表示します。後追い件数・確認待ち件数は重複する場合があります。途中の参考利益率は最新終値で仮に売却した費用後の値で、半年成績へは混ぜません。</p></details><div style="overflow-x:auto"><table><thead><tr><th>銘柄・区分</th><th>点灯・記録日時</th><th>仮想購入日・始値</th><th>売却日・状態</th><th>半年利益率</th><th>途中の参考利益率</th></tr></thead><tbody>${rows||'<tr><td colspan="6">固定後の新規点灯はまだありません。過去の点灯は遡って追加しません。</td></tr>'}</tbody></table></div>`;
+    }else froot.innerHTML='<p>前向き検証の記録が未配信です。過去検証とは別の集計です。</p>';
     const bt=reb.backtest;
     $('#rebBacktest').innerHTML=bt?`<h3>分割調整修正後の過去検証</h3><p><b>プラスになった割合 ${fmt(bt.positiveRate,2)}%　／　平均利益率 +${fmt(bt.meanReturn,2)}%</b><br>中央値 +${fmt(bt.medianReturn,2)}% ／ ${esc(bt.period)}・${esc(bt.evaluated)}件（利益${esc(bt.positive)}件）<br>対TOPIX勝率 ${fmt(bt.topixWinRate,2)}% ／ 平均TOPIX超過 +${fmt(bt.meanExcess,2)}%（プラス割合とは別指標）</p><p>${esc(bt.note)}</p><p>利益寄与の大きい2016・2020年を除くと131件、プラス55.73%、平均+8.25%。2019年は32件、平均−10.67%。</p>`:'';
     $('#rebNote').textContent=(reb.date?'データ日 '+reb.date+' ／ ':'')+(reb.note||'観察リストです。機械的に買うと検証では負けます（リフト0.67）。最終判断は自分で。');
