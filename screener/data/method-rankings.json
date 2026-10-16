@@ -4,11 +4,87 @@
     {
       "name": "清原式",
       "route": "cand",
-      "rule": "個社調査による選定を準備中。NC比率だけの順位は撤回しました。資産・本業利益・現在価格・反証を確認して選定します。",
+      "rule": "自社株買い実行＋株数純減の確認候補をNC順で表示。個社調査の購入推奨とは別。不明は非該当と区別し、一覧に残す。",
       "priceDate": "2026-10-14",
       "previousDate": null,
-      "rows": [],
-      "status": "research_pending"
+      "rows": [
+        {
+          "code": "8011",
+          "name": "三陽商会",
+          "previousRank": null,
+          "detail": "実行＋株数純減確認 ／ 年次株数 -4.436% ／ NC 1.68"
+        },
+        {
+          "code": "3106",
+          "name": "倉敷紡績",
+          "previousRank": null,
+          "detail": "実行＋株数純減確認 ／ 年次株数 -5.539% ／ NC 1.43"
+        },
+        {
+          "code": "2108",
+          "name": "ニッテン",
+          "previousRank": null,
+          "detail": "実行＋株数純減確認 ／ 年次株数 -2.928% ／ NC 1.38"
+        }
+      ],
+      "status": "buyback_screen",
+      "backtest": {
+        "period": "2022～2025年購入",
+        "holdingDays": 120,
+        "costPct": 0.5,
+        "rows": {
+          "baseline": {
+            "signals": 285,
+            "evaluated": 281,
+            "unique_codes": 126,
+            "unresolved": 4,
+            "positive": 166,
+            "positive_pct": 59.07473309608541,
+            "mean_pct": 8.772788895982831,
+            "median_pct": 5.049199084668199,
+            "excess_pct": 1.0345376851084653,
+            "insufficient": false
+          },
+          "observable_baseline": {
+            "signals": 236,
+            "evaluated": 233,
+            "unique_codes": 101,
+            "unresolved": 3,
+            "positive": 140,
+            "positive_pct": 60.08583690987125,
+            "mean_pct": 9.139870521587547,
+            "median_pct": 5.214285714285716,
+            "excess_pct": 1.294027119545434,
+            "insufficient": false
+          },
+          "buyback": {
+            "signals": 165,
+            "evaluated": 162,
+            "unique_codes": 82,
+            "unresolved": 3,
+            "positive": 97,
+            "positive_pct": 59.876543209876544,
+            "mean_pct": 10.079192372129702,
+            "median_pct": 6.201117713423033,
+            "excess_pct": 2.0877799882981973,
+            "insufficient": false
+          },
+          "buyback_and_shrink": {
+            "signals": 116,
+            "evaluated": 114,
+            "unique_codes": 71,
+            "unresolved": 2,
+            "positive": 73,
+            "positive_pct": 64.03508771929825,
+            "mean_pct": 11.656581323088602,
+            "median_pct": 8.76621137147453,
+            "excess_pct": 3.2694560998056983,
+            "insufficient": false
+          }
+        },
+        "note": "半年保有の過去標本。配当・税なし、年率や個別銘柄の将来確率ではありません。清原式K0の機械条件による比較で、個社調査ランキングの実績ではありません。追加群114取引・71社、未解決2件。2025年を除くと85件、プラス58.82%、平均+8.79%。2023年は基準より悪化。"
+      },
+      "evaluationUpdated": "2026-10-16"
     },
     {
       "name": "逆張り",
