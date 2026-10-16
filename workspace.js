@@ -402,4 +402,5 @@ async function renderMethodRankings(){
  try{const r=await fetch('screener/data/method-rankings.json',{cache:'no-store'});if(!r.ok)throw Error();const d=await r.json();if(!el.isConnected)return;
  el.innerHTML=privateHTML+'<h2>手法別スクリーニング TOP 3</h2><p class="muted">以下は抽出順。個社調査による清原式の順位とは別です。</p>'+d.groups.map(g=>`<details class="card"><summary>${esc(g.name)} · ${esc(g.priceDate)} 終値基準</summary><p>${esc(g.rule)} · 前回 ${esc(g.previousDate||'比較開始')}</p>${g.rows.map((x,i)=>`<p><b>${i+1}位 ${esc(x.name)}（${esc(x.code)}）</b><br>${x.previousRank==null?'初登場／比較開始':x.previousRank===i+1?'→ 据置':x.previousRank>i+1?'↑ '+(x.previousRank-i-1):'↓ '+(i+1-x.previousRank)} · ${esc(x.detail)}</p>`).join('')}<a href="#discover/scr:${g.route}">一覧と根拠を見る</a></details>`).join('')+'<h2>総合 TOP 10</h2>';
  }catch{if(el.isConnected)el.innerHTML=privateHTML+'<p>スクリーニング順位は取得できませんでした。</p><h2>総合 TOP 10</h2>';}
+ if(el.isConnected&&feed?.valuationMethod)el.insertAdjacentHTML('afterbegin',`<p class="muted">清原式の分割・開示基準を修正済み。${esc(feed.financialNote)} 旧20年検証は成績採用を停止しています。</p>`);
 }
