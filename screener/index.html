@@ -746,8 +746,8 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   /* status */
   const st=status.strategies||{};
   const box=(label,s)=>s?`<div><span>${label}　直近3ヶ月</span><b class="${s.last3m>=0?'up':'dn'}">${pct(s.last3m)}</b><span>TOPIX ${pct(s.last3m_topix)}　超過 ${pct(s.last3m-s.last3m_topix)}　${s.months}ヶ月分</span></div>`:'';
-  $('#status').innerHTML=`<div class="sum">${box('清原式',st.kiyohara)}${box('低PBR単独',st.lowpbr)}</div>
-    <p class="hint">20年検証で採用した戦略は清原式（ネットキャッシュ比率≥0.5 × 低PBR、小型、四半期入替）のみ。超過リターンは売買代金1〜5億の小型株に集中するため、指値で数日かけて集める。</p>`;
+  $('#status').innerHTML=`<div class="sum">${box('低PBR単独',st.lowpbr)}</div>
+    <p class="hint">清原式の旧20年検証は、分割・開示基準に問題があるため成績表示を停止しています。現在の候補は同一開示の株数から分割補正して再計算。自社株買いの2022～25年・120営業日検証とは別です。過去の候補による前向き比較も旧抽出条件の履歴であり、修正版の実績とは扱いません。</p>`;
 })();
 </script>
 </body>
