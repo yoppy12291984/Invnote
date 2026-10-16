@@ -380,12 +380,26 @@ async function renderNewsMacro(){
  }catch{if(el.isConnected)el.innerHTML='<p class="muted">市場環境を取得できません。自動判定は未確認です。</p>';}
 }
 
+function kiyoharaEvaluatedRows(rows,feed){
+ const evidence=new Map((feed?.items||[]).map(x=>[x.code,x.buyback]));
+ return rows.map((x,i)=>({...x,buyback:evidence.get(x.code)||null,originalPosition:i})).sort((a,b)=>(b.long_12m-a.long_12m)||((b.buyback?.priority||0)-(a.buyback?.priority||0))||a.originalPosition-b.originalPosition);
+}
+function kiyoharaEvidenceText(b){
+ if(!b)return '自社株買い実行・株数純減：判定不明（候補データ未取得または対象外）';
+ const yes=v=>v===true?'あり':v===false?'なし':'不明';
+ return `追加評価：${b.label} ／ 実行 ${yes(b.executed)}・株数純減 ${yes(b.shrunk)}${b.shareChangePct==null?'':'（前年比 '+b.shareChangePct.toFixed(3)+'%）'} ／ ${b.fyEnd||'—'}期・開示 ${b.disclosed||'—'}・判定基準 ${b.asof}。年次CFで判定、買付枠の発表ではありません。`;
+}
 async function renderMethodRankings(){
  const el=document.getElementById('method-rankings');if(!el)return;
  const privateRank=D.kiyoharaRanking;
- const privateHTML=privateRank?.rows?.length?'<h2>清原式 · 個社調査 TOP 3</h2>'+`<p class="muted">調査 ${esc(privateRank.date)} · ${esc(privateRank.priceDate)}終値基準<br>${esc(privateRank.scope)}</p><p class="muted">${esc(privateRank.caution)}</p>`+privateRank.rows.map((x,i)=>`<details class="card"><summary>${i+1}位 ${esc(x.name)} · ${esc(x.code)}</summary><p>${esc(x.detail)}</p><p>3か月 ${x.short_3m}/10 · 12か月 ${x.long_12m}/10 · 根拠 ${esc(x.evidence_confidence)}</p><p>${esc(x.reason)}</p><p><b>反証</b> ${esc(x.counter)}</p><p><b>次の確認</b> ${esc(x.next)}</p><p>個社研究順位は今回から比較開始。旧NC順位との上下比較はしません。</p><button class="open" data-company="${esc(x.code)}">会社の調査を読む</button></details>`).join(''):'';
+ let feed=null;
+ try{const response=await fetch('screener/data/candidates.json',{cache:'no-store'});if(response.ok)feed=await response.json();}catch{}
+ if(!el.isConnected)return;
+ const bt=feed?.buybackBacktest,stats=bt?.rows?.buyback_and_shrink;
+ const evidenceHTML=stats?`<div class="card"><b>清原式＋実行・純減：過去のプラス割合 ${stats.positive_pct.toFixed(2)}% ／ 半年平均利益率 +${stats.mean_pct.toFixed(2)}%</b><p>追加群 ${stats.evaluated}件。追加なし：プラス ${bt.rows.baseline.positive_pct.toFixed(2)}% ／ 平均 +${bt.rows.baseline.mean_pct.toFixed(2)}%。往復費用0.5%後。</p><p>${esc(bt.note)}</p></div>`:'';
+ const privateHTML=evidenceHTML+(privateRank?.rows?.length?'<h2>清原式 · 個社調査 TOP 3</h2>'+`<p class="muted">調査 ${esc(privateRank.date)} · ${esc(privateRank.priceDate)}終値基準<br>${esc(privateRank.scope)}</p><p class="muted">${esc(privateRank.caution)}</p><p>追加評価：12か月評価が同点なら「実行＋純減確認」を優先。それ以外は既存順。元の採点は変更せず、不明は減点・除外しません。</p>`+kiyoharaEvaluatedRows(privateRank.rows,feed).map((x,i)=>`<details class="card"><summary>${i+1}位 ${esc(x.name)} · ${esc(x.code)}</summary><p>${esc(x.detail)}</p><p>${esc(kiyoharaEvidenceText(x.buyback))}</p><p>3か月 ${x.short_3m}/10 · 12か月 ${x.long_12m}/10 · 根拠 ${esc(x.evidence_confidence)}</p><p>${esc(x.reason)}</p><p><b>反証</b> ${esc(x.counter)}</p><p><b>次の確認</b> ${esc(x.next)}</p><p>旧個社研究順位 ${x.originalPosition+1}位 → 追加評価後 ${i+1}位。NCだけの順位ではありません。</p><button class="open" data-company="${esc(x.code)}">会社の調査を読む</button></details>`).join(''):'');
  el.innerHTML=privateHTML;
  try{const r=await fetch('screener/data/method-rankings.json',{cache:'no-store'});if(!r.ok)throw Error();const d=await r.json();if(!el.isConnected)return;
- el.innerHTML=privateHTML+'<h2>手法別スクリーニング TOP 3</h2><p class="muted">以下は既存抽出順。個社調査による清原式の順位とは別です。</p>'+d.groups.filter(g=>!(privateHTML&&g.route==='cand')).map(g=>`<details class="card"><summary>${esc(g.name)} · ${esc(g.priceDate)} 終値基準</summary><p>${esc(g.rule)} · 前回 ${esc(g.previousDate||'比較開始')}</p>${g.rows.map((x,i)=>`<p><b>${i+1}位 ${esc(x.name)}（${esc(x.code)}）</b><br>${x.previousRank==null?'初登場／比較開始':x.previousRank===i+1?'→ 据置':x.previousRank>i+1?'↑ '+(x.previousRank-i-1):'↓ '+(i+1-x.previousRank)} · ${esc(x.detail)}</p>`).join('')}<a href="#discover/scr:${g.route}">一覧と根拠を見る</a></details>`).join('')+'<h2>総合 TOP 10</h2>';
+ el.innerHTML=privateHTML+'<h2>手法別スクリーニング TOP 3</h2><p class="muted">以下は抽出順。個社調査による清原式の順位とは別です。</p>'+d.groups.map(g=>`<details class="card"><summary>${esc(g.name)} · ${esc(g.priceDate)} 終値基準</summary><p>${esc(g.rule)} · 前回 ${esc(g.previousDate||'比較開始')}</p>${g.rows.map((x,i)=>`<p><b>${i+1}位 ${esc(x.name)}（${esc(x.code)}）</b><br>${x.previousRank==null?'初登場／比較開始':x.previousRank===i+1?'→ 据置':x.previousRank>i+1?'↑ '+(x.previousRank-i-1):'↓ '+(i+1-x.previousRank)} · ${esc(x.detail)}</p>`).join('')}<a href="#discover/scr:${g.route}">一覧と根拠を見る</a></details>`).join('')+'<h2>総合 TOP 10</h2>';
  }catch{if(el.isConnected)el.innerHTML=privateHTML+'<p>スクリーニング順位は取得できませんでした。</p><h2>総合 TOP 10</h2>';}
 }
