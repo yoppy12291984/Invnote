@@ -224,7 +224,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 #ideal .ideal-row-name .code{white-space:normal;overflow-wrap:anywhere}#ideal .ideal-sector{font-size:11px}
 </style>
 <script src="polish.js?v=2.28" defer></script>
-<script src="method-briefing.js?v=1.58" defer></script>
+<script src="method-briefing.js?v=1.59" defer></script>
 <script src="updates.js?v=1.14" defer></script>
 <link rel="stylesheet" href="../workspace.css?v=0021fc33ec1a"><script src="../workspace-frame.js?v=014229e23d13"></script></head>
 <body>
@@ -279,6 +279,7 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
 </section>
 <section id="reb" hidden>
   <p class="warn-note" id="rebNote"></p>
+  <div id="rebBacktest" class="meta" aria-label="逆張りの過去検証結果"></div>
   <div class="bar"><label>色で絞り込み <select id="rebColor"><option value="all">すべて</option><option value="blue">青（大型）</option><option value="green">緑（200日線以上）</option><option value="both">青＋緑（両方）</option></select></label><span id="rebCount" class="meta" aria-live="polite"></span></div>
   <p class="meta" style="padding:0 4px 8px"><span style="color:var(--blu);font-weight:600">青</span>＝時価総額5000億以上　<span style="color:var(--dn);font-weight:600">緑の縦線</span>＝200日線の上（買い条件ではありません）</p>
   <div class="tblwrap"><table class="rows">
@@ -621,6 +622,8 @@ pre{background:var(--sur);border:1px solid var(--line);border-radius:var(--r);pa
   if(rebKey==='rank')$('#reb').querySelectorAll('thead th').forEach(t=>t.removeAttribute('aria-sort'));
   const rebRows=$('#rebBody');
   function renderReb(){
+    const bt=reb.backtest;
+    $('#rebBacktest').innerHTML=bt?`<h3>分割調整修正後の過去検証</h3><p><b>プラスになった割合 ${fmt(bt.positiveRate,2)}%　／　平均利益率 +${fmt(bt.meanReturn,2)}%</b><br>中央値 +${fmt(bt.medianReturn,2)}% ／ ${esc(bt.period)}・${esc(bt.evaluated)}件（利益${esc(bt.positive)}件）<br>対TOPIX勝率 ${fmt(bt.topixWinRate,2)}% ／ 平均TOPIX超過 +${fmt(bt.meanExcess,2)}%（プラス割合とは別指標）</p><p>${esc(bt.note)}</p><p>利益寄与の大きい2016・2020年を除くと131件、プラス55.73%、平均+8.25%。2019年は32件、平均−10.67%。</p>`:'';
     $('#rebNote').textContent=(reb.date?'データ日 '+reb.date+' ／ ':'')+(reb.note||'観察リストです。機械的に買うと検証では負けます（リフト0.67）。最終判断は自分で。');
     let items=[...(reb.items||[])];
     const color=$('#rebColor').value;
