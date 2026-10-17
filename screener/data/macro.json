@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-16T22:21:50+00:00",
+  "generated_at": "2026-10-17T22:02:59+00:00",
   "items": [
     {
       "id": "DFII10",
@@ -317,7 +317,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-16T22:21:49+00:00",
+      "fetched_at": "2026-10-17T22:02:58+00:00",
       "percentile": 98.8,
       "sample_count": 1248,
       "sample_start": "2021-10-18"
@@ -637,7 +637,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-16T22:21:49+00:00",
+      "fetched_at": "2026-10-17T22:02:58+00:00",
       "percentile": 98.8,
       "sample_count": 1248,
       "sample_start": "2021-10-18"
@@ -957,7 +957,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-16T22:21:49+00:00",
+      "fetched_at": "2026-10-17T22:02:58+00:00",
       "percentile": 87.0,
       "sample_count": 1248,
       "sample_start": "2021-10-18"
@@ -1277,7 +1277,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-16T22:21:49+00:00",
+      "fetched_at": "2026-10-17T22:02:58+00:00",
       "percentile": 59.5,
       "sample_count": 1249,
       "sample_start": "2021-10-18"
@@ -1597,7 +1597,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-16T22:21:49+00:00",
+      "fetched_at": "2026-10-17T22:02:58+00:00",
       "percentile": 62.3,
       "sample_count": 1249,
       "sample_start": "2021-10-18"
@@ -1925,7 +1925,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-16T22:21:50+00:00",
+      "fetched_at": "2026-10-17T22:02:59+00:00",
       "percentile": 74.8,
       "sample_count": 786,
       "sample_start": "2023-10-17"
@@ -2253,7 +2253,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-16T22:21:50+00:00",
+      "fetched_at": "2026-10-17T22:02:59+00:00",
       "percentile": 48.4,
       "sample_count": 786,
       "sample_start": "2023-10-17"
@@ -2581,7 +2581,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-16T22:21:50+00:00",
+      "fetched_at": "2026-10-17T22:02:59+00:00",
       "percentile": 38.3,
       "sample_count": 1287,
       "sample_start": "2021-10-18"
@@ -2594,30 +2594,26 @@
       "meaning": "米大型株の価格指数。HY拡大と株高の同時進行を確認する。配当込みではない。",
       "source": "https://fred.stlouisfed.org/series/SP500",
       "frequency": "daily",
-      "value": 7744.06,
-      "date": "2026-10-15",
+      "value": 7659.44,
+      "date": "2026-10-16",
       "changes": {
         "1w": {
-          "value": -21.3,
-          "from": "2026-10-08",
-          "to": "2026-10-15"
+          "value": -152.1,
+          "from": "2026-10-09",
+          "to": "2026-10-16"
         },
         "1m": {
-          "value": 158.33,
-          "from": "2026-09-15",
-          "to": "2026-10-15"
+          "value": 107.63,
+          "from": "2026-09-16",
+          "to": "2026-10-16"
         },
         "3m": {
-          "value": 286.37,
+          "value": 201.75,
           "from": "2026-07-17",
-          "to": "2026-10-15"
+          "to": "2026-10-16"
         }
       },
       "history": [
-        {
-          "date": "2026-07-07",
-          "value": 7503.85
-        },
         {
           "date": "2026-07-08",
           "value": 7482.71
@@ -2901,13 +2897,17 @@
         {
           "date": "2026-10-15",
           "value": 7744.06
+        },
+        {
+          "date": "2026-10-16",
+          "value": 7659.44
         }
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-16T22:21:50+00:00",
-      "percentile": 98.7,
-      "sample_count": 1254,
+      "fetched_at": "2026-10-17T22:02:59+00:00",
+      "percentile": 96.8,
+      "sample_count": 1255,
       "sample_start": "2021-10-18"
     },
     {
@@ -3225,7 +3225,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-16T22:21:50+00:00",
+      "fetched_at": "2026-10-17T22:02:59+00:00",
       "percentile": 89.8,
       "sample_count": 1246,
       "sample_start": "2021-10-18"
@@ -3273,7 +3273,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-16T22:21:50+00:00",
+      "fetched_at": "2026-10-17T22:02:59+00:00",
       "percentile": 37.5,
       "sample_count": 60,
       "sample_start": "2021-10-01"
@@ -3321,7 +3321,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-16T22:21:50+00:00",
+      "fetched_at": "2026-10-17T22:02:59+00:00",
       "percentile": 72.9,
       "sample_count": 59,
       "sample_start": "2021-10-01"
