@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=2daaf610f0c2"><script src="workspace-frame.js?v=2daaf610f0c2"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=148ecfe79a56"><script src="workspace-frame.js?v=148ecfe79a56"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -1828,6 +1828,7 @@ function installResearchPaste(){
  const panel=document.createElement('details');panel.className='workspace-advanced';
  panel.innerHTML='<summary>研究データを貼り付けて取り込む</summary><p class="hint">四季報・採点・News・ランキング専用。ファイル選択が開かないときにも使えます。保有や接続設定は変更しません。</p><label for="researchPaste">研究データJSON</label><textarea id="researchPaste" rows="5" spellcheck="false" autocomplete="off" style="width:100%;box-sizing:border-box;font-size:16px"></textarea><button class="btn" id="researchPasteApply">研究データを取り込む</button><p role="status" id="researchPasteStatus"></p>';
  host.append(panel);
+ installResearchFile(host);
  panel.querySelector('button').onclick=()=>{
   const input=panel.querySelector('textarea'),status=panel.querySelector('[role=status]');
   const before=S.notes;
@@ -1838,6 +1839,51 @@ function installResearchPaste(){
    input.value='';workspacePublish();status.textContent=result.changed?'研究データを端末に保存しました。上部の同期で他の端末へ反映できます。':'同じ研究データは取り込み済みです。';
   }catch(e){S.notes=before;status.textContent=e instanceof SyntaxError?'JSONとして読み取れません。内容を確認してください。':e.message;}
  };
+}
+// Keep megabyte-sized research out of browser automation messages/clipboard.
+// Only the existing authenticated endpoint is used; no credentials are exported.
+async function verifyResearchUpload(expected,load){
+ const remote=await load();
+ const note=remote?.notes?.find(n=>n.id==='investment-research-bundle-v1');
+ if(note?.researchHash!==expected)throw Error('保存先の研究版が一致しません。端末のデータは保持しています。再試行してください。');
+ return note;
+}
+function installResearchFile(host){
+ const box=document.createElement('div');box.className='set';
+ box.innerHTML='<h3>研究データの更新</h3><p class="hint">研究専用ファイルを選ぶと、自動同期して保存先との一致まで確認します。</p><input type="file" accept=".json,application/json" id="researchFile" aria-label="研究ファイルを選択"><button class="btn" id="researchSyncRetry">研究の同期を再試行</button><p role="status" id="researchFileStatus">研究ファイルの取り込み待ち</p>';
+ host.prepend(box);
+ const input=box.querySelector('input'),retry=box.querySelector('button'),status=box.querySelector('[role=status]');let busy=false;
+ async function run(file){
+  if(busy)return;busy=true;input.disabled=retry.disabled=true;let before,committed=false;
+  try{
+   if(S.restorePending||document.documentElement.classList.contains('suite-locked'))throw Error('端末の登録・復元を完了してください。');
+   if(file){
+    if(file.size>12000000)throw Error('研究ファイルが大きすぎます。');
+    const raw=JSON.parse(await file.text());
+    // General backup files may contain holdings/settings: never silently discard them.
+    if(Object.keys(raw).some(k=>k!=='notes'&&k!=='version'&&k!=='exportedAt'))throw Error('研究専用の private-research-paste.json を選んでください。');
+    const result=researchImportRecord(JSON.stringify({notes:raw.notes}),S,parent.validBundle);
+    before=S.notes;
+    if(result.changed){S.notes=result.notes;editingSync=true;try{save(true);}finally{editingSync=false;}committed=true;render();}
+    workspacePublish();input.value='';
+   }
+   const expected=S.notes.find(n=>n.id==='investment-research-bundle-v1')?.researchHash;
+   if(!expected)throw Error('先に研究ファイルを選択してください。');
+   status.textContent='端末保存済み・クラウド同期中…';
+   if(!S.gas)throw Error('端末保存済み。接続設定を確認してから再試行してください。');
+   clearTimeout(syncT);
+   const until=Date.now()+45000;
+   while(syncing){if(Date.now()>until)throw Error('他の同期が継続中です。後で再試行してください。');await new Promise(r=>setTimeout(r,250));}
+   await syncNow(false);
+   status.textContent='保存先の研究データを照合中…';
+   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),30000);
+   let note;try{note=await verifyResearchUpload(expected,async()=>{const r=await fetch(S.gas+'?action=load&sess='+Date.now(),{signal:controller.signal});if(!r.ok)throw Error('保存先の確認に失敗しました。');return r.json();});}finally{clearTimeout(timeout);}
+   status.textContent='研究の同期確認済み：'+Object.keys(note.researchBundle.notes).length+'社・版 '+expected.slice(0,12)+'・'+new Date().toLocaleString('ja-JP')+'（携帯で同期すると反映）';
+   workspacePublish();
+  }catch(e){if(before&&!committed)S.notes=before;status.textContent='同期未完：'+(e.message||e);}
+  finally{busy=false;input.disabled=retry.disabled=false;}
+ }
+ input.onchange=()=>{const file=input.files?.[0];if(file)run(file);};retry.onclick=()=>run();
 }
 function workspacePublish(){
  if(!workspaceMode)return;
