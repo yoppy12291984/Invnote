@@ -246,10 +246,10 @@ nav[aria-label="メインナビゲーション"][hidden]{display:none!important}
 .list-score{text-align:center;font-variant-numeric:tabular-nums;font-weight:600}
 .depth-stars{display:inline-flex;gap:3px;vertical-align:middle;color:#a98443;line-height:1}
 .depth-stars svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;flex:none}
-.depth-stars .filled{fill:currentColor}
-.depth-stars .empty{fill:none;opacity:.4}
+.depth-stars .depth-star-filled{fill:currentColor}
+.depth-stars .depth-star-empty{fill:none;opacity:.4}
 .list-scroll-hint{display:none;color:var(--sub);font-size:11px;text-align:right;margin:6px 0}
-@media(max-width:600px){.company-table{width:436px;min-width:436px}.company-list-heading,.company-list-row{grid-template-columns:34px 116px 42px 42px 100px;gap:6px;padding:12px 3px}.company-list-row{font-size:13px}.list-scroll-hint{display:block}}
+@media(max-width:600px){.company-table{width:396px;min-width:396px}.company-list-heading,.company-list-row{grid-template-columns:34px 148px 42px 42px 100px;gap:6px;padding:12px 3px}.company-list-row{font-size:13px}.list-scroll-hint{display:block}}
 
 main:has(.company-list) .section-top{margin-bottom:12px}
 main:has(.company-list) .section-top .eyebrow,main:has(.company-list) .section-top p,main:has(.company-list)>small,main:has(.company-list)>p.muted[style]{display:none}
