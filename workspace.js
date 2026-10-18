@@ -116,6 +116,18 @@ function validBundle(d){
    if(!p.indices||!['nikkei225','topix','growth250'].every(k=>{const x=p.indices[k];return x&&[true,false,null].includes(x.member)&&typeof x.asOf==='string'&&typeof x.source==='string'&&(x.member===null||(day(x.asOf)&&url(x.source)));}))return false;
   }
  }
+ if(d?.researchProgress!==undefined){
+  const p=d.researchProgress;
+  if(!p||!p.companies||typeof p.companies!=='object'||Array.isArray(p.companies))return false;
+  for(const [c,r] of Object.entries(p.companies)){
+   if(!/^[0-9A-Z]{4,5}$/.test(c)||!r||r.code!==c||!(r.stars===null||(Number.isInteger(r.stars)&&r.stars>=1&&r.stars<=5)))return false;
+   if(!['label','reason','assessed_on','record_basis','next_action'].every(k=>typeof r[k]==='string')||typeof r.needs_reassessment!=='boolean')return false;
+   if(!Array.isArray(r.blocking_work)||!r.blocking_work.every(x=>typeof x==='string')||!Array.isArray(r.documents)||!Array.isArray(r.records))return false;
+   if(r.stars===5&&(r.blocking_work.length||typeof r.completion_basis!=='string'||!r.completion_basis.trim()))return false;
+   if(!r.documents.every(x=>x&&typeof x.id==='string'&&typeof x.status==='string'&&(x.evidence===undefined||(Array.isArray(x.evidence)&&x.evidence.every(s=>typeof s==='string')))))return false;
+   if(!r.records.every(x=>x&&typeof x.path==='string'&&Array.isArray(x.coverage)&&x.coverage.every(z=>z&&typeof z.field==='string'&&typeof z.scope==='string')))return false;
+  }
+ }
  if(d?.news!==undefined){
   if(!d.news||!Array.isArray(d.news.entries))return false;
   const ids=new Set();

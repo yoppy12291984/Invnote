@@ -220,3 +220,14 @@ nav[aria-label="メインナビゲーション"][hidden]{display:none!important}
 #news-macro[data-pulse="1"]{--pulse-color:#369b81}#news-macro[data-pulse="2"]{--pulse-color:#5e98c0}#news-macro[data-pulse="3"]{--pulse-color:#b58a38}#news-macro[data-pulse="4"]{--pulse-color:#c67c47}#news-macro[data-pulse="5"]{--pulse-color:#c75e69}
 :root[data-theme="dark"] #news-macro[data-pulse="1"]{--pulse-color:#79cfb5}:root[data-theme="dark"] #news-macro[data-pulse="2"]{--pulse-color:#96bde9}:root[data-theme="dark"] #news-macro[data-pulse="3"]{--pulse-color:#e3bd78}:root[data-theme="dark"] #news-macro[data-pulse="4"]{--pulse-color:#efa778}:root[data-theme="dark"] #news-macro[data-pulse="5"]{--pulse-color:#f18c99}
 .pulse-header{display:flex;gap:8px 16px;align-items:baseline;flex-wrap:wrap}.pulse-header strong{font-size:20px;color:#7562a7;letter-spacing:.03em}:root[data-theme="dark"] .pulse-header strong{color:#b9a6e7}.pulse-header span{font-size:10px;color:var(--sub);letter-spacing:.09em}.pulse-summary{margin:16px 0}.pulse-summary>b{font-size:23px;color:var(--pulse-color)}.pulse-summary p{line-height:1.7;margin:8px 0;font-size:14px}.pulse-scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin:16px 0}.pulse-step{border-top:3px solid var(--line);padding:8px 2px;font-size:10px;color:var(--sub);text-align:center}.pulse-step b{display:block;font-size:14px;margin-bottom:4px}.pulse-step.is-current{border-color:var(--pulse-color);color:var(--pulse-color);font-weight:700;background:var(--paper)}.pulse-note{font-size:11px;color:var(--sub)}
+/* Research completion is separate from the investment score. */
+.research-depth-badge{font-size:13px;line-height:1.6;margin:10px 0;color:var(--text,#213747)}
+.research-depth-badge b{color:#92702a;letter-spacing:2px;white-space:nowrap}
+.research-depth-badge small{display:block}
+.research-progress h2{margin-top:0;font-size:22px}
+.research-progress h3{font-size:16px;margin-bottom:6px}
+.research-progress details{overflow-wrap:anywhere}
+.research-progress summary{line-height:1.55}
+.depth-record{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.65 system-ui;background:rgba(128,128,128,.06);padding:12px;border-radius:8px;max-height:420px;overflow:auto}
+.depth-overview{font-size:13px;line-height:1.8;padding:12px;border:1px solid #b5a67b;border-radius:10px}
+.depth-warning{border-left:3px solid #b38a32;padding-left:10px}
