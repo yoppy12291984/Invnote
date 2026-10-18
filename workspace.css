@@ -231,3 +231,15 @@ nav[aria-label="メインナビゲーション"][hidden]{display:none!important}
 .depth-record{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.65 system-ui;background:rgba(128,128,128,.06);padding:12px;border-radius:8px;max-height:420px;overflow:auto}
 .depth-overview{font-size:13px;line-height:1.8;padding:12px;border:1px solid #b5a67b;border-radius:10px}
 .depth-warning{border-left:3px solid #b38a32;padding-left:10px}
+
+/* Compact personal company directory. */
+.company-list{display:block;border-top:1px solid var(--line)}
+.company-list-heading,.company-list-row{display:grid;grid-template-columns:58px minmax(0,1fr) 112px 120px;gap:12px;align-items:center;padding:12px 10px}
+.company-list-heading{font-size:12px;color:var(--sub)}
+.company-list-row{min-height:48px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:14px}
+.company-list-row:hover,.company-list-row:focus-visible{background:var(--paper);outline:2px solid var(--green);outline-offset:-2px}
+.list-code{font-variant-numeric:tabular-nums;color:var(--sub)}
+.list-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.list-depth{white-space:nowrap;color:var(--custom-short);font-size:15px;letter-spacing:1px}
+.list-score{text-align:right;font-variant-numeric:tabular-nums}
+@media(max-width:600px){.company-list-heading,.company-list-row{grid-template-columns:38px minmax(0,1fr) 90px;gap:6px;padding:12px 2px}.company-list-row{font-size:13px}.list-depth{font-size:14px;letter-spacing:0}.company-list-heading .list-score,.company-list-row .list-score{display:none}}
