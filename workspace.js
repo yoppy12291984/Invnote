@@ -153,8 +153,7 @@ function companyTools(code,mode){
  if(!/^[0-9A-Z]{4,5}$/.test(code||''))return;
  const p=personalStocks.find(s=>s.code===code);
  if(!notes[code])app.innerHTML=title(esc(code),esc(p?.name||code),'この会社の調査本文はまだありません。既存の個人メモを確認・編集できます。');
- const bar=document.createElement('div');bar.className='toolbar';bar.innerHTML=`<a class="action" href="#company/${code}">調査・採点</a><a class="action" href="#company/${code}/personal">個人メモ・登録情報</a><a class="action" href="#notebook/inv:vStocks">登録銘柄一覧</a>`;app.prepend(bar);
- if(mode==='personal'){app.innerHTML=title(esc(code),esc(notes[code]?.name||p?.name||code),'個人メモ・登録情報');app.append(bar);app.style.paddingBottom='12px';embedded('inv','stock/'+code);}
+ if(mode==='personal'){app.innerHTML=title(esc(code),esc(notes[code]?.name||p?.name||code),'個人メモ・登録情報');app.style.paddingBottom='12px';embedded('inv','stock/'+code);}
 }
 const baseNotebook=notebook;
 notebook=function(){baseNotebook();

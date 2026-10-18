@@ -233,16 +233,23 @@ nav[aria-label="メインナビゲーション"][hidden]{display:none!important}
 .depth-warning{border-left:3px solid #b38a32;padding-left:10px}
 
 /* Compact personal company directory. */
+.company-list-scroll{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;border-radius:8px}
+.company-table{min-width:480px}
 .company-list{display:block;border-top:1px solid var(--line)}
-.company-list-heading,.company-list-row{display:grid;grid-template-columns:58px minmax(0,1fr) 112px 120px;gap:12px;align-items:center;padding:12px 10px}
+.company-list-heading,.company-list-row{display:grid;grid-template-columns:40px minmax(116px,1fr) 44px 44px 112px;gap:8px;align-items:center;padding:12px 6px}
 .company-list-heading{font-size:12px;color:var(--sub)}
 .company-list-row{min-height:48px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:14px}
 .company-list-row:hover,.company-list-row:focus-visible{background:var(--paper);outline:2px solid var(--green);outline-offset:-2px}
 .list-code{font-variant-numeric:tabular-nums;color:var(--sub)}
 .list-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
-.list-depth{white-space:nowrap;color:var(--custom-short);font-size:15px;letter-spacing:1px}
-.list-score{text-align:right;font-variant-numeric:tabular-nums}
-@media(max-width:600px){.company-list-heading,.company-list-row{grid-template-columns:38px minmax(0,1fr) 90px;gap:6px;padding:12px 2px}.company-list-row{font-size:13px}.list-depth{font-size:14px;letter-spacing:0}.company-list-heading .list-score,.company-list-row .list-score{display:none}}
+.list-depth{white-space:nowrap;display:flex;align-items:center;gap:4px;color:var(--sub)}
+.list-score{text-align:center;font-variant-numeric:tabular-nums;font-weight:600}
+.depth-stars{display:inline-flex;gap:3px;vertical-align:middle;color:#a98443;line-height:1}
+.depth-stars svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;flex:none}
+.depth-stars .filled{fill:currentColor}
+.depth-stars .empty{fill:none;opacity:.4}
+.list-scroll-hint{display:none;color:var(--sub);font-size:11px;text-align:right;margin:6px 0}
+@media(max-width:600px){.company-table{width:436px;min-width:436px}.company-list-heading,.company-list-row{grid-template-columns:34px 116px 42px 42px 100px;gap:6px;padding:12px 3px}.company-list-row{font-size:13px}.list-scroll-hint{display:block}}
 
 main:has(.company-list) .section-top{margin-bottom:12px}
 main:has(.company-list) .section-top .eyebrow,main:has(.company-list) .section-top p,main:has(.company-list)>small,main:has(.company-list)>p.muted[style]{display:none}
