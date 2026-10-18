@@ -243,3 +243,10 @@ nav[aria-label="メインナビゲーション"][hidden]{display:none!important}
 .list-depth{white-space:nowrap;color:var(--custom-short);font-size:15px;letter-spacing:1px}
 .list-score{text-align:right;font-variant-numeric:tabular-nums}
 @media(max-width:600px){.company-list-heading,.company-list-row{grid-template-columns:38px minmax(0,1fr) 90px;gap:6px;padding:12px 2px}.company-list-row{font-size:13px}.list-depth{font-size:14px;letter-spacing:0}.company-list-heading .list-score,.company-list-row .list-score{display:none}}
+
+main:has(.company-list) .section-top{margin-bottom:12px}
+main:has(.company-list) .section-top .eyebrow,main:has(.company-list) .section-top p,main:has(.company-list)>small,main:has(.company-list)>p.muted:not(#company-count){display:none}
+main:has(.company-list) .section-top h1{font-size:24px;margin:12px 0}
+main:has(.company-list) .toolbar{margin:10px 0}
+.list-help{font-size:12px;margin:12px 0;color:var(--sub)}
+#company-count{font-size:12px;margin:8px 0}
