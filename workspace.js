@@ -2,6 +2,40 @@
 'use strict';
 const appRelease=JSON.parse(document.getElementById('app-release').textContent);
 let personalStocks=[],researchHash='',syncTime=0;
+let companyMemos=[],memoDialog=null,memoCode='',memoEditing=null,memoRequest='',memoBusy=false;
+function memoDate(ts){return new Date(ts).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});}
+function renderCompanyMemos(){
+ if(!memoDialog)return;
+ const list=memoDialog.querySelector('[data-memo-list]');list.replaceChildren();
+ for(const n of companyMemos.filter(n=>n.code===memoCode).sort((a,b)=>b.ts-a.ts)){
+  const card=document.createElement('article');card.className='card';
+  const date=document.createElement('small');date.textContent='作成 '+memoDate(n.ts)+(n.edited>n.ts?' · 更新 '+memoDate(n.edited):'')+'（日本時間）';card.append(date);
+  const text=document.createElement('p');text.style.whiteSpace='pre-wrap';text.textContent=n.memoDeleted?'削除済みのメモ':n.text;card.append(text);
+  const actions=document.createElement('div');actions.className='workspace-setting-actions';card.append(actions);
+  const add=(label,fn)=>{const b=document.createElement('button');b.type='button';b.className='action';b.textContent=label;b.disabled=memoBusy;b.onclick=fn;actions.append(b);};
+  if(n.memoDeleted)add('復元',()=>sendCompanyMemo('restore',n));
+  else{add('編集',()=>{memoEditing=n;memoDialog.querySelector('textarea').value=n.text;memoDialog.querySelector('textarea').focus();});add('削除',()=>sendCompanyMemo('delete',n));}
+  list.append(card);
+ }
+ if(!list.children.length){const p=document.createElement('p');p.textContent='まだメモはありません。';list.append(p);}
+}
+function openCompanyMemo(code){
+ if(!memoDialog){
+  memoDialog=document.createElement('dialog');memoDialog.className='company-memo-dialog';memoDialog.setAttribute('aria-labelledby','company-memo-title');
+  memoDialog.innerHTML='<h2 id="company-memo-title"></h2><p>自分用メモ · 日付は自動記録</p><form><label for="company-memo-text">メモ</label><textarea id="company-memo-text" rows="5" maxlength="20000" required></textarea><div class="workspace-setting-actions"><button class="action primary" type="submit">メモを保存</button><button class="action" type="button" data-new>新しいメモ</button><button class="action" type="button" data-close>閉じる</button></div><p role="status"></p></form><div data-memo-list></div>';
+  document.body.append(memoDialog);memoDialog.querySelector('form').onsubmit=e=>{e.preventDefault();sendCompanyMemo('save',memoEditing);};
+  memoDialog.querySelector('[data-new]').onclick=()=>{memoEditing=null;memoDialog.querySelector('textarea').value='';};
+  memoDialog.querySelector('[data-close]').onclick=()=>memoDialog.close();
+ }
+ memoCode=code;memoEditing=null;memoDialog.querySelector('textarea').value='';memoDialog.querySelector('h2').textContent=code+' '+(notes[code]?.name||'')+' のメモ';memoDialog.querySelector('[role=status]').textContent='';renderCompanyMemos();memoDialog.showModal();
+}
+function sendCompanyMemo(action,n){
+ if(memoBusy)return;
+ const output=memoDialog.querySelector('[role=status]');if(!invReady){output.textContent='データの読み込み完了を待ってください。';return;}
+ memoBusy=true;memoRequest=crypto.randomUUID();memoDialog.querySelectorAll('button').forEach(b=>b.disabled=true);output.textContent='保存中…';
+ frames.inv.contentWindow.postMessage({type:'workspace:memo',request:memoRequest,action,code:memoCode,id:n?.id,expected:n?(n.edited||n.ts):undefined,text:memoDialog.querySelector('textarea').value},location.origin);
+ const request=memoRequest;setTimeout(()=>{if(memoBusy&&request===memoRequest){memoBusy=false;memoDialog.querySelectorAll('button').forEach(b=>b.disabled=false);output.textContent='保存の応答を確認できません。入力は残しています。同期後に一覧を確認してください。';}},15000);
+}
 let appearanceMode=null,invReady=false,syncTimer,featureMeta='',syncPending=false,invLocked=false;
 let transferDialog=null,transferSubmitting=false;
 function openTransferDialog(){
@@ -154,6 +188,7 @@ function companyTools(code,mode){
  const p=personalStocks.find(s=>s.code===code);
  if(!notes[code])app.innerHTML=title(esc(code),esc(p?.name||code),'この会社の調査本文はまだありません。既存の個人メモを確認・編集できます。');
  if(mode==='personal'){app.innerHTML=title(esc(code),esc(notes[code]?.name||p?.name||code),'個人メモ・登録情報');app.style.paddingBottom='12px';embedded('inv','stock/'+code);}
+ else if(notes[code]){const b=document.createElement('button');b.type='button';b.className='action';b.style.marginLeft='8px';b.textContent='メモ';b.onclick=()=>openCompanyMemo(code);document.getElementById('watch-toggle')?.after(b);}
 }
 const baseNotebook=notebook;
 notebook=function(){baseNotebook();
@@ -181,9 +216,11 @@ window.addEventListener('message',e=>{
  if(e.origin===location.origin&&e.source===frames.scr?.contentWindow&&e.data?.type==='screener:company'&&/^[0-9A-Z]{4,5}$/.test(e.data.code)){location.hash='company/'+e.data.code;return;}
  if(e.origin!==location.origin||e.source!==frames.inv?.contentWindow)return;
  const m=e.data;
+ if(m?.type==='workspace:memo-result'&&m.request===memoRequest){memoBusy=false;memoDialog.querySelectorAll('button').forEach(b=>b.disabled=false);memoDialog.querySelector('[role=status]').textContent=String(m.message||'');if(m.ok){memoEditing=null;memoDialog.querySelector('textarea').value='';}renderCompanyMemos();return;}
  if(m?.type==='invnote:company'&&/^[0-9A-Z]{4,5}$/.test(m.code)){location.hash='company/'+m.code;return;}
- if(m?.type==='invnote:locked'){invReady=false;invLocked=true;syncPending=false;clearTimeout(syncTimer);document.getElementById('workspace-sync').disabled=false;replaceResearch(initialData);personalStocks=[];researchHash='';if(!['#settings','#import'].includes(location.hash))route();status.textContent='設定から引き継ぎコードを入力してください。';return;}
+ if(m?.type==='invnote:locked'){companyMemos=[];memoDialog?.close();invReady=false;invLocked=true;syncPending=false;clearTimeout(syncTimer);document.getElementById('workspace-sync').disabled=false;replaceResearch(initialData);personalStocks=[];researchHash='';if(!['#settings','#import'].includes(location.hash))route();status.textContent='設定から引き継ぎコードを入力してください。';return;}
  if(m?.type!=='invnote:state')return;
+ companyMemos=Array.isArray(m.companyMemos)?m.companyMemos.filter(n=>n.kind==='company-memo-v1'&&typeof n.text==='string'&&/^[0-9A-Z]{4,5}$/.test(n.code)&&Number.isFinite(n.ts)):[];if(memoDialog?.open)renderCompanyMemos();
  invReady=true;invLocked=false;if(syncPending){syncPending=false;clearTimeout(syncTimer);queueMicrotask(syncWorkspace);}if(!appearanceMode&&['light','dark'].includes(m.theme))appearanceMode=m.theme;paintAppearance();
  const nextStocks=Array.isArray(m.stocks)?m.stocks.filter(s=>/^[0-9A-Z]{4,5}$/.test(s.code)&&typeof s.name==='string'&&typeof s.status==='string'):[];
  const changed=m.researchHash!==researchHash||JSON.stringify(nextStocks)!==JSON.stringify(personalStocks);

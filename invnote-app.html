@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=54a3ca1ba9e9"><script src="workspace-frame.js?v=54a3ca1ba9e9"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=e4ce96fbf2d5"><script src="workspace-frame.js?v=e4ce96fbf2d5"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -426,7 +426,7 @@ function mount(){
  if(!el){el=document.createElement('section');el.id='market-agenda';el.className='market-agenda';}
  const newsTop=host.querySelector('#news-macro');if(newsTop){if(newsTop.previousElementSibling!==el)newsTop.before(el);}else if(tabs.nextElementSibling!==el)tabs.after(el);
  const now=new Date(),rows=upcoming(now),expired=dateJST(now)>'2026-12-18';
- const body='<div class="market-kicker">Market Calendar <span class="market-zone">日本時間</span></div>'+(expired?'<p>登録済み日程の対象期間が終了しました。新しい公式日程の確認が必要です。</p>':rows.length?rows.map(e=>'<details><summary><span>'+esc(e.title)+'</span><span class="market-when">'+label(e,now)+' · '+e.date.slice(5).replace('-','/')+'</span></summary><p>'+esc(e.detail)+'</p><small><a href="'+e.source+'" target="_blank" rel="noopener noreferrer">公式日程 ↗</a> · 10/15確認</small></details>').join(''):'<p>今後14日以内の登録済み重要予定はありません。</p>')+'<div class="market-tools"><a href="#today/inv:vCal">カレンダーを見る ↗</a><button type="button" data-market-export>スマホのカレンダーに追加</button></div><small>12/18までの主要予定。アプリ内アラート／端末カレンダー用の7日前・前日通知。通知の有効化は端末側で確認してください。</small>';
+ const body='<div class="market-kicker">Market Calendar <span class="market-zone">日本時間</span></div>'+(expired?'<p>登録済み日程の対象期間が終了しました。新しい公式日程の確認が必要です。</p>':rows.length?rows.map(e=>'<details><summary><span>'+esc(e.title)+'</span><span class="market-when">'+label(e,now)+' · '+e.date.slice(5).replace('-','/')+'</span></summary><p>'+esc(e.detail)+'</p><small><a href="'+e.source+'" target="_blank" rel="noopener noreferrer">公式日程 ↗</a> · 10/15確認</small></details>').join(''):'<p>今後14日以内の登録済み重要予定はありません。</p>');
  if(el.dataset.day!==dateJST(now)||el.dataset.signature!==rows.map(e=>e.id).join(',')){el.innerHTML=body;el.dataset.day=dateJST(now);el.dataset.signature=rows.map(e=>e.id).join(',');}
 }
 document.addEventListener('click',e=>{if(!e.target.closest('[data-market-export]'))return;const url=URL.createObjectURL(new Blob([calendar()],{type:'text/calendar;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='Invnote-market-2026.ics';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);});
@@ -1810,6 +1810,18 @@ function initTodos(){
 /* Runs inside the original, authenticated Invnote application scope. */
 const workspaceMode=parent!==window&&new URLSearchParams(location.search).get('workspace')==='1';
 let workspaceOpening=false;
+// Company memos use the existing authenticated notes merge and its edit timestamps.
+function applyCompanyMemo(state,m,stamp,newId){
+ if(!/^[0-9A-Z]{4,5}$/.test(m.code||'')||!['save','delete','restore'].includes(m.action))throw Error('メモの指定が不正です。');
+ const old=m.id?state.notes.find(n=>n.id===m.id):null;
+ if(m.id&&(!old||old.code!==m.code||old.kind!=='company-memo-v1'))throw Error('このメモは変更できません。');
+ if(old&&(old.edited||old.ts)!==m.expected)throw Error('別の端末で更新されています。一覧から開き直してください。');
+ if(m.action!=='save'&&!old)throw Error('メモが見つかりません。');
+ const text=m.action==='save'?String(m.text||'').trim():old.text;
+ if(!text||text.length>20000)throw Error('メモは1〜20,000文字で入力してください。');
+ const n={...old,id:old?.id||newId,kind:'company-memo-v1',code:m.code,text,tags:old?.tags||[],pinned:old?.pinned||false,ts:old?.ts||stamp,edited:Math.max(stamp,(old?.edited||old?.ts||0)+1),memoDeleted:m.action==='delete'};
+ return [...state.notes.filter(x=>x.id!==n.id),n];
+}
 // Research-only import: no file-picker dependency and no portfolio/settings mutation.
 function researchImportRecord(text,state,validate){
  if(text.length>12000000)throw Error('研究データが大きすぎます。');
@@ -1889,7 +1901,7 @@ function workspacePublish(){
  if(!workspaceMode)return;
  const bundle=S.notes.filter(n=>n.kind==='investment-research-bundle-v1'&&n.researchBundle).sort((a,b)=>(b.edited||b.ts)-(a.edited||a.ts))[0];
  parent.postMessage({type:'invnote:state',bundle:bundle?.researchBundle||null,researchHash:bundle?.researchHash||'',
- stocks:Object.entries(S.stocks).map(([code,s])=>({code,name:s.name||code,status:s.status||''})),lastSync:S.lastSync||0,theme:S.theme},location.origin);
+ stocks:Object.entries(S.stocks).map(([code,s])=>({code,name:s.name||code,status:s.status||''})),companyMemos:S.notes.filter(n=>n.kind==='company-memo-v1'),lastSync:S.lastSync||0,theme:S.theme},location.origin);
 }
 function workspaceGo(){
  if(!workspaceMode)return;
@@ -1904,6 +1916,14 @@ if(workspaceMode){
  window.addEventListener('message',async e=>{
   if(e.origin!==location.origin||e.source!==parent)return;
   if(e.data?.type==='workspace:refresh')workspacePublish();
+  if(e.data?.type==='workspace:memo'){
+   const before=S.notes;
+   try{
+    if(S.restorePending||document.documentElement.classList.contains('suite-locked'))throw Error('登録・復元の完了を待ってください。');
+    S.notes=applyCompanyMemo(S,e.data,Date.now(),uid());save(true);workspacePublish();
+    parent.postMessage({type:'workspace:memo-result',request:e.data.request,ok:true,message:'端末に保存しました。自動同期で他端末へ反映します。'},location.origin);
+   }catch(err){S.notes=before;parent.postMessage({type:'workspace:memo-result',request:e.data.request,ok:false,message:err.message},location.origin);}
+  }
   if(e.data?.type==='workspace:theme'&&['light','dark'].includes(e.data.theme)&&S.theme!==e.data.theme){S.theme=e.data.theme;applyTheme();save();}
   if(e.data?.type==='workspace:sync'){
    if(!S.gas){parent.postMessage({type:'workspace:sync-result',message:'接続設定を確認してください。'},location.origin);return;}

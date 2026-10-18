@@ -257,3 +257,6 @@ main:has(.company-list) .section-top h1{font-size:24px;margin:12px 0}
 main:has(.company-list) .toolbar{margin:10px 0}
 .list-help{font-size:12px;margin:12px 0;color:var(--sub)}
 #company-count{font-size:12px;margin:8px 0}
+
+.company-memo-dialog{width:min(660px,calc(100% - 28px));max-height:85dvh;box-sizing:border-box;overflow:auto;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:20px}.company-memo-dialog::backdrop{background:#0008}.company-memo-dialog textarea{display:block;box-sizing:border-box;width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;margin:8px 0 12px}.company-memo-dialog article{margin-top:14px}.company-memo-dialog button{min-height:44px}
+
