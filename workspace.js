@@ -36,6 +36,7 @@ function sendCompanyMemo(action,n){
  frames.inv.contentWindow.postMessage({type:'workspace:memo',request:memoRequest,action,code:memoCode,id:n?.id,expected:n?(n.edited||n.ts):undefined,text:memoDialog.querySelector('textarea').value},location.origin);
  const request=memoRequest;setTimeout(()=>{if(memoBusy&&request===memoRequest){memoBusy=false;memoDialog.querySelectorAll('button').forEach(b=>b.disabled=false);output.textContent='保存の応答を確認できません。入力は残しています。同期後に一覧を確認してください。';}},15000);
 }
+let ninePriceSyncRequested=false;
 let appearanceMode=null,invReady=false,syncTimer,featureMeta='',syncPending=false,invLocked=false;
 let transferDialog=null,transferSubmitting=false;
 function openTransferDialog(){
@@ -229,6 +230,7 @@ window.addEventListener('message',e=>{
  else {replaceResearch(initialData);researchHash='';status.textContent=m.bundle?'四季報の形式を確認できませんでした。設定・同期を確認してください。':'四季報はまだ同期されていません。設定・同期から読み込めます。';}
  // Keep active search text and personal edits intact when only sync time changed.
  if(changed&&!['#settings','#import'].includes(location.hash))route();
+ if(validBundle(m.bundle)&&!ninePriceSyncRequested&&!Object.values(m.bundle.notes).some(n=>n.ninePointPrice)){ninePriceSyncRequested=true;queueMicrotask(syncWorkspace);}
 });
 // A single header owns appearance, sync, import and settings for all four areas.
 utilities.remove();document.querySelector('header .private')?.remove();
@@ -448,7 +450,7 @@ async function renderMethodRankings(){
  const privateHTML=evidenceHTML+(privateRank?.rows?.length?'<h2>清原式 · 今買うならの個社調査順位</h2>'+`<p class="muted">調査 ${esc(privateRank.date)} · ${esc(privateRank.priceDate)}終値基準<br>${esc(privateRank.scope)}</p><p class="muted">${esc(privateRank.caution)}</p><p>個社調査の比較順位を固定表示。機械判定で並び替えません。</p><p>${esc(privateRank.definitions||"")}</p>`+kiyoharaEvaluatedRows(privateRank.rows,feed,privateRank.orderPolicy).map((x,i)=>`<details class="card"><summary>${i+1}位 ${esc(x.name)} · ${esc(x.code)} · ${esc(x.status||"")}</summary><p>${esc(x.detail)}</p><p>${esc(x.facts||"")}</p><p>${esc(kiyoharaEvidenceText(x.buyback))}</p><p>3か月 ${x.short_3m==null?"採点保留":x.short_3m+"/10"} · 12か月 ${x.long_12m==null?"採点保留":x.long_12m+"/10"} · 根拠 ${esc(x.evidence_confidence)}</p><p>${esc(x.reason)}</p><p><b>反証</b> ${esc(x.counter)}</p><p><b>次の確認</b> ${esc(x.next)}</p><p>個社調査による裁量比較。NC順・点数順ではありません。</p><button class="open" data-company="${esc(x.code)}">会社の調査を読む</button></details>`).join(''):'');
  el.innerHTML=privateHTML;
  try{const r=await fetch('screener/data/method-rankings.json',{cache:'no-store'});if(!r.ok)throw Error();const d=await r.json();if(!el.isConnected)return;
- el.innerHTML=privateHTML+'<h2>手法別スクリーニング TOP 3</h2><p class="muted">以下は抽出順。個社調査による清原式の順位とは別です。</p>'+d.groups.map(g=>`<details class="card"><summary>${g.route==="cand"?"清原式 · 機械的なNC順位（実行・純減確認候補）":esc(g.name)} · ${esc(g.priceDate)} 終値基準</summary><p>${esc(g.rule)} · 前回 ${esc(g.previousDate||'比較開始')}</p>${g.rows.map((x,i)=>`<p><b>${i+1}位 ${esc(x.name)}（${esc(x.code)}）</b><br>${x.previousRank==null?'初登場／比較開始':x.previousRank===i+1?'→ 据置':x.previousRank>i+1?'↑ '+(x.previousRank-i-1):'↓ '+(i+1-x.previousRank)} · ${esc(x.detail)}</p>`).join('')}<a href="#discover/scr:${g.route}">一覧と根拠を見る</a></details>`).join('')+'<h2>総合 TOP 10</h2>';
- }catch{if(el.isConnected)el.innerHTML=privateHTML+'<p>スクリーニング順位は取得できませんでした。</p><h2>総合 TOP 10</h2>';}
+ el.innerHTML=privateHTML+'<h2>手法別スクリーニング TOP 3</h2><p class="muted">以下は抽出順。個社調査による清原式の順位とは別です。</p>'+d.groups.map(g=>`<details class="card"><summary>${g.route==="cand"?"清原式 · 機械的なNC順位（実行・純減確認候補）":esc(g.name)} · ${esc(g.priceDate)} 終値基準</summary><p>${esc(g.rule)} · 前回 ${esc(g.previousDate||'比較開始')}</p>${g.rows.map((x,i)=>`<p><b>${i+1}位 ${esc(x.name)}（${esc(x.code)}）</b><br>${x.previousRank==null?'初登場／比較開始':x.previousRank===i+1?'→ 据置':x.previousRank>i+1?'↑ '+(x.previousRank-i-1):'↓ '+(i+1-x.previousRank)} · ${esc(x.detail)}</p>`).join('')}<a href="#discover/scr:${g.route}">一覧と根拠を見る</a></details>`).join('');
+ }catch{if(el.isConnected)el.innerHTML=privateHTML+'<p>スクリーニング順位は取得できませんでした。</p>';}
  if(el.isConnected&&feed?.valuationMethod)el.insertAdjacentHTML('afterbegin',`<p class="muted">清原式の分割・開示基準を修正済み。${esc(feed.financialNote)} 旧20年検証は成績採用を停止しています。</p>`);
 }
