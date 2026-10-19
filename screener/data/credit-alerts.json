@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "generated_at": "2026-10-19T14:02:34.992Z",
+  "generated_at": "2026-10-19T22:03:36.330Z",
   "current": {
-    "level": 1,
-    "label": "速度基準未満",
-    "primary": 1,
+    "level": 3,
+    "label": "警戒強化",
+    "primary": 2,
     "bankKnown": true,
     "speeds": [
       {
@@ -12,17 +12,17 @@
         "label": "HY",
         "threshold": 0.5,
         "known": true,
-        "change": 0.47,
-        "date": "2026-10-15",
-        "hit": false
+        "change": 0.61,
+        "date": "2026-10-16",
+        "hit": true
       },
       {
         "id": "BAMLC0A4CBBB",
         "label": "BBB",
         "threshold": 0.2,
         "known": true,
-        "change": 0.07,
-        "date": "2026-10-15",
+        "change": 0.1,
+        "date": "2026-10-16",
         "hit": false
       }
     ],
@@ -46,9 +46,9 @@
     ]
   },
   "lastConfirmed": {
-    "level": 1,
-    "label": "速度基準未満",
-    "primary": 1,
+    "level": 3,
+    "label": "警戒強化",
+    "primary": 2,
     "bankKnown": true,
     "speeds": [
       {
@@ -56,17 +56,17 @@
         "label": "HY",
         "threshold": 0.5,
         "known": true,
-        "change": 0.47,
-        "date": "2026-10-15",
-        "hit": false
+        "change": 0.61,
+        "date": "2026-10-16",
+        "hit": true
       },
       {
         "id": "BAMLC0A4CBBB",
         "label": "BBB",
         "threshold": 0.2,
         "known": true,
-        "change": 0.07,
-        "date": "2026-10-15",
+        "change": 0.1,
+        "date": "2026-10-16",
         "hit": false
       }
     ],
@@ -89,5 +89,103 @@
       }
     ]
   },
-  "events": []
+  "events": [
+    {
+      "id": "2026-10-19T22:03:36.330Z:3",
+      "confirmedAt": "2026-10-19T22:03:36.330Z",
+      "fromLevel": 1,
+      "kind": "rise",
+      "afterGap": false,
+      "snapshot": {
+        "level": 3,
+        "label": "警戒強化",
+        "primary": 2,
+        "bankKnown": true,
+        "speeds": [
+          {
+            "id": "BAMLH0A0HYM2",
+            "label": "HY",
+            "threshold": 0.5,
+            "known": true,
+            "change": 0.61,
+            "date": "2026-10-16",
+            "hit": true
+          },
+          {
+            "id": "BAMLC0A4CBBB",
+            "label": "BBB",
+            "threshold": 0.2,
+            "known": true,
+            "change": 0.1,
+            "date": "2026-10-16",
+            "hit": false
+          }
+        ],
+        "banks": [
+          {
+            "label": "銀行セクター KBE",
+            "level": 2,
+            "value": -4.731955761849553,
+            "relative": -6.157177000201683,
+            "from": "2026-09-16",
+            "to": "2026-10-16"
+          },
+          {
+            "label": "地銀 KRE",
+            "level": 2,
+            "value": -4.028045210404632,
+            "relative": -5.453266448756763,
+            "from": "2026-09-16",
+            "to": "2026-10-16"
+          }
+        ]
+      },
+      "before": {
+        "level": 1,
+        "label": "速度基準未満",
+        "primary": 1,
+        "bankKnown": true,
+        "speeds": [
+          {
+            "id": "BAMLH0A0HYM2",
+            "label": "HY",
+            "threshold": 0.5,
+            "known": true,
+            "change": 0.47,
+            "date": "2026-10-15",
+            "hit": false
+          },
+          {
+            "id": "BAMLC0A4CBBB",
+            "label": "BBB",
+            "threshold": 0.2,
+            "known": true,
+            "change": 0.07,
+            "date": "2026-10-15",
+            "hit": false
+          }
+        ],
+        "banks": [
+          {
+            "label": "銀行セクター KBE",
+            "level": 2,
+            "value": -4.731955761849553,
+            "relative": -6.157177000201683,
+            "from": "2026-09-16",
+            "to": "2026-10-16"
+          },
+          {
+            "label": "地銀 KRE",
+            "level": 2,
+            "value": -4.028045210404632,
+            "relative": -5.453266448756763,
+            "from": "2026-09-16",
+            "to": "2026-10-16"
+          }
+        ]
+      },
+      "beforeConfirmedAt": "2026-10-19T14:02:34.992Z",
+      "beforeBasis": "前回確認"
+    }
+  ]
 }
