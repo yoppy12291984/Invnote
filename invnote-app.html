@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=7da587c90ad1"><script src="workspace-frame.js?v=7da587c90ad1"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=043e7620ffdd"><script src="workspace-frame.js?v=043e7620ffdd"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -562,8 +562,11 @@ root.addEventListener('hashchange',mount);document.addEventListener('visibilityc
   <div id="imageReview" hidden>
    <h3>読み取り結果を確認</h3><p class="hint" id="imageWarnings"></p>
    <label>保有の確認日 <input id="imageDate" type="date" style="font:inherit;font-size:16px;max-width:100%"></label>
-   <p class="hint">画像と同じ日付を選んでください。未選択の行・画像にない銘柄は変更しません。別の日の画像は分けて取り込んでください。</p>
+   <p class="hint">画像と同じ日付を選んでください。通常は未選択の行・画像にない銘柄を変更しません。別の日の画像は分けて取り込んでください。</p>
    <div id="imageRows"></div>
+   <label style="display:block;margin:12px 0"><input type="checkbox" id="imageReplace" checked> 基本設定：画像にない現在の保有を削除する（全保有を置換）</label>
+   <p class="hint">全口座・全銘柄の画像を選んだ場合の設定です。一部の画面、特定口座だけ、続きの画像がない場合はチェックを外してください。</p>
+   <p class="hint" id="imageReplaceSummary" role="status"></p>
    <label style="display:block;margin:12px 0"><input type="checkbox" id="imageConfirm"> 選択した行の数字・口座区分・確認日を画像と照合しました</label>
    <button class="btn" id="imageApply">確認した内容を反映</button>
   </div></div>
@@ -1383,7 +1386,7 @@ $('#imageConnection').addEventListener('click',async()=>{
  imageStatus(j.configured===true?'OpenAIの接続設定があります。スクショを選んで読み取れます（実際の利用可否は送信時に確認）。':j.configured===false?'画像読み取り用AIが未設定です。管理者によるAPI接続設定が必要です。':'接続先の更新が必要です。');
  }catch(e){imageStatus('接続確認に失敗しました：'+e.message);}finally{$('#imageConnection').disabled=false;}
 });
-function clearImageDraft(){imageDraft=null;$('#imageReview').hidden=true;$('#imageRows').replaceChildren();$('#imageConfirm').checked=false;}
+function clearImageDraft(){imageDraft=null;$('#imageReview').hidden=true;$('#imageRows').replaceChildren();$('#imageConfirm').checked=false;$('#imageReplace').checked=false;}
 function imageBusySet(on){imageBusy=on;for(const id of ['imagePick','imageRead','imageClear'])$('#'+id).disabled=on;}
 function releaseImages(){for(const x of imageFiles)URL.revokeObjectURL(x.url);imageFiles=[];$('#imagePreviews').replaceChildren();$('#imageInput').value='';}
 async function imageEncode(file){
@@ -1434,7 +1437,7 @@ function renderImageDraft(){
   const duplicate=imageDraft.filter(x=>x.code&&InvnoteHistory.positionKey(x.code,x.acct)===InvnoteHistory.positionKey(r.code,r.acct)).length>1;
   const errors=imageDraftErrors([r],'2000-01-01','2000-01-01',S.holdings);
   return '<fieldset data-image-row="'+i+'" style="min-width:0;margin:12px 0;padding:12px;border:1px solid var(--line);border-radius:12px"><legend><label><input type="checkbox" data-field="selected" '+(!errors.length&&!r.issues.length&&!duplicate?'checked':'')+'> 反映する · 画像 '+esc(String(r.image||'?'))+'</label></legend><p>'+esc(r.name||'社名未確認')+'</p><div class="image-fields">'+[['code','銘柄コード',r.code],['shares','株数',val(r.shares)],['avg','取得単価（円）',val(r.avg)],['price','現在値（円）',val(r.price)]].map(([k,label,v])=>'<label>'+label+'<input data-field="'+k+'" aria-label="'+(i+1)+'行目 '+label+'" inputmode="'+(k==='code'?'text':'decimal')+'" value="'+esc(v)+'"></label>').join('')+'<label>口座区分<select data-field="acct" aria-label="'+(i+1)+'行目 口座区分">'+IMAGE_ACCOUNTS.map(a=>'<option '+(r.acct===a?'selected':'')+'>'+a+'</option>').join('')+'</select></label></div><p class="hint">'+esc([...(duplicate?['同じコードが複数行あります。重複・別口座・別建玉を確認してください。']:[]),...r.issues,...errors].join(' / '))+'</p><p class="hint" data-row-diff></p></fieldset>';
- }).join('');$('#imageReview').hidden=false;updateImageDiff();
+ }).join('');$('#imageReplace').checked=true;$('#imageReview').hidden=false;updateImageDiff();
 }
 function imageReviewRows(){return Array.from($('#imageRows').querySelectorAll('[data-image-row]')).filter(el=>el.querySelector('[data-field="selected"]').checked).map(el=>{
  const r=imageDraft[Number(el.dataset.imageRow)],get=k=>el.querySelector('[data-field="'+k+'"]').value.trim(),row={code:get('code').toUpperCase(),name:r.name,shares:get('shares')===''?NaN:Number(get('shares')),acct:get('acct')};
@@ -1446,18 +1449,21 @@ function updateImageDiff(){
   const code=el.querySelector('[data-field="code"]').value.trim().toUpperCase(),old=S.holdings[InvnoteHistory.positionKey(code,el.querySelector('[data-field="acct"]').value)],shares=el.querySelector('[data-field="shares"]').value;
   el.querySelector('[data-row-diff]').textContent=old?'登録中 '+old.shares+'株 / '+(old.acct||'口座不明')+' → 今回 '+(shares||'未確認')+'株':'未登録 → 今回 '+(shares||'未確認')+'株（新規購入とは判定しません）';
  }
+ const rows=InvnoteHistory.reconcileImportRows(imageReviewRows(),S.holdings),keep=new Set(rows.map(r=>InvnoteHistory.positionKey(r.code,r.acct))),removed=Object.keys(S.holdings).filter(k=>!keep.has(k));
+ $('#imageReplaceSummary').textContent=$('#imageReplace').checked?(removed.length?'画像にない現在の保有 '+removed.length+'件を一覧から外します：'+removed.slice(0,6).map(k=>InvnoteHistory.ticker(k)+' '+nm(InvnoteHistory.ticker(k))).join('、')+(removed.length>6?' ほか':''):'画像にない現在の保有はありません。'):'部分更新です。画像にない現在の保有は残します。';
 }
 $('#imageRows').addEventListener('input',updateImageDiff);
 $('#imageDate').addEventListener('change',()=>{$('#imageConfirm').checked=false;});
+$('#imageReplace').addEventListener('change',()=>{updateImageDiff();imageStatus($('#imageReplace').checked?'全保有として反映します。画像にない現在の保有は削除されます。':'部分更新です。画像にない現在の保有は残します。');});
 $('#imageApply').addEventListener('click',()=>{
  if(!imageDraft||imageBusy)return;
  if(!$('#imageConfirm').checked){imageStatus('確認日・株数・単価・口座区分を画像と照合して、確認にチェックしてください。');return;}
  const rows=imageReviewRows(),date=$('#imageDate').value,errors=imageDraftErrors(rows,date,dstr(Date.now()),S.holdings);
  if(errors.length){imageStatus(errors.join(' / '));return;}
  try{
-  const r=importParsed({stocks:rows.map(x=>({code:x.code,name:x.name,status:'保有'})),notes:[],diary:[],events:[],holdings:rows,holdings_date:date,holdings_replace:false});
+  const replace=$('#imageReplace').checked,r=importParsed({stocks:rows.map(x=>({code:x.code,name:x.name,status:'保有'})),notes:[],diary:[],events:[],holdings:rows,holdings_date:date,holdings_replace:replace});
   $('#impLog').innerHTML='<div class="set"><b>'+esc(r.msg)+'</b><div class="hint">'+r.detail+'</div></div>';
-  clearImageDraft();releaseImages();imageStatus(r.msg+'。画像にない銘柄は変更していません。');
+  clearImageDraft();releaseImages();imageStatus(r.msg+(replace?'。画像にない保有を一覧から外しました。':'。画像にない銘柄は変更していません。'));
  }catch(e){imageStatus(e.message||'反映できませんでした。');}
 });
 
