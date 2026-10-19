@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=15443caf521a"><script src="workspace-frame.js?v=15443caf521a"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=7da587c90ad1"><script src="workspace-frame.js?v=7da587c90ad1"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -1169,6 +1169,22 @@ function positionKey(c,acct){
  c=ticker(c);const a=String(acct||'').trim();
  return !a||a==='現物'?c:c+'~'+encodeURIComponent(a);
 }
+const detailedCash=a=>/^現物（(?:特定|一般)）$/.test(String(a||'').trim());
+function collapseCashAliases(holdings,deleted){
+ const byTicker={};
+ for(const [k,v] of Object.entries(holdings))((byTicker[ticker(k)]||=[])).push([k,v]);
+ for(const [c,rows] of Object.entries(byTicker)){
+  const generic=rows.find(([k,v])=>k===c&&String(v.acct||'').trim()==='現物');
+  const details=rows.filter(([,v])=>detailedCash(v.acct));
+  if(!generic||details.length!==1)continue;
+  const [genericKey,genericRow]=generic,[detailKey,detailRow]=details[0];
+  const genericAt=genericRow.positionUpd||genericRow.upd||0,detailAt=detailRow.positionUpd||detailRow.upd||0;
+  const older=genericAt>=detailAt?detailRow:genericRow,newer=genericAt>=detailAt?genericRow:detailRow;
+  holdings[detailKey]={...older,...newer,acct:detailRow.acct,upd:Math.max(genericRow.upd||0,detailRow.upd||0),positionUpd:Math.max(genericRow.positionUpd||0,detailRow.positionUpd||0)};
+  delete holdings[genericKey];deleted?.add('h:'+genericKey);
+ }
+ return holdings;
+}
 function normalizeState(s){
  const holdings={},deleted=new Set(s.deleted||[]);
  for(const [old,v] of Object.entries(s.holdings||{})){
@@ -1176,10 +1192,23 @@ function normalizeState(s){
   if(k!==old)deleted.add('h:'+old);
   if(!holdings[k]||(v.upd||0)>(holdings[k].upd||0))holdings[k]=v;
  }
- s.holdings=holdings;s.deleted=[...deleted];return s;
+ s.holdings=collapseCashAliases(holdings,deleted);s.deleted=[...deleted];return s;
 }
 function normalizeHistory(h){
- const out={};for(const [k,v] of Object.entries(h||{}))out[positionKey(k,v.ac)]={...v,code:ticker(k)};return out;
+ const out={};for(const [k,v] of Object.entries(h||{}))out[positionKey(k,v.ac)]={...v,code:ticker(k)};
+ const byTicker={};for(const [k,v] of Object.entries(out))((byTicker[ticker(k)]||=[])).push([k,v]);
+ for(const [c,rows] of Object.entries(byTicker)){
+  const generic=rows.find(([k,v])=>k===c&&String(v.ac||'').trim()==='現物'),details=rows.filter(([,v])=>detailedCash(v.ac));
+  if(generic&&details.length===1){const [gk,g]=generic,[dk,d]=details[0];out[dk]={...d,...g,ac:d.ac,code:c};delete out[gk];}
+ }
+ return out;
+}
+function reconcileImportRows(rows,holdings){
+ return (rows||[]).map(r=>{
+  if(String(r.acct||'').trim()!=='現物')return r;
+  const matches=Object.entries(holdings||{}).filter(([k,v])=>ticker(k)===String(r.code||'').trim().toUpperCase()&&detailedCash(v.acct));
+  return matches.length===1?{...r,acct:matches[0][1].acct}:r;
+ });
 }
 
 function validateImport(d,today){
@@ -1245,7 +1274,7 @@ function diff(a,b){
  }
  return out;
 }
-const api={ticker,positionKey,normalizeState,dayOK,validateImport,totals,canonical,upsert,diff};
+const api={ticker,positionKey,normalizeState,reconcileImportRows,dayOK,validateImport,totals,canonical,upsert,diff};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.InvnoteHistory=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
 
@@ -1255,6 +1284,7 @@ $("#copyPrompt").addEventListener("click",()=>navigator.clipboard.writeText(AI_P
 function importParsed(d){const before=JSON.stringify(S);try{return importParsedChecked(d)}catch(e){S=JSON.parse(before);throw e}}
 function importParsedChecked(d){
   InvnoteHistory.normalizeState(S);
+  if(Array.isArray(d.holdings))d={...d,holdings:InvnoteHistory.reconcileImportRows(d.holdings,S.holdings)};
   const observation=InvnoteHistory.validateImport(d,dstr(Date.now()));
   // Price refresh snapshots are not confirmations of the owned quantities.
   const confirmedDates=[S.holdingsAsOf,...Object.values(S.holdings).map(h=>h.observedDate),...InvnoteHistory.canonical(S.pfHistory).filter(h=>h.why==='import'||h.why==='manual').map(h=>h.date)].filter(InvnoteHistory.dayOK);
