@@ -275,3 +275,6 @@ main:has(.company-list) .toolbar{margin:10px 0}
 
 .news-credit-alert{border:1px solid var(--line);border-left:4px solid #b58013;padding:14px;margin:0 0 18px;border-radius:8px;overflow-wrap:anywhere}.news-credit-alert.is-red{border-left-color:#bd4658}.news-credit-alert h2{font-size:18px;margin:8px 0}.news-credit-alert p,.news-credit-alert li{font-size:12px;line-height:1.8}.news-credit-alert ul{padding-left:18px}.news-credit-alert li{margin:8px 0}.news-credit-alert small{font-size:10px;color:var(--sub);line-height:1.7}
 .news-credit-alert.is-improving{border-left-color:#23715c}:root[data-theme="dark"] .news-credit-alert.is-improving{border-left-color:#79cfb5}
+
+/* Compact credit-speed overview; details are closed on first use. */
+.pulse-scale-speed{grid-template-columns:repeat(3,minmax(0,1fr))}.pulse-details>summary{cursor:pointer;padding:12px 0;min-height:44px;box-sizing:border-box;font-size:14px;font-weight:600}.pulse-summary small{display:block;font-size:11px;color:var(--sub)}.pulse-summary .pulse-other{font-size:12px}.pulse-summary{margin:10px 0}.pulse-summary>b{font-size:20px}.pulse-details{overflow-wrap:anywhere}
