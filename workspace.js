@@ -282,6 +282,9 @@ function restoreTabPosition(){
 }
 function swipeFeature(direction){
  const [area,sub]=location.hash.slice(1).split('/'),list=sections[area||'today'];if(!list)return;
+ // Review contains wide tables and dense records. Horizontal finger drift must
+ // not move to another review tab; use the visible tab buttons explicitly.
+ if(area==='review')return;
  const index=Math.max(0,list.findIndex(([id])=>id===sub)),next=index+direction;
  if(next>=0&&next<list.length)location.hash=(area||'today')+'/'+list[next][0];
 }
@@ -414,6 +417,10 @@ function marketPulse(r,late){
  if(r.label.includes('緩和方向'))return {level:1,label:'追い風含み',message:'金利・信用環境は緩和方向。企業利益と日本株への波及は別途確認。'};
  return {level:2,label:'落ち着き',message:'接続済みのマクロ指標に目立つ警戒条件はありません。株価の上昇を保証するものではありません。'};
 }
+function pulseMetric(items,id,label,digits,unit){
+ const item=items.find(x=>x.id===id),value=Number(item?.value);
+ return {label,value:Number.isFinite(value)?value.toFixed(digits):'—',unit,date:item?.date?item.date.slice(5).replace('-','/'):'未取得',saved:item?.status&&item.status!=='fresh'};
+}
 async function renderNewsMacro(){
  const el=document.getElementById('news-macro');if(!el)return;
  const fmt=v=>{const d=new Date(v);return Number.isFinite(+d)?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(d):'未取得';};
@@ -423,9 +430,10 @@ async function renderNewsMacro(){
   let config=configModule.DEFAULTS;try{const v=localStorage.getItem('screener_macro_config_v2');if(v)config=configModule.validateConfig(JSON.parse(v));}catch{}
   const r=engine.classifyRegime(data.items,Date.now(),config),dates=data.items.filter(x=>x.frequency==='daily'&&x.date).map(x=>x.date).sort(),monthly=data.items.filter(x=>x.frequency==='monthly'&&x.date).map(x=>x.date.slice(0,7)),bad=data.items.filter(x=>x.status!=='fresh');
   const age=Date.now()-Date.parse(data.generated_at),late=!Number.isFinite(age)||age>36*3600000;
-  const pulse=marketPulse(r,late),labels=['追い風含み','落ち着き','注意','警戒','強い警戒'];
+   const pulse=marketPulse(r,late),labels=['追い風含み','落ち着き','注意','警戒','強い警戒'];
+   const metrics=[pulseMetric(data.items,'VIXCLS','VIX',1,'pt'),pulseMetric(data.items,'T10Y2Y','10年−2年',2,'%pt'),pulseMetric(data.items,'BAMLH0A0HYM2','HY社債',2,'%'),pulseMetric(data.items,'BAMLC0A4CBBB','BBB社債',2,'%')];
   el.dataset.pulse=String(pulse.level);
-  el.innerHTML=`<div class="pulse-header"><strong>Market Pulse</strong><span>DAILY DIGEST · 毎朝更新</span></div><div class="pulse-summary"><b>${pulse.level?pulse.level+' / 5 · ':''}${esc(pulse.label)}</b><p>${esc(pulse.message)}</p></div><div class="pulse-scale" aria-label="5段階の警戒度。数字が大きいほど警戒">${labels.map((label,i)=>`<span class="pulse-step ${pulse.level===i+1?'is-current':''}"><b>${i+1}</b>${label}</span>`).join('')}</div><small class="pulse-note">接続済みマクロ指標の暫定評価 · 米国中心${r.missing.length?' · 一部指標不足':''}</small><details class="news-story"><summary><span class="news-category">判定の背景</span><span class="news-headline">${esc(r.label)}</span><span class="news-expand">＋</span></summary><div class="news-body"><p>金利・信用スプレッド（企業の資金調達への警戒）・VIX（相場への不安の目安）などを、決めた条件で自動分類しています。今日や明日の株価を予言する表示ではありません。</p><p>${esc(r.reason)}</p><p>最終取得処理：${esc(fmt(data.generated_at))} 日本時間 · 毎朝7時</p><p>日次指標：${esc(dates[0]||'未取得')}〜${esc(dates.at(-1)||'未取得')}<br>月次統計：${esc([...new Set(monthly)].join(' / ')||'未取得')}</p><p>${late?'取得処理が古いため、直近の変動を反映していない可能性があります。':''}${bad.length?esc(bad.map(x=>x.name).join('・'))+'は未取得または保存値です。':''}</p><p>${esc(r.actions)}</p><small>取得可能な指標による暫定判定。発表直後のニュース、企業利益、日本市場全体の需給は別途調査します。灰は安全の意味ではありません。</small><p><a href="#review/scr:macro">指標と判定根拠</a> · <a href="#review/history">月次分類の履歴</a></p></div></details>`;
+   el.innerHTML=`<div class="pulse-header"><strong>Market Pulse</strong><span>DAILY DIGEST · 毎朝更新</span></div><div class="pulse-summary"><b>${pulse.level?pulse.level+' / 5 · ':''}${esc(pulse.label)}</b><p>${esc(pulse.message)}</p></div><div class="pulse-metrics" aria-label="主要な市場指標">${metrics.map(x=>`<div><span>${esc(x.label)}</span><b>${esc(x.value)}${x.value==='—'?'':`<small>${esc(x.unit)}</small>`}</b><em>${esc(x.date)}${x.saved?' · 保存値':''}</em></div>`).join('')}</div><div class="pulse-scale" aria-label="5段階の警戒度。数字が大きいほど警戒">${labels.map((label,i)=>`<span class="pulse-step ${pulse.level===i+1?'is-current':''}"><b>${i+1}</b>${label}</span>`).join('')}</div><small class="pulse-note">金利差・社債スプレッド・VIXによる暫定評価 · 米国中心${r.missing.length?' · 一部指標不足':''}</small><details class="news-story"><summary><span class="news-category">判定の背景</span><span class="news-headline">${esc(r.label)}</span><span class="news-expand">＋</span></summary><div class="news-body"><p>金利・信用スプレッド（企業の資金調達への警戒）・VIX（相場への不安の目安）などを、決めた条件で自動分類しています。今日や明日の株価を予言する表示ではありません。</p><p>${esc(r.reason)}</p><p>最終取得処理：${esc(fmt(data.generated_at))} 日本時間 · 毎朝7時</p><p>日次指標：${esc(dates[0]||'未取得')}〜${esc(dates.at(-1)||'未取得')}<br>月次統計：${esc([...new Set(monthly)].join(' / ')||'未取得')}</p><p>${late?'取得処理が古いため、直近の変動を反映していない可能性があります。':''}${bad.length?esc(bad.map(x=>x.name).join('・'))+'は未取得または保存値です。':''}</p><p>${esc(r.actions)}</p><small>取得可能な指標による暫定判定。発表直後のニュース、企業利益、日本市場全体の需給は別途調査します。灰は安全の意味ではありません。</small><p><a href="#review/scr:macro">指標と判定根拠</a> · <a href="#review/history">月次分類の履歴</a></p></div></details>`;
  }catch{if(el.isConnected)el.innerHTML='<p class="muted">市場環境を取得できません。自動判定は未確認です。</p>';}
 }
 
