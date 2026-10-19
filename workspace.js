@@ -477,18 +477,37 @@ function pulseAlertSnapshot(speed,banks){
  ]};
 }
 function pulseAlertHTML(current,feed,now=Date.now()){
- if(current.level<2)return '';
+ if(current.level===0)return '';
  const fresh=feed&&Number.isFinite(Date.parse(feed.generated_at))&&now-Date.parse(feed.generated_at)>=0&&now-Date.parse(feed.generated_at)<=36*3600000;
  const event=fresh&&feed.current?.level===current.level&&Array.isArray(feed.events)?feed.events.at(-1):null;
  const matched=event?.snapshot?.level===current.level&&Number.isFinite(Date.parse(event.confirmedAt))&&Array.isArray(event.snapshot.speeds)&&Array.isArray(event.snapshot.banks);
+ const improving=matched&&['ease','clear'].includes(event.kind),eventAge=matched?now-Date.parse(event.confirmedAt):Infinity;
+ const recentImprovement=improving&&eventAge>=0&&eventAge<=7*86400000;
+ if(current.level===1&&!recentImprovement)return '';
  const snapshot=matched?event.snapshot:current;
  const label=current.level===3?'警戒強化':'一次警戒';
  const title=matched?(event.kind==='initial'?`${label}を初回確認`:event.kind==='ease'?`${label}へ低下`:`${label}へ変化`):`現在：${label}（変化履歴未確認）`;
  const stamp=matched?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',year:'numeric',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(event.confirmedAt)):null;
  const signed=x=>Number.isFinite(x)?`${x>0?'+':''}${x.toFixed(2)}`:'—';
+ if(recentImprovement){
+  const before=event.before,baseDate=event.beforeConfirmedAt?String(event.beforeConfirmedAt).slice(0,10):'未記録';
+  const creditRows=snapshot.speeds.map(x=>{
+   const prior=before?.speeds?.find(y=>(x.id&&y.id===x.id)||y.label===x.label),valid=x.known&&prior?.known&&Number.isFinite(x.change)&&Number.isFinite(prior.change);
+   const delta=valid?Math.round((x.change-prior.change)*1e6)/1e6:null;
+   const direction=delta===null?'改善幅は未確認':delta<0?`拡大速度が${Math.abs(delta).toFixed(2)}%pt低下`:delta>0?`拡大速度は${delta.toFixed(2)}%pt上昇`:'拡大速度は横ばい';
+   return `<li><b>${esc(x.label)}：1か月変化 ${prior?.known?signed(prior.change):'—'} → ${x.known?signed(x.change):'—'}%pt</b><br>${direction}。${x.known?(x.hit?'急拡大基準には引き続き到達':'急拡大基準未満'):'現在は未判定'}<br><small>観測日 ${esc(prior?.date||'未記録')} → ${esc(x.date)}。差はスプレッド水準そのものの下落幅ではありません。</small></li>`;
+  }).join('');
+  const bankRows=snapshot.banks.map(x=>{
+   const prior=before?.banks?.find(y=>y.label===x.label),valid=x.level>0&&prior?.level>0&&Number.isFinite(x.value)&&Number.isFinite(prior.value);
+   const delta=valid?Math.round((x.value-prior.value)*1e6)/1e6:null;
+   const direction=delta===null?'改善幅は未確認':delta>0?`月次騰落率が${delta.toFixed(2)}%pt改善`:delta<0?`月次騰落率は${Math.abs(delta).toFixed(2)}%pt悪化`:'月次騰落率は横ばい';
+   return `<li><b>${esc(x.label)}：1か月 ${prior?.level?signed(prior.value):'—'} → ${x.level?signed(x.value):'—'}%</b><br>${direction}。S&P500比 ${prior?.level?signed(prior.relative):'—'} → ${x.level?signed(x.relative):'—'}%pt。${x.level===1?'下落基準未満':x.level>=2?'下落基準には引き続き到達':'現在は未判定'}<br><small>前回期間 ${esc(prior?.from||'未記録')} → ${esc(prior?.to||'未記録')} ／ 今回 ${esc(x.from||'未確認')} → ${esc(x.to||'未確認')}</small></li>`;
+  }).join('');
+  return `<section class="news-credit-alert is-improving" aria-label="市場の警戒改善"><span class="news-category">市場の重要変化</span><h2>${current.level===1?'信用の速度警戒を解除':'警戒強化から一次警戒へ低下'}</h2><p>${esc(stamp)} 日本時間に確認${event.afterGap?'（欠測後の再確認）':''}。${esc(event.beforeBasis||'前回確認')}（${esc(baseDate)}）との比較：</p><ul>${creditRows}${bankRows}</ul><p>${current.level===1?'HY・BBBの急拡大がともに基準未満となり、この速度警戒を解除しました。銀行株の弱さが残る場合は別途注意します。':'銀行株の下落基準が解消し、警戒を一段下げました。信用の急拡大による一次警戒は続いています。'}</p><small>改善通知は確認から7日間表示。同じ状態の再取得で日時を更新しません。水準の警戒や他の市場リスクがなくなった意味ではなく、買い信号でもありません。比較期間が移るため月次騰落率の改善は、その間の株価上昇率とは異なります。最新値は下のMarket Pulseへ。</small></section>`;
+ }
  const credit=snapshot.speeds.filter(x=>x.hit).map(x=>`<li><b>${esc(x.label)}：1か月 ${signed(x.change)}%pt</b>（一次警戒 +${Number(x.threshold).toFixed(2)}%pt以上）<br><small>${esc(x.date)}時点</small></li>`).join('');
  const bank=current.level===3?snapshot.banks.filter(x=>x.level>=2).map(x=>`<li><b>${esc(x.label)}：1か月 ${signed(x.value)}%</b> ／ S&P500比 ${signed(x.relative)}%pt<br><small>${esc(x.from)} → ${esc(x.to)}。下落−5%以下、または下落かつ市場比−3%pt以下で確認。</small></li>`).join(''):'';
- return `<section class="news-credit-alert is-${current.level===3?'red':'yellow'}" aria-label="市場の警戒変化"><span class="news-category">市場の重要変化</span><h2>${esc(title)}</h2><p>${stamp?`${esc(stamp)} 日本時間に確認${event.afterGap?'（欠測後の再確認）':''}。変化時の根拠：`:'現在の取得値に基づく警告です。初回点灯日時は未確認です。'}</p><ul>${credit}${bank}</ul><p>${current.level===3?'信用の急拡大に銀行株の弱さが重なっています。':'信用が急拡大しています。銀行株下落を待たず一次警戒します。'}</p><small>現在も${label}。確認日時は当アプリの更新時刻で、市場での発生時刻とは異なります。同じ段階の再取得は新しい変化として記録しません。最新値と未判定項目は下のMarket Pulseへ。</small></section>`;
+ return `<section class="news-credit-alert is-${current.level===3?'red':'yellow'}" aria-label="市場の警戒変化"><span class="news-category">市場の重要変化</span><h2>${esc(improving?'一次警戒が継続':title)}</h2><p>${stamp?`${esc(stamp)} 日本時間に確認${event.afterGap?'（欠測後の再確認）':''}。変化時の根拠：`:'現在の取得値に基づく警告です。初回点灯日時は未確認です。'}</p><ul>${credit}${bank}</ul><p>${current.level===3?'信用の急拡大に銀行株の弱さが重なっています。':'信用が急拡大しています。銀行株下落を待たず一次警戒します。'}</p><small>現在も${label}。確認日時は当アプリの更新時刻で、市場での発生時刻とは異なります。同じ段階の再取得は新しい変化として記録しません。最新値と未判定項目は下のMarket Pulseへ。</small></section>`;
 }
 function pulseMetric(items,id,label,digits,unit,changePeriod=''){
  const item=items.find(x=>x.id===id),value=item?.value,change=item?.changes?.[changePeriod]?.value;
