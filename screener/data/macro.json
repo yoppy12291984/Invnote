@@ -2584,7 +2584,29 @@
       "fetched_at": "2026-10-18T22:03:38+00:00",
       "percentile": 38.3,
       "sample_count": 1287,
-      "sample_start": "2021-10-18"
+      "sample_start": "2021-10-18",
+      "macd_daily": {
+        "status": "ok",
+        "date": "2026-10-15",
+        "value": 16.46,
+        "macd": 0.04915353975866843,
+        "signal": -0.06104920478844603,
+        "histogram": 0.11020274454711446,
+        "above": true,
+        "last_cross": {
+          "date": "2026-10-14",
+          "direction": "above"
+        },
+        "count": 1287,
+        "start": "2021-10-18",
+        "parameters": [
+          12,
+          26,
+          9
+        ],
+        "initialization": "SMA",
+        "timeframe": "daily"
+      }
     },
     {
       "id": "SP500",
