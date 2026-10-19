@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=203c6302dc23"><script src="workspace-frame.js?v=203c6302dc23"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=1655e6aef57d"><script src="workspace-frame.js?v=1655e6aef57d"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -584,7 +584,7 @@ root.addEventListener('hashchange',mount);document.addEventListener('visibilityc
     <button class="btn" id="impJson">JSONを読み込む</button>
     <button class="btn" id="expMd">Markdownを書き出す（Notion用）</button>
     <input type="file" id="impFile" accept=".json" class="hide">
-  </div><p class="hint" style="margin-top:8px">JSONはブラウザ内（localStorage）にも自動保存されます。端末をまたぐ時は書き出し→読み込み（読み込みは追加・上書きで、既存は消えません）。</p></div>
+  </div><p class="hint" style="margin-top:8px">研究データはIndexedDB、設定・保有・メモはlocalStorageに保存します。端末間の共有は同期ボタン、バックアップはJSONの書き出しを使います。</p></div>
   <div class="set"><h3>GAS同期</h3><div class="row" style="width:100%">
     <input id="gasUrl" placeholder="GASウェブアプリのURL（https://script.google.com/macros/s/…/exec）" style="flex:1;min-width:200px;border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:6px 8px;font-size:13px">
     <button class="btn" id="syncNow">今すぐ同期</button><button class="btn" id="fillNames">銘柄名を一括補完</button></div>
