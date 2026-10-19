@@ -439,6 +439,12 @@ function kiyoharaEvidenceText(b){
  const yes=v=>v===true?'あり':v===false?'なし':'不明';
  return `追加評価：${b.label} ／ 実行 ${yes(b.executed)}・株数純減 ${yes(b.shrunk)}${b.shareChangePct==null?'':'（前年比 '+b.shareChangePct.toFixed(3)+'%）'} ／ ${b.fyEnd||'—'}期・開示 ${b.disclosed||'—'}・判定基準 ${b.asof}。年次CFで判定、買付枠の発表ではありません。`;
 }
+function methodScreenGroupHTML(g){
+ const route=['cand','reb','cs'].includes(g.route)?g.route:null;if(!route)return '';
+ const label=route==='cand'?'清原式 · 機械抽出':g.name;
+ const kind=route==='reb'?'固定条件の進行順。個社調査による購入推奨順位ではありません。':'機械抽出の順位。個社調査による購入推奨順位ではありません。';
+ return `<section class="method-ranking-group"><h2>${esc(label)}</h2><p class="muted">${esc(g.priceDate)} 終値基準 · ${esc(kind)}</p><p>${esc(g.rule)}</p>${g.rows.map((x,i)=>`<details class="card"><summary>${i+1}位 ${esc(x.name)} · ${esc(x.code)}</summary><p>${x.previousRank==null?'比較開始':x.previousRank===i+1?'→ 据置':x.previousRank>i+1?'↑ '+(x.previousRank-i-1):'↓ '+(i+1-x.previousRank)} · 前回 ${esc(g.previousDate||'比較開始')}</p><p>${esc(x.detail)}</p>${notes[x.code]?`<button class="open" data-company="${esc(x.code)}">会社の調査を読む</button>`:''}<p><a href="#discover/scr:${route}">一覧と抽出条件を見る</a></p></details>`).join('')||'<p>現在の候補はありません。</p>'}</section>`;
+}
 async function renderMethodRankings(){
  const el=document.getElementById('method-rankings');if(!el)return;
  const privateRank=D.kiyoharaRanking;
@@ -450,7 +456,7 @@ async function renderMethodRankings(){
  const privateHTML=evidenceHTML+(privateRank?.rows?.length?'<h2>清原式 · 今買うならの個社調査順位</h2>'+`<p class="muted">調査 ${esc(privateRank.date)} · ${esc(privateRank.priceDate)}終値基準<br>${esc(privateRank.scope)}</p><p class="muted">${esc(privateRank.caution)}</p><p>個社調査の比較順位を固定表示。機械判定で並び替えません。</p><p>${esc(privateRank.definitions||"")}</p>`+kiyoharaEvaluatedRows(privateRank.rows,feed,privateRank.orderPolicy).map((x,i)=>`<details class="card"><summary>${i+1}位 ${esc(x.name)} · ${esc(x.code)} · ${esc(x.status||"")}</summary><p>${esc(x.detail)}</p><p>${esc(x.facts||"")}</p><p>${esc(kiyoharaEvidenceText(x.buyback))}</p><p>3か月 ${x.short_3m==null?"採点保留":x.short_3m+"/10"} · 12か月 ${x.long_12m==null?"採点保留":x.long_12m+"/10"} · 根拠 ${esc(x.evidence_confidence)}</p><p>${esc(x.reason)}</p><p><b>反証</b> ${esc(x.counter)}</p><p><b>次の確認</b> ${esc(x.next)}</p><p>個社調査による裁量比較。NC順・点数順ではありません。</p><button class="open" data-company="${esc(x.code)}">会社の調査を読む</button></details>`).join(''):'');
  el.innerHTML=privateHTML;
  try{const r=await fetch('screener/data/method-rankings.json',{cache:'no-store'});if(!r.ok)throw Error();const d=await r.json();if(!el.isConnected)return;
- el.innerHTML=privateHTML+'<h2>手法別スクリーニング TOP 3</h2><p class="muted">以下は抽出順。個社調査による清原式の順位とは別です。</p>'+d.groups.map(g=>`<details class="card"><summary>${g.route==="cand"?"清原式 · 機械的なNC順位（実行・純減確認候補）":esc(g.name)} · ${esc(g.priceDate)} 終値基準</summary><p>${esc(g.rule)} · 前回 ${esc(g.previousDate||'比較開始')}</p>${g.rows.map((x,i)=>`<p><b>${i+1}位 ${esc(x.name)}（${esc(x.code)}）</b><br>${x.previousRank==null?'初登場／比較開始':x.previousRank===i+1?'→ 据置':x.previousRank>i+1?'↑ '+(x.previousRank-i-1):'↓ '+(i+1-x.previousRank)} · ${esc(x.detail)}</p>`).join('')}<a href="#discover/scr:${g.route}">一覧と根拠を見る</a></details>`).join('');
+ el.innerHTML=privateHTML+d.groups.map(methodScreenGroupHTML).join('');
  }catch{if(el.isConnected)el.innerHTML=privateHTML+'<p>スクリーニング順位は取得できませんでした。</p>';}
  if(el.isConnected&&feed?.valuationMethod)el.insertAdjacentHTML('afterbegin',`<p class="muted">清原式の分割・開示基準を修正済み。${esc(feed.financialNote)} 旧20年検証は成績採用を停止しています。</p>`);
 }
