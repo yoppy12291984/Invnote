@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=08b882bd9a08"><script src="workspace-frame.js?v=08b882bd9a08"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=203c6302dc23"><script src="workspace-frame.js?v=203c6302dc23"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -635,7 +635,46 @@ root.addEventListener('hashchange',mount);document.addEventListener('visibilityc
  const api={stringify,parse,pack,unpack};root.InvnoteStorage=api;if(typeof module!=='undefined')module.exports=api;
 })(globalThis);
 
+/* IndexedDB is local only. Cloud/export payloads remain expanded JSON. */
+(function(root){
+function create({indexedDB,localStorage,codec,crypto,key='invnote_v1',dbName='invnote-research-v1'}){
+ let connection,opening;const prepared=new WeakMap();
+ function open(){if(connection)return Promise.resolve(connection);if(opening)return opening;
+  opening=new Promise((resolve,reject)=>{const q=indexedDB.open(dbName,1);let settled=false;
+   const fail=()=>{if(!settled){settled=true;opening=null;reject(Error('研究保存用データベースを開けません。データは削除せず、再読み込みしてください。'));}};
+   const timer=setTimeout(fail,15000);
+   q.onupgradeneeded=()=>{if(!q.result.objectStoreNames.contains('bundles'))q.result.createObjectStore('bundles');};
+   q.onerror=fail;q.onblocked=fail;
+   q.onsuccess=()=>{clearTimeout(timer);if(settled){q.result.close();return;}settled=true;connection=q.result;connection.onversionchange=()=>{connection.close();connection=null;opening=null;};resolve(connection);};
+  });return opening;
+ }
+ async function transaction(mode,work){const db=await open();return new Promise((resolve,reject)=>{let result;const tx=db.transaction('bundles',mode);tx.oncomplete=()=>resolve(result);tx.onabort=tx.onerror=()=>reject(Error('研究データを保存・取得できません。以前の保存データは残しています。'));try{work(tx.objectStore('bundles'),v=>result=v);}catch(e){tx.abort();reject(e);}});}
+ const read=id=>transaction('readonly',(s,done)=>{const q=s.get(id);q.onsuccess=()=>done(q.result);});
+ async function hash(text){const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));return [...new Uint8Array(bytes)].map(b=>b.toString(16).padStart(2,'0')).join('');}
+ async function prepare(state){for(const n of state.notes||[]){const b=n.researchBundle;if(!b)continue;if(b._invnoteResearchRef)throw Error('未復元の研究データは保存できません。');if(prepared.has(b))continue;
+   const text=JSON.stringify(b),id=await hash(text);const old=await read(id);
+   if(old!==text)await transaction('readwrite',(s)=>s.put(text,id));
+   if(await read(id)!==text)throw Error('研究データの保存照合に失敗しました。以前の保存を維持します。');prepared.set(b,id);
+  }}
+ function stringify(state){return JSON.stringify(state,(k,v)=>{if(k!=='researchBundle'||!v)return v;const id=prepared.get(v);if(!id)throw Error('研究データの保存準備が完了していません。同期を再試行してください。');return {_invnoteResearchRef:id};});}
+ async function load(){const raw=localStorage.getItem(key);if(!raw)return null;const state=codec.parse(raw);let legacy=false;
+  for(const n of state.notes||[]){const b=n.researchBundle;if(!b)continue;
+   if(b._invnoteResearchRef){const text=await read(b._invnoteResearchRef);if(typeof text!=='string'||await hash(text)!==b._invnoteResearchRef)throw Error('端末の研究データを復元できません。保存済みの設定は保持しています。');n.researchBundle=JSON.parse(text);prepared.set(n.researchBundle,b._invnoteResearchRef);}
+   else legacy=true;
+  }
+  if(legacy){await prepare(state);if(localStorage.getItem(key)!==raw)throw Error('別画面でデータが更新されました。再読み込みしてください。');localStorage.setItem(key,stringify(state));}
+  return state;
+ }
+ const clear=()=>transaction('readwrite',s=>s.clear());
+ return {load,prepare,stringify,clear};
+}
+root.InvnoteResearchDB={create};if(typeof module!=='undefined')module.exports={create};
+})(globalThis);
+
 const KEY="invnote_v1";
+const researchStore=InvnoteResearchDB.create({indexedDB:window.indexedDB,localStorage,codec:InvnoteStorage,crypto:window.crypto});
+let storageReady=false;
+
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
 let STATUS=STATUS_DEFAULT;
@@ -724,8 +763,9 @@ const RULES_DEFAULT=`【執行】
 - 上がりきったところ（ATR4.0超）を拾わない
 - 一過性利益で膨らんだ決算を伸びしろと見ない`;
 let mem=null;
-function load(){try{const j=localStorage.getItem(KEY);if(j)S=Object.assign(S,InvnoteStorage.parse(j));}catch(e){mem=true;}S.diary=S.diary||{};S.events=S.events||[];S.rules=S.rules||{text:"",upd:0};S.sectors=S.sectors||{};S.holdings=S.holdings||{};S.pfHistory=S.pfHistory||[];InvnoteHistory.normalizeState(S)}
-function save(strict=false){try{localStorage.setItem(KEY,InvnoteStorage.stringify(S));}catch(e){if(strict)throw Error(e.name==="QuotaExceededError"?"端末の保存容量が不足しています。保存済みデータは残しています。":"端末に保存できませんでした。保存済みデータは残しています。ブラウザの保存設定を確認してください。");toast("保存に失敗しました。変更は端末に保存されていません。");return false}scheduleSync();workspacePublish();return true}
+async function load(){const restored=await researchStore.load();if(restored)S=Object.assign(S,restored);S.diary=S.diary||{};S.events=S.events||[];S.rules=S.rules||{text:"",upd:0};S.sectors=S.sectors||{};S.holdings=S.holdings||{};S.pfHistory=S.pfHistory||[];InvnoteHistory.normalizeState(S)}
+async function saveResearch(){await researchStore.prepare(S);return save(true);}
+function save(strict=false){try{if(!storageReady)throw Error("端末データの復元完了を待ってください。");localStorage.setItem(KEY,researchStore.stringify(S));}catch(e){if(strict)throw Error(e.name==="QuotaExceededError"?"端末の保存容量が不足しています。保存済みデータは残しています。":"端末に保存できませんでした。保存済みデータは残しています。ブラウザの保存設定を確認してください。");toast("保存に失敗しました。変更は端末に保存されていません。");return false}scheduleSync();workspacePublish();return true}
 const $=s=>document.querySelector(s);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const esc=s=>s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -1110,10 +1150,10 @@ function mergeIn(d){
   if(d.lists&&(d.lists.upd||0)>(S.listsUpd||0)){S.quick=d.lists.quick;S.status=d.lists.status;S.themes=d.lists.themes||S.themes;if(d.lists.tabsVersion===1&&d.lists.tabOrder)S.tabOrder=d.lists.tabOrder;if(d.lists.tabsVersion===1&&d.lists.tabNames&&typeof d.lists.tabNames==='object'&&!Array.isArray(d.lists.tabNames))S.tabNames=d.lists.tabNames;S.listsUpd=d.lists.upd;STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT}
   S.notes.sort((a,b)=>b.ts-a.ts);return add;
 }
-$("#impFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{
+$("#impFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;f.text().then(async t=>{
   const d=JSON.parse(t);
   if(Array.isArray(d.stocks)||Array.isArray(d.holdings)){const r=importParsed(d);toast(r.msg);$("#impLog").innerHTML=`<div class="set"><b>${esc(r.msg)}</b><div class="hint">${r.detail}</div></div>`;}
-  else{const add=mergeIn(d);save();render();toast(`${add}件を追加しました`);}e.target.value="";
+  else{const add=mergeIn(d);await saveResearch();render();toast(`${add}件を追加しました`);}e.target.value="";
 }).catch(()=>toast("読み込めませんでした（JSON形式を確認）"))});
 
 /* Snapshot observations are not executions. Shared by Invnote and its tests. */
@@ -1720,6 +1760,7 @@ function restoreNotice(message,failed=false){
   if(parent!==window)parent.postMessage({type:'workspace:restore-status',message,failed},location.origin);
 }
 async function syncNow(quiet){
+  if(!storageReady)return;
   if(!S.gas||syncing)return;syncing=true;const first=!S.lastSync,st=$("#syncStat");let downloaded=false;
   if(first)restoreNotice('登録済みの保存先から、メモ・保有・四季報・Newsを引き継いでいます…');
   if(!quiet)st.textContent="同期中…";$("#syncBtn").classList.add("busy");
@@ -1728,10 +1769,10 @@ async function syncNow(quiet){
     if(!validSyncData(d))throw Error('保存先のデータ形式を確認できません。送信せずに停止しました');
     mergeIn(d);downloaded=true;S.restorePending=false;
     // Persist the fetched records before any upload. A failed upload must not discard restoration.
-    editingSync=true;try{save(true);}finally{editingSync=false;}
+    editingSync=true;try{await saveResearch();}finally{editingSync=false;}
     const p=await fetch(S.gas,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:payload()});if(!p.ok)throw Error('同期先への保存に失敗しました');
     const res=await p.json();if(!res.ok)throw new Error(res.error||"save failed");
-    S.lastSync=Date.now();editingSync=true;try{save(true);}finally{editingSync=false;}
+    S.lastSync=Date.now();editingSync=true;try{await saveResearch();}finally{editingSync=false;}
     const ae=document.activeElement;if(!(ae&&(ae.tagName==="TEXTAREA"||ae.tagName==="INPUT")))render();
     st.textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;
     restoreNotice('');
@@ -1757,7 +1798,7 @@ $("#expMd").addEventListener("click",()=>{
   const free=S.notes.filter(n=>!n.code);if(free.length){out+="## 銘柄なしのメモ\n\n";free.forEach(n=>out+=noteMd(n)+"\n")}
   dl(`invnote_${dstr(Date.now())}.md`,out,"text/markdown");
 });
-$("#wipe").addEventListener("click",()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={todoRecords:todoRecords().map(r=>({...r,edited:Math.max(Date.now(),(r.edited||0)+1),todo:{...r.todo,deleted:true,done:false}})),todoTabAdded:true,notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()},quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,tabNames:S.tabNames,listsUpd:Date.now(),sectors:{},holdings:{},pfHistory:[],stockView:S.stockView};save();render();toast("削除しました")}});
+$("#wipe").addEventListener("click",async()=>{if(prompt('すべて削除します。「削除」と入力してください')==="削除"){S={todoRecords:todoRecords().map(r=>({...r,edited:Math.max(Date.now(),(r.edited||0)+1),todo:{...r.todo,deleted:true,done:false}})),todoTabAdded:true,notes:[],stocks:{},theme:S.theme,gas:S.gas,lastSync:0,deleted:[...S.notes.map(n=>n.id),...S.events.map(e=>e.id)],diary:{},events:[],rules:{text:"",upd:Date.now()},quick:S.quick,status:S.status,themes:S.themes,tabOrder:S.tabOrder,tabNames:S.tabNames,listsUpd:Date.now(),sectors:{},holdings:{},pfHistory:[],stockView:S.stockView};if(!save())return;try{await researchStore.clear();render();toast("削除しました")}catch(e){toast("研究データの端末削除は未完です。再試行してください。")}}});
 
 /* 曜日別To do。同期用notesの型付きレコードを分離し、既存メモ・投資計算へ混ぜない。 */
 const TODO_KIND='invnote-todo-v1';
@@ -1872,14 +1913,15 @@ function installResearchPaste(){
  const panel=document.createElement('details');panel.className='workspace-advanced';
  panel.innerHTML='<summary>研究データを貼り付けて取り込む</summary><p class="hint">四季報・採点・News・ランキング専用。ファイル選択が開かないときにも使えます。保有や接続設定は変更しません。</p><label for="researchPaste">研究データJSON</label><textarea id="researchPaste" rows="5" spellcheck="false" autocomplete="off" style="width:100%;box-sizing:border-box;font-size:16px"></textarea><button class="btn" id="researchPasteApply">研究データを取り込む</button><p role="status" id="researchPasteStatus"></p>';
  host.append(panel);
+ const storageInfo=document.createElement('p');storageInfo.id='researchStorageInfo';storageInfo.className='hint';storageInfo.textContent='研究の端末保存を確認中…';host.append(storageInfo);
  installResearchFile(host);
- panel.querySelector('button').onclick=()=>{
+ panel.querySelector('button').onclick=async()=>{
   const input=panel.querySelector('textarea'),status=panel.querySelector('[role=status]');
   const before=S.notes;
   try{
    if(S.restorePending||document.documentElement.classList.contains('suite-locked'))throw Error('端末の登録・復元を完了してから取り込んでください。');
    const result=researchImportRecord(input.value,S,parent.validBundle);
-   if(result.changed){S.notes=result.notes;save(true);render();}
+   if(result.changed){S.notes=result.notes;await saveResearch();render();}
    input.value='';workspacePublish();status.textContent=result.changed?'研究データを端末に保存しました。上部の同期で他の端末へ反映できます。':'同じ研究データは取り込み済みです。';
   }catch(e){S.notes=before;status.textContent=e instanceof SyntaxError?'JSONとして読み取れません。内容を確認してください。':e.message;}
  };
@@ -1908,7 +1950,7 @@ function installResearchFile(host){
     if(Object.keys(raw).some(k=>k!=='notes'&&k!=='version'&&k!=='exportedAt'))throw Error('研究専用の private-research-paste.json を選んでください。');
     const result=researchImportRecord(JSON.stringify({notes:raw.notes}),S,parent.validBundle);
     before=S.notes;
-    if(result.changed){S.notes=result.notes;editingSync=true;try{save(true);}finally{editingSync=false;}committed=true;render();}
+    if(result.changed){S.notes=result.notes;editingSync=true;try{await saveResearch();}finally{editingSync=false;}committed=true;render();}
     workspacePublish();input.value='';
    }
    const expected=S.notes.find(n=>n.id==='investment-research-bundle-v1')?.researchHash;
@@ -1930,8 +1972,9 @@ function installResearchFile(host){
  input.onchange=()=>{const file=input.files?.[0];if(file)run(file);};retry.onclick=()=>run();
 }
 function workspacePublish(){
- if(!workspaceMode)return;
+ if(!workspaceMode||!storageReady)return;
  const bundle=S.notes.filter(n=>n.kind==='investment-research-bundle-v1'&&n.researchBundle).sort((a,b)=>(b.edited||b.ts)-(a.edited||a.ts))[0];
+ const storageInfo=document.getElementById('researchStorageInfo');if(storageInfo)storageInfo.textContent=bundle?'研究の端末保存：IndexedDB · '+Object.keys(bundle.researchBundle.notes||{}).length+'社。設定・保有・メモは従来の保存先を維持。':'研究データはまだ登録されていません。';
  parent.postMessage({type:'invnote:state',bundle:bundle?.researchBundle||null,researchHash:bundle?.researchHash||'',
  stocks:Object.entries(S.stocks).map(([code,s])=>({code,name:s.name||code,status:s.status||''})),companyMemos:S.notes.filter(n=>n.kind==='company-memo-v1'),lastSync:S.lastSync||0,theme:S.theme},location.origin);
 }
@@ -1946,7 +1989,7 @@ if(workspaceMode){
  const css=document.createElement('style');css.textContent='#tabs,header .wm{display:none!important}.app{max-width:none!important}';document.head.append(css);
  window.addEventListener('hashchange',workspaceGo);
  window.addEventListener('message',async e=>{
-  if(e.origin!==location.origin||e.source!==parent)return;
+  if(e.origin!==location.origin||e.source!==parent||!storageReady)return;
   if(e.data?.type==='workspace:refresh')workspacePublish();
   if(e.data?.type==='workspace:memo'){
    const before=S.notes;
@@ -1970,9 +2013,17 @@ if(workspaceMode){
 }
 
 /* ---------- init ---------- */
-$("#ver").textContent="v"+VER;load();initTodos();migrateTabs();STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT;applyTheme();renderQuick();autoGrow();show(initialView());$("#gasUrl").value=S.gas||"";ledRender($("#quickLed"),quick());ledRender($("#statusLed"),STATUS);ledRender($("#themeLed"),themes());renderTabs();renderTabLed();if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
+document.body.inert=true;
+async function startStoredApp(){
+try{
+/* ---------- init ---------- */
+$("#ver").textContent="v"+VER;await load();storageReady=true;document.body.inert=false;initTodos();migrateTabs();STATUS=S.status&&S.status.length?S.status:STATUS_DEFAULT;applyTheme();renderQuick();autoGrow();show(initialView());$("#gasUrl").value=S.gas||"";ledRender($("#quickLed"),quick());ledRender($("#statusLed"),STATUS);ledRender($("#themeLed"),themes());renderTabs();renderTabLed();if(S.lastSync)$("#syncStat").textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;if(S.gas)syncNow(true);
 queueMicrotask(()=>{workspaceGo();workspacePublish();});
 if(mem)toast("この環境では保存できません（GitHub Pagesで開くと保存されます）");
+}catch(e){document.body.inert=true;const box=document.createElement('div');box.style.cssText='position:fixed;inset:20px;z-index:99999;background:#17212b;color:white;padding:24px;overflow:auto';box.setAttribute('role','alert');box.textContent='端末データの読み込みを停止しました。'+(e.message||e)+' 保存データの削除は不要です。';const retry=document.createElement('button');retry.textContent='再読み込み';retry.onclick=()=>location.reload();box.append(document.createElement('br'),retry);document.documentElement.append(box);}
+}
+startStoredApp();
+
 })();
 </script>
 <script>window.SuiteDeviceConfig={app:"Invnote",name:"Invnote",settingsTarget:"#vSet",url:"https://script.google.com/macros/s/AKfycby8HS4VPWgkc7Ay-rX4GvT60vxKffwW9q9HcIiJgoMGFsSu_HO9ZxtQxXJsHSd1g54/exec",readUrl(){return (JSON.parse(localStorage.getItem("invnote_v1")||'{}').gas);},ensureUrl(url){const existing=localStorage.getItem("invnote_v1");const s=JSON.parse(existing||'{}');if(!existing)s.restorePending=true;if(!s.gas)s.gas=url;localStorage.setItem("invnote_v1",JSON.stringify(s));}};
