@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=5546c7bceffd"><script src="workspace-frame.js?v=5546c7bceffd"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=08b882bd9a08"><script src="workspace-frame.js?v=08b882bd9a08"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -603,6 +603,38 @@ root.addEventListener('hashchange',mount);document.addEventListener('visibilityc
 <script type="text/plain" id="suite-original-app">
 (function(){
 "use strict";
+// Lossless local-only research compression. Network and exported state stay ordinary JSON.
+(function(root){
+ function pack(text){
+  const bytes=new TextEncoder().encode(text),out=[];let dict=new Map(),next=257,w='';
+  const code=s=>s.length===1?s.charCodeAt(0):dict.get(s);
+  for(const b of bytes){const c=String.fromCharCode(b),wc=w+c;
+   if(w===''||dict.has(wc)){w=wc;continue;}
+   out.push(code(w));
+   if(next<65535)dict.set(wc,next++);else{out.push(256);dict=new Map();next=257;}
+   w=c;
+  }
+  if(w)out.push(code(w));
+  let bits=0,buffer=0,chars=[];for(const c of out){buffer=(buffer<<16)|c;bits+=16;while(bits>=15){bits-=15;chars.push(String.fromCharCode(((buffer>>>bits)&32767)+32));}buffer&=(1<<bits)-1;}
+  if(bits)chars.push(String.fromCharCode((buffer<<(15-bits))+32));return out.length+':'+chars.join('');
+ }
+ function unpack(encoded){
+  const sep=encoded.indexOf(':'),count=Number(encoded.slice(0,sep)),codes=[];if(sep<1||!Number.isSafeInteger(count)||count<0)throw Error('Invalid compressed research');
+  let bits=0,buffer=0;for(const char of encoded.slice(sep+1)){const v=char.charCodeAt(0)-32;if(v<0||v>32767)throw Error('Invalid compressed research');buffer=(buffer<<15)|v;bits+=15;if(bits>=16){bits-=16;codes.push((buffer>>>bits)&65535);}buffer&=(1<<bits)-1;}
+  if(codes.length!==count)throw Error('Invalid compressed research');
+  let dict=[],next=257,w='',parts=[];
+  for(const k of codes){if(k===256){dict=[];next=257;w='';continue;}
+   const entry=k<256?String.fromCharCode(k):dict[k]||(k===next&&w?w+w[0]:null);
+   if(entry===null)throw Error('Invalid compressed research');parts.push(entry);
+   if(w&&next<65535)dict[next++]=w+entry[0];w=entry;
+  }
+  const raw=parts.join('');return new TextDecoder('utf-8',{fatal:true}).decode(Uint8Array.from(raw,c=>c.charCodeAt(0)));
+ }
+ function stringify(state){return JSON.stringify(state,(key,value)=>key==='researchBundle'&&value&&typeof value==='object'?{_invnoteLocalCodec:'lzw15-utf8-v1',data:pack(JSON.stringify(value))}:value);}
+ function parse(text){return JSON.parse(text,(key,value)=>key==='researchBundle'&&value?._invnoteLocalCodec==='lzw15-utf8-v1'?JSON.parse(unpack(value.data)):value);}
+ const api={stringify,parse,pack,unpack};root.InvnoteStorage=api;if(typeof module!=='undefined')module.exports=api;
+})(globalThis);
+
 const KEY="invnote_v1";
 const STATUS_DEFAULT=["気になる","監視","候補","打診","保有","買い増し","利確","損切","見送り"];
 const STATUS_COLOR={"保有":"var(--up)","買い増し":"var(--up)","打診":"var(--amb)","候補":"var(--amb)","監視":"var(--blu)","利確":"var(--dn)","損切":"var(--dn)","売却済":"var(--dn)"};
@@ -692,8 +724,8 @@ const RULES_DEFAULT=`【執行】
 - 上がりきったところ（ATR4.0超）を拾わない
 - 一過性利益で膨らんだ決算を伸びしろと見ない`;
 let mem=null;
-function load(){try{const j=localStorage.getItem(KEY);if(j)S=Object.assign(S,JSON.parse(j));}catch(e){mem=true;}S.diary=S.diary||{};S.events=S.events||[];S.rules=S.rules||{text:"",upd:0};S.sectors=S.sectors||{};S.holdings=S.holdings||{};S.pfHistory=S.pfHistory||[];InvnoteHistory.normalizeState(S)}
-function save(strict=false){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){if(strict)throw Error("保存できませんでした。取り込みは確定していません。ブラウザの保存設定を確認してください。");toast("保存に失敗しました。変更は端末に保存されていません。");return false}scheduleSync();workspacePublish();return true}
+function load(){try{const j=localStorage.getItem(KEY);if(j)S=Object.assign(S,InvnoteStorage.parse(j));}catch(e){mem=true;}S.diary=S.diary||{};S.events=S.events||[];S.rules=S.rules||{text:"",upd:0};S.sectors=S.sectors||{};S.holdings=S.holdings||{};S.pfHistory=S.pfHistory||[];InvnoteHistory.normalizeState(S)}
+function save(strict=false){try{localStorage.setItem(KEY,InvnoteStorage.stringify(S));}catch(e){if(strict)throw Error(e.name==="QuotaExceededError"?"端末の保存容量が不足しています。保存済みデータは残しています。":"端末に保存できませんでした。保存済みデータは残しています。ブラウザの保存設定を確認してください。");toast("保存に失敗しました。変更は端末に保存されていません。");return false}scheduleSync();workspacePublish();return true}
 const $=s=>document.querySelector(s);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const esc=s=>s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
