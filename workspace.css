@@ -269,3 +269,5 @@ main:has(.company-list) .toolbar{margin:10px 0}
 .company-sort:nth-child(3),.company-sort:nth-child(4){text-align:center}
 .company-list-heading .company-sort[aria-pressed="true"]{color:var(--text);font-weight:700}
 .company-sort:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.pulse-speed h3{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}.pulse-speed-values{display:grid;gap:8px}.pulse-speed .pulse-bank{min-width:0}.pulse-speed .pulse-bank p{overflow-wrap:anywhere}
