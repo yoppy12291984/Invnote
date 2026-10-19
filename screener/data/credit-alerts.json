@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "generated_at": "2026-10-19T13:54:37.237Z",
+  "current": {
+    "level": 1,
+    "label": "速度基準未満",
+    "primary": 1,
+    "bankKnown": true,
+    "speeds": [
+      {
+        "id": "BAMLH0A0HYM2",
+        "label": "HY",
+        "threshold": 0.5,
+        "known": true,
+        "change": 0.47,
+        "date": "2026-10-15",
+        "hit": false
+      },
+      {
+        "id": "BAMLC0A4CBBB",
+        "label": "BBB",
+        "threshold": 0.2,
+        "known": true,
+        "change": 0.07,
+        "date": "2026-10-15",
+        "hit": false
+      }
+    ],
+    "banks": [
+      {
+        "label": "銀行セクター KBE",
+        "level": 2,
+        "value": -4.731955761849553,
+        "relative": -6.157177000201683,
+        "from": "2026-09-16",
+        "to": "2026-10-16"
+      },
+      {
+        "label": "地銀 KRE",
+        "level": 2,
+        "value": -4.028045210404632,
+        "relative": -5.453266448756763,
+        "from": "2026-09-16",
+        "to": "2026-10-16"
+      }
+    ]
+  },
+  "lastConfirmed": {
+    "level": 1,
+    "label": "速度基準未満",
+    "primary": 1,
+    "bankKnown": true,
+    "speeds": [
+      {
+        "id": "BAMLH0A0HYM2",
+        "label": "HY",
+        "threshold": 0.5,
+        "known": true,
+        "change": 0.47,
+        "date": "2026-10-15",
+        "hit": false
+      },
+      {
+        "id": "BAMLC0A4CBBB",
+        "label": "BBB",
+        "threshold": 0.2,
+        "known": true,
+        "change": 0.07,
+        "date": "2026-10-15",
+        "hit": false
+      }
+    ],
+    "banks": [
+      {
+        "label": "銀行セクター KBE",
+        "level": 2,
+        "value": -4.731955761849553,
+        "relative": -6.157177000201683,
+        "from": "2026-09-16",
+        "to": "2026-10-16"
+      },
+      {
+        "label": "地銀 KRE",
+        "level": 2,
+        "value": -4.028045210404632,
+        "relative": -5.453266448756763,
+        "from": "2026-09-16",
+        "to": "2026-10-16"
+      }
+    ]
+  },
+  "events": []
+}
