@@ -563,7 +563,8 @@ function pulseScoreAlertHTML(s,feed,now=Date.now()){
  const e=fresh&&s.complete&&feed.current?.score===s.score?feed.events?.at(-1):null;
  const matched=e?.snapshot?.model===s.model&&e.snapshot.score===s.score;
  const recent=matched&&now-Date.parse(e.confirmedAt)>=0&&now-Date.parse(e.confirmedAt)<=7*86400000;
- if(!s.warning&&!recent)return '';
+ // The headline already shows current risk. Reserve this card for real, recent changes.
+ if(!recent||e.kind==='method-change')return '';
  const title=recent?(e.kind==='method-change'?'警戒スコアを新方式へ変更':e.kind==='clear'?'早期警戒の基準を下回りました':e.kind==='ease'?'警戒スコアが低下':e.kind==='rise'?'警戒スコアが上昇':'早期警戒を初回確認'):`現在：${s.label}`;
  const stamp=recent?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(e.confirmedAt)):'';
  return `<section class="news-credit-alert is-${recent&&['ease','clear'].includes(e.kind)?'improving':s.confirmed>=2?'red':'yellow'}"><span class="news-category">市場の重要変化</span><h2>${esc(title)} · ${s.complete?s.score:'確認分 '+s.confirmed}/3</h2><p>${recent?esc(stamp)+' 日本時間に確認。':'変化日時は未確認。'}${recent&&e.kind==='method-change'?'旧4段階との点数差は市場の改善・悪化ではありません。':recent&&e.before?`前回 ${e.before.score}/3 → 今回 ${s.score}/3。`:''}</p><details><summary>指標の値と変化を見る</summary>${pulseScoreRows(recent?e.snapshot:s,recent?e.before:null)}<small>HY・BBBの水準差はマイナスが縮小、拡大速度差はマイナスが鈍化。銀行の月次騰落率差はプラスが改善ですが、その間の株価上昇率とは異なります。基準変更と市場変化を区別し、欠測では解除しません。確認日時は観測日・市場発生時刻とは異なります。</small></details></section>`;
