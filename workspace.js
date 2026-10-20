@@ -1,7 +1,7 @@
 /* Private content arrives only from the existing authenticated Invnote frame. */
 'use strict';
 const appRelease=JSON.parse(document.getElementById('app-release').textContent);
-let personalStocks=[],researchHash='',syncTime=0;
+let personalStocks=[],personalPositions=[],positionMeta={},researchHash='',syncTime=0;
 let companyMemos=[],memoDialog=null,memoCode='',memoEditing=null,memoRequest='',memoBusy=false;
 function memoDate(ts){return new Date(ts).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});}
 function renderCompanyMemos(){
@@ -219,12 +219,15 @@ window.addEventListener('message',e=>{
  const m=e.data;
  if(m?.type==='workspace:memo-result'&&m.request===memoRequest){memoBusy=false;memoDialog.querySelectorAll('button').forEach(b=>b.disabled=false);memoDialog.querySelector('[role=status]').textContent=String(m.message||'');if(m.ok){memoEditing=null;memoDialog.querySelector('textarea').value='';}renderCompanyMemos();return;}
  if(m?.type==='invnote:company'&&/^[0-9A-Z]{4,5}$/.test(m.code)){location.hash='company/'+m.code;return;}
- if(m?.type==='invnote:locked'){companyMemos=[];memoDialog?.close();invReady=false;invLocked=true;syncPending=false;clearTimeout(syncTimer);document.getElementById('workspace-sync').disabled=false;replaceResearch(initialData);personalStocks=[];researchHash='';if(!['#settings','#import'].includes(location.hash))route();status.textContent='設定から引き継ぎコードを入力してください。';return;}
+ if(m?.type==='invnote:locked'){companyMemos=[];memoDialog?.close();invReady=false;invLocked=true;syncPending=false;clearTimeout(syncTimer);document.getElementById('workspace-sync').disabled=false;replaceResearch(initialData);personalStocks=[];personalPositions=[];positionMeta={};researchHash='';if(!['#settings','#import'].includes(location.hash))route();status.textContent='設定から引き継ぎコードを入力してください。';return;}
  if(m?.type!=='invnote:state')return;
  companyMemos=Array.isArray(m.companyMemos)?m.companyMemos.filter(n=>n.kind==='company-memo-v1'&&typeof n.text==='string'&&/^[0-9A-Z]{4,5}$/.test(n.code)&&Number.isFinite(n.ts)):[];if(memoDialog?.open)renderCompanyMemos();
  invReady=true;invLocked=false;if(syncPending){syncPending=false;clearTimeout(syncTimer);queueMicrotask(syncWorkspace);}if(!appearanceMode&&['light','dark'].includes(m.theme))appearanceMode=m.theme;paintAppearance();
  const nextStocks=Array.isArray(m.stocks)?m.stocks.filter(s=>/^[0-9A-Z]{4,5}$/.test(s.code)&&typeof s.name==='string'&&typeof s.status==='string'):[];
- const changed=m.researchHash!==researchHash||JSON.stringify(nextStocks)!==JSON.stringify(personalStocks);
+ const nextPositions=Array.isArray(m.positions)?m.positions.filter(p=>/^[0-9A-Z]{4,5}$/.test(p.code)&&Number.isFinite(p.shares)&&p.shares>0):[];
+ const nextMeta={date:typeof m.holdingsAsOf==='string'?m.holdingsAsOf:'',complete:m.holdingsComplete===true};
+ const changed=m.researchHash!==researchHash||JSON.stringify(nextStocks)!==JSON.stringify(personalStocks)||JSON.stringify(nextPositions)!==JSON.stringify(personalPositions)||JSON.stringify(nextMeta)!==JSON.stringify(positionMeta);
+ personalPositions=nextPositions;positionMeta=nextMeta;
  personalStocks=nextStocks;syncTime=m.lastSync||0;
  if(validBundle(m.bundle)){replaceResearch(m.bundle);researchHash=m.researchHash;status.textContent=`四季報 ${all.length}社 · ${syncTime?'Invnote 最終同期 '+new Date(syncTime).toLocaleString('ja-JP'):'端末の保存データ'}`;}
  else {replaceResearch(initialData);researchHash='';status.textContent=m.bundle?'四季報の形式を確認できませんでした。設定・同期を確認してください。':'四季報はまだ同期されていません。設定・同期から読み込めます。';}
@@ -659,11 +662,52 @@ function pulseHeadlineHTML(speed,metrics,signals,banks){
  const other=metrics.map((x,i)=>({name:x.label,signal:signals[i]})).filter(x=>x.signal.level>=2||!x.signal.level).map(x=>`${x.name}：${x.signal.label}`);
  return `<div class="pulse-summary"><b>${speed.level?'警戒度 '+speed.level+' / 4 · ':''}${esc(speed.label)}</b><p>${esc(credit)}（1か月差）${dates?`<small>基準日 ${esc(dates)}</small>`:''}<br>銀行 ${bankNames[banks.broadLevel]} ／ 地銀 ${bankNames[banks.regionalLevel]}</p><p>${esc(speed.detail)}</p>${other.length?`<p class="pulse-other">別の注意点：${esc(other.join(' ／ '))}</p>`:''}<small>速度・銀行による警戒度。1でも安全や買いの判定ではありません。</small></div>`;
 }
+function marginPressureHTML(d){
+ const f=v=>typeof v==='number'&&Number.isFinite(v)?(v>=0?'+':'')+v.toFixed(1)+'%':'未取得';
+ const p=d?.pressure;
+ if(!p)return '<section class="japan-market"><strong>信用取引の圧力</strong><p>追加データ未取得 · 3点スコアへの加点なし</p></section>';
+ const old=d.status!=='fresh'||Date.now()-Date.parse(d.date+'T00:00:00+09:00')>14*86400000;
+ let context='株価との組み合わせは未判定';
+ if(Number.isFinite(p.topix4wPct)&&Number.isFinite(p.buy4wPct))context=p.buy4wPct>0?(p.topix4wPct<0?'株価下落と買い残増加が重なる':'買い残増加・同期間の株価は下落せず'):(p.topix4wPct<0?'株価下落と買い残減少が重なる':'買い残は減少または横ばい');
+ return `<section class="japan-market"><strong>信用取引の圧力 <small>補助・加点なし</small></strong><p>買い残4週 ${f(p.buy4wPct)} ／ TOPIX同期間 ${f(p.topix4wPct)}</p><details><summary>信用残高・評価損益率を見る</summary><p>${esc(context)}${old?'（保存値・更新確認が必要）':''}。買い残減少だけで投げ売り完了とは判断しません。</p><p>買い残 ${Number.isFinite(d.buyMillion)?(d.buyMillion/1e6).toFixed(2)+'兆円':'未取得'}、前週比 ${f(p.buy1wPct)}。残高基準 ${esc(d.date)}、公表 ${esc(d.published)}。4週比較 ${esc(p.fromDate)}〜${esc(p.toDate)}。株価は同じ両日の終値を確認できた場合のみ表示。</p><p>市場全体の信用評価損益率：公表値＝未取得／推計値＝推計未実施。信用残高と指数だけでは取得単価や入替が分からず、追証発生水準も算出できません。</p><p>${esc(d.note||'')}</p>${/^https:\/\//.test(d.source||'')?`<a href="${esc(d.source)}" target="_blank" rel="noopener">JPX公表資料</a>`:''}</details></section>`;
+}
+function holdingFactors(n){
+ const themes=(n?.themes||[]).join(' '),business=n?.business||'',out=[];
+ if(/半導体|電子基板/.test(themes+' '+business))out.push('半導体の投資・生産');
+ if(/AI|データセンター/.test(themes))out.push('AI・データセンター需要');
+ if(/電力|電気設備|空調|自動制御/.test(themes+' '+business))out.push('電力・建物設備の投資更新');
+ if(/航空|防衛/.test(themes))out.push('航空・防衛需要');
+ if(/食品|飲料|製粉/.test(themes))out.push('食品・飲料需要と製造費');
+ if(/道路|橋|河川|自治体/.test(business))out.push('公共インフラ整備');
+ if(/薬局/.test(themes))out.push('薬局のIT投資・利用');
+ if(/クリーンエネルギー/.test(themes))out.push('クリーンエネルギー設備投資');
+ return out;
+}
+function portfolioExposure(positions,ns){
+ const groups={},unknown=[],valid=[],unpriced=[];let total=0,credit=0;
+ for(const p of positions){
+  const priced=Number.isFinite(p.price)&&p.price>0&&Number.isFinite(p.shares)&&p.shares>0;
+  const amount=priced?p.price*p.shares:null;
+  if(!priced){unpriced.push(p);continue;}
+  const row={...p,amount};valid.push(row);total+=amount;if(/信用/.test(p.acct||''))credit+=amount;
+  const factors=holdingFactors(ns[p.code]);if(!factors.length)unknown.push(row);
+  for(const label of factors){const g=groups[label]||(groups[label]={label,amount:0,credit:0,rows:[]});g.amount+=amount;if(/信用/.test(p.acct||''))g.credit+=amount;g.rows.push(row);}
+ }
+ return {total,credit,valid,unpriced,unknown,groups:Object.values(groups).sort((a,b)=>b.amount-a.amount)};
+}
+function portfolioImpactHTML(positions,ns,rs,meta){
+ if(!positions.length)return '<section class="japan-market"><strong>自分の保有への影響</strong><p>保有情報の同期・登録後に表示します。</p></section>';
+ const e=portfolioExposure(positions,ns),money=v=>(v/10000).toLocaleString('ja-JP',{maximumFractionDigits:1})+'万円';
+ const lead=e.groups[0];const today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Tokyo'});
+ const priceDates=[...new Set(e.valid.map(p=>p.priceDate||'日付不明'))].sort();
+ const allRows=positions.map(p=>{const n=ns[p.code],r=rs[p.code],date=n?.earnings_dates?.next?.date;return `<li><a href="#company/${esc(p.code)}">${esc(n?.name||p.code)}</a> · ${esc(p.acct||'口座区分不明')} · ${Number.isFinite(p.price)&&p.price>0?money(p.price*p.shares):'時価未取得'}<br>決算：${date?esc(date)+(date<today?'（予定日経過・再確認）':'（保存された予定）'):'次回予定未確認'}／確認 ${esc(n?.earnings_dates?.checked_on||'不明')}<br>見直す条件：${esc(r?.change_conditions||n?.counter||'調査条件未登録')}<br><small>研究 ${esc(n?.updated||'未登録')} · ${esc(n?.business||'事業の確認待ち')}</small></li>`;}).join('');
+ return `<section class="japan-market"><strong>自分の保有への影響 <small>端末内で集計</small></strong><p>${lead?`${esc(lead.label)}に関係 ${money(lead.amount)}（評価可能時価の${(lead.amount/e.total*100).toFixed(1)}%）`:'共通要因は分類待ち'} ／ 信用保有 ${money(e.credit)}</p><details><summary>共通要因ごとの保有額・決算・見直し条件</summary><p>保有基準 ${esc(meta.date||'不明')} · ${meta.complete?'全保有として登録':'全量確認なし・登録分のみ'}。株価基準 ${esc(priceDates.join(' / '))}。現在値の再取得や証券会社残高との照合ではありません。</p><p>評価可能な株式時価 ${money(e.total)}、うち信用 ${money(e.credit)}。時価欠測 ${e.unpriced.length}口座行、分類待ち ${e.unknown.length}口座行。現金・借入・保証金を含む純資産比率ではありません。口座区分不明は信用額へ推測算入しません。</p><ul>${e.groups.map(g=>`<li><b>${esc(g.label)}：${money(g.amount)}</b> ／ 信用 ${money(g.credit)}<br>${[...new Set(g.rows.map(p=>ns[p.code]?.name||p.code))].map(esc).join('・')}</li>`).join('')}</ul><p>保存された研究のテーマ・事業説明から抽出した「共通要因への関係候補」です。関係する銘柄の全時価を表示し、当該事業への売上配分や損失予測を意味しません。複数要因に重複するため各行は合算できません。半導体でも装置は設備投資、材料は生産量・工程・採用に左右され、感応度は同じではありません。</p><ul>${allRows}</ul><p><a href="#today/inv:vPf">保有情報・株価を確認する</a></p></details></section>`;
+}
 function japanMarketHTML(d, now=Date.now()) {
  const num=(v,n=1)=>typeof v==='number'&&Number.isFinite(v)?v.toFixed(n):'未判定';
  if(!d||!d.asOf||!d.evaluated)return '<section class="japan-market"><strong>日本株の広がり・売られ方</strong><p>データ未取得（3点スコアとは別）</p></section>';
  const age=now-Date.parse(d.asOf+'T15:30:00+09:00'),old=!Number.isFinite(age)||age>96*3600000;
- return `<section class="japan-market"><strong>日本株の広がり・売られ方 <small>補助情報・加点なし</small></strong><p>下落 ${num(d.downPct)}%の銘柄 ／ 売買代金 ${num(d.turnoverRatio20,2)}倍<span>（直前20営業日平均比）</span></p><small>${esc(d.asOf)} 終値 · ${esc(d.evaluated)}/${esc(d.universe)}社${old?' · 保存値が古いため最新状況は未確認':''}</small><details><summary>広がり・売買の内訳を見る</summary><p>上昇 ${esc(d.up)}社 ／ 下落 ${esc(d.down)}社 ／ 横ばい ${esc(d.unchanged)}社。騰落率中央値 ${num(d.medianReturnPct,2)}%。3%以上下落 ${esc(d.sharpDown)}社。</p><p>下落銘柄の売買代金は集計全体の ${num(d.downTurnoverPct)}%（${esc(d.turnoverEvaluated)}社）。これは売り注文の割合ではありません。</p><p>売買代金 ${num(d.turnoverYen===null?null:d.turnoverYen/1e12,2)}兆円、直前20日平均比 ${num(d.turnoverRatio20,2)}倍。比較期間 ${esc(d.baselineFrom)}〜${esc(d.baselineTo)}、全21日を揃えた ${esc(d.turnoverCohort)}社で比較。</p><p>対象は全市場の国内普通株。ETF・REITを除外し、前日比は株式分割を補正。価格欠測・権利等で ${esc(d.excluded)}社を除外。売買代金の比較には追加の履歴・正値条件があり、対象数は異なります。終値ベースで平日夜に更新、場中の情報ではありません。</p><p>下落の広がりと商いの増減を観測する欄です。低商いでも下落は続き得ます。これだけで投げ売り・底打ち・今後の下落確率は判定しません。</p><small>${esc(d.source)}</small></details></section>`;
+ return `<section class="japan-market"><strong>日本株の広がり・売られ方 <small>補助情報・加点なし</small></strong><p>下落 ${num(d.downPct)}%の銘柄 ／ 売買代金 ${num(d.turnoverRatio20,2)}倍<span>（直前20営業日平均比）</span></p><small>${esc(d.asOf)} 終値 · ${esc(d.evaluated)}/${esc(d.universe)}社${old?' · 保存値が古いため最新状況は未確認':''}</small><details><summary>広がり・売買の内訳を見る</summary><p>上昇 ${esc(d.up)}社 ／ 下落 ${esc(d.down)}社 ／ 横ばい ${esc(d.unchanged)}社。騰落率中央値 ${num(d.medianReturnPct,2)}%。3%以上下落 ${esc(d.sharpDown)}社。</p><p>下落銘柄の売買代金は集計全体の ${num(d.downTurnoverPct)}%（${esc(d.turnoverEvaluated)}社）。これは売り注文の割合ではありません。</p><p>売買代金 ${num(d.turnoverYen===null?null:d.turnoverYen/1e12,2)}兆円、直前20日平均比 ${num(d.turnoverRatio20,2)}倍。比較期間 ${esc(d.baselineFrom)}〜${esc(d.baselineTo)}、全21日を揃えた ${esc(d.turnoverCohort)}社で比較。</p><p>値動きの内訳：2%以上の下窓 ${d.priceAction?esc(d.priceAction.gapDown2)+'社':'未取得'} ／ 日中値幅5%以上 ${d.priceAction?esc(d.priceAction.wideRange5)+'社':'未取得'}（OHLC判定 ${d.priceAction?esc(d.priceAction.evaluated):'未取得'}社）。始値の前日比中央値 ${num(d.priceAction?.medianGapPct,2)}%、日中値幅中央値 ${num(d.priceAction?.medianRangePct,2)}%。分割補正前日終値で比較。2%/5%は表示用の区切りです。</p><p>売買代金・窓・値幅は売られ方の観測です。板の厚さやスプレッドの直接測定ではなく、投げ売り・買い手不在の原因は確定できません。</p><p>対象は全市場の国内普通株。ETF・REITを除外し、前日比は株式分割を補正。価格欠測・権利等で ${esc(d.excluded)}社を除外。売買代金の比較には追加の履歴・正値条件があり、対象数は異なります。終値ベースで平日夜に更新、場中の情報ではありません。</p><p>下落の広がりと商いの増減を観測する欄です。低商いでも下落は続き得ます。これだけで投げ売り・底打ち・今後の下落確率は判定しません。</p><small>${esc(d.source)}</small></details></section>`;
 }
 function bindPulseDetails(el){
  const details=el.querySelector?.('.pulse-details');if(!details)return;
@@ -687,7 +731,7 @@ async function renderNewsMacro(){
    const score=pulseScoreContext(data.items,context,Date.now(),late);
    score.confirmation=pulseConfirmationContext(score,data.items,marginFeed,Date.now(),late);
   el.dataset.pulse=String(!score.complete?0:score.score>=2?5:score.warning?3:1);
-   el.innerHTML=`${pulseScoreAlertHTML(score,alertFeed)}<div class="pulse-header"><strong>Market Pulse</strong><span>DAILY DIGEST · 毎朝更新</span></div>${pulseScoreHeadlineHTML(score,metrics,signals)}${japanMarketHTML(japanFeed)}${pulseConfirmationHTML(score.confirmation,alertFeed)}<details class="pulse-details"><summary>指標・判定の詳細を開く／閉じる</summary><div class="pulse-metrics" aria-label="主要な市場指標">${metrics.map((x,i)=>`<div><span>${esc(x.label)}</span><strong class="pulse-signal is-${signals[i].color}" title="${esc(signals[i].reason)}">${signals[i].label}</strong><b>${esc(x.value)}${x.value==='—'?'':`<small>${esc(x.unit)}</small>`}</b><em>${esc(x.date)}${x.saved?' · 保存値':''}${x.change===null?'':` · <i class="${x.change>0?'is-wider':x.change<0?'is-narrower':''}">1か月 ${x.change>0?'+':''}${x.change.toFixed(2)}%pt</i>`}</em></div>`).join('')}</div><p class="pulse-legend">緑＝基準内 ／ 黄＝注意 ／ 赤＝警戒 ／ 灰＝未判定。HY・BBBの色は水準のみ。上昇速度は下欄で別判定します。値は国債に対する上乗せ幅（社債利回りではありません）。</p>${pulseScoreHTML(score)}${pulseVixMacdHTML(data.items,speed,context,Date.now(),late)}<div class="pulse-curve"><span>米国イールドカーブ</span><b>${esc(curve.label)}</b><small>${esc(curve.detail)}</small></div>${pulseCreditHTML(context,extra)}${pulseResearchHTML()}<details class="news-story"><summary><span class="news-category">判定の背景</span><span class="news-headline">指標ごとの基準と更新日</span><span class="news-expand">＋</span></summary><div class="news-body"><p>金利・信用スプレッド（企業の資金調達への警戒）・VIX（相場への不安の目安）などを、決めた条件で自動分類しています。社債スプレッドは拡大が警戒、縮小が改善の方向です。個別信号は今回の暫定監視基準で、公式な危機判定や検証済み売買ルールではありません。HY：3%未満緑／3〜5%未満黄／5%以上赤、BBB：1.5%未満緑／1.5〜2.5%未満黄／2.5%以上赤。警戒スコアはHY・BBBの水準と速度を各0.5点、銀行を最大1点として合計3点。1.5点以上で早期警戒します。水準色は速度で変更しません。欠測は点数未確定とし、確認分を示します。VIX：20未満緑／20〜30未満黄／30以上赤。米2年・10年金利：1か月上昇+0.25/+0.50%ptで黄/赤。銀行株（KBE・KRE各々）：1か月−5/−10%以下、または銀行株下落かつS&P500比−3/−7%pt以下で黄/赤。逆イールドは黄。緑も買い信号や安全保証ではありません。金利・VIXは加点せず、補助情報として表示します。カーブ分類は1か月の2年・10年金利の共通日比較です。今日や明日の株価を予言する表示ではありません。</p><p>最終取得処理：${esc(fmt(data.generated_at))} 日本時間 · 毎朝7時</p><p>日次指標：${esc(dates[0]||'未取得')}〜${esc(dates.at(-1)||'未取得')}<br>月次統計：${esc([...new Set(monthly)].join(' / ')||'未取得')}</p><p>${late?'取得処理が古いため、直近の変動を反映していない可能性があります。':''}${bad.length?esc(bad.map(x=>x.name).join('・'))+'は未取得または保存値です。':''}</p><small>取得可能な指標による暫定判定。発表直後のニュース、企業利益、日本市場全体の需給は別途調査します。灰は安全の意味ではありません。</small><p><a href="#review/scr:macro">指標と判定根拠</a> · <a href="#review/history">月次分類の履歴</a></p></div></details></details>`;
+   el.innerHTML=`${pulseScoreAlertHTML(score,alertFeed)}<div class="pulse-header"><strong>Market Pulse</strong><span>DAILY DIGEST · 毎朝更新</span></div>${pulseScoreHeadlineHTML(score,metrics,signals)}${japanMarketHTML(japanFeed)}${marginPressureHTML(marginFeed)}${portfolioImpactHTML(personalPositions,notes,ratings,positionMeta)}${pulseConfirmationHTML(score.confirmation,alertFeed)}<details class="pulse-details"><summary>指標・判定の詳細を開く／閉じる</summary><div class="pulse-metrics" aria-label="主要な市場指標">${metrics.map((x,i)=>`<div><span>${esc(x.label)}</span><strong class="pulse-signal is-${signals[i].color}" title="${esc(signals[i].reason)}">${signals[i].label}</strong><b>${esc(x.value)}${x.value==='—'?'':`<small>${esc(x.unit)}</small>`}</b><em>${esc(x.date)}${x.saved?' · 保存値':''}${x.change===null?'':` · <i class="${x.change>0?'is-wider':x.change<0?'is-narrower':''}">1か月 ${x.change>0?'+':''}${x.change.toFixed(2)}%pt</i>`}</em></div>`).join('')}</div><p class="pulse-legend">緑＝基準内 ／ 黄＝注意 ／ 赤＝警戒 ／ 灰＝未判定。HY・BBBの色は水準のみ。上昇速度は下欄で別判定します。値は国債に対する上乗せ幅（社債利回りではありません）。</p>${pulseScoreHTML(score)}${pulseVixMacdHTML(data.items,speed,context,Date.now(),late)}<div class="pulse-curve"><span>米国イールドカーブ</span><b>${esc(curve.label)}</b><small>${esc(curve.detail)}</small></div>${pulseCreditHTML(context,extra)}${pulseResearchHTML()}<details class="news-story"><summary><span class="news-category">判定の背景</span><span class="news-headline">指標ごとの基準と更新日</span><span class="news-expand">＋</span></summary><div class="news-body"><p>金利・信用スプレッド（企業の資金調達への警戒）・VIX（相場への不安の目安）などを、決めた条件で自動分類しています。社債スプレッドは拡大が警戒、縮小が改善の方向です。個別信号は今回の暫定監視基準で、公式な危機判定や検証済み売買ルールではありません。HY：3%未満緑／3〜5%未満黄／5%以上赤、BBB：1.5%未満緑／1.5〜2.5%未満黄／2.5%以上赤。警戒スコアはHY・BBBの水準と速度を各0.5点、銀行を最大1点として合計3点。1.5点以上で早期警戒します。水準色は速度で変更しません。欠測は点数未確定とし、確認分を示します。VIX：20未満緑／20〜30未満黄／30以上赤。米2年・10年金利：1か月上昇+0.25/+0.50%ptで黄/赤。銀行株（KBE・KRE各々）：1か月−5/−10%以下、または銀行株下落かつS&P500比−3/−7%pt以下で黄/赤。逆イールドは黄。緑も買い信号や安全保証ではありません。金利・VIXは加点せず、補助情報として表示します。カーブ分類は1か月の2年・10年金利の共通日比較です。今日や明日の株価を予言する表示ではありません。</p><p>最終取得処理：${esc(fmt(data.generated_at))} 日本時間 · 毎朝7時</p><p>日次指標：${esc(dates[0]||'未取得')}〜${esc(dates.at(-1)||'未取得')}<br>月次統計：${esc([...new Set(monthly)].join(' / ')||'未取得')}</p><p>${late?'取得処理が古いため、直近の変動を反映していない可能性があります。':''}${bad.length?esc(bad.map(x=>x.name).join('・'))+'は未取得または保存値です。':''}</p><small>取得可能な指標による暫定判定。発表直後のニュース、企業利益、日本市場全体の需給は別途調査します。灰は安全の意味ではありません。</small><p><a href="#review/scr:macro">指標と判定根拠</a> · <a href="#review/history">月次分類の履歴</a></p></div></details></details>`;
    bindPulseDetails(el);
  }catch{if(el.isConnected)el.innerHTML='<p class="muted">市場環境を取得できません。自動判定は未確認です。</p>';}
 }

@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=ff4a18ad638f"><script src="workspace-frame.js?v=ff4a18ad638f"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=f8d27f58cf33"><script src="workspace-frame.js?v=f8d27f58cf33"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -2012,6 +2012,7 @@ function workspacePublish(){
  const bundle=S.notes.filter(n=>n.kind==='investment-research-bundle-v1'&&n.researchBundle).sort((a,b)=>(b.edited||b.ts)-(a.edited||a.ts))[0];
  const storageInfo=document.getElementById('researchStorageInfo');if(storageInfo)storageInfo.textContent=bundle?'研究の端末保存：IndexedDB · '+Object.keys(bundle.researchBundle.notes||{}).length+'社。設定・保有・メモは従来の保存先を維持。':'研究データはまだ登録されていません。';
  parent.postMessage({type:'invnote:state',bundle:bundle?.researchBundle||null,researchHash:bundle?.researchHash||'',
+ positions:(!S.restorePending&&!document.documentElement.classList.contains('suite-locked'))?Object.entries(S.holdings||{}).map(([key,h])=>({code:InvnoteHistory.ticker(key),shares:h.shares,price:h.price,priceDate:h.pdate||'',acct:h.acct||'',observedDate:h.observedDate||''})):[],holdingsAsOf:S.holdingsAsOf||'',holdingsComplete:S.holdingsComplete===true,
  stocks:Object.entries(S.stocks).map(([code,s])=>({code,name:s.name||code,status:s.status||''})),companyMemos:S.notes.filter(n=>n.kind==='company-memo-v1'),lastSync:S.lastSync||0,theme:S.theme},location.origin);
 }
 function workspaceGo(){
