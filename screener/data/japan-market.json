@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "asOf": "2026-10-20",
-  "generatedAt": "2026-10-20T14:06:36.818362+00:00",
+  "generatedAt": "2026-10-20T14:37:55.164884+00:00",
   "source": "J-Quants 日次株価四本値・上場銘柄一覧",
   "universe": 3879,
   "evaluated": 3633,
@@ -18,5 +18,13 @@
   "downTurnoverPct": 80.0654416611907,
   "turnoverEvaluated": 3633,
   "baselineFrom": "2026-09-16",
-  "baselineTo": "2026-10-19"
+  "baselineTo": "2026-10-19",
+  "priceAction": {
+    "evaluated": 3633,
+    "gapDown2": 62,
+    "wideRange5": 520,
+    "medianGapPct": 0.0,
+    "medianRangePct": 2.143878037160553,
+    "note": "窓開けは始値÷分割補正前日終値−1、値幅は(高値−安値)÷分割補正前日終値。2%/5%は表示用の区切りで警戒スコアではない。"
+  }
 }
