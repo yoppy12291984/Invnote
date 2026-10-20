@@ -1,34 +1,51 @@
 {
-  "version": 2,
-  "generated_at": "2026-10-19T22:03:36.330Z",
+  "version": 3,
+  "model": "credit-bank-v3",
+  "generated_at": "2026-10-20T10:16:41.643Z",
   "current": {
-    "level": 3,
-    "label": "警戒強化",
-    "primary": 2,
-    "bankKnown": true,
-    "speeds": [
+    "model": "credit-bank-v3",
+    "score": 1.5,
+    "confirmed": 1.5,
+    "complete": true,
+    "parts": [
       {
         "id": "BAMLH0A0HYM2",
         "label": "HY",
-        "threshold": 0.5,
-        "known": true,
+        "threshold": 3,
+        "speedThreshold": 0.5,
+        "value": 3.31,
         "change": 0.61,
         "date": "2026-10-16",
-        "hit": true
+        "levelPoint": 0.5,
+        "speedPoint": 0.5,
+        "known": true,
+        "points": 1
       },
       {
         "id": "BAMLC0A4CBBB",
         "label": "BBB",
-        "threshold": 0.2,
-        "known": true,
+        "threshold": 1.5,
+        "speedThreshold": 0.2,
+        "value": 1.06,
         "change": 0.1,
         "date": "2026-10-16",
-        "hit": false
+        "levelPoint": 0,
+        "speedPoint": 0,
+        "known": true,
+        "points": 0
+      },
+      {
+        "id": "BANK",
+        "label": "銀行",
+        "known": true,
+        "points": 0.5
       }
     ],
+    "warning": true,
+    "label": "早期警戒",
     "banks": [
       {
-        "label": "銀行セクター KBE",
+        "label": "KBE",
         "level": 2,
         "value": -4.731955761849553,
         "relative": -6.157177000201683,
@@ -36,7 +53,7 @@
         "to": "2026-10-16"
       },
       {
-        "label": "地銀 KRE",
+        "label": "KRE",
         "level": 2,
         "value": -4.028045210404632,
         "relative": -5.453266448756763,
@@ -46,33 +63,49 @@
     ]
   },
   "lastConfirmed": {
-    "level": 3,
-    "label": "警戒強化",
-    "primary": 2,
-    "bankKnown": true,
-    "speeds": [
+    "model": "credit-bank-v3",
+    "score": 1.5,
+    "confirmed": 1.5,
+    "complete": true,
+    "parts": [
       {
         "id": "BAMLH0A0HYM2",
         "label": "HY",
-        "threshold": 0.5,
-        "known": true,
+        "threshold": 3,
+        "speedThreshold": 0.5,
+        "value": 3.31,
         "change": 0.61,
         "date": "2026-10-16",
-        "hit": true
+        "levelPoint": 0.5,
+        "speedPoint": 0.5,
+        "known": true,
+        "points": 1
       },
       {
         "id": "BAMLC0A4CBBB",
         "label": "BBB",
-        "threshold": 0.2,
-        "known": true,
+        "threshold": 1.5,
+        "speedThreshold": 0.2,
+        "value": 1.06,
         "change": 0.1,
         "date": "2026-10-16",
-        "hit": false
+        "levelPoint": 0,
+        "speedPoint": 0,
+        "known": true,
+        "points": 0
+      },
+      {
+        "id": "BANK",
+        "label": "銀行",
+        "known": true,
+        "points": 0.5
       }
     ],
+    "warning": true,
+    "label": "早期警戒",
     "banks": [
       {
-        "label": "銀行セクター KBE",
+        "label": "KBE",
         "level": 2,
         "value": -4.731955761849553,
         "relative": -6.157177000201683,
@@ -80,7 +113,7 @@
         "to": "2026-10-16"
       },
       {
-        "label": "地銀 KRE",
+        "label": "KRE",
         "level": 2,
         "value": -4.028045210404632,
         "relative": -5.453266448756763,
@@ -186,6 +219,73 @@
       },
       "beforeConfirmedAt": "2026-10-19T14:02:34.992Z",
       "beforeBasis": "前回確認"
+    },
+    {
+      "id": "2026-10-20T10:16:41.643Z:credit-bank-v3:1.5",
+      "confirmedAt": "2026-10-20T10:16:41.643Z",
+      "kind": "method-change",
+      "snapshot": {
+        "model": "credit-bank-v3",
+        "score": 1.5,
+        "confirmed": 1.5,
+        "complete": true,
+        "parts": [
+          {
+            "id": "BAMLH0A0HYM2",
+            "label": "HY",
+            "threshold": 3,
+            "speedThreshold": 0.5,
+            "value": 3.31,
+            "change": 0.61,
+            "date": "2026-10-16",
+            "levelPoint": 0.5,
+            "speedPoint": 0.5,
+            "known": true,
+            "points": 1
+          },
+          {
+            "id": "BAMLC0A4CBBB",
+            "label": "BBB",
+            "threshold": 1.5,
+            "speedThreshold": 0.2,
+            "value": 1.06,
+            "change": 0.1,
+            "date": "2026-10-16",
+            "levelPoint": 0,
+            "speedPoint": 0,
+            "known": true,
+            "points": 0
+          },
+          {
+            "id": "BANK",
+            "label": "銀行",
+            "known": true,
+            "points": 0.5
+          }
+        ],
+        "warning": true,
+        "label": "早期警戒",
+        "banks": [
+          {
+            "label": "KBE",
+            "level": 2,
+            "value": -4.731955761849553,
+            "relative": -6.157177000201683,
+            "from": "2026-09-16",
+            "to": "2026-10-16"
+          },
+          {
+            "label": "KRE",
+            "level": 2,
+            "value": -4.028045210404632,
+            "relative": -5.453266448756763,
+            "from": "2026-09-16",
+            "to": "2026-10-16"
+          }
+        ]
+      },
+      "before": null,
+      "afterGap": false
     }
   ]
 }
