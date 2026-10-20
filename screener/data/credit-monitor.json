@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-19T22:03:35+00:00",
+  "generated_at": "2026-10-20T10:49:52+00:00",
   "items": [
     {
       "id": "NASDAQBANK",
@@ -8,45 +8,29 @@
       "unit": "pt",
       "frequency": "daily",
       "source": "https://fred.stlouisfed.org/series/NASDAQBANK",
-      "value": 5072.62,
-      "date": "2026-10-15",
+      "value": 5033.87,
+      "date": "2026-10-19",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-19T22:03:32+00:00",
+      "fetched_at": "2026-10-20T10:49:52+00:00",
       "changes": {
         "1w": {
-          "value": 15.73,
-          "from": "2026-10-08",
-          "to": "2026-10-15"
+          "value": -29.97,
+          "from": "2026-10-12",
+          "to": "2026-10-19"
         },
         "1m": {
-          "value": -241.98,
-          "from": "2026-09-15",
-          "to": "2026-10-15"
+          "value": -180.98,
+          "from": "2026-09-18",
+          "to": "2026-10-19"
         },
         "3m": {
-          "value": -358.98,
-          "from": "2026-07-17",
-          "to": "2026-10-15"
+          "value": -354.68,
+          "from": "2026-07-21",
+          "to": "2026-10-19"
         }
       },
       "history": [
-        {
-          "date": "2026-07-07",
-          "value": 5334.18
-        },
-        {
-          "date": "2026-07-08",
-          "value": 5218.07
-        },
-        {
-          "date": "2026-07-09",
-          "value": 5303.37
-        },
-        {
-          "date": "2026-07-10",
-          "value": 5329.53
-        },
         {
           "date": "2026-07-13",
           "value": 5334.52
@@ -318,10 +302,18 @@
         {
           "date": "2026-10-15",
           "value": 5072.62
+        },
+        {
+          "date": "2026-10-16",
+          "value": 5076.33
+        },
+        {
+          "date": "2026-10-19",
+          "value": 5033.87
         }
       ],
-      "percentile": null,
-      "sample_count": 498,
+      "percentile": 81.7,
+      "sample_count": 500,
       "sample_start": "2024-10-21"
     },
     {
@@ -334,7 +326,7 @@
       "date": "2026-10-16",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-19T22:03:35+00:00",
+      "fetched_at": "2026-10-20T10:49:51+00:00",
       "changes": {
         "1w": {
           "value": 0.05,
@@ -660,7 +652,7 @@
       "date": "2026-10-16",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-19T22:03:35+00:00",
+      "fetched_at": "2026-10-20T10:49:51+00:00",
       "changes": {
         "1w": {
           "value": -0.1,
@@ -986,7 +978,7 @@
       "date": "2026-07-01",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-19T22:03:32+00:00",
+      "fetched_at": "2026-10-20T10:49:51+00:00",
       "changes": {
         "1w": null,
         "1m": null,
@@ -1041,7 +1033,7 @@
       "date": "2026-07-01",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-19T22:03:33+00:00",
+      "fetched_at": "2026-10-20T10:49:51+00:00",
       "changes": {
         "1w": null,
         "1m": null,
@@ -1092,41 +1084,29 @@
       "unit": "USD",
       "frequency": "daily",
       "source": "https://finance.yahoo.com/quote/KBE/history/",
-      "value": 63.619998931884766,
-      "date": "2026-10-16",
+      "value": 63.119998931884766,
+      "date": "2026-10-19",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-19T22:03:35+00:00",
+      "fetched_at": "2026-10-20T10:49:52+00:00",
       "changes": {
         "1w": {
-          "value": 0.489998,
-          "from": "2026-10-09",
-          "to": "2026-10-16"
+          "value": -0.27,
+          "from": "2026-10-12",
+          "to": "2026-10-19"
         },
         "1m": {
-          "value": -3.16,
-          "from": "2026-09-16",
-          "to": "2026-10-16"
+          "value": -3.500004,
+          "from": "2026-09-18",
+          "to": "2026-10-19"
         },
         "3m": {
-          "value": -6.619999,
-          "from": "2026-07-17",
-          "to": "2026-10-16"
+          "value": -6.430004,
+          "from": "2026-07-21",
+          "to": "2026-10-19"
         }
       },
       "history": [
-        {
-          "date": "2026-07-08",
-          "value": 67.19999694824219
-        },
-        {
-          "date": "2026-07-09",
-          "value": 68.31999969482422
-        },
-        {
-          "date": "2026-07-10",
-          "value": 68.75
-        },
         {
           "date": "2026-07-13",
           "value": 68.81999969482422
@@ -1402,11 +1382,15 @@
         {
           "date": "2026-10-16",
           "value": 63.619998931884766
+        },
+        {
+          "date": "2026-10-19",
+          "value": 63.119998931884766
         }
       ],
       "price_basis": "Yahoo daily close; split-adjusted, dividends excluded. Current UTC date excluded.",
       "percentile": null,
-      "sample_count": 126,
+      "sample_count": 127,
       "sample_start": "2026-04-20"
     },
     {
@@ -1415,41 +1399,29 @@
       "unit": "USD",
       "frequency": "daily",
       "source": "https://finance.yahoo.com/quote/KRE/history/",
-      "value": 69.80999755859375,
-      "date": "2026-10-16",
+      "value": 69.26000213623047,
+      "date": "2026-10-19",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-19T22:03:35+00:00",
+      "fetched_at": "2026-10-20T10:49:52+00:00",
       "changes": {
         "1w": {
-          "value": 0.799995,
-          "from": "2026-10-09",
-          "to": "2026-10-16"
+          "value": -0.299995,
+          "from": "2026-10-12",
+          "to": "2026-10-19"
         },
         "1m": {
-          "value": -2.93,
-          "from": "2026-09-16",
-          "to": "2026-10-16"
+          "value": -3.489998,
+          "from": "2026-09-18",
+          "to": "2026-10-19"
         },
         "3m": {
-          "value": -6.880005,
-          "from": "2026-07-17",
-          "to": "2026-10-16"
+          "value": -6.720001,
+          "from": "2026-07-21",
+          "to": "2026-10-19"
         }
       },
       "history": [
-        {
-          "date": "2026-07-08",
-          "value": 73.33999633789062
-        },
-        {
-          "date": "2026-07-09",
-          "value": 74.6500015258789
-        },
-        {
-          "date": "2026-07-10",
-          "value": 75.0199966430664
-        },
         {
           "date": "2026-07-13",
           "value": 75.12000274658203
@@ -1725,11 +1697,15 @@
         {
           "date": "2026-10-16",
           "value": 69.80999755859375
+        },
+        {
+          "date": "2026-10-19",
+          "value": 69.26000213623047
         }
       ],
       "price_basis": "Yahoo daily close; split-adjusted, dividends excluded. Current UTC date excluded.",
       "percentile": null,
-      "sample_count": 126,
+      "sample_count": 127,
       "sample_start": "2026-04-20"
     }
   ],
