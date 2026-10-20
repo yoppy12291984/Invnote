@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=27a4bfdfbe64"><script src="workspace-frame.js?v=27a4bfdfbe64"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=05d1b8c2bcbb"><script src="workspace-frame.js?v=05d1b8c2bcbb"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -418,7 +418,7 @@ if(typeof document==='undefined')return;
 const style=document.createElement('style');style.textContent='.market-agenda{margin:18px 0 24px;border-block:1px solid #64748b55;padding:14px 0;color:inherit}.market-agenda summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px;font-weight:600}.market-agenda small{font-size:12px;opacity:.7}.market-agenda details{padding:12px 0;border-bottom:1px solid #64748b33}.market-agenda p{font-size:13px;line-height:1.8;margin:8px 0}.market-agenda a{color:inherit}.market-agenda button{font:inherit;font-size:12px;padding:8px 12px;border:1px solid #64748b66;border-radius:9px;background:transparent;color:inherit;cursor:pointer}.market-agenda .market-kicker{font-size:18px;font-weight:700;letter-spacing:.08em;color:var(--calendar-accent,#e3bd78);margin-bottom:14px;display:flex;align-items:baseline;flex-wrap:wrap;gap:10px}.market-agenda .market-zone{font-size:11px;font-weight:400;color:var(--sub);letter-spacing:.05em}.market-agenda .market-when{white-space:nowrap;color:#87aee3;font-size:12px}.market-agenda .market-tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:12px}';document.head.append(style);
 function mount(){
  if(root.parent!==root)return;
- const hash=location.hash,eligible=!hash||hash==='#today'||hash==='#today/updates'||hash==='#today/inv:vCal';
+ const hash=location.hash,eligible=!hash||hash==='#today'||hash==='#today/market';
  let el=document.getElementById('market-agenda');
  if(!eligible){el?.remove();return;}
  const host=document.querySelector('main');if(!host)return;
