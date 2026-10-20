@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=f54d0ead9926"><script src="workspace-frame.js?v=f54d0ead9926"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=29687a058b7d"><script src="workspace-frame.js?v=29687a058b7d"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -390,7 +390,19 @@ const raw=[
 const events=raw.map((r,i)=>({id:'macro-2026-'+i,date:r[0],time:r[1],name:r[2],title:r[2]+(r[1]?' '+r[1]+' JST':''),category:r[3],detail:r[4],source:sources[r[3]],readonly:true,sq:r[3]==='sq'}));
 const dateJST=n=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(n);
 const day=d=>Date.parse(d+'T00:00:00+09:00');
-function upcoming(now=new Date(),horizon=14){const today=dateJST(now);return events.filter(e=>e.date>=today&&day(e.date)-day(today)<=horizon*864e5&&(!e.time||Date.parse(e.date+'T'+e.time+':00+09:00')>+now)).map(e=>({...e,days:Math.round((day(e.date)-day(today))/864e5)}));}
+let holdingEvents=[],holdingUnknown=[],holdingsLoaded=false;
+function setHoldings(positions,notes,loaded=true){
+ const rows=[],unknown=[];
+ for(const code of [...new Set((positions||[]).filter(p=>Number.isFinite(p.shares)&&p.shares>0).map(p=>p.code))]){
+  const n=notes?.[code],next=n?.earnings_dates?.next,name=n?.name||code,date=next?.date;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date||'')||!Number.isFinite(day(date))){unknown.push(name+'（'+code+'）');continue;}
+  const confirmed=['confirmed','announced','scheduled'].includes(next.status),source=/^https:\/\//.test(next.source||'')?next.source:'';
+  rows.push({id:'holding-earnings-'+code,date,time:'',name:name+' 決算',title:name+'（'+code+'）決算 · '+(confirmed?'発表予定':'参考予定・要確認'),category:'earnings',readonly:true,code,source,checked:n.earnings_dates.checked_on||'不明',detail:(next.period||'決算発表予定')+'。'+(confirmed?'保存済みの公表予定。変更の可能性があります。':'未確認・推計を含む参考日程です。')+(next.note||'')});
+ }
+ holdingEvents=rows;holdingUnknown=unknown;holdingsLoaded=loaded;
+}
+function allEvents(){return [...events,...holdingEvents].sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id));}
+function upcoming(now=new Date(),horizon=14){const today=dateJST(now);return allEvents().filter(e=>e.date>=today&&day(e.date)-day(today)<=horizon*864e5&&(!e.time||Date.parse(e.date+'T'+e.time+':00+09:00')>+now)).map(e=>({...e,days:Math.round((day(e.date)-day(today))/864e5)}));}
 function label(e,now=new Date()){
  if(e.days===0)return '今日';if(e.days===1)return '明日';
  const start=day(dateJST(now)),wd=new Date(start).getUTCDay();
@@ -413,7 +425,7 @@ function calendar(now=new Date()){
  // RFC5545: fold at <=75 UTF-8 octets without splitting a character.
  return lines.map(line=>{let out='',part='',n=0;for(const c of line){const k=new TextEncoder().encode(c).length;if(n+k>74){out+=part+'\r\n ';part='';n=1;}part+=c;n+=k;}return out+part;}).join('\r\n')+'\r\n';
 }
-root.InvnoteMarketCalendar={events,upcoming,label,calendar,dateJST,verifiedAt:'2026-10-15',coverageThrough:'2026-12-18'};
+root.InvnoteMarketCalendar={get events(){return allEvents();},setHoldings,upcoming,label,calendar,dateJST,verifiedAt:'2026-10-15',coverageThrough:'2026-12-18'};
 if(typeof document==='undefined')return;
 const style=document.createElement('style');style.textContent='.market-agenda{margin:18px 0 24px;border-block:1px solid #64748b55;padding:14px 0;color:inherit}.market-agenda summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px;font-weight:600}.market-agenda small{font-size:12px;opacity:.7}.market-agenda details{padding:12px 0;border-bottom:1px solid #64748b33}.market-agenda p{font-size:13px;line-height:1.8;margin:8px 0}.market-agenda a{color:inherit}.market-agenda button{font:inherit;font-size:12px;padding:8px 12px;border:1px solid #64748b66;border-radius:9px;background:transparent;color:inherit;cursor:pointer}.market-agenda .market-kicker{font-size:18px;font-weight:700;letter-spacing:.08em;color:var(--calendar-accent,#e3bd78);margin-bottom:14px;display:flex;align-items:baseline;flex-wrap:wrap;gap:10px}.market-agenda .market-zone{font-size:11px;font-weight:400;color:var(--sub);letter-spacing:.05em}.market-agenda .market-when{white-space:nowrap;color:#87aee3;font-size:12px}.market-agenda .market-tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:12px}';document.head.append(style);
 function mount(){
@@ -426,8 +438,12 @@ function mount(){
  if(!el){el=document.createElement('section');el.id='market-agenda';el.className='market-agenda';}
  const newsTop=host.querySelector('#news-macro');if(newsTop){if(newsTop.previousElementSibling!==el)newsTop.before(el);}else if(tabs.nextElementSibling!==el)tabs.after(el);
  const now=new Date(),rows=upcoming(now),expired=dateJST(now)>'2026-12-18';
- const body='<div class="market-kicker">Market Calendar <span class="market-zone">日本時間</span></div>'+(expired?'<p>登録済み日程の対象期間が終了しました。新しい公式日程の確認が必要です。</p>':rows.length?rows.map(e=>'<details><summary><span>'+esc(e.title)+'</span><span class="market-when">'+label(e,now)+' · '+e.date.slice(5).replace('-','/')+'</span></summary><p>'+esc(e.detail)+'</p><small><a href="'+e.source+'" target="_blank" rel="noopener noreferrer">公式日程 ↗</a> · 10/15確認</small></details>').join(''):'<p>今後14日以内の登録済み重要予定はありません。</p>');
- if(el.dataset.day!==dateJST(now)||el.dataset.signature!==rows.map(e=>e.id).join(',')){el.innerHTML=body;el.dataset.day=dateJST(now);el.dataset.signature=rows.map(e=>e.id).join(',');}
+ const item=e=>'<details><summary><span>'+esc(e.title)+'</span><span class="market-when">'+label(e,now)+' · '+e.date.slice(5).replace('-','/')+'</span></summary><p>'+esc(e.detail)+'</p><small>'+(e.source?'<a href="'+esc(e.source)+'" target="_blank" rel="noopener noreferrer">日程の出典 ↗</a> · ':'')+esc(e.checked||'2026-10-15')+'確認</small></details>';
+ const overdue=holdingEvents.filter(e=>e.date<dateJST(now)).map(e=>e.name+'（'+e.date+'・再確認）');
+ const missing=[...holdingUnknown,...overdue];
+ const body='<div class="market-kicker">Market Calendar <span class="market-zone">日本時間 · 今後14日</span></div>'+(expired?'<p>経済日程の対象期間が終了しています。</p>':'')+(rows.length?rows.map(item).join(''):'<p>今後14日以内の登録済み予定はありません。</p>')+(!holdingsLoaded?'<p>保有銘柄の決算予定は保有情報の同期後に表示します。</p>':'<p>保有銘柄の決算予定を自動表示。14日より先は下の投資カレンダーで確認できます。</p>')+(missing.length?'<details><summary>決算予定の確認待ち '+missing.length+'社</summary><p>'+missing.map(esc).join('、')+'</p><small>未確認の日程を推測してカレンダーには載せません。</small></details>':'');
+ if(el.dataset.signature!==body){el.innerHTML=body;el.dataset.signature=body;}
+
 }
 document.addEventListener('click',e=>{if(!e.target.closest('[data-market-export]'))return;const url=URL.createObjectURL(new Blob([calendar()],{type:'text/calendar;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='Invnote-market-2026.ics';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);});
 new MutationObserver(mount).observe(document.documentElement,{childList:true,subtree:true});
@@ -2010,6 +2026,9 @@ function installResearchFile(host){
 function workspacePublish(){
  if(!workspaceMode||!storageReady)return;
  const bundle=S.notes.filter(n=>n.kind==='investment-research-bundle-v1'&&n.researchBundle).sort((a,b)=>(b.edited||b.ts)-(a.edited||a.ts))[0];
+ const calendarAllowed=!S.restorePending&&!document.documentElement.classList.contains('suite-locked');
+ window.InvnoteMarketCalendar?.setHoldings(calendarAllowed?Object.entries(S.holdings||{}).map(([key,h])=>({code:InvnoteHistory.ticker(key),shares:h.shares})):[],calendarAllowed?bundle?.researchBundle?.notes:{},calendarAllowed);
+ if(view==='vCal')renderCal();
  const storageInfo=document.getElementById('researchStorageInfo');if(storageInfo)storageInfo.textContent=bundle?'研究の端末保存：IndexedDB · '+Object.keys(bundle.researchBundle.notes||{}).length+'社。設定・保有・メモは従来の保存先を維持。':'研究データはまだ登録されていません。';
  parent.postMessage({type:'invnote:state',bundle:bundle?.researchBundle||null,researchHash:bundle?.researchHash||'',
  positions:(!S.restorePending&&!document.documentElement.classList.contains('suite-locked'))?Object.entries(S.holdings||{}).map(([key,h])=>({code:InvnoteHistory.ticker(key),shares:h.shares,price:h.price,priceDate:h.pdate||'',acct:h.acct||'',observedDate:h.observedDate||''})):[],holdingsAsOf:S.holdingsAsOf||'',holdingsComplete:S.holdingsComplete===true,

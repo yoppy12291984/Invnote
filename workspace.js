@@ -348,6 +348,7 @@ route=function(){
  restoreTabPosition();
  paintAppearance();
  renderUpdateHealth();
+ window.InvnoteMarketCalendar?.setHoldings(personalPositions,notes,invReady&&!invLocked);
  renderNewsMacro();
  window.scrollTo(0,0);
 };
