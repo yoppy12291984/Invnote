@@ -1,7 +1,7 @@
 {
   "version": 3,
   "model": "credit-bank-v3",
-  "generated_at": "2026-10-20T22:10:08.928Z",
+  "generated_at": "2026-10-20T23:13:41.607Z",
   "current": {
     "model": "credit-bank-v3",
     "score": 1.5,
@@ -47,18 +47,18 @@
       {
         "label": "KBE",
         "level": 2,
-        "value": -5.2536833619082515,
-        "relative": -5.7795313457001605,
+        "value": -3.392377524505507,
+        "relative": -4.203694745602167,
         "from": "2026-09-18",
-        "to": "2026-10-19"
+        "to": "2026-10-20"
       },
       {
         "label": "KRE",
         "level": 2,
-        "value": -4.797248109965635,
-        "relative": -5.3230960937575444,
+        "value": -2.9278309278350516,
+        "relative": -3.739148148931712,
         "from": "2026-09-18",
-        "to": "2026-10-19"
+        "to": "2026-10-20"
       }
     ],
     "confirmation": {
@@ -69,8 +69,8 @@
       "buy": false,
       "ratioJoint": false,
       "buyJoint": false,
-      "vixValue": 18.44,
-      "vixDate": "2026-10-19",
+      "vixValue": 17.309999465942383,
+      "vixDate": "2026-10-20",
       "ratioValue": 10.196074951605814,
       "buyNormalized": 0.6746077701932018,
       "buyMedian": 0.7158689944731838,
@@ -125,18 +125,18 @@
       {
         "label": "KBE",
         "level": 2,
-        "value": -5.2536833619082515,
-        "relative": -5.7795313457001605,
+        "value": -3.392377524505507,
+        "relative": -4.203694745602167,
         "from": "2026-09-18",
-        "to": "2026-10-19"
+        "to": "2026-10-20"
       },
       {
         "label": "KRE",
         "level": 2,
-        "value": -4.797248109965635,
-        "relative": -5.3230960937575444,
+        "value": -2.9278309278350516,
+        "relative": -3.739148148931712,
         "from": "2026-09-18",
-        "to": "2026-10-19"
+        "to": "2026-10-20"
       }
     ],
     "confirmation": {
@@ -147,8 +147,8 @@
       "buy": false,
       "ratioJoint": false,
       "buyJoint": false,
-      "vixValue": 18.44,
-      "vixDate": "2026-10-19",
+      "vixValue": 17.309999465942383,
+      "vixDate": "2026-10-20",
       "ratioValue": 10.196074951605814,
       "buyNormalized": 0.6746077701932018,
       "buyMedian": 0.7158689944731838,
@@ -332,8 +332,8 @@
     "buy": false,
     "ratioJoint": false,
     "buyJoint": false,
-    "vixValue": 18.44,
-    "vixDate": "2026-10-19",
+    "vixValue": 17.309999465942383,
+    "vixDate": "2026-10-20",
     "ratioValue": 10.196074951605814,
     "buyNormalized": 0.6746077701932018,
     "buyMedian": 0.7158689944731838,
