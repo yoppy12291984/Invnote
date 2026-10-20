@@ -17,6 +17,8 @@ nav[aria-label="メインナビゲーション"]{background:var(--nav)}
 .notice{background:var(--notice);color:var(--notice-ink)}
 .tools a{background:var(--paper);color:var(--green);border-color:var(--line)}
 .workspace-frame-host{max-width:1000px;margin:0 auto 110px;padding:0 22px}
+.pulse-score-parts{display:flex;flex-wrap:wrap;gap:6px 20px}
+.pulse-score-parts>span{white-space:nowrap}
 .workspace-frame-host iframe{display:block;width:100%;border:0!important;border-radius:0!important;background:var(--bg)!important;min-height:0!important;height:600px;color-scheme:inherit}
 .workspace-setting{padding:20px;background:var(--paper);border:1px solid var(--line);border-radius:16px;margin:14px 0}.workspace-setting h2{margin:0 0 12px}.workspace-setting p{font-size:14px}
 .appearance-options{display:flex;gap:8px;flex-wrap:wrap}.appearance-options button[aria-pressed=true]{background:var(--soft);border-color:var(--green)}

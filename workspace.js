@@ -554,7 +554,7 @@ function pulseScoreRows(s,before=null){
 }
 function pulseScoreHeadlineHTML(s,metrics,signals){
  const extras=metrics.map((x,i)=>({name:x.label,s:signals[i]})).filter(x=>x.s.level>=2||!x.s.level).map(x=>`${x.name}：${x.s.label}`);
- return `<div class="pulse-summary"><b>警戒スコア ${s.complete?s.score:'未確定（確認分 '+s.confirmed+'）'} / 3 · ${esc(s.label)}</b><p>${s.parts.map(x=>`${x.label} ${x.known?x.points:'未確定（確認分 '+x.points+'）'}/1`).join(' ／ ')}</p><small>1.5点以上で早期警戒。点数は条件の重なりで、暴落確率ではありません。欠測や0点も安全を意味しません。</small>${extras.length?`<p class="pulse-other">補助情報：${esc(extras.join(' ／ '))}</p>`:''}</div>`;
+ return `<div class="pulse-summary"><b>警戒スコア ${s.complete?s.score:'未確定（確認分 '+s.confirmed+'）'} / 3 · ${esc(s.label)}</b><p class="pulse-score-parts">${s.parts.map(x=>`<span>${x.label} ${x.known?x.points:'未確定（確認分 '+x.points+'）'}/1</span>`).join('')}</p><small>1.5点以上で早期警戒。点数は条件の重なりで、暴落確率ではありません。欠測や0点も安全を意味しません。</small>${extras.length?`<p class="pulse-other">補助情報：${esc(extras.join(' ／ '))}</p>`:''}</div>`;
 }
 function pulseScoreHTML(s){
  return `<section class="pulse-credit"><h3>3点の内訳：水準＋上昇速度＋銀行</h3>${pulseScoreRows(s)}<small>信用の水準と速度を各0.5点、銀行を最大1点。VIX・日本株信用需給は二段階目の絞り込みに使い、3点には加減点しません。日足MACDは補助情報です。1.5点は早めに気づくための基準で、点数が上がるほど的中率が必ず上がるとは確認できていません。</small></section>`;
