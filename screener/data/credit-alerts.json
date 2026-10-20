@@ -1,7 +1,7 @@
 {
   "version": 3,
   "model": "credit-bank-v3",
-  "generated_at": "2026-10-20T10:50:11.139Z",
+  "generated_at": "2026-10-20T11:24:45.939Z",
   "current": {
     "model": "credit-bank-v3",
     "score": 1.5,
@@ -60,7 +60,25 @@
         "from": "2026-09-18",
         "to": "2026-10-19"
       }
-    ]
+    ],
+    "confirmation": {
+      "model": "vix-margin-confirm-v1",
+      "base": true,
+      "vix": false,
+      "ratio": true,
+      "buy": false,
+      "ratioJoint": false,
+      "buyJoint": false,
+      "vixValue": 19.99,
+      "vixDate": "2026-10-16",
+      "ratioValue": 10.196074951605814,
+      "buyNormalized": 0.6746077701932018,
+      "buyMedian": 0.7158689944731838,
+      "marginDate": "2026-10-16",
+      "published": "2026-10-20",
+      "turnoverDate": "2026-09-30",
+      "buyMillion": 6664007
+    }
   },
   "lastConfirmed": {
     "model": "credit-bank-v3",
@@ -120,7 +138,25 @@
         "from": "2026-09-18",
         "to": "2026-10-19"
       }
-    ]
+    ],
+    "confirmation": {
+      "model": "vix-margin-confirm-v1",
+      "base": true,
+      "vix": false,
+      "ratio": true,
+      "buy": false,
+      "ratioJoint": false,
+      "buyJoint": false,
+      "vixValue": 19.99,
+      "vixDate": "2026-10-16",
+      "ratioValue": 10.196074951605814,
+      "buyNormalized": 0.6746077701932018,
+      "buyMedian": 0.7158689944731838,
+      "marginDate": "2026-10-16",
+      "published": "2026-10-20",
+      "turnoverDate": "2026-09-30",
+      "buyMillion": 6664007
+    }
   },
   "events": [
     {
@@ -286,6 +322,49 @@
       },
       "before": null,
       "afterGap": false
+    }
+  ],
+  "lastConfirmation": {
+    "model": "vix-margin-confirm-v1",
+    "base": true,
+    "vix": false,
+    "ratio": true,
+    "buy": false,
+    "ratioJoint": false,
+    "buyJoint": false,
+    "vixValue": 19.99,
+    "vixDate": "2026-10-16",
+    "ratioValue": 10.196074951605814,
+    "buyNormalized": 0.6746077701932018,
+    "buyMedian": 0.7158689944731838,
+    "marginDate": "2026-10-16",
+    "published": "2026-10-20",
+    "turnoverDate": "2026-09-30",
+    "buyMillion": 6664007
+  },
+  "confirmationEvents": [
+    {
+      "confirmedAt": "2026-10-20T11:24:45.939Z",
+      "kind": "initial",
+      "snapshot": {
+        "model": "vix-margin-confirm-v1",
+        "base": true,
+        "vix": false,
+        "ratio": true,
+        "buy": false,
+        "ratioJoint": false,
+        "buyJoint": false,
+        "vixValue": 19.99,
+        "vixDate": "2026-10-16",
+        "ratioValue": 10.196074951605814,
+        "buyNormalized": 0.6746077701932018,
+        "buyMedian": 0.7158689944731838,
+        "marginDate": "2026-10-16",
+        "published": "2026-10-20",
+        "turnoverDate": "2026-09-30",
+        "buyMillion": 6664007
+      },
+      "before": null
     }
   ]
 }
