@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "asOf": "2026-10-20",
+  "generatedAt": "2026-10-20T14:06:36.818362+00:00",
+  "source": "J-Quants 日次株価四本値・上場銘柄一覧",
+  "universe": 3879,
+  "evaluated": 3633,
+  "excluded": 246,
+  "down": 2743,
+  "up": 700,
+  "unchanged": 190,
+  "downPct": 75.50233966418938,
+  "medianReturnPct": -1.0487144790257141,
+  "sharpDown": 765,
+  "turnoverCohort": 3459,
+  "turnoverYen": 7198982699440.0,
+  "turnoverRatio20": 0.8482657917070195,
+  "downTurnoverPct": 80.0654416611907,
+  "turnoverEvaluated": 3633,
+  "baselineFrom": "2026-09-16",
+  "baselineTo": "2026-10-19"
+}
