@@ -971,11 +971,11 @@
    "unchanged": 0
   },
   "rebound": {
-   "hash": "fd411c5693c3aebe480ded82a10595f9bef581701a077a9bae706873122eab4b",
-   "date": "20261019",
+   "hash": "4ee5ce800b0da6c8789599a3ba2f3bad555143e3168abb02e34fbfcaef639b92",
+   "date": "20261020",
    "count": 5,
    "comparison": true,
-   "previous_date": "20261016",
+   "previous_date": "20261019",
    "previous_label": "前回公開データ",
    "added": [],
    "removed": [],
@@ -985,34 +985,14 @@
      "name": "住友林業",
      "changes": [
       {
-       "field": "2年高値比（%）",
-       "before": -50.2616,
-       "after": -49.9518
-      },
-      {
-       "field": "半年高値比（%）",
-       "before": -17.6189,
-       "after": -17.1057
-      },
-      {
        "field": "200日線比（%）",
-       "before": -15.2126,
-       "after": -14.5691
+       "before": -14.5691,
+       "after": -14.4564
       },
       {
        "field": "50日線比（%）",
-       "before": -5.1871,
-       "after": -4.434
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 7382.7091,
-       "after": 7428.6977
-      },
-      {
-       "field": "株価",
-       "before": 1204.0,
-       "after": 1211.5
+       "before": -4.434,
+       "after": -4.2792
       }
      ]
     },
@@ -1022,33 +1002,33 @@
      "changes": [
       {
        "field": "2年高値比（%）",
-       "before": -45.3321,
-       "after": -44.9531
+       "before": -44.9531,
+       "after": -43.7463
       },
       {
        "field": "半年高値比（%）",
-       "before": -8.65,
-       "after": -8.0167
+       "before": -8.0167,
+       "after": -6.0
       },
       {
        "field": "200日線比（%）",
-       "before": -3.329,
-       "after": -2.5588
+       "before": -2.5588,
+       "after": -0.338
       },
       {
        "field": "50日線比（%）",
-       "before": -1.0185,
-       "after": -0.4685
+       "before": -0.4685,
+       "after": 1.4794
       },
       {
        "field": "時価総額（億円）",
-       "before": 49867.5968,
-       "after": 50213.3309
+       "before": 50213.3309,
+       "after": 51314.2211
       },
       {
        "field": "株価",
-       "before": 2740.5,
-       "after": 2759.5
+       "before": 2759.5,
+       "after": 2820.0
       }
      ]
     },
@@ -1058,33 +1038,33 @@
      "changes": [
       {
        "field": "2年高値比（%）",
-       "before": -49.318,
-       "after": -48.7725
+       "before": -48.7725,
+       "after": -50.341
       },
       {
        "field": "半年高値比（%）",
-       "before": -44.3499,
-       "after": -43.7509
+       "before": -43.7509,
+       "after": -45.4731
       },
       {
        "field": "200日線比（%）",
-       "before": -30.2196,
-       "after": -29.3715
+       "before": -29.3715,
+       "after": -31.4272
       },
       {
        "field": "50日線比（%）",
-       "before": -13.0785,
-       "after": -11.8105
+       "before": -11.8105,
+       "after": -14.1277
       },
       {
        "field": "時価総額（億円）",
-       "before": 5587.1433,
-       "after": 5647.2862
+       "before": 5647.2862,
+       "after": 5474.3752
       },
       {
        "field": "株価",
-       "before": 8175.0,
-       "after": 8263.0
+       "before": 8263.0,
+       "after": 8010.0
       }
      ]
     },
@@ -1094,33 +1074,33 @@
      "changes": [
       {
        "field": "2年高値比（%）",
-       "before": -49.0587,
-       "after": -49.3483
+       "before": -49.3483,
+       "after": -49.3845
       },
       {
        "field": "半年高値比（%）",
-       "before": -29.4737,
-       "after": -29.8747
+       "before": -29.8747,
+       "after": -29.9248
       },
       {
        "field": "200日線比（%）",
-       "before": -20.2011,
-       "after": -20.5236
+       "before": -20.5236,
+       "after": -20.4466
       },
       {
        "field": "50日線比（%）",
-       "before": -9.8429,
-       "after": -10.0952
+       "before": -10.0952,
+       "after": -9.9128
       },
       {
        "field": "時価総額（億円）",
-       "before": 9836.0792,
-       "after": 9780.1526
+       "before": 9780.1526,
+       "after": 9773.1618
       },
       {
        "field": "株価",
-       "before": 281.4,
-       "after": 279.8
+       "before": 279.8,
+       "after": 279.6
       }
      ]
     },
@@ -1130,33 +1110,33 @@
      "changes": [
       {
        "field": "2年高値比（%）",
-       "before": -61.0947,
-       "after": -59.8089
+       "before": -59.8089,
+       "after": -59.7046
       },
       {
        "field": "半年高値比（%）",
-       "before": -36.5003,
-       "after": -34.383
+       "before": -34.383,
+       "after": -34.2128
       },
       {
        "field": "200日線比（%）",
-       "before": -33.6016,
-       "after": -31.1495
+       "before": -31.1495,
+       "after": -30.6927
       },
       {
        "field": "50日線比（%）",
-       "before": -15.2485,
-       "after": -12.1688
+       "before": -12.1688,
+       "after": -11.7069
       },
       {
        "field": "時価総額（億円）",
-       "before": 30988.9329,
-       "after": 32013.1316
+       "before": 32013.1316,
+       "after": 32096.1748
       },
       {
        "field": "株価",
-       "before": 1119.5,
-       "after": 1156.5
+       "before": 1156.5,
+       "after": 1159.5
       }
      ]
     }
