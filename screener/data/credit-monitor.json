@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-20T22:03:05+00:00",
+  "generated_at": "2026-10-20T23:13:41+00:00",
   "items": [
     {
       "id": "NASDAQBANK",
@@ -12,7 +12,7 @@
       "date": "2026-10-19",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-20T22:03:05+00:00",
+      "fetched_at": "2026-10-20T23:13:40+00:00",
       "changes": {
         "1w": {
           "value": -29.97,
@@ -326,7 +326,7 @@
       "date": "2026-10-19",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-20T22:03:04+00:00",
+      "fetched_at": "2026-10-20T23:13:40+00:00",
       "changes": {
         "1w": {
           "value": 0.09,
@@ -644,7 +644,7 @@
       "date": "2026-10-19",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-20T22:03:04+00:00",
+      "fetched_at": "2026-10-20T23:13:40+00:00",
       "changes": {
         "1w": {
           "value": -0.03,
@@ -962,7 +962,7 @@
       "date": "2026-07-01",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-20T22:03:04+00:00",
+      "fetched_at": "2026-10-20T23:13:40+00:00",
       "changes": {
         "1w": null,
         "1m": null,
@@ -1017,7 +1017,7 @@
       "date": "2026-07-01",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-20T22:03:04+00:00",
+      "fetched_at": "2026-10-20T23:13:40+00:00",
       "changes": {
         "1w": null,
         "1m": null,
@@ -1068,26 +1068,26 @@
       "unit": "USD",
       "frequency": "daily",
       "source": "https://finance.yahoo.com/quote/KBE/history/",
-      "value": 63.119998931884766,
-      "date": "2026-10-19",
+      "value": 64.36000061035156,
+      "date": "2026-10-20",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-20T22:03:05+00:00",
+      "fetched_at": "2026-10-20T23:13:40.837501+00:00",
       "changes": {
         "1w": {
-          "value": -0.27,
-          "from": "2026-10-12",
-          "to": "2026-10-19"
+          "value": 1.420002,
+          "from": "2026-10-13",
+          "to": "2026-10-20"
         },
         "1m": {
-          "value": -3.500004,
+          "value": -2.260002,
           "from": "2026-09-18",
-          "to": "2026-10-19"
+          "to": "2026-10-20"
         },
         "3m": {
-          "value": -6.430004,
-          "from": "2026-07-21",
-          "to": "2026-10-19"
+          "value": -4.970001,
+          "from": "2026-07-22",
+          "to": "2026-10-20"
         }
       },
       "history": [
@@ -1370,12 +1370,16 @@
         {
           "date": "2026-10-19",
           "value": 63.119998931884766
+        },
+        {
+          "date": "2026-10-20",
+          "value": 64.36000061035156
         }
       ],
-      "price_basis": "Yahoo daily close; split-adjusted, dividends excluded. Current UTC date excluded.",
-      "percentile": null,
-      "sample_count": 126,
-      "sample_start": "2026-04-21"
+      "price_basis": "Completed US daily close, dividends excluded; 15-minute post-close buffer.",
+      "percentile": 92.1,
+      "sample_count": 1254,
+      "sample_start": "2021-10-21"
     },
     {
       "id": "KRE",
@@ -1383,26 +1387,26 @@
       "unit": "USD",
       "frequency": "daily",
       "source": "https://finance.yahoo.com/quote/KRE/history/",
-      "value": 69.26000213623047,
-      "date": "2026-10-19",
+      "value": 70.62000274658203,
+      "date": "2026-10-20",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-20T22:03:05+00:00",
+      "fetched_at": "2026-10-20T23:13:40.837501+00:00",
       "changes": {
         "1w": {
-          "value": -0.299995,
-          "from": "2026-10-12",
-          "to": "2026-10-19"
+          "value": 1.560005,
+          "from": "2026-10-13",
+          "to": "2026-10-20"
         },
         "1m": {
-          "value": -3.489998,
+          "value": -2.129997,
           "from": "2026-09-18",
-          "to": "2026-10-19"
+          "to": "2026-10-20"
         },
         "3m": {
-          "value": -6.720001,
-          "from": "2026-07-21",
-          "to": "2026-10-19"
+          "value": -4.979996,
+          "from": "2026-07-22",
+          "to": "2026-10-20"
         }
       },
       "history": [
@@ -1685,12 +1689,16 @@
         {
           "date": "2026-10-19",
           "value": 69.26000213623047
+        },
+        {
+          "date": "2026-10-20",
+          "value": 70.62000274658203
         }
       ],
-      "price_basis": "Yahoo daily close; split-adjusted, dividends excluded. Current UTC date excluded.",
-      "percentile": null,
-      "sample_count": 126,
-      "sample_start": "2026-04-21"
+      "price_basis": "Completed US daily close, dividends excluded; 15-minute post-close buffer.",
+      "percentile": 86.1,
+      "sample_count": 1254,
+      "sample_start": "2021-10-21"
     }
   ],
   "note": "米国中心。KBEは銀行セクター代理で全銀行の網羅ではなく地銀も多く含む。KREは地銀ETFでKBEと重複する。ETFは日次終値・配当なし。SLOOS観測日は対象四半期。社債利回りは個社の借換え金利・成否ではない。"
