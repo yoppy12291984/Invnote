@@ -1,0 +1,20 @@
+{
+  "status": "fresh",
+  "date": "2026-10-16",
+  "published": "2026-10-20",
+  "ratio": 10.196074951605814,
+  "buyMillion": 6664007.0,
+  "sellShares": 366263.0,
+  "buyShares": 3734445.0,
+  "normalized": 0.6746077701932018,
+  "normMedian156": 0.7158689944731838,
+  "baselineCount": 156,
+  "turnoverDate": "2026-09-30",
+  "turnoverAvailable": "2026-10-08",
+  "buy4wPct": 3.22210945869168,
+  "source": "https://www.jpx.co.jp/markets/statistics-equities/margin/tvdivq0000001rk9-att/20261016_mtcurrent.xlsx",
+  "turnoverSource": "https://www.jpx.co.jp/markets/statistics-equities/misc/tvdivq0000000vzk-att/historical-genbutsu.xlsx",
+  "note": "株数ベース信用倍率。買い残金額÷直近公表済み東証月間平均売買代金を過去156週中央値と比較。分子は東京・名古屋/投信等含む、分母は東証内国株のため範囲不一致。換金所要日数ではない。過去公表日は第5営業日後に利用するモデル、最新信用は原表の公表日。",
+  "generated_at": "2026-10-20T11:22:56+00:00",
+  "fetched_at": "2026-10-20T11:22:56+00:00"
+}
