@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-20T23:13:41+00:00",
+  "generated_at": "2026-10-21T22:03:54+00:00",
   "items": [
     {
       "id": "NASDAQBANK",
@@ -11,7 +11,7 @@
       "value": 5033.87,
       "date": "2026-10-19",
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:40+00:00",
       "changes": {
         "1w": {
@@ -314,7 +314,9 @@
       ],
       "percentile": 81.7,
       "sample_count": 500,
-      "sample_start": "2024-10-21"
+      "sample_start": "2024-10-21",
+      "error": "取得失敗。保存値を現在の信号判定に使わない。",
+      "error_type": "ValueError"
     },
     {
       "id": "BAMLH0A0HYM2EY",
@@ -325,7 +327,7 @@
       "value": 8.18,
       "date": "2026-10-19",
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:40+00:00",
       "changes": {
         "1w": {
@@ -632,7 +634,9 @@
       ],
       "percentile": 98.4,
       "sample_count": 523,
-      "sample_start": "2024-10-21"
+      "sample_start": "2024-10-21",
+      "error": "取得失敗。保存値を現在の信号判定に使わない。",
+      "error_type": "ValueError"
     },
     {
       "id": "BAMLC0A4CBBBEY",
@@ -643,7 +647,7 @@
       "value": 6.13,
       "date": "2026-10-19",
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:40+00:00",
       "changes": {
         "1w": {
@@ -950,7 +954,9 @@
       ],
       "percentile": 97.4,
       "sample_count": 523,
-      "sample_start": "2024-10-21"
+      "sample_start": "2024-10-21",
+      "error": "取得失敗。保存値を現在の信号判定に使わない。",
+      "error_type": "ValueError"
     },
     {
       "id": "DRTSCIS",
@@ -961,7 +967,7 @@
       "value": 1.8,
       "date": "2026-07-01",
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:40+00:00",
       "changes": {
         "1w": null,
@@ -1005,7 +1011,9 @@
           "date": "2026-07-01",
           "value": 1.8
         }
-      ]
+      ],
+      "error": "取得失敗。保存値を現在の信号判定に使わない。",
+      "error_type": "ValueError"
     },
     {
       "id": "DRTSCILM",
@@ -1016,7 +1024,7 @@
       "value": 0.0,
       "date": "2026-07-01",
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:40+00:00",
       "changes": {
         "1w": null,
@@ -1060,7 +1068,9 @@
           "date": "2026-07-01",
           "value": 0.0
         }
-      ]
+      ],
+      "error": "取得失敗。保存値を現在の信号判定に使わない。",
+      "error_type": "ValueError"
     },
     {
       "id": "KBE",
@@ -1068,26 +1078,26 @@
       "unit": "USD",
       "frequency": "daily",
       "source": "https://finance.yahoo.com/quote/KBE/history/",
-      "value": 64.36000061035156,
-      "date": "2026-10-20",
+      "value": 64.30000305175781,
+      "date": "2026-10-21",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-20T23:13:40.837501+00:00",
+      "fetched_at": "2026-10-21T22:03:54.192851+00:00",
       "changes": {
         "1w": {
-          "value": 1.420002,
-          "from": "2026-10-13",
-          "to": "2026-10-20"
+          "value": 1.800003,
+          "from": "2026-10-14",
+          "to": "2026-10-21"
         },
         "1m": {
-          "value": -2.260002,
-          "from": "2026-09-18",
-          "to": "2026-10-20"
+          "value": -1.769997,
+          "from": "2026-09-21",
+          "to": "2026-10-21"
         },
         "3m": {
-          "value": -4.970001,
-          "from": "2026-07-22",
-          "to": "2026-10-20"
+          "value": -4.469994,
+          "from": "2026-07-23",
+          "to": "2026-10-21"
         }
       },
       "history": [
@@ -1374,12 +1384,16 @@
         {
           "date": "2026-10-20",
           "value": 64.36000061035156
+        },
+        {
+          "date": "2026-10-21",
+          "value": 64.30000305175781
         }
       ],
       "price_basis": "Completed US daily close, dividends excluded; 15-minute post-close buffer.",
-      "percentile": 92.1,
+      "percentile": 91.9,
       "sample_count": 1254,
-      "sample_start": "2021-10-21"
+      "sample_start": "2021-10-22"
     },
     {
       "id": "KRE",
@@ -1388,25 +1402,25 @@
       "frequency": "daily",
       "source": "https://finance.yahoo.com/quote/KRE/history/",
       "value": 70.62000274658203,
-      "date": "2026-10-20",
+      "date": "2026-10-21",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-20T23:13:40.837501+00:00",
+      "fetched_at": "2026-10-21T22:03:54.193025+00:00",
       "changes": {
         "1w": {
-          "value": 1.560005,
-          "from": "2026-10-13",
-          "to": "2026-10-20"
+          "value": 2.080002,
+          "from": "2026-10-14",
+          "to": "2026-10-21"
         },
         "1m": {
-          "value": -2.129997,
-          "from": "2026-09-18",
-          "to": "2026-10-20"
+          "value": -1.369995,
+          "from": "2026-09-21",
+          "to": "2026-10-21"
         },
         "3m": {
-          "value": -4.979996,
-          "from": "2026-07-22",
-          "to": "2026-10-20"
+          "value": -4.529999,
+          "from": "2026-07-23",
+          "to": "2026-10-21"
         }
       },
       "history": [
@@ -1693,12 +1707,16 @@
         {
           "date": "2026-10-20",
           "value": 70.62000274658203
+        },
+        {
+          "date": "2026-10-21",
+          "value": 70.62000274658203
         }
       ],
       "price_basis": "Completed US daily close, dividends excluded; 15-minute post-close buffer.",
       "percentile": 86.1,
       "sample_count": 1254,
-      "sample_start": "2021-10-21"
+      "sample_start": "2021-10-22"
     }
   ],
   "note": "米国中心。KBEは銀行セクター代理で全銀行の網羅ではなく地銀も多く含む。KREは地銀ETFでKBEと重複する。ETFは日次終値・配当なし。SLOOS観測日は対象四半期。社債利回りは個社の借換え金利・成否ではない。"
