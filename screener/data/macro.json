@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-20T23:13:39+00:00",
+  "generated_at": "2026-10-21T22:03:52+00:00",
   "items": [
     {
       "id": "DFII10",
@@ -308,11 +308,12 @@
         }
       ],
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:38+00:00",
       "percentile": 98.8,
       "sample_count": 1248,
-      "sample_start": "2021-10-20"
+      "sample_start": "2021-10-20",
+      "error": "今回の取得に失敗。保存値がある場合のみ表示しています。"
     },
     {
       "id": "DGS10",
@@ -620,11 +621,12 @@
         }
       ],
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:38+00:00",
       "percentile": 98.8,
       "sample_count": 1248,
-      "sample_start": "2021-10-20"
+      "sample_start": "2021-10-20",
+      "error": "今回の取得に失敗。保存値がある場合のみ表示しています。"
     },
     {
       "id": "DGS2",
@@ -932,11 +934,12 @@
         }
       ],
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:38+00:00",
       "percentile": 86.9,
       "sample_count": 1248,
-      "sample_start": "2021-10-20"
+      "sample_start": "2021-10-20",
+      "error": "今回の取得に失敗。保存値がある場合のみ表示しています。"
     },
     {
       "id": "T10YIE",
@@ -1248,11 +1251,12 @@
         }
       ],
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:38+00:00",
       "percentile": 59.6,
       "sample_count": 1249,
-      "sample_start": "2021-10-20"
+      "sample_start": "2021-10-20",
+      "error": "今回の取得に失敗。保存値がある場合のみ表示しています。"
     },
     {
       "id": "T10Y2Y",
@@ -1564,11 +1568,12 @@
         }
       ],
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:38+00:00",
       "percentile": 60.7,
       "sample_count": 1249,
-      "sample_start": "2021-10-20"
+      "sample_start": "2021-10-20",
+      "error": "今回の取得に失敗。保存値がある場合のみ表示しています。"
     },
     {
       "id": "BAMLH0A0HYM2",
@@ -1884,11 +1889,12 @@
         }
       ],
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:38+00:00",
       "percentile": 80.1,
       "sample_count": 784,
-      "sample_start": "2023-10-23"
+      "sample_start": "2023-10-23",
+      "error": "今回の取得に失敗。保存値がある場合のみ表示しています。"
     },
     {
       "id": "BAMLC0A4CBBB",
@@ -2204,11 +2210,12 @@
         }
       ],
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:38+00:00",
       "percentile": 53.8,
       "sample_count": 784,
-      "sample_start": "2023-10-23"
+      "sample_start": "2023-10-23",
+      "error": "今回の取得に失敗。保存値がある場合のみ表示しています。"
     },
     {
       "id": "VIXCLS",
@@ -2218,23 +2225,23 @@
       "meaning": "米株オプションが示す予想変動率。水準だけで底打ちとは判断しない。",
       "source": "https://finance.yahoo.com/quote/^VIX/history/",
       "frequency": "daily",
-      "value": 17.309999465942383,
-      "date": "2026-10-20",
+      "value": 16.68000030517578,
+      "date": "2026-10-21",
       "changes": {
         "1w": {
-          "value": 2.039999,
-          "from": "2026-10-13",
-          "to": "2026-10-20"
+          "value": -0.190001,
+          "from": "2026-10-14",
+          "to": "2026-10-21"
         },
         "1m": {
-          "value": 2.499999,
-          "from": "2026-09-18",
-          "to": "2026-10-20"
+          "value": 1.81,
+          "from": "2026-09-21",
+          "to": "2026-10-21"
         },
         "3m": {
-          "value": 0.67,
-          "from": "2026-07-22",
-          "to": "2026-10-20"
+          "value": -2.02,
+          "from": "2026-07-23",
+          "to": "2026-10-21"
         }
       },
       "history": [
@@ -2525,28 +2532,32 @@
         {
           "date": "2026-10-20",
           "value": 17.309999465942383
+        },
+        {
+          "date": "2026-10-21",
+          "value": 16.68000030517578
         }
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-20T23:13:38.766173+00:00",
-      "percentile": 47.6,
+      "fetched_at": "2026-10-21T22:03:51.277407+00:00",
+      "percentile": 40.3,
       "sample_count": 1257,
-      "sample_start": "2021-10-20",
+      "sample_start": "2021-10-21",
       "macd_daily": {
         "status": "ok",
-        "date": "2026-10-20",
-        "value": 17.309999465942383,
-        "macd": 0.5310320200471814,
-        "signal": 0.20714217635005702,
-        "histogram": 0.32388984369712437,
+        "date": "2026-10-21",
+        "value": 16.68000030517578,
+        "macd": 0.48272632961781525,
+        "signal": 0.2622590070036087,
+        "histogram": 0.22046732261420654,
         "above": true,
         "last_cross": {
           "date": "2026-10-14",
           "direction": "above"
         },
         "count": 1257,
-        "start": "2021-10-20",
+        "start": "2021-10-21",
         "parameters": [
           12,
           26,
@@ -2566,23 +2577,23 @@
       "meaning": "米大型株の価格指数。HY拡大と株高の同時進行を確認する。配当込みではない。",
       "source": "https://finance.yahoo.com/quote/^GSPC/history/",
       "frequency": "daily",
-      "value": 7712.56982421875,
-      "date": "2026-10-20",
+      "value": 7757.169921875,
+      "date": "2026-10-21",
       "changes": {
         "1w": {
-          "value": -92.880371,
-          "from": "2026-10-13",
-          "to": "2026-10-20"
+          "value": 38.22998,
+          "from": "2026-10-14",
+          "to": "2026-10-21"
         },
         "1m": {
-          "value": 62.069824,
-          "from": "2026-09-18",
-          "to": "2026-10-20"
+          "value": -7.530273,
+          "from": "2026-09-21",
+          "to": "2026-10-21"
         },
         "3m": {
-          "value": 213.609863,
-          "from": "2026-07-22",
-          "to": "2026-10-20"
+          "value": 348.870117,
+          "from": "2026-07-23",
+          "to": "2026-10-21"
         }
       },
       "history": [
@@ -2869,14 +2880,18 @@
         {
           "date": "2026-10-20",
           "value": 7712.56982421875
+        },
+        {
+          "date": "2026-10-21",
+          "value": 7757.169921875
         }
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-20T23:13:38.635178+00:00",
-      "percentile": 98.0,
+      "fetched_at": "2026-10-21T22:03:51.212373+00:00",
+      "percentile": 99.0,
       "sample_count": 1254,
-      "sample_start": "2021-10-21",
+      "sample_start": "2021-10-22",
       "price_basis": "Completed US daily close; 15-minute post-close buffer. Not live.",
       "provider": "yahoo"
     },
@@ -3194,11 +3209,12 @@
         }
       ],
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:38+00:00",
       "percentile": 88.3,
       "sample_count": 1248,
-      "sample_start": "2021-10-20"
+      "sample_start": "2021-10-20",
+      "error": "今回の取得に失敗。保存値がある場合のみ表示しています。"
     },
     {
       "id": "FEDFUNDS",
@@ -3242,11 +3258,12 @@
         }
       ],
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:39+00:00",
       "percentile": 37.5,
       "sample_count": 60,
-      "sample_start": "2021-10-01"
+      "sample_start": "2021-10-01",
+      "error": "今回の取得に失敗。保存値がある場合のみ表示しています。"
     },
     {
       "id": "UNRATE",
@@ -3290,11 +3307,12 @@
         }
       ],
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-20T23:13:39+00:00",
       "percentile": 72.9,
       "sample_count": 59,
-      "sample_start": "2021-10-01"
+      "sample_start": "2021-10-01",
+      "error": "今回の取得に失敗。保存値がある場合のみ表示しています。"
     }
   ],
   "note": "VIX・S&P500は取引終了確認済み日足（Cboe/Yahoo）とFREDの最新観測日を比較。他指標はFRED公表値で公表遅れあり。公表時点の履歴（ビンテージ）ではなく、過去検証にはそのまま使用できません。"
