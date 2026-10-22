@@ -4101,149 +4101,18 @@
    ]
   },
   "macro": {
-   "hash": "975a666db17576b9d0edad8b8b9bed1bd1cbafde2d9eee46ef173ca1d1668bd3",
-   "date": "2026-10-21T22:03:52+00:00",
+   "hash": "84cb31fb8131851d277669232706cbe58471dfcf689c97d33fa0805cca10f241",
+   "date": "2026-10-22T04:20:35+00:00",
    "count": 12,
    "comparison": true,
-   "previous_date": "2026-10-20T23:13:39+00:00",
+   "previous_date": "2026-10-21T22:03:52+00:00",
    "previous_label": "前回公開データ",
    "added": [],
    "removed": [],
    "changed": [
     {
-     "key": "DFII10",
-     "name": "米10年実質金利",
-     "changes": [
-      {
-       "field": "状態",
-       "before": "fresh",
-       "after": "cached"
-      }
-     ]
-    },
-    {
-     "key": "DGS10",
-     "name": "米10年国債利回り",
-     "changes": [
-      {
-       "field": "状態",
-       "before": "fresh",
-       "after": "cached"
-      }
-     ]
-    },
-    {
-     "key": "DGS2",
-     "name": "米2年国債利回り",
-     "changes": [
-      {
-       "field": "状態",
-       "before": "fresh",
-       "after": "cached"
-      }
-     ]
-    },
-    {
-     "key": "T10YIE",
-     "name": "米10年期待インフレ（BEI）",
-     "changes": [
-      {
-       "field": "状態",
-       "before": "fresh",
-       "after": "cached"
-      }
-     ]
-    },
-    {
-     "key": "T10Y2Y",
-     "name": "米10年−2年金利差",
-     "changes": [
-      {
-       "field": "状態",
-       "before": "fresh",
-       "after": "cached"
-      }
-     ]
-    },
-    {
-     "key": "BAMLH0A0HYM2",
-     "name": "米HY信用スプレッド",
-     "changes": [
-      {
-       "field": "状態",
-       "before": "fresh",
-       "after": "cached"
-      }
-     ]
-    },
-    {
-     "key": "BAMLC0A4CBBB",
-     "name": "米BBB信用スプレッド",
-     "changes": [
-      {
-       "field": "状態",
-       "before": "fresh",
-       "after": "cached"
-      }
-     ]
-    },
-    {
-     "key": "VIXCLS",
-     "name": "VIX",
-     "changes": [
-      {
-       "field": "観測日",
-       "before": "2026-10-20",
-       "after": "2026-10-21"
-      },
-      {
-       "field": "観測値",
-       "before": 17.31,
-       "after": 16.68
-      }
-     ]
-    },
-    {
      "key": "SP500",
      "name": "S&P 500指数",
-     "changes": [
-      {
-       "field": "観測日",
-       "before": "2026-10-20",
-       "after": "2026-10-21"
-      },
-      {
-       "field": "観測値",
-       "before": 7712.5698,
-       "after": 7757.1699
-      }
-     ]
-    },
-    {
-     "key": "DEXJPUS",
-     "name": "ドル円",
-     "changes": [
-      {
-       "field": "状態",
-       "before": "fresh",
-       "after": "cached"
-      }
-     ]
-    },
-    {
-     "key": "FEDFUNDS",
-     "name": "米実効FF金利（月次）",
-     "changes": [
-      {
-       "field": "状態",
-       "before": "fresh",
-       "after": "cached"
-      }
-     ]
-    },
-    {
-     "key": "UNRATE",
-     "name": "米失業率（月次）",
      "changes": [
       {
        "field": "状態",
@@ -4253,7 +4122,7 @@
      ]
     }
    ],
-   "unchanged": 0
+   "unchanged": 11
   },
   "catalysts": {
    "hash": "5102fe525872239a2cdca27cd7be6b3e15741a6eefb8ae5f008d2486b04f8ea0",
