@@ -1,7 +1,7 @@
 {
   "version": 3,
   "model": "credit-bank-v3",
-  "generated_at": "2026-10-21T22:03:59.802Z",
+  "generated_at": "2026-10-22T04:20:36.588Z",
   "current": {
     "model": "credit-bank-v3",
     "score": null,
@@ -37,7 +37,7 @@
       {
         "id": "BANK",
         "label": "銀行",
-        "known": true,
+        "known": false,
         "points": 0
       }
     ],
@@ -46,19 +46,19 @@
     "banks": [
       {
         "label": "KBE",
-        "level": 1,
-        "value": -2.67897231447794,
-        "relative": -2.5819914548106735,
-        "from": "2026-09-21",
-        "to": "2026-10-21"
+        "level": 0,
+        "value": null,
+        "relative": null,
+        "from": null,
+        "to": null
       },
       {
         "label": "KRE",
-        "level": 1,
-        "value": -1.903035200240614,
-        "relative": -1.8060543405733471,
-        "from": "2026-09-21",
-        "to": "2026-10-21"
+        "level": 0,
+        "value": null,
+        "relative": null,
+        "from": null,
+        "to": null
       }
     ],
     "confirmation": {
@@ -69,7 +69,7 @@
       "buy": false,
       "ratioJoint": null,
       "buyJoint": null,
-      "vixValue": 16.68000030517578,
+      "vixValue": 16.68,
       "vixDate": "2026-10-21",
       "ratioValue": 10.196074951605814,
       "buyNormalized": 0.6746077701932018,
