@@ -1,76 +1,76 @@
 {
   "version": 3,
   "model": "credit-bank-v3",
-  "generated_at": "2026-10-22T04:20:36.588Z",
+  "generated_at": "2026-10-22T22:04:23.156Z",
   "current": {
     "model": "credit-bank-v3",
-    "score": null,
-    "confirmed": 0,
-    "complete": false,
+    "score": 1,
+    "confirmed": 1,
+    "complete": true,
     "parts": [
       {
         "id": "BAMLH0A0HYM2",
         "label": "HY",
         "threshold": 3,
         "speedThreshold": 0.5,
-        "value": null,
-        "change": null,
-        "date": "2026-10-19",
-        "levelPoint": null,
-        "speedPoint": null,
-        "known": false,
-        "points": 0
+        "value": 3.27,
+        "change": 0.61,
+        "date": "2026-10-21",
+        "levelPoint": 0.5,
+        "speedPoint": 0.5,
+        "known": true,
+        "points": 1
       },
       {
         "id": "BAMLC0A4CBBB",
         "label": "BBB",
         "threshold": 1.5,
         "speedThreshold": 0.2,
-        "value": null,
-        "change": null,
-        "date": "2026-10-19",
-        "levelPoint": null,
-        "speedPoint": null,
-        "known": false,
+        "value": 1.09,
+        "change": 0.14,
+        "date": "2026-10-21",
+        "levelPoint": 0,
+        "speedPoint": 0,
+        "known": true,
         "points": 0
       },
       {
         "id": "BANK",
         "label": "銀行",
-        "known": false,
+        "known": true,
         "points": 0
       }
     ],
     "warning": false,
-    "label": "判定保留",
+    "label": "警戒基準未満",
     "banks": [
       {
         "label": "KBE",
-        "level": 0,
-        "value": null,
-        "relative": null,
-        "from": null,
-        "to": null
+        "level": 1,
+        "value": 0.9198190543036718,
+        "relative": 2.2232917100598755,
+        "from": "2026-09-22",
+        "to": "2026-10-22"
       },
       {
         "label": "KRE",
-        "level": 0,
-        "value": null,
-        "relative": null,
-        "from": null,
-        "to": null
+        "level": 1,
+        "value": 1.713725183538427,
+        "relative": 3.0171978392946306,
+        "from": "2026-09-22",
+        "to": "2026-10-22"
       }
     ],
     "confirmation": {
       "model": "vix-margin-confirm-v1",
-      "base": null,
+      "base": false,
       "vix": false,
       "ratio": true,
       "buy": false,
-      "ratioJoint": null,
-      "buyJoint": null,
-      "vixValue": 16.68,
-      "vixDate": "2026-10-21",
+      "ratioJoint": false,
+      "buyJoint": false,
+      "vixValue": 19.030000686645508,
+      "vixDate": "2026-10-22",
       "ratioValue": 10.196074951605814,
       "buyNormalized": 0.6746077701932018,
       "buyMedian": 0.7158689944731838,
@@ -82,8 +82,8 @@
   },
   "lastConfirmed": {
     "model": "credit-bank-v3",
-    "score": 1.5,
-    "confirmed": 1.5,
+    "score": 1,
+    "confirmed": 1,
     "complete": true,
     "parts": [
       {
@@ -91,9 +91,9 @@
         "label": "HY",
         "threshold": 3,
         "speedThreshold": 0.5,
-        "value": 3.29,
+        "value": 3.27,
         "change": 0.61,
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "levelPoint": 0.5,
         "speedPoint": 0.5,
         "known": true,
@@ -104,9 +104,9 @@
         "label": "BBB",
         "threshold": 1.5,
         "speedThreshold": 0.2,
-        "value": 1.08,
+        "value": 1.09,
         "change": 0.14,
-        "date": "2026-10-19",
+        "date": "2026-10-21",
         "levelPoint": 0,
         "speedPoint": 0,
         "known": true,
@@ -116,39 +116,39 @@
         "id": "BANK",
         "label": "銀行",
         "known": true,
-        "points": 0.5
+        "points": 0
       }
     ],
-    "warning": true,
-    "label": "早期警戒",
+    "warning": false,
+    "label": "警戒基準未満",
     "banks": [
       {
         "label": "KBE",
-        "level": 2,
-        "value": -3.392377524505507,
-        "relative": -4.203694745602167,
-        "from": "2026-09-18",
-        "to": "2026-10-20"
+        "level": 1,
+        "value": 0.9198190543036718,
+        "relative": 2.2232917100598755,
+        "from": "2026-09-22",
+        "to": "2026-10-22"
       },
       {
         "label": "KRE",
-        "level": 2,
-        "value": -2.9278309278350516,
-        "relative": -3.739148148931712,
-        "from": "2026-09-18",
-        "to": "2026-10-20"
+        "level": 1,
+        "value": 1.713725183538427,
+        "relative": 3.0171978392946306,
+        "from": "2026-09-22",
+        "to": "2026-10-22"
       }
     ],
     "confirmation": {
       "model": "vix-margin-confirm-v1",
-      "base": true,
+      "base": false,
       "vix": false,
       "ratio": true,
       "buy": false,
       "ratioJoint": false,
       "buyJoint": false,
-      "vixValue": 17.309999465942383,
-      "vixDate": "2026-10-20",
+      "vixValue": 19.030000686645508,
+      "vixDate": "2026-10-22",
       "ratioValue": 10.196074951605814,
       "buyNormalized": 0.6746077701932018,
       "buyMedian": 0.7158689944731838,
@@ -322,18 +322,180 @@
       },
       "before": null,
       "afterGap": false
+    },
+    {
+      "id": "2026-10-22T22:04:23.156Z:credit-bank-v3:1",
+      "confirmedAt": "2026-10-22T22:04:23.156Z",
+      "kind": "clear",
+      "snapshot": {
+        "model": "credit-bank-v3",
+        "score": 1,
+        "confirmed": 1,
+        "complete": true,
+        "parts": [
+          {
+            "id": "BAMLH0A0HYM2",
+            "label": "HY",
+            "threshold": 3,
+            "speedThreshold": 0.5,
+            "value": 3.27,
+            "change": 0.61,
+            "date": "2026-10-21",
+            "levelPoint": 0.5,
+            "speedPoint": 0.5,
+            "known": true,
+            "points": 1
+          },
+          {
+            "id": "BAMLC0A4CBBB",
+            "label": "BBB",
+            "threshold": 1.5,
+            "speedThreshold": 0.2,
+            "value": 1.09,
+            "change": 0.14,
+            "date": "2026-10-21",
+            "levelPoint": 0,
+            "speedPoint": 0,
+            "known": true,
+            "points": 0
+          },
+          {
+            "id": "BANK",
+            "label": "銀行",
+            "known": true,
+            "points": 0
+          }
+        ],
+        "warning": false,
+        "label": "警戒基準未満",
+        "banks": [
+          {
+            "label": "KBE",
+            "level": 1,
+            "value": 0.9198190543036718,
+            "relative": 2.2232917100598755,
+            "from": "2026-09-22",
+            "to": "2026-10-22"
+          },
+          {
+            "label": "KRE",
+            "level": 1,
+            "value": 1.713725183538427,
+            "relative": 3.0171978392946306,
+            "from": "2026-09-22",
+            "to": "2026-10-22"
+          }
+        ],
+        "confirmation": {
+          "model": "vix-margin-confirm-v1",
+          "base": false,
+          "vix": false,
+          "ratio": true,
+          "buy": false,
+          "ratioJoint": false,
+          "buyJoint": false,
+          "vixValue": 19.030000686645508,
+          "vixDate": "2026-10-22",
+          "ratioValue": 10.196074951605814,
+          "buyNormalized": 0.6746077701932018,
+          "buyMedian": 0.7158689944731838,
+          "marginDate": "2026-10-16",
+          "published": "2026-10-20",
+          "turnoverDate": "2026-09-30",
+          "buyMillion": 6664007
+        }
+      },
+      "before": {
+        "model": "credit-bank-v3",
+        "score": 1.5,
+        "confirmed": 1.5,
+        "complete": true,
+        "parts": [
+          {
+            "id": "BAMLH0A0HYM2",
+            "label": "HY",
+            "threshold": 3,
+            "speedThreshold": 0.5,
+            "value": 3.29,
+            "change": 0.61,
+            "date": "2026-10-19",
+            "levelPoint": 0.5,
+            "speedPoint": 0.5,
+            "known": true,
+            "points": 1
+          },
+          {
+            "id": "BAMLC0A4CBBB",
+            "label": "BBB",
+            "threshold": 1.5,
+            "speedThreshold": 0.2,
+            "value": 1.08,
+            "change": 0.14,
+            "date": "2026-10-19",
+            "levelPoint": 0,
+            "speedPoint": 0,
+            "known": true,
+            "points": 0
+          },
+          {
+            "id": "BANK",
+            "label": "銀行",
+            "known": true,
+            "points": 0.5
+          }
+        ],
+        "warning": true,
+        "label": "早期警戒",
+        "banks": [
+          {
+            "label": "KBE",
+            "level": 2,
+            "value": -3.392377524505507,
+            "relative": -4.203694745602167,
+            "from": "2026-09-18",
+            "to": "2026-10-20"
+          },
+          {
+            "label": "KRE",
+            "level": 2,
+            "value": -2.9278309278350516,
+            "relative": -3.739148148931712,
+            "from": "2026-09-18",
+            "to": "2026-10-20"
+          }
+        ],
+        "confirmation": {
+          "model": "vix-margin-confirm-v1",
+          "base": true,
+          "vix": false,
+          "ratio": true,
+          "buy": false,
+          "ratioJoint": false,
+          "buyJoint": false,
+          "vixValue": 17.309999465942383,
+          "vixDate": "2026-10-20",
+          "ratioValue": 10.196074951605814,
+          "buyNormalized": 0.6746077701932018,
+          "buyMedian": 0.7158689944731838,
+          "marginDate": "2026-10-16",
+          "published": "2026-10-20",
+          "turnoverDate": "2026-09-30",
+          "buyMillion": 6664007
+        }
+      },
+      "afterGap": true
     }
   ],
   "lastConfirmation": {
     "model": "vix-margin-confirm-v1",
-    "base": true,
+    "base": false,
     "vix": false,
     "ratio": true,
     "buy": false,
     "ratioJoint": false,
     "buyJoint": false,
-    "vixValue": 17.309999465942383,
-    "vixDate": "2026-10-20",
+    "vixValue": 19.030000686645508,
+    "vixDate": "2026-10-22",
     "ratioValue": 10.196074951605814,
     "buyNormalized": 0.6746077701932018,
     "buyMedian": 0.7158689944731838,
@@ -365,6 +527,46 @@
         "buyMillion": 6664007
       },
       "before": null
+    },
+    {
+      "confirmedAt": "2026-10-22T22:04:23.156Z",
+      "kind": "change",
+      "snapshot": {
+        "model": "vix-margin-confirm-v1",
+        "base": false,
+        "vix": false,
+        "ratio": true,
+        "buy": false,
+        "ratioJoint": false,
+        "buyJoint": false,
+        "vixValue": 19.030000686645508,
+        "vixDate": "2026-10-22",
+        "ratioValue": 10.196074951605814,
+        "buyNormalized": 0.6746077701932018,
+        "buyMedian": 0.7158689944731838,
+        "marginDate": "2026-10-16",
+        "published": "2026-10-20",
+        "turnoverDate": "2026-09-30",
+        "buyMillion": 6664007
+      },
+      "before": {
+        "model": "vix-margin-confirm-v1",
+        "base": true,
+        "vix": false,
+        "ratio": true,
+        "buy": false,
+        "ratioJoint": false,
+        "buyJoint": false,
+        "vixValue": 17.309999465942383,
+        "vixDate": "2026-10-20",
+        "ratioValue": 10.196074951605814,
+        "buyNormalized": 0.6746077701932018,
+        "buyMedian": 0.7158689944731838,
+        "marginDate": "2026-10-16",
+        "published": "2026-10-20",
+        "turnoverDate": "2026-09-30",
+        "buyMillion": 6664007
+      }
     }
   ]
 }
