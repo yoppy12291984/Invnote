@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-21T22:03:54+00:00",
+  "generated_at": "2026-10-22T04:20:36+00:00",
   "items": [
     {
       "id": "NASDAQBANK",
@@ -1081,7 +1081,7 @@
       "value": 64.30000305175781,
       "date": "2026-10-21",
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-21T22:03:54.192851+00:00",
       "changes": {
         "1w": {
@@ -1404,7 +1404,7 @@
       "value": 70.62000274658203,
       "date": "2026-10-21",
       "stale": false,
-      "status": "fresh",
+      "status": "cached",
       "fetched_at": "2026-10-21T22:03:54.193025+00:00",
       "changes": {
         "1w": {
