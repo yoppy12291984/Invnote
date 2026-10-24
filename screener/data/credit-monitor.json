@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-23T22:22:52+00:00",
+  "generated_at": "2026-10-24T21:59:49+00:00",
   "items": [
     {
       "id": "NASDAQBANK",
@@ -8,33 +8,29 @@
       "unit": "pt",
       "frequency": "daily",
       "source": "https://fred.stlouisfed.org/series/NASDAQBANK",
-      "value": 5225.2,
-      "date": "2026-10-22",
+      "value": 5261.14,
+      "date": "2026-10-23",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-23T22:22:50+00:00",
+      "fetched_at": "2026-10-24T21:59:48+00:00",
       "changes": {
         "1w": {
-          "value": 152.58,
-          "from": "2026-10-15",
-          "to": "2026-10-22"
+          "value": 184.81,
+          "from": "2026-10-16",
+          "to": "2026-10-23"
         },
         "1m": {
-          "value": 78.99,
-          "from": "2026-09-22",
-          "to": "2026-10-22"
+          "value": 181.04,
+          "from": "2026-09-23",
+          "to": "2026-10-23"
         },
         "3m": {
-          "value": -129.38,
+          "value": -93.44,
           "from": "2026-07-24",
-          "to": "2026-10-22"
+          "to": "2026-10-23"
         }
       },
       "history": [
-        {
-          "date": "2026-07-14",
-          "value": 5321.16
-        },
         {
           "date": "2026-07-15",
           "value": 5377.72
@@ -318,11 +314,15 @@
         {
           "date": "2026-10-22",
           "value": 5225.2
+        },
+        {
+          "date": "2026-10-23",
+          "value": 5261.14
         }
       ],
-      "percentile": 88.5,
+      "percentile": 88.9,
       "sample_count": 501,
-      "sample_start": "2024-10-23"
+      "sample_start": "2024-10-24"
     },
     {
       "id": "BAMLH0A0HYM2EY",
@@ -334,7 +334,7 @@
       "date": "2026-10-22",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-23T22:22:51+00:00",
+      "fetched_at": "2026-10-24T21:59:48+00:00",
       "changes": {
         "1w": {
           "value": 0.06,
@@ -647,8 +647,8 @@
         }
       ],
       "percentile": 97.1,
-      "sample_count": 524,
-      "sample_start": "2024-10-23"
+      "sample_count": 523,
+      "sample_start": "2024-10-24"
     },
     {
       "id": "BAMLC0A4CBBBEY",
@@ -660,7 +660,7 @@
       "date": "2026-10-22",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-23T22:22:50+00:00",
+      "fetched_at": "2026-10-24T21:59:49+00:00",
       "changes": {
         "1w": {
           "value": -0.06,
@@ -973,8 +973,8 @@
         }
       ],
       "percentile": 96.0,
-      "sample_count": 524,
-      "sample_start": "2024-10-23"
+      "sample_count": 523,
+      "sample_start": "2024-10-24"
     },
     {
       "id": "DRTSCIS",
@@ -986,7 +986,7 @@
       "date": "2026-07-01",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-23T22:22:51+00:00",
+      "fetched_at": "2026-10-24T21:59:48+00:00",
       "changes": {
         "1w": null,
         "1m": null,
@@ -1041,7 +1041,7 @@
       "date": "2026-07-01",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-23T22:22:50+00:00",
+      "fetched_at": "2026-10-24T21:59:48+00:00",
       "changes": {
         "1w": null,
         "1m": null,
@@ -1096,7 +1096,7 @@
       "date": "2026-10-23",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-23T22:22:51.903700+00:00",
+      "fetched_at": "2026-10-24T21:59:49.310273+00:00",
       "changes": {
         "1w": {
           "value": 2.250004,
@@ -1419,7 +1419,7 @@
       "date": "2026-10-23",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-23T22:22:51.903815+00:00",
+      "fetched_at": "2026-10-24T21:59:49.310401+00:00",
       "changes": {
         "1w": {
           "value": 2.650002,
