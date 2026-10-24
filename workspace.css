@@ -312,3 +312,4 @@ html[data-theme="dark"] .price-accent{color:#b9c6ff;background:#2b3450}
 html[data-theme="dark"] .price-accent-fundamental{color:#9bcaff;background:#21374b}
 html[data-theme="dark"] .price-accent-buy{color:#8cdec0;background:#1c3c34}
 html[data-theme="dark"] .price-accent-technical{color:#f3cd83;background:#433622}
+html[data-theme="dark"] .price-accent.price-accent-bear{color:#ffb5bc;background:#482a32}
