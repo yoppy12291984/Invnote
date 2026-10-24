@@ -288,6 +288,26 @@ main:has(.company-list) .toolbar{margin:10px 0}
 .price-accent-fundamental{color:#155b9e;background:#e7f1ff}
 .price-accent-buy{color:#17664b;background:#e5f4ec}
 .price-accent-technical{color:#88520b;background:#fff1d9}
+.price-accent-bear{color:#a02d36;background:#ffeaec}
+.price-sheet-wrap{width:100%;overflow-x:auto;margin:12px 0;border:1px solid var(--line,#aab5c3);border-radius:5px}
+.price-sheet{width:100%;border-collapse:collapse;table-layout:fixed;font-variant-numeric:tabular-nums;font-size:13px}
+.price-sheet caption{text-align:left;padding:8px 10px;font-weight:650}
+.price-sheet th,.price-sheet td{border:1px solid var(--line,#aab5c3);padding:10px;vertical-align:top;text-align:left;overflow-wrap:anywhere}
+.price-sheet th:first-child{width:25%}
+.price-sheet thead th{background:#e8edf3;color:#26374b;font-size:12px}
+.price-sheet tbody th{font-weight:650;background:#f3f5f8}
+.price-sheet td p{margin:0 0 9px;line-height:1.65;white-space:pre-wrap}
+.price-sheet td p:last-child{margin-bottom:0}
+.price-sheet th small{display:block;font-weight:400;line-height:1.5;margin-top:5px}
+.price-sheet-fundamental th{border-left:4px solid #4385bd}
+.price-sheet-buy th{border-left:4px solid #3b9877}
+.price-sheet-bear th{border-left:4px solid #bd5761}
+.price-sheet-technical th{border-left:4px solid #bf913e}
+.price-sheet-score th{border-left:4px solid #8776bf}
+html[data-theme="dark"] .price-sheet thead th{background:#283548;color:#e3ebf7}
+html[data-theme="dark"] .price-sheet tbody th{background:#202a38}
+html[data-theme="dark"] .price-accent-bear{color:#ffb5bc;background:#482a32}
+@media(max-width:480px){.price-sheet{font-size:12px}.price-sheet th,.price-sheet td{padding:8px 6px}.price-sheet th:first-child{width:27%}}
 html[data-theme="dark"] .price-accent{color:#b9c6ff;background:#2b3450}
 html[data-theme="dark"] .price-accent-fundamental{color:#9bcaff;background:#21374b}
 html[data-theme="dark"] .price-accent-buy{color:#8cdec0;background:#1c3c34}
