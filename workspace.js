@@ -612,6 +612,7 @@ function pulseCreditContext(items,extra,engine,now=Date.now()){
  const credit=engine.aligned(combined,['BAMLH0A0HYM2','BAMLC0A4CBBB'],30,now);
  const banks=engine.aligned(combined,['KBE','SP500'],30,now);
  const regional=engine.aligned(combined,['KRE','SP500'],30,now);
+ const bankQuarter={KBE:engine.aligned(combined,['KBE','SP500'],90,now),KRE:engine.aligned(combined,['KRE','SP500'],90,now)};
  const transmission=engine.aligned(combined,['KBE','KRE','SP500','BAMLC0A4CBBB'],30,now);
  const rates=engine.aligned(combined,['DGS10','DGS2'],30,now);
  const percent=x=>x&&x.before>0?100*x.change/x.before:null;
@@ -638,19 +639,33 @@ function pulseCreditContext(items,extra,engine,now=Date.now()){
  else if(bankLevel>=2)kind='銀行株が弱い・原因は未特定';
  else if(!creditKnown||!rateKnown||!broadLevel||!regionalLevel)kind='一部未判定';
  const spreadText=!credit?'HY・BBBの共通日比較は未確認':hy.change>=.5&&bbb.change>=.2?'HY・BBBが同時拡大（信用不安の広がりを警戒）':bbb.change>=.2?'BBBも拡大（HYとの因果関係は未確定）':hy.change>=.5?'HY拡大、BBBへの広がりは基準未満':'HY・BBBの同時急拡大は基準未満';
- return {kind,credit,banks,rates,bankReturn,marketReturn,relative,bankLevel,broadLevel,regional,regionalReturn,regionalRelative,regionalLevel,transmission,transmissionText,spreadText};
+ return {bankQuarter,kind,credit,banks,rates,bankReturn,marketReturn,relative,bankLevel,broadLevel,regional,regionalReturn,regionalRelative,regionalLevel,transmission,transmissionText,spreadText};
+}
+function pulseBankTrend(month,quarter){
+ if(!Number.isFinite(month)||!Number.isFinite(quarter))return '期間比較は未判定（データ不足）';
+ if(month<0&&quarter<0)return '1か月・3か月とも下落';
+ if(month>0&&quarter<0)return '3か月では下落、直近1か月は持ち直し';
+ if(month<0&&quarter>0)return '3か月では上昇、直近1か月は悪化';
+ if(month>0&&quarter>0)return '1か月・3か月とも上昇';
+ return '一方または両期間で横ばい';
 }
 function pulseCreditHTML(context,extra,now=Date.now()){
  const c=context,signed=(x,d=2)=>Number.isFinite(x)?(x>0?'+':'')+x.toFixed(d):'—';
  const names=['判定保留','基準内','注意','警戒'],colors=['gray','green','yellow','red'];
- const bankRow=(label,pair,value,relative,level)=>`<div class="pulse-bank"><span>${label}</span><strong class="pulse-signal is-${colors[level]}">${names[level]}</strong><p>${pair?`1か月 ${signed(value)}% ／ S&P500比 ${signed(relative)}%pt（${esc(pair.from)} → ${esc(pair.to)}）`:'共通日のETF・S&P500データ不足'}</p></div>`;
+ const bankRow=(label,pair,value,relative,level,id)=>{
+  const q=c.bankQuarter?.[id],v=q?.values?.[id],sp=q?.values?.SP500;
+  const qr=v?.before>0?100*v.change/v.before:null,sr=sp?.before>0?100*sp.change/sp.before:null;
+  const sameEnd=!!pair&&!!q&&pair.to===q.to;
+  return `<div class="pulse-bank"><span>${label}</span><strong class="pulse-signal is-${colors[level]}">1か月判定：${names[level]}</strong><p>${pair?`1か月 ${signed(value)}% ／ S&P500比 ${signed(relative)}%pt（${esc(pair.from)} → ${esc(pair.to)}）`:'1か月：共通日のETF・S&P500データ不足'}</p><p>${q?`3か月 ${signed(qr)}% ／ S&P500比 ${signed(Number.isFinite(qr)&&Number.isFinite(sr)?qr-sr:null)}%pt（${esc(q.from)} → ${esc(q.to)}）`:'3か月：共通日のETF・S&P500データ不足'}</p><p><b>${esc(sameEnd?pulseBankTrend(value,qr):pair&&q?'期間比較は未判定（観測日が異なります）':'期間比較は未判定（データ不足）')}</b></p></div>`;
+ };
+
  const t=c.transmission,tv=t?.values,pct=x=>100*x.change/x.before;
  const transmissionDetail=t?`共通期間 ${esc(t.from)} → ${esc(t.to)}：KBE ${signed(pct(tv.KBE))}%、KRE ${signed(pct(tv.KRE))}%、地銀−銀行セクター ${signed(pct(tv.KRE)-pct(tv.KBE))}%pt、BBB ${signed(tv.BAMLC0A4CBBB.change)}%pt。`:'';
  const items=extra?.items||[],row=(id,label,quarterly=false)=>{
   const x=items.find(x=>x.id===id),valid=pulseUsable(x,now),value=Number.isFinite(x?.value)?x.value.toFixed(2)+'%':'未取得',change=x?.changes?.[quarterly?'3m':'1m']?.value;
   return `<div><span>${esc(label)}</span><b>${esc(value)}</b><small>${esc(x?.date||'未取得')}${quarterly?'対象期':''}${valid?'':' · 現在の判定には使いません'}${Number.isFinite(change)?` ／ ${quarterly?'前期差':'1か月'} ${signed(change)}%pt`:''}</small></div>`;
  };
- return `<section class="pulse-credit" aria-label="銀行と信用リスク"><h3>${esc(c.kind)}</h3><p>${esc(c.spreadText)}${c.credit?`。共通期間 ${esc(c.credit.from)} → ${esc(c.credit.to)}：HY ${signed(c.credit.values.BAMLH0A0HYM2.change)}%pt、BBB ${signed(c.credit.values.BAMLC0A4CBBB.change)}%pt。`:''}</p>${bankRow('米銀行セクター・KBE',c.banks,c.bankReturn,c.relative,c.broadLevel)}${bankRow('米地銀・KRE',c.regional,c.regionalReturn,c.regionalRelative,c.regionalLevel)}<p><b>${esc(c.transmissionText)}</b><br>${transmissionDetail}</p><small>KBEは銀行セクターの代理で全銀行を網羅せず、地銀も多く含みます。KREと構成銘柄が重複します。日次終値・配当なしで比較。株価下落とBBB拡大の同時発生は、波及の因果を証明しません。</small><details class="pulse-reference"><summary>借換え環境・貸出基準を見る</summary><div class="pulse-refinance">${row('BAMLH0A0HYM2EY','HY社債利回り')}${row('BAMLC0A4CBBBEY','BBB社債利回り')}${row('DRTSCIS','小企業向け貸出基準・厳格化超',true)}${row('DRTSCILM','大中企業向け貸出基準・厳格化超',true)}</div><p>借換えは金利とスプレッドの両方が重要。社債利回りは既発債市場の参考値で、個社の借換え金利ではありません。旧借入金利・今後の満期額・発行量/発行中止・利払い余力は別途確認します。</p><p>貸出基準は「厳格化した銀行−緩和した銀行」の純割合。プラスは厳格化超、マイナスは緩和超。四半期調査で速報性は低く、日付は対象期です。貸出減少には需要減もあるため、供給制約と区別します。</p><p>地銀は預金流出・商業用不動産・債券評価損も確認。米地銀専用の<a href="https://www.ssga.com/us/en/intermediary/etfs/state-street-spdr-sp-regional-banking-etf-kre" target="_blank" rel="noopener">KRE</a>を自動取得し、銀行セクターの<a href="https://www.ssga.com/us/en/intermediary/etfs/state-street-spdr-sp-bank-etf-kbe" target="_blank" rel="noopener">KBE</a>と別表示。日本の地銀とは区別します。</p><p>銀行株安＋HY/BBB拡大＋貸出厳格化が重なるほど信用収縮を警戒しますが、ここで因果やクレジットクランチを確定しません。</p><p><a href="https://finance.yahoo.com/quote/KBE/history/" target="_blank" rel="noopener">KBE価格</a> · <a href="https://finance.yahoo.com/quote/KRE/history/" target="_blank" rel="noopener">KRE価格</a> · <a href="https://fred.stlouisfed.org/series/DRTSCIS" target="_blank" rel="noopener">貸出基準</a> · <a href="https://fred.stlouisfed.org/series/BAMLH0A0HYM2EY" target="_blank" rel="noopener">HY利回り</a> · <a href="https://fred.stlouisfed.org/series/BAMLC0A4CBBBEY" target="_blank" rel="noopener">BBB利回り</a></p></details></section>`;
+ return `<section class="pulse-credit" aria-label="銀行と信用リスク"><h3>${esc(c.kind)}</h3><p>${esc(c.spreadText)}${c.credit?`。共通期間 ${esc(c.credit.from)} → ${esc(c.credit.to)}：HY ${signed(c.credit.values.BAMLH0A0HYM2.change)}%pt、BBB ${signed(c.credit.values.BAMLC0A4CBBB.change)}%pt。`:''}</p>${bankRow('米銀行セクター・KBE',c.banks,c.bankReturn,c.relative,c.broadLevel,'KBE')}${bankRow('米地銀・KRE',c.regional,c.regionalReturn,c.regionalRelative,c.regionalLevel,'KRE')}<p><b>${esc(c.transmissionText)}</b><br>${transmissionDetail}</p><small>1か月は約30日前、3か月は約90日前の共通営業日との比較です。採点と信号色は従来の1か月条件を使用し、3か月と状態説明は補助表示です。持ち直しは下落リスクの解消や今後の上昇を意味しません。KBEは銀行セクターの代理で全銀行を網羅せず、地銀も多く含みます。KREと構成銘柄が重複します。日次終値・配当なしで比較。株価下落とBBB拡大の同時発生は、波及の因果を証明しません。</small><details class="pulse-reference"><summary>借換え環境・貸出基準を見る</summary><div class="pulse-refinance">${row('BAMLH0A0HYM2EY','HY社債利回り')}${row('BAMLC0A4CBBBEY','BBB社債利回り')}${row('DRTSCIS','小企業向け貸出基準・厳格化超',true)}${row('DRTSCILM','大中企業向け貸出基準・厳格化超',true)}</div><p>借換えは金利とスプレッドの両方が重要。社債利回りは既発債市場の参考値で、個社の借換え金利ではありません。旧借入金利・今後の満期額・発行量/発行中止・利払い余力は別途確認します。</p><p>貸出基準は「厳格化した銀行−緩和した銀行」の純割合。プラスは厳格化超、マイナスは緩和超。四半期調査で速報性は低く、日付は対象期です。貸出減少には需要減もあるため、供給制約と区別します。</p><p>地銀は預金流出・商業用不動産・債券評価損も確認。米地銀専用の<a href="https://www.ssga.com/us/en/intermediary/etfs/state-street-spdr-sp-regional-banking-etf-kre" target="_blank" rel="noopener">KRE</a>を自動取得し、銀行セクターの<a href="https://www.ssga.com/us/en/intermediary/etfs/state-street-spdr-sp-bank-etf-kbe" target="_blank" rel="noopener">KBE</a>と別表示。日本の地銀とは区別します。</p><p>銀行株安＋HY/BBB拡大＋貸出厳格化が重なるほど信用収縮を警戒しますが、ここで因果やクレジットクランチを確定しません。</p><p><a href="https://finance.yahoo.com/quote/KBE/history/" target="_blank" rel="noopener">KBE価格</a> · <a href="https://finance.yahoo.com/quote/KRE/history/" target="_blank" rel="noopener">KRE価格</a> · <a href="https://fred.stlouisfed.org/series/DRTSCIS" target="_blank" rel="noopener">貸出基準</a> · <a href="https://fred.stlouisfed.org/series/BAMLH0A0HYM2EY" target="_blank" rel="noopener">HY利回り</a> · <a href="https://fred.stlouisfed.org/series/BAMLC0A4CBBBEY" target="_blank" rel="noopener">BBB利回り</a></p></details></section>`;
 }
 function pulseCurve(r){
  const curve=r?.curve,a=curve?.values?.DGS10?.change,b=curve?.values?.DGS2?.change,label=r?.curveLabel||'';
