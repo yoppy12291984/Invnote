@@ -294,6 +294,10 @@ main:has(.company-list) .toolbar{margin:10px 0}
 .price-sheet caption{text-align:left;padding:8px 10px;font-weight:650}
 .price-sheet th,.price-sheet td{border:1px solid var(--line,#aab5c3);padding:10px;vertical-align:top;text-align:left;overflow-wrap:anywhere}
 .price-sheet th:first-child{width:25%}
+.price-sheet .price-cell{margin:0;border:0;padding:0;background:transparent}
+.price-sheet .price-cell>summary{padding:8px 0;cursor:pointer;line-height:1.8;min-height:36px;font-variant-numeric:tabular-nums}
+.price-sheet .price-cell-details{margin-top:8px;padding-top:10px;border-top:1px solid var(--line,#aab5c3);font-size:12px}
+.price-sheet .price-cell>summary:focus-visible{outline:2px solid #609bd3;outline-offset:3px}
 .price-sheet thead th{background:#e8edf3;color:#26374b;font-size:12px}
 .price-sheet tbody th{font-weight:650;background:#f3f5f8}
 .price-sheet td p{margin:0 0 9px;line-height:1.65;white-space:pre-wrap}
