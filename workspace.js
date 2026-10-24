@@ -33,7 +33,8 @@ function heldCompanyRows(positions,stocks){
  const result=new Map();
  for(const p of positions||[]){
   if(!/^[0-9A-Z]{4,5}$/.test(p.code||'')||!Number.isFinite(p.shares)||p.shares<=0)continue;
-  const row=result.get(p.code)||{code:p.code,name:stocks.find(x=>x.code===p.code)?.name||p.code,shares:0,accounts:[]};
+  const row=result.get(p.code)||{code:p.code,name:stocks.find(x=>x.code===p.code)?.name||p.code,shares:0,accounts:[],price:null,priceDate:''};
+  if(Number.isFinite(p.price)&&p.price>0&&/^\d{4}-\d{2}-\d{2}$/.test(p.priceDate||'')&&(!row.priceDate||p.priceDate>row.priceDate)){row.price=p.price;row.priceDate=p.priceDate;}
   row.shares+=p.shares;if(p.acct&&!row.accounts.includes(p.acct))row.accounts.push(p.acct);result.set(p.code,row);
  }
  return [...result.values()].sort((a,b)=>a.code.localeCompare(b.code));
@@ -50,7 +51,7 @@ function holdingsPlanPage(){
  if(!rows.length){app.innerHTML+='<p class="empty">保存されている保有情報に、株数がプラスの銘柄はありません。</p><a class="action" href="#today/inv:vPf">ポートフォリオを確認</a>';return;}
  app.innerHTML+='<div class="grid">'+rows.map(p=>{
   const code=p.code,n=notes[code],r=ratings[code];
-  return `<article class="card"><h2><button class="open" data-company="${esc(code)}">${esc(n?.name||p.name)}（${esc(code)}）</button></h2><p>保有 ${p.shares.toLocaleString('ja-JP')}株${p.accounts.length?' · '+p.accounts.map(esc).join(' / '):''}</p>${companyMemos.some(m=>m.code===code&&!m.memoDeleted)?holdingMemoHTML(code):''}${r?`<div class="rating-pair"><div><span>3か月</span><b>${esc(r.short_3m)}</b> / 10</div><div><span>12か月</span><b>${esc(r.long_12m)}</b> / 10</div></div><small>採点 ${esc(r.assessment_date||R.assessment_date)} · 基準株価 ${Number(r.baseline_close).toLocaleString('ja-JP')}円（${esc(r.baseline_price_date)}）</small>${ninePointPriceLine(code)}`:'<p>投資妙味：未採点・未同期</p>'}${n?earningsDates(n):'<p>研究本文は未収録です。</p>'}${rankingPriceDetails(code)}<details><summary>次の確認・見立てが変わる条件</summary><p>${esc(n?.next||'未記録')}</p><p>${esc(r?.change_conditions||n?.counter||'未記録')}</p></details></article>`;
+  return `<article class="card"><h2><button class="open" data-company="${esc(code)}">${esc(n?.name||p.name)}（${esc(code)}）</button></h2><p>保有 ${p.shares.toLocaleString('ja-JP')}株${p.accounts.length?' · '+p.accounts.map(esc).join(' / '):''}</p><p class="holding-current-price">最新の保有株価：${p.price!=null?`<strong class="price-accent">${p.price.toLocaleString('ja-JP')}円</strong><br><small>価格日 ${esc(p.priceDate)} · ポートフォリオの更新・同期に連動</small>`:'未取得・未同期'}</p>${companyMemos.some(m=>m.code===code&&!m.memoDeleted)?holdingMemoHTML(code):''}${r?`<div class="rating-pair"><div><span>3か月</span><b>${esc(r.short_3m)}</b> / 10</div><div><span>12か月</span><b>${esc(r.long_12m)}</b> / 10</div></div><small>採点 ${esc(r.assessment_date||R.assessment_date)} · 採点時の株価 ${Number(r.baseline_close).toLocaleString('ja-JP')}円（${esc(r.baseline_price_date)}）</small>${ninePointPriceLine(code)}`:'<p>投資妙味：未採点・未同期</p>'}${n?earningsDates(n):'<p>研究本文は未収録です。</p>'}${rankingPriceDetails(code)}<details><summary>次の確認・見立てが変わる条件</summary><p>${esc(n?.next||'未記録')}</p><p>${esc(r?.change_conditions||n?.counter||'未記録')}</p></details></article>`;
  }).join('')+'</div>';
 
 }
