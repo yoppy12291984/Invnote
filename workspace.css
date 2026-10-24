@@ -282,3 +282,13 @@ main:has(.company-list) .toolbar{margin:10px 0}
 .pulse-scale-speed{grid-template-columns:repeat(2,minmax(0,1fr))}.pulse-details>summary{cursor:pointer;padding:12px 0;min-height:44px;box-sizing:border-box;font-size:14px;font-weight:600}.pulse-summary small{display:block;font-size:11px;color:var(--sub)}.pulse-summary .pulse-other{font-size:12px}.pulse-summary{margin:10px 0}.pulse-summary>b{font-size:20px}.pulse-details{overflow-wrap:anywhere}
 
 .japan-market{padding:10px 0;border-bottom:1px solid #8884;font-size:13px;line-height:1.6}.japan-market p{margin:4px 0}.japan-market small{opacity:.75}.japan-market summary{cursor:pointer;margin-top:6px}.japan-market details{overflow-wrap:anywhere}.japan-market strong small{font-weight:normal}
+
+/* Price accents retain the category labels and work in both themes. */
+.price-accent{font-weight:750;padding:0 .16em;border-radius:.2em;color:#405ab2;background:#eef0ff;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.price-accent-fundamental{color:#155b9e;background:#e7f1ff}
+.price-accent-buy{color:#17664b;background:#e5f4ec}
+.price-accent-technical{color:#88520b;background:#fff1d9}
+html[data-theme="dark"] .price-accent{color:#b9c6ff;background:#2b3450}
+html[data-theme="dark"] .price-accent-fundamental{color:#9bcaff;background:#21374b}
+html[data-theme="dark"] .price-accent-buy{color:#8cdec0;background:#1c3c34}
+html[data-theme="dark"] .price-accent-technical{color:#f3cd83;background:#433622}

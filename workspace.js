@@ -43,19 +43,16 @@ function holdingMemoHTML(code){
  return list.length?list.map(n=>`<details><summary>自分のメモ · ${esc(memoDate(n.edited||n.ts))}</summary><p class="detail-body">${esc(n.text)}</p></details>`).join(''):'<p class="muted">買い増しのタイミング・条件はまだ記録されていません。</p>';
 }
 function holdingsPlanPage(){
- app.innerHTML=title('MY HOLDINGS','保有銘柄','保有中の銘柄だけを表示。買い増しの価格・タイミング・見送る条件を記録できます。');
+ app.innerHTML=title('MY HOLDINGS','保有銘柄','保有中の銘柄だけを表示。買い増しの価格・タイミング・見送る条件を確認できます。');
  if(!invReady||invLocked){app.innerHTML+='<p class="empty">保有情報の読み込み・同期後に表示します。</p>';return;}
  const rows=heldCompanyRows(personalPositions,personalStocks);
  app.innerHTML+=`<p>${rows.length}銘柄 · 同じ銘柄の複数口座はまとめて表示</p><p class="muted">保有記録 ${esc(positionMeta.date||'基準日未記録')} · ${positionMeta.complete?'全保有として登録されたデータ':'一部の保有情報の可能性があります'}。売買後はポートフォリオを更新してください。</p>`;
  if(!rows.length){app.innerHTML+='<p class="empty">保存されている保有情報に、株数がプラスの銘柄はありません。</p><a class="action" href="#today/inv:vPf">ポートフォリオを確認</a>';return;}
  app.innerHTML+='<div class="grid">'+rows.map(p=>{
   const code=p.code,n=notes[code],r=ratings[code];
-  return `<article class="card"><h2><button class="open" data-company="${esc(code)}">${esc(n?.name||p.name)}（${esc(code)}）</button></h2><p>保有 ${p.shares.toLocaleString('ja-JP')}株${p.accounts.length?' · '+p.accounts.map(esc).join(' / '):''}</p><h3>買い増しのタイミング・条件</h3><button class="action primary" data-holding-memo="${esc(code)}">書く・編集する</button><div data-holding-memos="${esc(code)}">${holdingMemoHTML(code)}</div><p class="muted">自分用の銘柄メモとして保存し、既存の同期で他端末へ反映します。売却後もメモは銘柄ページに残ります。</p>${r?`<div class="rating-pair"><div><span>3か月</span><b>${esc(r.short_3m)}</b> / 10</div><div><span>12か月</span><b>${esc(r.long_12m)}</b> / 10</div></div><small>採点 ${esc(r.assessment_date||R.assessment_date)} · 基準株価 ${Number(r.baseline_close).toLocaleString('ja-JP')}円（${esc(r.baseline_price_date)}）</small>${ninePointPriceLine(code)}`:'<p>投資妙味：未採点・未同期</p>'}${n?earningsDates(n):'<p>研究本文は未収録です。メモは記録できます。</p>'}${rankingPriceDetails(code)}<details><summary>次の確認・見立てが変わる条件</summary><p>${esc(n?.next||'未記録')}</p><p>${esc(r?.change_conditions||n?.counter||'未記録')}</p></details></article>`;
+  return `<article class="card"><h2><button class="open" data-company="${esc(code)}">${esc(n?.name||p.name)}（${esc(code)}）</button></h2><p>保有 ${p.shares.toLocaleString('ja-JP')}株${p.accounts.length?' · '+p.accounts.map(esc).join(' / '):''}</p>${companyMemos.some(m=>m.code===code&&!m.memoDeleted)?holdingMemoHTML(code):''}${r?`<div class="rating-pair"><div><span>3か月</span><b>${esc(r.short_3m)}</b> / 10</div><div><span>12か月</span><b>${esc(r.long_12m)}</b> / 10</div></div><small>採点 ${esc(r.assessment_date||R.assessment_date)} · 基準株価 ${Number(r.baseline_close).toLocaleString('ja-JP')}円（${esc(r.baseline_price_date)}）</small>${ninePointPriceLine(code)}`:'<p>投資妙味：未採点・未同期</p>'}${n?earningsDates(n):'<p>研究本文は未収録です。</p>'}${rankingPriceDetails(code)}<details><summary>次の確認・見立てが変わる条件</summary><p>${esc(n?.next||'未記録')}</p><p>${esc(r?.change_conditions||n?.counter||'未記録')}</p></details></article>`;
  }).join('')+'</div>';
- app.querySelectorAll('[data-holding-memo]').forEach(button=>button.onclick=()=>{
-  const code=button.dataset.holdingMemo,hasMemo=companyMemos.some(n=>n.code===code&&!n.memoDeleted);
-  openCompanyMemo(code,hasMemo?'':'【買い増し計画】\n検討する価格：\nタイミング・確認したい条件：\n決算・ニュースで確認すること：\n見送る・見直す条件：');
- });
+
 }
 function sendCompanyMemo(action,n){
  if(memoBusy)return;
