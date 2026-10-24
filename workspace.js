@@ -19,7 +19,7 @@ function renderCompanyMemos(){
  }
  if(!list.children.length){const p=document.createElement('p');p.textContent='まだメモはありません。';list.append(p);}
 }
-function openCompanyMemo(code){
+function openCompanyMemo(code,initialText=''){
  if(!memoDialog){
   memoDialog=document.createElement('dialog');memoDialog.className='company-memo-dialog';memoDialog.setAttribute('aria-labelledby','company-memo-title');
   memoDialog.innerHTML='<h2 id="company-memo-title"></h2><p>自分用メモ · 日付は自動記録</p><form><label for="company-memo-text">メモ</label><textarea id="company-memo-text" rows="5" maxlength="20000" required></textarea><div class="workspace-setting-actions"><button class="action primary" type="submit">メモを保存</button><button class="action" type="button" data-new>新しいメモ</button><button class="action" type="button" data-close>閉じる</button></div><p role="status"></p></form><div data-memo-list></div>';
@@ -27,7 +27,35 @@ function openCompanyMemo(code){
   memoDialog.querySelector('[data-new]').onclick=()=>{memoEditing=null;memoDialog.querySelector('textarea').value='';};
   memoDialog.querySelector('[data-close]').onclick=()=>memoDialog.close();
  }
- memoCode=code;memoEditing=null;memoDialog.querySelector('textarea').value='';memoDialog.querySelector('h2').textContent=code+' '+(notes[code]?.name||'')+' のメモ';memoDialog.querySelector('[role=status]').textContent='';renderCompanyMemos();memoDialog.showModal();
+ memoCode=code;memoEditing=null;memoDialog.querySelector('textarea').value=initialText;memoDialog.querySelector('h2').textContent=code+' '+(notes[code]?.name||personalStocks.find(x=>x.code===code)?.name||'')+' のメモ';memoDialog.querySelector('[role=status]').textContent='';renderCompanyMemos();memoDialog.showModal();
+}
+function heldCompanyRows(positions,stocks){
+ const result=new Map();
+ for(const p of positions||[]){
+  if(!/^[0-9A-Z]{4,5}$/.test(p.code||'')||!Number.isFinite(p.shares)||p.shares<=0)continue;
+  const row=result.get(p.code)||{code:p.code,name:stocks.find(x=>x.code===p.code)?.name||p.code,shares:0,accounts:[]};
+  row.shares+=p.shares;if(p.acct&&!row.accounts.includes(p.acct))row.accounts.push(p.acct);result.set(p.code,row);
+ }
+ return [...result.values()].sort((a,b)=>a.code.localeCompare(b.code));
+}
+function holdingMemoHTML(code){
+ const list=companyMemos.filter(n=>n.code===code&&!n.memoDeleted).sort((a,b)=>(b.edited||b.ts)-(a.edited||a.ts));
+ return list.length?list.map(n=>`<details><summary>自分のメモ · ${esc(memoDate(n.edited||n.ts))}</summary><p class="detail-body">${esc(n.text)}</p></details>`).join(''):'<p class="muted">買い増しのタイミング・条件はまだ記録されていません。</p>';
+}
+function holdingsPlanPage(){
+ app.innerHTML=title('MY HOLDINGS','保有銘柄','保有中の銘柄だけを表示。買い増しの価格・タイミング・見送る条件を記録できます。');
+ if(!invReady||invLocked){app.innerHTML+='<p class="empty">保有情報の読み込み・同期後に表示します。</p>';return;}
+ const rows=heldCompanyRows(personalPositions,personalStocks);
+ app.innerHTML+=`<p>${rows.length}銘柄 · 同じ銘柄の複数口座はまとめて表示</p><p class="muted">保有記録 ${esc(positionMeta.date||'基準日未記録')} · ${positionMeta.complete?'全保有として登録されたデータ':'一部の保有情報の可能性があります'}。売買後はポートフォリオを更新してください。</p>`;
+ if(!rows.length){app.innerHTML+='<p class="empty">保存されている保有情報に、株数がプラスの銘柄はありません。</p><a class="action" href="#today/inv:vPf">ポートフォリオを確認</a>';return;}
+ app.innerHTML+='<div class="grid">'+rows.map(p=>{
+  const code=p.code,n=notes[code],r=ratings[code];
+  return `<article class="card"><h2><button class="open" data-company="${esc(code)}">${esc(n?.name||p.name)}（${esc(code)}）</button></h2><p>保有 ${p.shares.toLocaleString('ja-JP')}株${p.accounts.length?' · '+p.accounts.map(esc).join(' / '):''}</p><h3>買い増しのタイミング・条件</h3><button class="action primary" data-holding-memo="${esc(code)}">書く・編集する</button><div data-holding-memos="${esc(code)}">${holdingMemoHTML(code)}</div><p class="muted">自分用の銘柄メモとして保存し、既存の同期で他端末へ反映します。売却後もメモは銘柄ページに残ります。</p>${r?`<div class="rating-pair"><div><span>3か月</span><b>${esc(r.short_3m)}</b> / 10</div><div><span>12か月</span><b>${esc(r.long_12m)}</b> / 10</div></div><small>採点 ${esc(r.assessment_date||R.assessment_date)} · 基準株価 ${Number(r.baseline_close).toLocaleString('ja-JP')}円（${esc(r.baseline_price_date)}）</small>${ninePointPriceLine(code)}`:'<p>投資妙味：未採点・未同期</p>'}${n?earningsDates(n):'<p>研究本文は未収録です。メモは記録できます。</p>'}${rankingPriceDetails(code)}<details><summary>次の確認・見立てが変わる条件</summary><p>${esc(n?.next||'未記録')}</p><p>${esc(r?.change_conditions||n?.counter||'未記録')}</p></details></article>`;
+ }).join('')+'</div>';
+ app.querySelectorAll('[data-holding-memo]').forEach(button=>button.onclick=()=>{
+  const code=button.dataset.holdingMemo,hasMemo=companyMemos.some(n=>n.code===code&&!n.memoDeleted);
+  openCompanyMemo(code,hasMemo?'':'【買い増し計画】\n検討する価格：\nタイミング・確認したい条件：\n決算・ニュースで確認すること：\n見送る・見直す条件：');
+ });
 }
 function sendCompanyMemo(action,n){
  if(memoBusy)return;
@@ -221,12 +249,13 @@ window.addEventListener('message',e=>{
  if(m?.type==='invnote:company'&&/^[0-9A-Z]{4,5}$/.test(m.code)){location.hash='company/'+m.code;return;}
  if(m?.type==='invnote:locked'){companyMemos=[];memoDialog?.close();invReady=false;invLocked=true;syncPending=false;clearTimeout(syncTimer);document.getElementById('workspace-sync').disabled=false;replaceResearch(initialData);personalStocks=[];personalPositions=[];positionMeta={};researchHash='';if(!['#settings','#import'].includes(location.hash))route();status.textContent='設定から引き継ぎコードを入力してください。';return;}
  if(m?.type!=='invnote:state')return;
+ const previousMemos=JSON.stringify(companyMemos);
  companyMemos=Array.isArray(m.companyMemos)?m.companyMemos.filter(n=>n.kind==='company-memo-v1'&&typeof n.text==='string'&&/^[0-9A-Z]{4,5}$/.test(n.code)&&Number.isFinite(n.ts)):[];if(memoDialog?.open)renderCompanyMemos();
  invReady=true;invLocked=false;if(syncPending){syncPending=false;clearTimeout(syncTimer);queueMicrotask(syncWorkspace);}if(!appearanceMode&&['light','dark'].includes(m.theme))appearanceMode=m.theme;paintAppearance();
  const nextStocks=Array.isArray(m.stocks)?m.stocks.filter(s=>/^[0-9A-Z]{4,5}$/.test(s.code)&&typeof s.name==='string'&&typeof s.status==='string'):[];
  const nextPositions=Array.isArray(m.positions)?m.positions.filter(p=>/^[0-9A-Z]{4,5}$/.test(p.code)&&Number.isFinite(p.shares)&&p.shares>0):[];
  const nextMeta={date:typeof m.holdingsAsOf==='string'?m.holdingsAsOf:'',complete:m.holdingsComplete===true};
- const changed=m.researchHash!==researchHash||JSON.stringify(nextStocks)!==JSON.stringify(personalStocks)||JSON.stringify(nextPositions)!==JSON.stringify(personalPositions)||JSON.stringify(nextMeta)!==JSON.stringify(positionMeta);
+ const changed=(location.hash==='#today/holdings-plan'&&previousMemos!==JSON.stringify(companyMemos))||m.researchHash!==researchHash||JSON.stringify(nextStocks)!==JSON.stringify(personalStocks)||JSON.stringify(nextPositions)!==JSON.stringify(personalPositions)||JSON.stringify(nextMeta)!==JSON.stringify(positionMeta);
  personalPositions=nextPositions;positionMeta=nextMeta;
  personalStocks=nextStocks;syncTime=m.lastSync||0;
  if(validBundle(m.bundle)){replaceResearch(m.bundle);researchHash=m.researchHash;status.textContent=`四季報 ${all.length}社 · ${syncTime?'Invnote 最終同期 '+new Date(syncTime).toLocaleString('ja-JP'):'端末の保存データ'}`;}
