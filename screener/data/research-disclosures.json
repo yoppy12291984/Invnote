@@ -1,11 +1,23 @@
 {
   "schema": 1,
-  "attemptedAt": "2026-10-24T07:23:19+09:00",
-  "windowStart": "2026-10-17",
-  "windowEnd": "2026-10-23",
+  "attemptedAt": "2026-10-26T07:00:27+09:00",
+  "windowStart": "2026-10-19",
+  "windowEnd": "2026-10-25",
   "status": "ok",
-  "lastCompleteAt": "2026-10-24T07:23:19+09:00",
+  "lastCompleteAt": "2026-10-26T07:00:27+09:00",
   "coverage": [
+    {
+      "date": "2026-10-25",
+      "status": "ok",
+      "rows": 0,
+      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261025.html"
+    },
+    {
+      "date": "2026-10-24",
+      "status": "ok",
+      "rows": 2,
+      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261024.html"
+    },
     {
       "date": "2026-10-23",
       "status": "ok",
@@ -35,22 +47,36 @@
       "status": "ok",
       "rows": 150,
       "source": "https://www.release.tdnet.info/inbs/I_list_001_20261019.html"
-    },
-    {
-      "date": "2026-10-18",
-      "status": "ok",
-      "rows": 0,
-      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261018.html"
-    },
-    {
-      "date": "2026-10-17",
-      "status": "ok",
-      "rows": 0,
-      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261017.html"
     }
   ],
   "scope": "TDnet公開一覧。IR専用発表・EDINET・Xは網羅しない。見出し分類は方向や割安性の判定ではない。",
   "items": [
+    {
+      "id": "e577feac0053a3dea984a59d",
+      "code": "9449",
+      "name": "ＧＭＯ",
+      "title": "連結子会社GMOインターネット株式会社における不正アクセスに伴うお客様へのお見舞金のお支払いおよび損失の全額補填に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261024555606.pdf",
+      "published": "2026-10-24",
+      "time": "13:15",
+      "tags": [
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ce6ade65b463ae33132e6f04",
+      "code": "4784",
+      "name": "ＧＭＯインターネット",
+      "title": "当社における不正アクセスに伴うお客様へのお見舞金のお支払いおよび不正取引による損失の補償に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261024555624.pdf",
+      "published": "2026-10-24",
+      "time": "13:15",
+      "tags": [
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
     {
       "id": "df143fc946c082970a1726e3",
       "code": "5592",
