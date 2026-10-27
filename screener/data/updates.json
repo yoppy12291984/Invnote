@@ -4206,11 +4206,11 @@
    ]
   },
   "macro": {
-   "hash": "6f0e2176922a2eef55d05487feb52ac686f5fdeccd9825c2ad7c8eea618b2674",
-   "date": "2026-10-26T22:01:13+00:00",
+   "hash": "568174aec295126f50e701c498f4712b2e97a21f9e60d7f0843478f6caa54166",
+   "date": "2026-10-27T22:06:10+00:00",
    "count": 12,
    "comparison": true,
-   "previous_date": "2026-10-25T21:59:46+00:00",
+   "previous_date": "2026-10-26T22:01:13+00:00",
    "previous_label": "前回公開データ",
    "added": [],
    "removed": [],
@@ -4221,13 +4221,8 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-10-22",
-       "after": "2026-10-23"
-      },
-      {
-       "field": "観測値",
-       "before": 2.64,
-       "after": 2.66
+       "before": "2026-10-23",
+       "after": "2026-10-26"
       }
      ]
     },
@@ -4237,13 +4232,8 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-10-22",
-       "after": "2026-10-23"
-      },
-      {
-       "field": "観測値",
-       "before": 4.96,
-       "after": 5.0
+       "before": "2026-10-23",
+       "after": "2026-10-26"
       }
      ]
     },
@@ -4253,13 +4243,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-10-22",
-       "after": "2026-10-23"
+       "before": "2026-10-23",
+       "after": "2026-10-26"
       },
       {
        "field": "観測値",
-       "before": 4.65,
-       "after": 4.69
+       "before": 4.69,
+       "after": 4.68
       }
      ]
     },
@@ -4269,8 +4259,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-10-23",
-       "after": "2026-10-26"
+       "before": "2026-10-26",
+       "after": "2026-10-27"
+      },
+      {
+       "field": "観測値",
+       "before": 2.34,
+       "after": 2.35
       }
      ]
     },
@@ -4280,13 +4275,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-10-23",
-       "after": "2026-10-26"
+       "before": "2026-10-26",
+       "after": "2026-10-27"
       },
       {
        "field": "観測値",
-       "before": 0.31,
-       "after": 0.32
+       "before": 0.32,
+       "after": 0.29
       }
      ]
     },
@@ -4296,13 +4291,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-10-22",
-       "after": "2026-10-23"
+       "before": "2026-10-23",
+       "after": "2026-10-26"
       },
       {
        "field": "観測値",
-       "before": 3.4,
-       "after": 3.38
+       "before": 3.38,
+       "after": 3.3
       }
      ]
     },
@@ -4312,13 +4307,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-10-22",
-       "after": "2026-10-23"
+       "before": "2026-10-23",
+       "after": "2026-10-26"
       },
       {
        "field": "観測値",
-       "before": 1.11,
-       "after": 1.13
+       "before": 1.13,
+       "after": 1.12
       }
      ]
     },
@@ -4328,13 +4323,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-10-23",
-       "after": "2026-10-26"
+       "before": "2026-10-26",
+       "after": "2026-10-27"
       },
       {
        "field": "観測値",
-       "before": 19.45,
-       "after": 18.39
+       "before": 18.39,
+       "after": 17.52
       }
      ]
     },
@@ -4344,34 +4339,18 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-10-23",
-       "after": "2026-10-26"
+       "before": "2026-10-26",
+       "after": "2026-10-27"
       },
       {
        "field": "観測値",
-       "before": 7623.6802,
-       "after": 7676.77
-      }
-     ]
-    },
-    {
-     "key": "DEXJPUS",
-     "name": "ドル円",
-     "changes": [
-      {
-       "field": "観測日",
-       "before": "2026-10-16",
-       "after": "2026-10-23"
-      },
-      {
-       "field": "観測値",
-       "before": 158.0,
-       "after": 156.87
+       "before": 7676.77,
+       "after": 7722.6001
       }
      ]
     }
    ],
-   "unchanged": 2
+   "unchanged": 3
   },
   "catalysts": {
    "hash": "5102fe525872239a2cdca27cd7be6b3e15741a6eefb8ae5f008d2486b04f8ea0",
