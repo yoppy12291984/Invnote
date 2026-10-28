@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-28T21:56:47+00:00",
+  "generated_at": "2026-10-28T22:02:24+00:00",
   "items": [
     {
       "id": "NASDAQBANK",
@@ -12,7 +12,7 @@
       "date": "2026-10-27",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-28T21:56:47+00:00",
+      "fetched_at": "2026-10-28T22:02:24+00:00",
       "changes": {
         "1w": {
           "value": 115.36,
@@ -330,7 +330,7 @@
       "date": "2026-10-27",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-28T21:56:47+00:00",
+      "fetched_at": "2026-10-28T22:02:24+00:00",
       "changes": {
         "1w": {
           "value": -0.25,
@@ -652,7 +652,7 @@
       "date": "2026-10-27",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-28T21:56:47+00:00",
+      "fetched_at": "2026-10-28T22:02:24+00:00",
       "changes": {
         "1w": {
           "value": -0.09,
@@ -973,8 +973,8 @@
       "value": 1.8,
       "date": "2026-07-01",
       "stale": false,
-      "status": "cached",
-      "fetched_at": "2026-10-27T22:06:11+00:00",
+      "status": "fresh",
+      "fetched_at": "2026-10-28T22:02:24+00:00",
       "changes": {
         "1w": null,
         "1m": null,
@@ -1017,9 +1017,7 @@
           "date": "2026-07-01",
           "value": 1.8
         }
-      ],
-      "error": "取得失敗。保存値を現在の信号判定に使わない。",
-      "error_type": "PermissionError"
+      ]
     },
     {
       "id": "DRTSCILM",
@@ -1031,7 +1029,7 @@
       "date": "2026-07-01",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-28T21:56:47+00:00",
+      "fetched_at": "2026-10-28T22:02:24+00:00",
       "changes": {
         "1w": null,
         "1m": null,
@@ -1086,7 +1084,7 @@
       "date": "2026-10-28",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-28T21:56:47.417651+00:00",
+      "fetched_at": "2026-10-28T22:02:24.193445+00:00",
       "changes": {
         "1w": {
           "value": 1.339996,
@@ -1409,7 +1407,7 @@
       "date": "2026-10-28",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-28T21:56:47.417651+00:00",
+      "fetched_at": "2026-10-28T22:02:24.193445+00:00",
       "changes": {
         "1w": {
           "value": 1.489998,
