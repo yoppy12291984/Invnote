@@ -11,7 +11,7 @@
   "version": 1
  },
  "recorded_at": "2026-09-19T09:39:39+09:00",
- "snapshot_count": 25,
+ "snapshot_count": 26,
  "started": "2026-09-24",
  "last_date": "2026-10-23",
  "status": "active",
@@ -5647,12 +5647,16 @@
   {
    "source": "rebound",
    "name": "反転",
-   "date": "2026-10-29",
-   "count": 5,
+   "date": "2026-10-30",
+   "count": 6,
    "members": [
     {
      "code": "1911",
      "name": "住友林業"
+    },
+    {
+     "code": "3110",
+     "name": "日東紡績"
     },
     {
      "code": "4568",
@@ -5841,6 +5845,6 @@
    ]
   }
  ],
- "generated_at": "2026-10-29T19:09:50+09:00",
- "latest_snapshot_at": "2026-10-29T19:09:50+09:00"
+ "generated_at": "2026-10-30T19:06:49+09:00",
+ "latest_snapshot_at": "2026-10-30T19:06:49+09:00"
 }
