@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-10-29T22:00:30+00:00",
+  "generated_at": "2026-11-01T13:40:26+00:00",
   "items": [
     {
       "id": "NASDAQBANK",
@@ -8,33 +8,29 @@
       "unit": "pt",
       "frequency": "daily",
       "source": "https://fred.stlouisfed.org/series/NASDAQBANK",
-      "value": 5216.89,
-      "date": "2026-10-28",
+      "value": 5282.03,
+      "date": "2026-10-29",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-29T22:00:29+00:00",
+      "fetched_at": "2026-11-01T13:40:25+00:00",
       "changes": {
         "1w": {
-          "value": 85.13,
-          "from": "2026-10-21",
-          "to": "2026-10-28"
+          "value": 56.83,
+          "from": "2026-10-22",
+          "to": "2026-10-29"
         },
         "1m": {
-          "value": 108.67,
-          "from": "2026-09-28",
-          "to": "2026-10-28"
+          "value": 219.06,
+          "from": "2026-09-29",
+          "to": "2026-10-29"
         },
         "3m": {
-          "value": -180.04,
-          "from": "2026-07-30",
-          "to": "2026-10-28"
+          "value": -122.32,
+          "from": "2026-07-31",
+          "to": "2026-10-29"
         }
       },
       "history": [
-        {
-          "date": "2026-07-20",
-          "value": 5392.19
-        },
         {
           "date": "2026-07-21",
           "value": 5388.55
@@ -318,11 +314,15 @@
         {
           "date": "2026-10-28",
           "value": 5216.89
+        },
+        {
+          "date": "2026-10-29",
+          "value": 5282.03
         }
       ],
-      "percentile": 87.3,
-      "sample_count": 501,
-      "sample_start": "2024-10-29"
+      "percentile": null,
+      "sample_count": 499,
+      "sample_start": "2024-11-01"
     },
     {
       "id": "BAMLH0A0HYM2EY",
@@ -330,33 +330,29 @@
       "unit": "%",
       "frequency": "daily",
       "source": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2EY",
-      "value": 7.94,
-      "date": "2026-10-28",
+      "value": 7.99,
+      "date": "2026-10-29",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-29T22:00:29+00:00",
+      "fetched_at": "2026-11-01T13:40:25+00:00",
       "changes": {
         "1w": {
-          "value": -0.23,
-          "from": "2026-10-21",
-          "to": "2026-10-28"
+          "value": -0.15,
+          "from": "2026-10-22",
+          "to": "2026-10-29"
         },
         "1m": {
           "value": -0.09,
-          "from": "2026-09-28",
-          "to": "2026-10-28"
+          "from": "2026-09-29",
+          "to": "2026-10-29"
         },
         "3m": {
-          "value": 0.78,
-          "from": "2026-07-30",
-          "to": "2026-10-28"
+          "value": 0.71,
+          "from": "2026-07-31",
+          "to": "2026-10-29"
         }
       },
       "history": [
-        {
-          "date": "2026-07-20",
-          "value": 6.98
-        },
         {
           "date": "2026-07-21",
           "value": 7.02
@@ -644,11 +640,15 @@
         {
           "date": "2026-10-28",
           "value": 7.94
+        },
+        {
+          "date": "2026-10-29",
+          "value": 7.99
         }
       ],
-      "percentile": 93.4,
-      "sample_count": 524,
-      "sample_start": "2024-10-29"
+      "percentile": 94.0,
+      "sample_count": 522,
+      "sample_start": "2024-11-01"
     },
     {
       "id": "BAMLC0A4CBBBEY",
@@ -656,33 +656,29 @@
       "unit": "%",
       "frequency": "daily",
       "source": "https://fred.stlouisfed.org/series/BAMLC0A4CBBBEY",
-      "value": 6.04,
-      "date": "2026-10-28",
+      "value": 6.01,
+      "date": "2026-10-29",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-29T22:00:29+00:00",
+      "fetched_at": "2026-11-01T13:40:25+00:00",
       "changes": {
         "1w": {
-          "value": -0.09,
-          "from": "2026-10-21",
-          "to": "2026-10-28"
+          "value": 0.0,
+          "from": "2026-10-22",
+          "to": "2026-10-29"
         },
         "1m": {
-          "value": -0.12,
-          "from": "2026-09-28",
-          "to": "2026-10-28"
+          "value": -0.16,
+          "from": "2026-09-29",
+          "to": "2026-10-29"
         },
         "3m": {
-          "value": 0.46,
-          "from": "2026-07-30",
-          "to": "2026-10-28"
+          "value": 0.38,
+          "from": "2026-07-31",
+          "to": "2026-10-29"
         }
       },
       "history": [
-        {
-          "date": "2026-07-20",
-          "value": 5.5
-        },
         {
           "date": "2026-07-21",
           "value": 5.54
@@ -970,11 +966,15 @@
         {
           "date": "2026-10-28",
           "value": 6.04
+        },
+        {
+          "date": "2026-10-29",
+          "value": 6.01
         }
       ],
-      "percentile": 95.7,
-      "sample_count": 524,
-      "sample_start": "2024-10-29"
+      "percentile": 95.1,
+      "sample_count": 522,
+      "sample_start": "2024-11-01"
     },
     {
       "id": "DRTSCIS",
@@ -986,7 +986,7 @@
       "date": "2026-07-01",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-29T22:00:29+00:00",
+      "fetched_at": "2026-11-01T13:40:25+00:00",
       "changes": {
         "1w": null,
         "1m": null,
@@ -1041,7 +1041,7 @@
       "date": "2026-07-01",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-29T22:00:29+00:00",
+      "fetched_at": "2026-11-01T13:40:25+00:00",
       "changes": {
         "1w": null,
         "1m": null,
@@ -1092,33 +1092,29 @@
       "unit": "USD",
       "frequency": "daily",
       "source": "https://finance.yahoo.com/quote/KBE/history/",
-      "value": 66.45999908447266,
-      "date": "2026-10-29",
+      "value": 65.69999694824219,
+      "date": "2026-10-30",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-29T22:00:29.852477+00:00",
+      "fetched_at": "2026-11-01T13:40:25.772741+00:00",
       "changes": {
         "1w": {
-          "value": 0.629997,
-          "from": "2026-10-22",
-          "to": "2026-10-29"
+          "value": -0.170006,
+          "from": "2026-10-23",
+          "to": "2026-10-30"
         },
         "1m": {
-          "value": 2.629997,
-          "from": "2026-09-29",
-          "to": "2026-10-29"
+          "value": 2.479996,
+          "from": "2026-09-30",
+          "to": "2026-10-30"
         },
         "3m": {
-          "value": -3.190002,
+          "value": -3.950005,
           "from": "2026-07-31",
-          "to": "2026-10-29"
+          "to": "2026-10-30"
         }
       },
       "history": [
-        {
-          "date": "2026-07-21",
-          "value": 69.55000305175781
-        },
         {
           "date": "2026-07-22",
           "value": 69.33000183105469
@@ -1402,11 +1398,15 @@
         {
           "date": "2026-10-29",
           "value": 66.45999908447266
+        },
+        {
+          "date": "2026-10-30",
+          "value": 65.69999694824219
         }
       ],
       "price_basis": "Completed US daily close, dividends excluded; 15-minute post-close buffer.",
-      "percentile": 94.6,
-      "sample_count": 1254,
+      "percentile": 93.6,
+      "sample_count": 1255,
       "sample_start": "2021-11-01"
     },
     {
@@ -1415,33 +1415,29 @@
       "unit": "USD",
       "frequency": "daily",
       "source": "https://finance.yahoo.com/quote/KRE/history/",
-      "value": 72.86000061035156,
-      "date": "2026-10-29",
+      "value": 72.01000213623047,
+      "date": "2026-10-30",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-10-29T22:00:29.852477+00:00",
+      "fetched_at": "2026-11-01T13:40:25.772741+00:00",
       "changes": {
         "1w": {
-          "value": 0.449997,
-          "from": "2026-10-22",
-          "to": "2026-10-29"
+          "value": -0.449997,
+          "from": "2026-10-23",
+          "to": "2026-10-30"
         },
         "1m": {
-          "value": 3.029999,
-          "from": "2026-09-29",
-          "to": "2026-10-29"
+          "value": 2.57,
+          "from": "2026-09-30",
+          "to": "2026-10-30"
         },
         "3m": {
-          "value": -3.199997,
+          "value": -4.049995,
           "from": "2026-07-31",
-          "to": "2026-10-29"
+          "to": "2026-10-30"
         }
       },
       "history": [
-        {
-          "date": "2026-07-21",
-          "value": 75.9800033569336
-        },
         {
           "date": "2026-07-22",
           "value": 75.5999984741211
@@ -1725,11 +1721,15 @@
         {
           "date": "2026-10-29",
           "value": 72.86000061035156
+        },
+        {
+          "date": "2026-10-30",
+          "value": 72.01000213623047
         }
       ],
       "price_basis": "Completed US daily close, dividends excluded; 15-minute post-close buffer.",
-      "percentile": 91.4,
-      "sample_count": 1254,
+      "percentile": 89.3,
+      "sample_count": 1255,
       "sample_start": "2021-11-01"
     }
   ],
