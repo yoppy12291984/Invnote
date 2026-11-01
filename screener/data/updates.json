@@ -2,25 +2,83 @@
  "version": 1,
  "sources": {
   "candidates": {
-   "hash": "d567373ae9c3bd69787f4a4b299c10363382f1d98547e02ac39d1fa0a4131869",
-   "date": "20261023",
-   "count": 35,
+   "hash": "aea100f754ed762e359cfa5ad94ec7be064ba77946499e8f8e522c46da048b71",
+   "date": "20261030",
+   "count": 30,
    "comparison": true,
-   "previous_date": "20261016",
+   "previous_date": "20261023",
    "previous_label": "前回公開データ",
    "added": [
     {
-     "key": "3680",
-     "name": "ホットリンク",
+     "key": "3779",
+     "name": "ジェイ・エスコムホールディングス",
      "fields": {
       "sector": "情報･通信業",
+      "nc": 0.68,
+      "pbr": 2.65,
+      "mcap_oku": 13.19,
+      "price": 114.0,
+      "turnover_oku": 1.21,
+      "bs_date": "2026-08-12",
+      "ma200_slope_improvement": -0.1338
+     }
+    },
+    {
+     "key": "4337",
+     "name": "ぴあ",
+     "fields": {
+      "sector": "サービス業",
+      "nc": 1.17,
+      "pbr": 3.31,
+      "mcap_oku": 356.66,
+      "price": 2324.0,
+      "turnover_oku": 1.24,
+      "bs_date": "2026-08-13",
+      "ma200_slope_improvement": 0.3406
+     }
+    }
+   ],
+   "removed": [
+    {
+     "key": "6419",
+     "name": "マースグループホールディングス",
+     "fields": {
+      "sector": "機械",
+      "nc": 0.95,
+      "pbr": 0.65,
+      "mcap_oku": 556.76,
+      "price": 3105.0,
+      "turnover_oku": 1.78,
+      "bs_date": "2026-07-30",
+      "ma200_slope_improvement": 1.3592
+     }
+    },
+    {
+     "key": "8141",
+     "name": "新光商事",
+     "fields": {
+      "sector": "卸売業",
       "nc": 0.64,
-      "pbr": 0.88,
-      "mcap_oku": 34.29,
-      "price": 224.0,
-      "turnover_oku": 2.24,
-      "bs_date": "2026-08-10",
-      "ma200_slope_improvement": 1.497
+      "pbr": 0.84,
+      "mcap_oku": 447.95,
+      "price": 1569.0,
+      "turnover_oku": 1.72,
+      "bs_date": "2026-07-31",
+      "ma200_slope_improvement": -4.3476
+     }
+    },
+    {
+     "key": "8103",
+     "name": "明和産業",
+     "fields": {
+      "sector": "卸売業",
+      "nc": 0.52,
+      "pbr": 0.93,
+      "mcap_oku": 375.45,
+      "price": 988.0,
+      "turnover_oku": 1.8,
+      "bs_date": "2026-07-31",
+      "ma200_slope_improvement": 0.0647
      }
     },
     {
@@ -52,31 +110,17 @@
      }
     },
     {
-     "key": "4664",
-     "name": "アール・エス・シー",
+     "key": "1976",
+     "name": "明星工業",
      "fields": {
-      "sector": "サービス業",
-      "nc": 0.53,
-      "pbr": 1.38,
-      "mcap_oku": 31.89,
-      "price": 1060.0,
-      "turnover_oku": 3.87,
-      "bs_date": "2026-08-13",
-      "ma200_slope_improvement": -1.7135
-     }
-    },
-    {
-     "key": "4072",
-     "name": "電算システムホールディングス",
-     "fields": {
-      "sector": "情報･通信業",
-      "nc": 0.62,
-      "pbr": 1.4,
-      "mcap_oku": 358.43,
-      "price": 3340.0,
-      "turnover_oku": 1.03,
-      "bs_date": "2026-08-12",
-      "ma200_slope_improvement": -4.2433
+      "sector": "建設業",
+      "nc": 0.54,
+      "pbr": 1.13,
+      "mcap_oku": 769.32,
+      "price": 1676.0,
+      "turnover_oku": 1.4,
+      "bs_date": "2026-07-31",
+      "ma200_slope_improvement": -1.652
      }
     },
     {
@@ -94,22 +138,6 @@
      }
     }
    ],
-   "removed": [
-    {
-     "key": "6430",
-     "name": "ダイコク電機",
-     "fields": {
-      "sector": "機械",
-      "nc": 0.56,
-      "pbr": 0.69,
-      "mcap_oku": 347.75,
-      "price": 2379.0,
-      "turnover_oku": 1.03,
-      "bs_date": "2026-08-07",
-      "ma200_slope_improvement": -3.4177
-     }
-    }
-   ],
    "changed": [
     {
      "key": "6619",
@@ -117,33 +145,33 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -9.9648,
-       "after": -8.49
+       "before": -8.49,
+       "after": -7.1696
       },
       {
        "field": "時価総額（億円）",
-       "before": 85.66,
-       "after": 67.56
+       "before": 67.56,
+       "after": 65.75
       },
       {
        "field": "NC比率",
-       "before": 1.97,
-       "after": 2.49
+       "before": 2.49,
+       "after": 2.56
       },
       {
        "field": "PBR",
-       "before": 0.21,
-       "after": 0.17
+       "before": 0.17,
+       "after": 0.16
       },
       {
        "field": "株価",
-       "before": 142.0,
-       "after": 112.0
+       "before": 112.0,
+       "after": 109.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 3.08,
-       "after": 3.34
+       "before": 3.34,
+       "after": 3.5
       }
      ]
     },
@@ -153,28 +181,33 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": 2.2438,
-       "after": 2.6997
+       "before": 2.6997,
+       "after": 2.8713
       },
       {
        "field": "時価総額（億円）",
-       "before": 323.67,
-       "after": 316.08
+       "before": 316.08,
+       "after": 308.49
       },
       {
        "field": "NC比率",
-       "before": 0.64,
-       "after": 0.66
+       "before": 0.66,
+       "after": 0.67
+      },
+      {
+       "field": "PBR",
+       "before": 0.29,
+       "after": 0.28
       },
       {
        "field": "株価",
-       "before": 597.0,
-       "after": 583.0
+       "before": 583.0,
+       "after": 569.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 1.19,
-       "after": 1.23
+       "before": 1.23,
+       "after": 1.34
       }
      ]
     },
@@ -184,33 +217,28 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -5.1874,
-       "after": -4.0201
+       "before": -4.0201,
+       "after": -3.0693
       },
       {
        "field": "時価総額（億円）",
-       "before": 839.79,
-       "after": 804.8
+       "before": 804.8,
+       "after": 794.48
       },
       {
        "field": "NC比率",
-       "before": 0.95,
-       "after": 0.99
-      },
-      {
-       "field": "PBR",
-       "before": 0.39,
-       "after": 0.37
+       "before": 0.99,
+       "after": 1.0
       },
       {
        "field": "株価",
-       "before": 2280.0,
-       "after": 2185.0
+       "before": 2185.0,
+       "after": 2157.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 1.77,
-       "after": 1.66
+       "before": 1.66,
+       "after": 1.77
       }
      ]
     },
@@ -220,28 +248,28 @@
      "changes": [
       {
        "field": "時価総額（億円）",
-       "before": 33.41,
-       "after": 34.85
+       "before": 34.85,
+       "after": 33.89
       },
       {
        "field": "NC比率",
-       "before": 0.55,
-       "after": 0.52
+       "before": 0.52,
+       "after": 0.54
       },
       {
        "field": "PBR",
-       "before": 0.39,
-       "after": 0.41
+       "before": 0.41,
+       "after": 0.39
       },
       {
        "field": "株価",
-       "before": 2160.0,
-       "after": 2253.0
+       "before": 2253.0,
+       "after": 2191.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 2.41,
-       "after": 2.54
+       "before": 2.54,
+       "after": 1.62
       }
      ]
     },
@@ -251,33 +279,33 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -3.8004,
-       "after": -4.1357
+       "before": -4.1357,
+       "after": -4.508
       },
       {
        "field": "時価総額（億円）",
-       "before": 316.15,
-       "after": 311.24
+       "before": 311.24,
+       "after": 306.32
       },
       {
        "field": "NC比率",
-       "before": 0.76,
-       "after": 0.77
+       "before": 0.77,
+       "after": 0.78
       },
       {
        "field": "PBR",
-       "before": 0.43,
-       "after": 0.42
+       "before": 0.42,
+       "after": 0.41
       },
       {
        "field": "株価",
-       "before": 579.0,
-       "after": 570.0
+       "before": 570.0,
+       "after": 561.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 3.27,
-       "after": 3.21
+       "before": 3.21,
+       "after": 1.57
       }
      ]
     },
@@ -287,28 +315,28 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -0.2149,
-       "after": -0.1569
+       "before": -0.1569,
+       "after": -0.3361
       },
       {
        "field": "時価総額（億円）",
-       "before": 673.23,
-       "after": 672.55
+       "before": 672.55,
+       "after": 676.97
       },
       {
        "field": "NC比率",
-       "before": 1.17,
-       "after": 1.18
+       "before": 1.18,
+       "after": 1.17
       },
       {
        "field": "株価",
-       "before": 1980.0,
-       "after": 1978.0
+       "before": 1978.0,
+       "after": 1991.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 1.09,
-       "after": 1.0
+       "before": 1.0,
+       "after": 1.29
       }
      ]
     },
@@ -318,28 +346,23 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -0.155,
-       "after": 0.2785
+       "before": 0.2785,
+       "after": 0.6248
       },
       {
        "field": "時価総額（億円）",
-       "before": 982.38,
-       "after": 980.45
-      },
-      {
-       "field": "NC比率",
-       "before": 0.67,
-       "after": 0.68
+       "before": 980.45,
+       "after": 979.17
       },
       {
        "field": "株価",
-       "before": 1531.0,
-       "after": 1528.0
+       "before": 1528.0,
+       "after": 1526.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 1.81,
-       "after": 1.65
+       "before": 1.65,
+       "after": 1.63
       }
      ]
     },
@@ -349,69 +372,33 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -10.8251,
-       "after": -8.6648
+       "before": -8.6648,
+       "after": -6.3491
       },
       {
        "field": "時価総額（億円）",
-       "before": 324.82,
-       "after": 309.68
+       "before": 309.68,
+       "after": 320.53
       },
       {
        "field": "NC比率",
-       "before": 0.57,
-       "after": 0.6
+       "before": 0.6,
+       "after": 0.58
       },
       {
        "field": "PBR",
-       "before": 0.63,
-       "after": 0.6
+       "before": 0.6,
+       "after": 0.62
       },
       {
        "field": "株価",
-       "before": 1137.0,
-       "after": 1084.0
+       "before": 1084.0,
+       "after": 1122.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 1.3,
-       "after": 1.26
-      }
-     ]
-    },
-    {
-     "key": "6419",
-     "name": "マースグループホールディングス",
-     "changes": [
-      {
-       "field": "200日線の傾き改善",
-       "before": 1.0152,
-       "after": 1.3592
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 563.94,
-       "after": 556.76
-      },
-      {
-       "field": "NC比率",
-       "before": 0.93,
-       "after": 0.95
-      },
-      {
-       "field": "PBR",
-       "before": 0.66,
-       "after": 0.65
-      },
-      {
-       "field": "株価",
-       "before": 3145.0,
-       "after": 3105.0
-      },
-      {
-       "field": "売買代金（億円）",
-       "before": 1.91,
-       "after": 1.78
+       "before": 1.26,
+       "after": 1.57
       }
      ]
     },
@@ -421,69 +408,33 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": 0.7583,
-       "after": 0.6824
+       "before": 0.6824,
+       "after": 0.3753
       },
       {
        "field": "時価総額（億円）",
-       "before": 740.76,
-       "after": 751.81
+       "before": 751.81,
+       "after": 742.2
       },
       {
        "field": "NC比率",
-       "before": 0.72,
-       "after": 0.71
+       "before": 0.71,
+       "after": 0.72
       },
       {
        "field": "PBR",
-       "before": 0.65,
-       "after": 0.66
+       "before": 0.66,
+       "after": 0.65
       },
       {
        "field": "株価",
-       "before": 1542.0,
-       "after": 1565.0
+       "before": 1565.0,
+       "after": 1545.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 1.35,
-       "after": 1.41
-      }
-     ]
-    },
-    {
-     "key": "7239",
-     "name": "タチエス",
-     "changes": [
-      {
-       "field": "200日線の傾き改善",
-       "before": -0.5217,
-       "after": -0.0389
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 793.15,
-       "after": 772.56
-      },
-      {
-       "field": "NC比率",
-       "before": 0.56,
-       "after": 0.57
-      },
-      {
-       "field": "PBR",
-       "before": 0.73,
-       "after": 0.71
-      },
-      {
-       "field": "株価",
-       "before": 2311.0,
-       "after": 2251.0
-      },
-      {
-       "field": "売買代金（億円）",
-       "before": 2.47,
-       "after": 2.53
+       "before": 1.41,
+       "after": 1.66
       }
      ]
     },
@@ -493,49 +444,105 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -1.4442,
-       "after": -2.0583
+       "before": -2.0583,
+       "after": -2.6353
       },
       {
        "field": "時価総額（億円）",
-       "before": 643.59,
-       "after": 652.84
+       "before": 652.84,
+       "after": 599.57
       },
       {
        "field": "NC比率",
-       "before": 0.66,
-       "after": 0.65
+       "before": 0.65,
+       "after": 0.71
       },
       {
        "field": "PBR",
-       "before": 0.74,
-       "after": 0.75
+       "before": 0.75,
+       "after": 0.69
       },
       {
        "field": "株価",
-       "before": 1184.0,
-       "after": 1201.0
+       "before": 1201.0,
+       "after": 1103.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 3.1,
-       "after": 2.94
+       "before": 2.94,
+       "after": 3.18
       }
      ]
     },
     {
-     "key": "3632",
-     "name": "グリーホールディングス",
+     "key": "7239",
+     "name": "タチエス",
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": 6.4078,
-       "after": 6.6586
+       "before": -0.0389,
+       "after": 0.2702
+      },
+      {
+       "field": "時価総額（億円）",
+       "before": 772.56,
+       "after": 752.99
+      },
+      {
+       "field": "NC比率",
+       "before": 0.57,
+       "after": 0.59
+      },
+      {
+       "field": "PBR",
+       "before": 0.71,
+       "after": 0.7
+      },
+      {
+       "field": "株価",
+       "before": 2251.0,
+       "after": 2194.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 2.04,
-       "after": 2.16
+       "before": 2.53,
+       "after": 2.4
+      }
+     ]
+    },
+    {
+     "key": "3680",
+     "name": "ホットリンク",
+     "changes": [
+      {
+       "field": "200日線の傾き改善",
+       "before": 1.497,
+       "after": 1.8689
+      },
+      {
+       "field": "時価総額（億円）",
+       "before": 34.29,
+       "after": 29.24
+      },
+      {
+       "field": "NC比率",
+       "before": 0.64,
+       "after": 0.75
+      },
+      {
+       "field": "PBR",
+       "before": 0.88,
+       "after": 0.75
+      },
+      {
+       "field": "株価",
+       "before": 224.0,
+       "after": 191.0
+      },
+      {
+       "field": "売買代金（億円）",
+       "before": 2.24,
+       "after": 2.59
       }
      ]
     },
@@ -545,59 +552,59 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": 2.0083,
-       "after": 2.3277
+       "before": 2.3277,
+       "after": 2.3982
       },
       {
        "field": "時価総額（億円）",
-       "before": 624.54,
-       "after": 615.19
+       "before": 615.19,
+       "after": 609.49
       },
       {
        "field": "NC比率",
-       "before": 0.59,
-       "after": 0.6
-      },
-      {
-       "field": "PBR",
-       "before": 0.8,
-       "after": 0.78
+       "before": 0.6,
+       "after": 0.61
       },
       {
        "field": "株価",
-       "before": 2740.0,
-       "after": 2699.0
+       "before": 2699.0,
+       "after": 2674.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 1.86,
-       "after": 2.28
+       "before": 2.28,
+       "after": 3.31
       }
      ]
     },
     {
-     "key": "8141",
-     "name": "新光商事",
+     "key": "3632",
+     "name": "グリーホールディングス",
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -3.8892,
-       "after": -4.3476
+       "before": 6.6586,
+       "after": 6.8256
       },
       {
        "field": "時価総額（億円）",
-       "before": 447.38,
-       "after": 447.95
+       "before": 745.79,
+       "after": 740.63
+      },
+      {
+       "field": "NC比率",
+       "before": 0.64,
+       "after": 0.65
       },
       {
        "field": "株価",
-       "before": 1567.0,
-       "after": 1569.0
+       "before": 434.0,
+       "after": 431.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 1.78,
-       "after": 1.72
+       "before": 2.16,
+       "after": 2.7
       }
      ]
     },
@@ -607,33 +614,33 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -9.2757,
-       "after": -8.3378
+       "before": -8.3378,
+       "after": -7.2017
       },
       {
        "field": "時価総額（億円）",
-       "before": 898.63,
-       "after": 914.6
+       "before": 914.6,
+       "after": 881.32
       },
       {
        "field": "NC比率",
-       "before": 0.62,
-       "after": 0.61
+       "before": 0.61,
+       "after": 0.63
       },
       {
        "field": "PBR",
-       "before": 0.85,
-       "after": 0.86
+       "before": 0.86,
+       "after": 0.83
       },
       {
        "field": "株価",
-       "before": 3375.0,
-       "after": 3435.0
+       "before": 3435.0,
+       "after": 3310.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 2.75,
-       "after": 2.41
+       "before": 2.41,
+       "after": 2.37
       }
      ]
     },
@@ -643,28 +650,33 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -3.507,
-       "after": -1.9782
+       "before": -1.9782,
+       "after": -0.5782
       },
       {
        "field": "時価総額（億円）",
-       "before": 815.9,
-       "after": 806.06
+       "before": 806.06,
+       "after": 798.68
+      },
+      {
+       "field": "NC比率",
+       "before": 0.59,
+       "after": 0.6
       },
       {
        "field": "PBR",
-       "before": 0.88,
-       "after": 0.87
+       "before": 0.87,
+       "after": 0.86
       },
       {
        "field": "株価",
-       "before": 4975.0,
-       "after": 4915.0
+       "before": 4915.0,
+       "after": 4870.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 1.81,
-       "after": 1.69
+       "before": 1.69,
+       "after": 1.64
       }
      ]
     },
@@ -674,105 +686,33 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -0.9218,
-       "after": -0.1188
+       "before": -0.1188,
+       "after": 0.4382
       },
       {
        "field": "時価総額（億円）",
-       "before": 380.02,
-       "after": 373.12
+       "before": 373.12,
+       "after": 367.29
       },
       {
        "field": "NC比率",
-       "before": 0.6,
-       "after": 0.61
+       "before": 0.61,
+       "after": 0.62
       },
       {
        "field": "PBR",
-       "before": 0.91,
-       "after": 0.89
+       "before": 0.89,
+       "after": 0.88
       },
       {
        "field": "株価",
-       "before": 1433.0,
-       "after": 1407.0
+       "before": 1407.0,
+       "after": 1385.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 1.66,
-       "after": 1.6
-      }
-     ]
-    },
-    {
-     "key": "8103",
-     "name": "明和産業",
-     "changes": [
-      {
-       "field": "200日線の傾き改善",
-       "before": -0.1044,
-       "after": 0.0647
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 381.53,
-       "after": 375.45
-      },
-      {
-       "field": "NC比率",
-       "before": 0.51,
-       "after": 0.52
-      },
-      {
-       "field": "PBR",
-       "before": 0.95,
-       "after": 0.93
-      },
-      {
-       "field": "株価",
-       "before": 1004.0,
-       "after": 988.0
-      },
-      {
-       "field": "売買代金（億円）",
-       "before": 1.69,
-       "after": 1.8
-      }
-     ]
-    },
-    {
-     "key": "6332",
-     "name": "月島ホールディングス",
-     "changes": [
-      {
-       "field": "200日線の傾き改善",
-       "before": -4.0468,
-       "after": -2.606
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 958.51,
-       "after": 919.35
-      },
-      {
-       "field": "NC比率",
-       "before": 0.58,
-       "after": 0.6
-      },
-      {
-       "field": "PBR",
-       "before": 0.99,
-       "after": 0.95
-      },
-      {
-       "field": "株価",
-       "before": 2423.0,
-       "after": 2324.0
-      },
-      {
-       "field": "売買代金（億円）",
-       "before": 7.86,
-       "after": 8.12
+       "before": 1.6,
+       "after": 1.85
       }
      ]
     },
@@ -782,33 +722,49 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -23.0761,
-       "after": -24.1562
+       "before": -24.1562,
+       "after": -23.9227
       },
       {
        "field": "時価総額（億円）",
-       "before": 963.03,
-       "after": 893.61
-      },
-      {
-       "field": "NC比率",
-       "before": 0.75,
-       "after": 0.81
-      },
-      {
-       "field": "PBR",
-       "before": 1.03,
-       "after": 0.95
+       "before": 893.61,
+       "after": 889.62
       },
       {
        "field": "株価",
-       "before": 2414.0,
-       "after": 2240.0
+       "before": 2240.0,
+       "after": 2230.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 9.44,
-       "after": 10.13
+       "before": 10.13,
+       "after": 10.15
+      }
+     ]
+    },
+    {
+     "key": "6332",
+     "name": "月島ホールディングス",
+     "changes": [
+      {
+       "field": "200日線の傾き改善",
+       "before": -2.606,
+       "after": -1.6819
+      },
+      {
+       "field": "時価総額（億円）",
+       "before": 919.35,
+       "after": 916.97
+      },
+      {
+       "field": "株価",
+       "before": 2324.0,
+       "after": 2318.0
+      },
+      {
+       "field": "売買代金（億円）",
+       "before": 8.12,
+       "after": 9.07
       }
      ]
     },
@@ -818,54 +774,33 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -6.3419,
-       "after": -3.8786
+       "before": -3.8786,
+       "after": -1.2477
       },
       {
        "field": "時価総額（億円）",
-       "before": 537.93,
-       "after": 532.33
+       "before": 532.33,
+       "after": 522.65
+      },
+      {
+       "field": "NC比率",
+       "before": 0.52,
+       "after": 0.53
       },
       {
        "field": "PBR",
-       "before": 1.0,
-       "after": 0.99
+       "before": 0.99,
+       "after": 0.97
       },
       {
        "field": "株価",
-       "before": 1056.0,
-       "after": 1045.0
+       "before": 1045.0,
+       "after": 1026.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 2.13,
-       "after": 2.01
-      }
-     ]
-    },
-    {
-     "key": "3302",
-     "name": "帝国繊維",
-     "changes": [
-      {
-       "field": "200日線の傾き改善",
-       "before": -4.0619,
-       "after": -4.5138
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 755.95,
-       "after": 758.0
-      },
-      {
-       "field": "株価",
-       "before": 2950.0,
-       "after": 2958.0
-      },
-      {
-       "field": "売買代金（億円）",
-       "before": 1.59,
-       "after": 1.67
+       "before": 2.01,
+       "after": 1.97
       }
      ]
     },
@@ -875,28 +810,59 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -7.3039,
-       "after": -6.8909
+       "before": -6.8909,
+       "after": -6.6421
       },
       {
        "field": "時価総額（億円）",
-       "before": 600.93,
-       "after": 596.07
+       "before": 596.07,
+       "after": 583.93
+      },
+      {
+       "field": "NC比率",
+       "before": 0.51,
+       "after": 0.53
       },
       {
        "field": "PBR",
-       "before": 1.04,
-       "after": 1.03
+       "before": 1.03,
+       "after": 1.01
       },
       {
        "field": "株価",
-       "before": 1732.0,
-       "after": 1718.0
+       "before": 1718.0,
+       "after": 1683.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 1.54,
-       "after": 1.52
+       "before": 1.52,
+       "after": 1.53
+      }
+     ]
+    },
+    {
+     "key": "3302",
+     "name": "帝国繊維",
+     "changes": [
+      {
+       "field": "200日線の傾き改善",
+       "before": -4.5138,
+       "after": -4.8818
+      },
+      {
+       "field": "時価総額（億円）",
+       "before": 758.0,
+       "after": 751.34
+      },
+      {
+       "field": "株価",
+       "before": 2958.0,
+       "after": 2932.0
+      },
+      {
+       "field": "売買代金（億円）",
+       "before": 1.67,
+       "after": 2.26
       }
      ]
     },
@@ -906,33 +872,33 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": 3.0434,
-       "after": 3.2018
+       "before": 3.2018,
+       "after": 2.9992
       },
       {
        "field": "時価総額（億円）",
-       "before": 537.73,
-       "after": 541.13
+       "before": 541.13,
+       "after": 521.58
       },
       {
        "field": "NC比率",
-       "before": 0.72,
-       "after": 0.71
+       "before": 0.71,
+       "after": 0.74
       },
       {
        "field": "PBR",
-       "before": 1.05,
-       "after": 1.06
+       "before": 1.06,
+       "after": 1.02
       },
       {
        "field": "株価",
-       "before": 1265.0,
-       "after": 1273.0
+       "before": 1273.0,
+       "after": 1227.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 1.62,
-       "after": 1.66
+       "before": 1.66,
+       "after": 1.92
       }
      ]
     },
@@ -942,69 +908,33 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -0.0223,
-       "after": 0.8559
+       "before": 0.8559,
+       "after": 1.7826
       },
       {
        "field": "時価総額（億円）",
-       "before": 825.79,
-       "after": 862.04
+       "before": 862.04,
+       "after": 839.97
       },
       {
        "field": "NC比率",
-       "before": 0.67,
-       "after": 0.64
+       "before": 0.64,
+       "after": 0.66
       },
       {
        "field": "PBR",
-       "before": 1.07,
-       "after": 1.12
+       "before": 1.12,
+       "after": 1.09
       },
       {
        "field": "株価",
-       "before": 5240.0,
-       "after": 5470.0
+       "before": 5470.0,
+       "after": 5330.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 1.9,
-       "after": 2.05
-      }
-     ]
-    },
-    {
-     "key": "1976",
-     "name": "明星工業",
-     "changes": [
-      {
-       "field": "200日線の傾き改善",
-       "before": -1.812,
-       "after": -1.652
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 778.5,
-       "after": 769.32
-      },
-      {
-       "field": "NC比率",
-       "before": 0.53,
-       "after": 0.54
-      },
-      {
-       "field": "PBR",
-       "before": 1.14,
-       "after": 1.13
-      },
-      {
-       "field": "株価",
-       "before": 1696.0,
-       "after": 1676.0
-      },
-      {
-       "field": "売買代金（億円）",
-       "before": 1.38,
-       "after": 1.4
+       "before": 2.05,
+       "after": 2.55
       }
      ]
     },
@@ -1014,33 +944,33 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": 11.6639,
-       "after": 11.7893
+       "before": 11.7893,
+       "after": 11.9294
       },
       {
        "field": "時価総額（億円）",
-       "before": 173.35,
-       "after": 156.74
+       "before": 156.74,
+       "after": 151.66
       },
       {
        "field": "NC比率",
-       "before": 0.51,
-       "after": 0.57
+       "before": 0.57,
+       "after": 0.59
       },
       {
        "field": "PBR",
-       "before": 1.32,
-       "after": 1.19
+       "before": 1.19,
+       "after": 1.15
       },
       {
        "field": "株価",
-       "before": 4955.0,
-       "after": 4480.0
+       "before": 4480.0,
+       "after": 4335.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 2.4,
-       "after": 2.7
+       "before": 2.7,
+       "after": 2.39
       }
      ]
     },
@@ -1050,33 +980,105 @@
      "changes": [
       {
        "field": "200日線の傾き改善",
-       "before": -11.4269,
-       "after": -10.8822
+       "before": -10.8822,
+       "after": -10.9276
       },
       {
        "field": "時価総額（億円）",
-       "before": 206.76,
-       "after": 176.25
+       "before": 176.25,
+       "after": 171.17
       },
       {
        "field": "NC比率",
-       "before": 0.89,
-       "after": 1.04
+       "before": 1.04,
+       "after": 1.07
       },
       {
        "field": "PBR",
-       "before": 1.45,
-       "after": 1.24
+       "before": 1.24,
+       "after": 1.2
       },
       {
        "field": "株価",
-       "before": 12200.0,
-       "after": 10400.0
+       "before": 10400.0,
+       "after": 10100.0
       },
       {
        "field": "売買代金（億円）",
-       "before": 3.68,
-       "after": 3.44
+       "before": 3.44,
+       "after": 3.18
+      }
+     ]
+    },
+    {
+     "key": "4664",
+     "name": "アール・エス・シー",
+     "changes": [
+      {
+       "field": "200日線の傾き改善",
+       "before": -1.7135,
+       "after": -2.6335
+      },
+      {
+       "field": "時価総額（億円）",
+       "before": 31.89,
+       "after": 31.56
+      },
+      {
+       "field": "NC比率",
+       "before": 0.53,
+       "after": 0.54
+      },
+      {
+       "field": "PBR",
+       "before": 1.38,
+       "after": 1.36
+      },
+      {
+       "field": "株価",
+       "before": 1060.0,
+       "after": 1049.0
+      },
+      {
+       "field": "売買代金（億円）",
+       "before": 3.87,
+       "after": 4.06
+      }
+     ]
+    },
+    {
+     "key": "4072",
+     "name": "電算システムホールディングス",
+     "changes": [
+      {
+       "field": "200日線の傾き改善",
+       "before": -4.2433,
+       "after": -2.9953
+      },
+      {
+       "field": "時価総額（億円）",
+       "before": 358.43,
+       "after": 353.07
+      },
+      {
+       "field": "NC比率",
+       "before": 0.62,
+       "after": 0.63
+      },
+      {
+       "field": "PBR",
+       "before": 1.4,
+       "after": 1.37
+      },
+      {
+       "field": "株価",
+       "before": 3340.0,
+       "after": 3290.0
+      },
+      {
+       "field": "売買代金（億円）",
+       "before": 1.03,
+       "after": 1.29
       }
      ]
     }
@@ -1084,7 +1086,7 @@
    "unchanged": 0
   },
   "rebound": {
-   "hash": "a4c6c836da20076103665cffb7b1c78174813539b388d63bdd4664aabebd2388",
+   "hash": "360b68aca918be20d1205a5010850d1aea288b93c8eca000a012e03965cf5ed6",
    "date": "20261030",
    "count": 6,
    "comparison": true,
@@ -1292,30 +1294,208 @@
    "crossings": []
   },
   "canslim": {
-   "hash": "d2b9d1053361842d25e9aa0a17667dbad35653980676decd5a8610c5ae3d66a0",
-   "date": "20261024",
-   "count": 28,
+   "hash": "9be19330d2fda4f7f2c77b71c58dd7c6edc937238a0c15a95dadd3e10c82b8eb",
+   "date": "20261102",
+   "count": 25,
    "comparison": true,
-   "previous_date": "20261017",
+   "previous_date": "20261024",
    "previous_label": "前回公開データ",
    "added": [
     {
-     "key": "2001",
-     "name": "ニップン",
+     "key": "2124",
+     "name": "ジェイエイシーリクルートメント",
      "fields": {
-      "sector": "食料品",
-      "mcap_oku": 2449.5,
-      "price": 2891.0,
-      "pivot": 3055.0,
-      "pivot_gap": -5.37,
-      "stop": 2888.34,
-      "stop_pct": 5.46,
-      "vol_dry": 1.04,
-      "r260": 21.93,
+      "sector": "サービス業",
+      "mcap_oku": 1814.5,
+      "price": 1096.0,
+      "pivot": 1141.0,
+      "pivot_gap": -3.94,
+      "stop": 1037.04,
+      "stop_pct": 9.11,
+      "vol_dry": 0.82,
+      "r260": 2.72,
+      "tt": 6,
+      "warn": null,
+      "score": 72.48,
+      "lot_man": 11.0,
+      "bucket": [
+       "S2初期"
+      ]
+     }
+    },
+    {
+     "key": "4633",
+     "name": "サカタインクス",
+     "fields": {
+      "sector": "化学",
+      "mcap_oku": 1347.0,
+      "price": 2694.0,
+      "pivot": 2762.0,
+      "pivot_gap": -2.46,
+      "stop": 2643.88,
+      "stop_pct": 4.28,
+      "vol_dry": 1.14,
+      "r260": 15.37,
+      "tt": 6,
+      "warn": null,
+      "score": 76.06,
+      "lot_man": 26.9,
+      "bucket": [
+       "S2初期"
+      ]
+     }
+    },
+    {
+     "key": "5108",
+     "name": "ブリヂストン",
+     "fields": {
+      "sector": "ゴム製品",
+      "mcap_oku": 53188.1,
+      "price": 3987,
+      "pivot": 4083.0,
+      "pivot_gap": -2.35,
+      "stop": 3941.58,
+      "stop_pct": 3.46,
+      "vol_dry": 0.95,
+      "r260": 12.91,
+      "tt": 6,
+      "warn": null,
+      "score": 51.9,
+      "lot_man": 39.9,
+      "bucket": [
+       "柔軟"
+      ]
+     }
+    },
+    {
+     "key": "5423",
+     "name": "東京製鐵",
+     "fields": {
+      "sector": "鉄鋼",
+      "mcap_oku": 1917.3,
+      "price": 1742,
+      "pivot": 1780.0,
+      "pivot_gap": -2.13,
+      "stop": 1704.5,
+      "stop_pct": 4.24,
+      "vol_dry": 1.24,
+      "r260": 18.02,
+      "tt": 6,
+      "warn": null,
+      "score": 68.48,
+      "lot_man": 17.4,
+      "bucket": [
+       "柔軟"
+      ]
+     }
+    },
+    {
+     "key": "7947",
+     "name": "エフピコ",
+     "fields": {
+      "sector": "化学",
+      "mcap_oku": 2507.5,
+      "price": 2965.0,
+      "pivot": 3000.0,
+      "pivot_gap": -1.17,
+      "stop": 2804.16,
+      "stop_pct": 6.53,
+      "vol_dry": 1.17,
+      "r260": 18.74,
+      "tt": 6,
+      "warn": null,
+      "score": 81.7,
+      "lot_man": 29.6,
+      "bucket": [
+       "S2初期"
+      ]
+     }
+    },
+    {
+     "key": "8057",
+     "name": "内田洋行",
+     "fields": {
+      "sector": "卸売業",
+      "mcap_oku": 1264.4,
+      "price": 2427.0,
+      "pivot": 2537.0,
+      "pivot_gap": -4.34,
+      "stop": 2292.02,
+      "stop_pct": 9.66,
+      "vol_dry": 0.89,
+      "r260": 4.16,
+      "tt": 6,
+      "warn": null,
+      "score": 70.25,
+      "lot_man": 24.3,
+      "bucket": [
+       "S2初期"
+      ]
+     }
+    },
+    {
+     "key": "9301",
+     "name": "三菱倉庫",
+     "fields": {
+      "sector": "倉庫･運輸関連業",
+      "mcap_oku": 5446.5,
+      "price": 1504,
+      "pivot": 1540.0,
+      "pivot_gap": -2.34,
+      "stop": 1509.74,
+      "stop_pct": 1.96,
+      "vol_dry": 1.12,
+      "r260": 30.1,
       "tt": 7,
       "warn": null,
-      "score": 65.55,
-      "lot_man": 28.9,
+      "score": 54.01,
+      "lot_man": 15.0,
+      "bucket": [
+       "柔軟"
+      ]
+     }
+    },
+    {
+     "key": "9684",
+     "name": "スクウェア・エニックス・ホールディングス",
+     "fields": {
+      "sector": "情報･通信業",
+      "mcap_oku": 11086.7,
+      "price": 3016,
+      "pivot": 3097.0,
+      "pivot_gap": -2.62,
+      "stop": 2934.5,
+      "stop_pct": 5.25,
+      "vol_dry": 1.01,
+      "r260": -8.91,
+      "tt": 6,
+      "warn": null,
+      "score": 62.86,
+      "lot_man": 30.2,
+      "bucket": [
+       "柔軟"
+      ]
+     }
+    }
+   ],
+   "removed": [
+    {
+     "key": "2109",
+     "name": "ＤＭ三井製糖",
+     "fields": {
+      "sector": "食料品",
+      "mcap_oku": 1183.1,
+      "price": 3760.0,
+      "pivot": 3920.0,
+      "pivot_gap": -4.08,
+      "stop": 3735.2,
+      "stop_pct": 4.71,
+      "vol_dry": 1.01,
+      "r260": 15.34,
+      "tt": 6,
+      "warn": null,
+      "score": 64.47,
+      "lot_man": 37.6,
       "bucket": [
        "S2初期"
       ]
@@ -1366,6 +1546,28 @@
      }
     },
     {
+     "key": "3028",
+     "name": "アルペン",
+     "fields": {
+      "sector": "小売業",
+      "mcap_oku": 948.1,
+      "price": 2438.0,
+      "pivot": 2493.0,
+      "pivot_gap": -2.21,
+      "stop": 2354.8,
+      "stop_pct": 5.54,
+      "vol_dry": 1.03,
+      "r260": 4.23,
+      "tt": 6,
+      "warn": null,
+      "score": 76.02,
+      "lot_man": 24.4,
+      "bucket": [
+       "S2初期"
+      ]
+     }
+    },
+    {
      "key": "4544",
      "name": "Ｈ．Ｕ．グループホールディングス",
      "fields": {
@@ -1388,332 +1590,132 @@
      }
     },
     {
-     "key": "9039",
-     "name": "サカイ引越センター",
-     "fields": {
-      "sector": "陸運業",
-      "mcap_oku": 1295.1,
-      "price": 3060.0,
-      "pivot": 3115.0,
-      "pivot_gap": -1.77,
-      "stop": 2995.88,
-      "stop_pct": 3.82,
-      "vol_dry": 0.94,
-      "r260": 1.49,
-      "tt": 6,
-      "warn": null,
-      "score": 73.79,
-      "lot_man": 30.6,
-      "bucket": [
-       "S2初期"
-      ]
-     }
-    },
-    {
-     "key": "9536",
-     "name": "西部ガスホールディングス",
-     "fields": {
-      "sector": "電気･ガス業",
-      "mcap_oku": 914.4,
-      "price": 2459.0,
-      "pivot": 2695.0,
-      "pivot_gap": -8.76,
-      "stop": 2482.76,
-      "stop_pct": 7.88,
-      "vol_dry": 0.99,
-      "r260": 25.14,
-      "tt": 6,
-      "warn": null,
-      "score": 56.97,
-      "lot_man": 24.6,
-      "bucket": [
-       "S2初期"
-      ]
-     }
-    }
-   ],
-   "removed": [
-    {
-     "key": "2004",
-     "name": "昭和産業",
-     "fields": {
-      "sector": "食料品",
-      "mcap_oku": 1275.3,
-      "price": 3865.0,
-      "pivot": 4000.0,
-      "pivot_gap": -3.37,
-      "stop": 3752.0,
-      "stop_pct": 6.2,
-      "vol_dry": 1.11,
-      "r260": 24.28,
-      "tt": 7,
-      "warn": null,
-      "score": 76.47,
-      "lot_man": 38.6,
-      "bucket": [
-       "S2初期"
-      ]
-     }
-    },
-    {
-     "key": "2181",
-     "name": "パーソルホールディングス",
-     "fields": {
-      "sector": "サービス業",
-      "mcap_oku": 6700.9,
-      "price": 294.1,
-      "pivot": 304.3,
-      "pivot_gap": -3.35,
-      "stop": 286.38,
-      "stop_pct": 5.89,
-      "vol_dry": 0.85,
-      "r260": 5.56,
-      "tt": 6,
-      "warn": null,
-      "score": 62.32,
-      "lot_man": 2.9,
-      "bucket": [
-       "S2初期"
-      ]
-     }
-    },
-    {
-     "key": "3087",
-     "name": "ドトール・日レスホールディングス",
-     "fields": {
-      "sector": "小売業",
-      "mcap_oku": 1480.0,
-      "price": 3245.0,
-      "pivot": 3455.0,
-      "pivot_gap": -6.08,
-      "stop": 3237.8,
-      "stop_pct": 6.29,
-      "vol_dry": 1.1,
-      "r260": 21.26,
-      "tt": 7,
-      "warn": null,
-      "score": 62.17,
-      "lot_man": 32.4,
-      "bucket": [
-       "S2初期"
-      ]
-     }
-    },
-    {
-     "key": "3402",
-     "name": "東レ",
-     "fields": {
-      "sector": "繊維製品",
-      "mcap_oku": 18745.8,
-      "price": 1246.0,
-      "pivot": 1280.5,
-      "pivot_gap": -2.69,
-      "stop": 1264.03,
-      "stop_pct": 1.29,
-      "vol_dry": 0.92,
-      "r260": 28.73,
-      "tt": 6,
-      "warn": null,
-      "score": 45.58,
-      "lot_man": 12.5,
-      "bucket": [
-       "柔軟"
-      ]
-     }
-    },
-    {
-     "key": "3950",
-     "name": "ザ・パック",
-     "fields": {
-      "sector": "パルプ・紙",
-      "mcap_oku": 891.9,
-      "price": 1494.0,
-      "pivot": 1546.0,
-      "pivot_gap": -3.36,
-      "stop": 1465.28,
-      "stop_pct": 5.22,
-      "vol_dry": 0.83,
-      "r260": 24.29,
-      "tt": 6,
-      "warn": null,
-      "score": 60.99,
-      "lot_man": 14.9,
-      "bucket": [
-       "S2初期"
-      ]
-     }
-    },
-    {
-     "key": "4114",
-     "name": "日本触媒",
+     "key": "4958",
+     "name": "長谷川香料",
      "fields": {
       "sector": "化学",
-      "mcap_oku": 3937.5,
-      "price": 2625.0,
-      "pivot": 2733.5,
-      "pivot_gap": -3.97,
-      "stop": 2557.55,
-      "stop_pct": 6.44,
-      "vol_dry": 0.93,
-      "r260": 41.28,
-      "tt": 8,
-      "warn": null,
-      "score": 76.69,
-      "lot_man": 26.2,
-      "bucket": [
-       "S2初期"
-      ]
-     }
-    },
-    {
-     "key": "4634",
-     "name": "ａｒｔｉｅｎｃｅ",
-     "fields": {
-      "sector": "化学",
-      "mcap_oku": 2564.6,
-      "price": 5100.0,
-      "pivot": 5220.0,
-      "pivot_gap": -2.3,
-      "stop": 5015.9,
-      "stop_pct": 3.91,
-      "vol_dry": 0.87,
-      "r260": 61.65,
-      "tt": 8,
-      "warn": null,
-      "score": 82.07,
-      "lot_man": 51.0,
-      "bucket": [
-       "S2初期"
-      ]
-     }
-    },
-    {
-     "key": "4665",
-     "name": "ダスキン",
-     "fields": {
-      "sector": "サービス業",
-      "mcap_oku": 2258.9,
-      "price": 4706.0,
-      "pivot": 4800.0,
-      "pivot_gap": -1.96,
-      "stop": 4615.08,
-      "stop_pct": 3.85,
-      "vol_dry": 1.1,
-      "r260": 20.95,
+      "mcap_oku": 1449.9,
+      "price": 3395.0,
+      "pivot": 3535.0,
+      "pivot_gap": -3.96,
+      "stop": 3360.2,
+      "stop_pct": 4.94,
+      "vol_dry": 1.29,
+      "r260": 16.83,
       "tt": 6,
       "warn": null,
-      "score": 72.75,
-      "lot_man": 47.1,
+      "score": 72.18,
+      "lot_man": 34.0,
       "bucket": [
        "S2初期"
       ]
      }
     },
     {
-     "key": "6282",
-     "name": "オイレス工業",
-     "fields": {
-      "sector": "機械",
-      "mcap_oku": 909.8,
-      "price": 2732.0,
-      "pivot": 3005.0,
-      "pivot_gap": -9.08,
-      "stop": 2879.28,
-      "stop_pct": 4.18,
-      "vol_dry": 1.35,
-      "r260": 17.61,
-      "tt": 6,
-      "warn": null,
-      "score": 59.25,
-      "lot_man": 27.3,
-      "bucket": [
-       "S2初期"
-      ]
-     }
-    },
-    {
-     "key": "7296",
-     "name": "エフ・シー・シー",
+     "key": "7246",
+     "name": "プレス工業",
      "fields": {
       "sector": "輸送用機器",
-      "mcap_oku": 2235.8,
-      "price": 4295.0,
-      "pivot": 4330.0,
-      "pivot_gap": -0.81,
-      "stop": 4133.0,
-      "stop_pct": 4.55,
-      "vol_dry": 0.89,
-      "r260": 31.15,
+      "mcap_oku": 920.8,
+      "price": 939.0,
+      "pivot": 1056.0,
+      "pivot_gap": -11.08,
+      "stop": 987.24,
+      "stop_pct": 6.51,
+      "vol_dry": 0.92,
+      "r260": 44.91,
       "tt": 6,
       "warn": null,
-      "score": 73.82,
-      "lot_man": 43.0,
+      "score": 56.99,
+      "lot_man": 9.4,
       "bucket": [
        "S2初期"
       ]
      }
     },
     {
-     "key": "7616",
-     "name": "コロワイド",
-     "fields": {
-      "sector": "小売業",
-      "mcap_oku": 2228.1,
-      "price": 2093.0,
-      "pivot": 2168.0,
-      "pivot_gap": -3.46,
-      "stop": 2046.58,
-      "stop_pct": 5.6,
-      "vol_dry": 1.32,
-      "r260": 9.41,
-      "tt": 6,
-      "warn": null,
-      "score": 59.44,
-      "lot_man": 20.9,
-      "bucket": [
-       "S2初期"
-      ]
-     }
-    },
-    {
-     "key": "8043",
-     "name": "スターゼン",
+     "key": "8060",
+     "name": "キヤノンマーケティングジャパン",
      "fields": {
       "sector": "卸売業",
-      "mcap_oku": 907.2,
-      "price": 1549.0,
-      "pivot": 1613.0,
-      "pivot_gap": -3.97,
-      "stop": 1496.64,
-      "stop_pct": 7.21,
-      "vol_dry": 1.19,
-      "r260": 26.97,
-      "tt": 7,
+      "mcap_oku": 9381.8,
+      "price": 4223.0,
+      "pivot": 4284.0,
+      "pivot_gap": -1.42,
+      "stop": 3736.64,
+      "stop_pct": 12.78,
+      "vol_dry": 0.99,
+      "r260": 41.26,
+      "tt": 8,
       "warn": null,
-      "score": 69.04,
-      "lot_man": 15.5,
+      "score": 95.04,
+      "lot_man": 42.2,
       "bucket": [
        "S2初期"
       ]
      }
     },
     {
-     "key": "9434",
-     "name": "ソフトバンク",
+     "key": "8075",
+     "name": "神鋼商事",
      "fields": {
-      "sector": "情報･通信業",
-      "mcap_oku": 117498.5,
-      "price": 244.7,
-      "pivot": 252.9,
-      "pivot_gap": -3.24,
-      "stop": 238.87,
-      "stop_pct": 5.55,
-      "vol_dry": 1.06,
-      "r260": 6.9,
+      "sector": "卸売業",
+      "mcap_oku": 801.4,
+      "price": 3015.0,
+      "pivot": 3235.0,
+      "pivot_gap": -6.8,
+      "stop": 3085.42,
+      "stop_pct": 4.62,
+      "vol_dry": 0.97,
+      "r260": 34.06,
       "tt": 6,
       "warn": null,
-      "score": 63.44,
-      "lot_man": 2.4,
+      "score": 65.41,
+      "lot_man": 30.2,
+      "bucket": [
+       "S2初期"
+      ]
+     }
+    },
+    {
+     "key": "8133",
+     "name": "伊藤忠エネクス",
+     "fields": {
+      "sector": "卸売業",
+      "mcap_oku": 2641.5,
+      "price": 2260.0,
+      "pivot": 2387.0,
+      "pivot_gap": -5.32,
+      "stop": 2258.8,
+      "stop_pct": 5.37,
+      "vol_dry": 1.01,
+      "r260": 13.0,
+      "tt": 6,
+      "warn": null,
+      "score": 60.68,
+      "lot_man": 22.6,
+      "bucket": [
+       "S2初期"
+      ]
+     }
+    },
+    {
+     "key": "9934",
+     "name": "因幡電機産業",
+     "fields": {
+      "sector": "卸売業",
+      "mcap_oku": 3450.7,
+      "price": 3036.0,
+      "pivot": 3225.0,
+      "pivot_gap": -5.86,
+      "stop": 3069.57,
+      "stop_pct": 4.82,
+      "vol_dry": 1.04,
+      "r260": 42.5,
+      "tt": 7,
+      "warn": null,
+      "score": 78.26,
+      "lot_man": 30.4,
       "bucket": [
        "S2初期"
       ]
@@ -1722,53 +1724,58 @@
    ],
    "changed": [
     {
-     "key": "2109",
-     "name": "ＤＭ三井製糖",
+     "key": "2001",
+     "name": "ニップン",
      "changes": [
       {
        "field": "単元金額（万円）",
-       "before": 37.7,
-       "after": 37.6
+       "before": 28.9,
+       "after": 29.2
       },
       {
        "field": "時価総額（億円）",
-       "before": 1186.2,
-       "after": 1183.1
+       "before": 2449.5,
+       "after": 2474.0
       },
       {
        "field": "ピボット比（%）",
-       "before": -3.83,
-       "after": -4.08
+       "before": -5.37,
+       "after": -4.42
       },
       {
        "field": "株価",
-       "before": 3770.0,
-       "after": 3760.0
+       "before": 2891.0,
+       "after": 2920.0
       },
       {
        "field": "260日騰落（%）",
-       "before": 13.73,
-       "after": 15.34
+       "before": 21.93,
+       "after": 27.9
       },
       {
        "field": "スコア",
-       "before": 67.42,
-       "after": 64.47
+       "before": 65.55,
+       "after": 69.69
       },
       {
        "field": "参考損切価格",
-       "before": 3701.7,
-       "after": 3735.2
+       "before": 2888.34,
+       "after": 2892.2
       },
       {
        "field": "損切幅（%）",
-       "before": 5.57,
-       "after": 4.71
+       "before": 5.46,
+       "after": 5.33
+      },
+      {
+       "field": "トレンド条件",
+       "before": 7,
+       "after": 8
       },
       {
        "field": "出来高乾き度",
-       "before": 1.09,
-       "after": 1.01
+       "before": 1.04,
+       "after": 1.06
       }
      ]
     },
@@ -1778,48 +1785,53 @@
      "changes": [
       {
        "field": "単元金額（万円）",
-       "before": 38.0,
-       "after": 37.6
+       "before": 37.6,
+       "after": 37.3
       },
       {
        "field": "時価総額（億円）",
-       "before": 7536.3,
-       "after": 7453.0
+       "before": 7453.0,
+       "after": 7385.6
       },
       {
        "field": "ピボット比（%）",
-       "before": -1.88,
-       "after": -2.97
+       "before": -2.97,
+       "after": -3.85
       },
       {
        "field": "株価",
-       "before": 3802.0,
-       "after": 3760.0
+       "before": 3760.0,
+       "after": 3726.0
       },
       {
        "field": "260日騰落（%）",
-       "before": 43.63,
-       "after": 48.79
+       "before": 48.79,
+       "after": 49.16
       },
       {
        "field": "スコア",
-       "before": 94.1,
-       "after": 89.94
+       "before": 89.94,
+       "after": 81.98
       },
       {
        "field": "参考損切価格",
-       "before": 3745.64,
-       "after": 3751.78
+       "before": 3751.78,
+       "after": 3754.62
       },
       {
        "field": "損切幅（%）",
-       "before": 3.34,
-       "after": 3.18
+       "before": 3.18,
+       "after": 3.11
+      },
+      {
+       "field": "トレンド条件",
+       "before": 8,
+       "after": 7
       },
       {
        "field": "出来高乾き度",
-       "before": 1.09,
-       "after": 1.03
+       "before": 1.03,
+       "after": 1.23
       }
      ]
     },
@@ -1829,104 +1841,53 @@
      "changes": [
       {
        "field": "単元金額（万円）",
-       "before": 42.9,
-       "after": 44.5
+       "before": 44.5,
+       "after": 46.5
       },
       {
        "field": "時価総額（億円）",
-       "before": 3953.8,
-       "after": 4098.4
+       "before": 4098.4,
+       "after": 4282.6
       },
       {
        "field": "ピボット",
-       "before": 4324.0,
-       "after": 4530.0
+       "before": 4530.0,
+       "after": 4674.0
       },
       {
        "field": "ピボット比（%）",
-       "before": -0.72,
-       "after": -1.77
+       "before": -1.77,
+       "after": -0.51
       },
       {
        "field": "株価",
-       "before": 4293.0,
-       "after": 4450.0
+       "before": 4450.0,
+       "after": 4650.0
       },
       {
        "field": "260日騰落（%）",
-       "before": 45.97,
-       "after": 52.71
+       "before": 52.71,
+       "after": 60.46
       },
       {
        "field": "スコア",
-       "before": 98.16,
-       "after": 96.74
+       "before": 96.74,
+       "after": 100.02
       },
       {
        "field": "参考損切価格",
-       "before": 3909.26,
-       "after": 3975.74
+       "before": 3975.74,
+       "after": 4046.32
       },
       {
        "field": "損切幅（%）",
-       "before": 9.59,
-       "after": 12.24
-      }
-     ]
-    },
-    {
-     "key": "3028",
-     "name": "アルペン",
-     "changes": [
-      {
-       "field": "単元金額（万円）",
-       "before": 24.5,
-       "after": 24.4
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 951.6,
-       "after": 948.1
-      },
-      {
-       "field": "ピボット",
-       "before": 2447.0,
-       "after": 2493.0
-      },
-      {
-       "field": "ピボット比（%）",
-       "before": 0.0,
-       "after": -2.21
-      },
-      {
-       "field": "株価",
-       "before": 2447.0,
-       "after": 2438.0
-      },
-      {
-       "field": "260日騰落（%）",
-       "before": 4.04,
-       "after": 4.23
-      },
-      {
-       "field": "スコア",
-       "before": 62.56,
-       "after": 76.02
-      },
-      {
-       "field": "参考損切価格",
-       "before": 2331.96,
-       "after": 2354.8
-      },
-      {
-       "field": "損切幅（%）",
-       "before": 4.7,
-       "after": 5.54
+       "before": 12.24,
+       "after": 13.43
       },
       {
        "field": "出来高乾き度",
-       "before": 0.93,
-       "after": 1.03
+       "before": 1.06,
+       "after": 1.12
       }
      ]
     },
@@ -1936,53 +1897,48 @@
      "changes": [
       {
        "field": "単元金額（万円）",
-       "before": 31.0,
-       "after": 31.6
+       "before": 31.6,
+       "after": 30.5
       },
       {
        "field": "時価総額（億円）",
-       "before": 1751.5,
-       "after": 1785.4
-      },
-      {
-       "field": "ピボット",
-       "before": 3100.0,
-       "after": 3220.0
+       "before": 1785.4,
+       "after": 1726.0
       },
       {
        "field": "ピボット比（%）",
-       "before": -0.16,
-       "after": -2.02
+       "before": -2.02,
+       "after": -5.28
       },
       {
        "field": "株価",
-       "before": 3095.0,
-       "after": 3155.0
+       "before": 3155.0,
+       "after": 3050.0
       },
       {
        "field": "260日騰落（%）",
-       "before": 10.02,
-       "after": 13.04
+       "before": 13.04,
+       "after": 11.44
       },
       {
        "field": "スコア",
-       "before": 79.53,
-       "after": 76.83
+       "before": 76.83,
+       "after": 66.41
       },
       {
        "field": "参考損切価格",
-       "before": 2973.96,
-       "after": 2993.1
+       "before": 2993.1,
+       "after": 3006.46
       },
       {
        "field": "損切幅（%）",
-       "before": 4.07,
-       "after": 7.05
+       "before": 7.05,
+       "after": 6.63
       },
       {
        "field": "出来高乾き度",
-       "before": 0.84,
-       "after": 0.86
+       "before": 0.86,
+       "after": 0.79
       }
      ]
     },
@@ -1992,53 +1948,48 @@
      "changes": [
       {
        "field": "単元金額（万円）",
-       "before": 13.3,
-       "after": 13.6
+       "before": 13.6,
+       "after": 13.4
       },
       {
        "field": "時価総額（億円）",
-       "before": 1833.3,
-       "after": 1870.6
+       "before": 1870.6,
+       "after": 1848.5
       },
       {
        "field": "ピボット比（%）",
-       "before": -6.14,
-       "after": -4.23
+       "before": -4.23,
+       "after": -5.36
       },
       {
        "field": "株価",
-       "before": 1330.0,
-       "after": 1357.0
+       "before": 1357.0,
+       "after": 1341.0
       },
       {
        "field": "260日騰落（%）",
-       "before": 25.83,
-       "after": 29.12
+       "before": 29.12,
+       "after": 32.64
       },
       {
        "field": "スコア",
-       "before": 68.52,
-       "after": 74.73
+       "before": 74.73,
+       "after": 69.71
       },
       {
        "field": "参考損切価格",
-       "before": 1296.14,
-       "after": 1316.22
+       "before": 1316.22,
+       "after": 1328.2
       },
       {
        "field": "損切幅（%）",
-       "before": 8.53,
-       "after": 7.11
-      },
-      {
-       "field": "トレンド条件",
-       "before": 7,
-       "after": 8
+       "before": 7.11,
+       "after": 6.27
       },
       {
        "field": "出来高乾き度",
-       "before": 1.44,
-       "after": 1.16
+       "before": 1.16,
+       "after": 0.79
       }
      ]
     },
@@ -2048,53 +1999,43 @@
      "changes": [
       {
        "field": "単元金額（万円）",
-       "before": 21.7,
-       "after": 21.4
+       "before": 21.4,
+       "after": 21.3
       },
       {
        "field": "時価総額（億円）",
-       "before": 844.7,
-       "after": 836.6
+       "before": 836.6,
+       "after": 829.5
       },
       {
        "field": "ピボット比（%）",
-       "before": -4.67,
-       "after": -5.59
+       "before": -5.59,
+       "after": -6.38
       },
       {
        "field": "株価",
-       "before": 2166.0,
-       "after": 2145.0
+       "before": 2145.0,
+       "after": 2127.0
       },
       {
        "field": "260日騰落（%）",
-       "before": 43.13,
-       "after": 31.76
+       "before": 31.76,
+       "after": 34.2
       },
       {
        "field": "スコア",
-       "before": 82.98,
-       "after": 73.5
+       "before": 73.5,
+       "after": 69.28
       },
       {
        "field": "参考損切価格",
-       "before": 2140.72,
-       "after": 2151.88
-      },
-      {
-       "field": "損切幅（%）",
-       "before": 5.78,
-       "after": 5.29
-      },
-      {
-       "field": "トレンド条件",
-       "before": 8,
-       "after": 7
+       "before": 2151.88,
+       "after": 2151.7
       },
       {
        "field": "出来高乾き度",
-       "before": 1.12,
-       "after": 1.15
+       "before": 1.15,
+       "after": 1.04
       }
      ]
     },
@@ -2104,53 +2045,48 @@
      "changes": [
       {
        "field": "単元金額（万円）",
-       "before": 34.2,
-       "after": 34.5
+       "before": 34.5,
+       "after": 33.5
       },
       {
        "field": "時価総額（億円）",
-       "before": 1104.8,
-       "after": 1114.5
-      },
-      {
-       "field": "ピボット",
-       "before": 3455.0,
-       "after": 3515.0
+       "before": 1114.5,
+       "after": 1082.2
       },
       {
        "field": "ピボット比（%）",
-       "before": -1.01,
-       "after": -1.85
+       "before": -1.85,
+       "after": -4.69
       },
       {
        "field": "株価",
-       "before": 3420.0,
-       "after": 3450.0
+       "before": 3450.0,
+       "after": 3350.0
       },
       {
        "field": "260日騰落（%）",
-       "before": 38.18,
-       "after": 38.28
+       "before": 38.28,
+       "after": 36.57
       },
       {
        "field": "スコア",
-       "before": 96.34,
-       "after": 95.07
+       "before": 95.07,
+       "after": 85.41
       },
       {
        "field": "参考損切価格",
-       "before": 3185.2,
-       "after": 3249.14
+       "before": 3249.14,
+       "after": 3272.7
       },
       {
        "field": "損切幅（%）",
-       "before": 7.81,
-       "after": 7.56
+       "before": 7.56,
+       "after": 6.89
       },
       {
        "field": "出来高乾き度",
-       "before": 0.79,
-       "after": 0.76
+       "before": 0.76,
+       "after": 0.81
       }
      ]
     },
@@ -2160,109 +2096,53 @@
      "changes": [
       {
        "field": "単元金額（万円）",
-       "before": 15.2,
-       "after": 15.0
+       "before": 15.0,
+       "after": 15.3
       },
       {
        "field": "時価総額（億円）",
-       "before": 1069.6,
-       "after": 1052.7
+       "before": 1052.7,
+       "after": 1077.3
       },
       {
        "field": "ピボット",
-       "before": 1536.0,
-       "after": 1541.0
+       "before": 1541.0,
+       "after": 1609.0
       },
       {
        "field": "ピボット比（%）",
-       "before": -1.11,
-       "after": -2.99
+       "before": -2.99,
+       "after": -4.91
       },
       {
        "field": "株価",
-       "before": 1519.0,
-       "after": 1495.0
+       "before": 1495.0,
+       "after": 1530.0
       },
       {
        "field": "260日騰落（%）",
-       "before": 17.12,
-       "after": 14.91
+       "before": 14.91,
+       "after": 18.97
       },
       {
        "field": "スコア",
-       "before": 73.04,
-       "after": 75.46
+       "before": 75.46,
+       "after": 71.39
       },
       {
        "field": "参考損切価格",
-       "before": 1471.24,
-       "after": 1477.58
+       "before": 1477.58,
+       "after": 1480.62
       },
       {
        "field": "損切幅（%）",
-       "before": 4.22,
-       "after": 4.12
+       "before": 4.12,
+       "after": 7.98
       },
       {
        "field": "出来高乾き度",
-       "before": 0.99,
-       "after": 1.12
-      }
-     ]
-    },
-    {
-     "key": "4958",
-     "name": "長谷川香料",
-     "changes": [
-      {
-       "field": "単元金額（万円）",
-       "before": 34.9,
-       "after": 34.0
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 1490.5,
-       "after": 1449.9
-      },
-      {
-       "field": "ピボット比（%）",
-       "before": -1.27,
-       "after": -3.96
-      },
-      {
-       "field": "株価",
-       "before": 3490.0,
-       "after": 3395.0
-      },
-      {
-       "field": "260日騰落（%）",
-       "before": 16.96,
-       "after": 16.83
-      },
-      {
-       "field": "スコア",
-       "before": 84.89,
-       "after": 72.18
-      },
-      {
-       "field": "参考損切価格",
-       "before": 3346.2,
-       "after": 3360.2
-      },
-      {
-       "field": "損切幅（%）",
-       "before": 5.34,
-       "after": 4.94
-      },
-      {
-       "field": "トレンド条件",
-       "before": 7,
-       "after": 6
-      },
-      {
-       "field": "出来高乾き度",
-       "before": 1.51,
-       "after": 1.29
+       "before": 1.12,
+       "after": 1.3
       }
      ]
     },
@@ -2271,115 +2151,44 @@
      "name": "丸一鋼管",
      "changes": [
       {
-       "field": "単元金額（万円）",
-       "before": 17.4,
-       "after": 17.0
-      },
-      {
        "field": "時価総額（億円）",
-       "before": 4391.1,
-       "after": 4275.2
-      },
-      {
-       "field": "ピボット",
-       "before": 1761.0,
-       "after": 1768.5
+       "before": 4275.2,
+       "after": 4281.5
       },
       {
        "field": "ピボット比（%）",
-       "before": -1.05,
-       "after": -4.07
+       "before": -4.07,
+       "after": -3.93
       },
       {
        "field": "株価",
-       "before": 1742.5,
-       "after": 1696.5
+       "before": 1696.5,
+       "after": 1699
       },
       {
        "field": "260日騰落（%）",
-       "before": 36.48,
-       "after": 33.58
+       "before": 33.58,
+       "after": 32.58
       },
       {
        "field": "スコア",
-       "before": 65.58,
-       "after": 54.97
+       "before": 54.97,
+       "after": 55.51
       },
       {
        "field": "参考損切価格",
-       "before": 1735.59,
-       "after": 1727.22
+       "before": 1727.22,
+       "after": 1723.18
       },
       {
        "field": "損切幅（%）",
-       "before": 1.44,
-       "after": 2.33
-      },
-      {
-       "field": "トレンド条件",
-       "before": 8,
-       "after": 7
+       "before": 2.33,
+       "after": 2.56
       },
       {
        "field": "出来高乾き度",
-       "before": 0.96,
-       "after": 0.94
-      }
-     ]
-    },
-    {
-     "key": "7246",
-     "name": "プレス工業",
-     "changes": [
-      {
-       "field": "単元金額（万円）",
-       "before": 9.8,
-       "after": 9.4
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 965.0,
-       "after": 920.8
-      },
-      {
-       "field": "ピボット比（%）",
-       "before": -6.82,
-       "after": -11.08
-      },
-      {
-       "field": "株価",
-       "before": 984.0,
-       "after": 939.0
-      },
-      {
-       "field": "260日騰落（%）",
-       "before": 50.92,
-       "after": 44.91
-      },
-      {
-       "field": "スコア",
-       "before": 70.21,
-       "after": 56.99
-      },
-      {
-       "field": "参考損切価格",
-       "before": 982.98,
-       "after": 987.24
-      },
-      {
-       "field": "損切幅（%）",
-       "before": 6.91,
-       "after": 6.51
-      },
-      {
-       "field": "トレンド条件",
-       "before": 7,
-       "after": 6
-      },
-      {
-       "field": "出来高乾き度",
-       "before": 0.85,
-       "after": 0.92
+       "before": 0.94,
+       "after": 0.99
       }
      ]
     },
@@ -2389,165 +2198,48 @@
      "changes": [
       {
        "field": "単元金額（万円）",
-       "before": 46.6,
-       "after": 47.4
+       "before": 47.4,
+       "after": 46.6
       },
       {
        "field": "時価総額（億円）",
-       "before": 1616.2,
-       "after": 1645.7
-      },
-      {
-       "field": "ピボット",
-       "before": 4680.0,
-       "after": 4845.0
+       "before": 1645.7,
+       "after": 1616.2
       },
       {
        "field": "ピボット比（%）",
-       "before": -0.43,
-       "after": -2.06
+       "before": -2.06,
+       "after": -3.82
       },
       {
        "field": "株価",
-       "before": 4660.0,
-       "after": 4745.0
+       "before": 4745.0,
+       "after": 4660.0
       },
       {
        "field": "260日騰落（%）",
-       "before": 13.11,
-       "after": 12.71
+       "before": 12.71,
+       "after": 15.06
       },
       {
        "field": "スコア",
-       "before": 80.69,
-       "after": 78.06
+       "before": 78.06,
+       "after": 71.6
       },
       {
        "field": "参考損切価格",
-       "before": 4413.8,
-       "after": 4467.9
+       "before": 4467.9,
+       "after": 4508.5
       },
       {
        "field": "損切幅（%）",
-       "before": 5.69,
-       "after": 7.78
+       "before": 7.78,
+       "after": 6.95
       },
       {
        "field": "出来高乾き度",
-       "before": 1.01,
-       "after": 0.99
-      }
-     ]
-    },
-    {
-     "key": "8060",
-     "name": "キヤノンマーケティングジャパン",
-     "changes": [
-      {
-       "field": "単元金額（万円）",
-       "before": 40.3,
-       "after": 42.2
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 8948.6,
-       "after": 9381.8
-      },
-      {
-       "field": "ピボット",
-       "before": 4099.0,
-       "after": 4284.0
-      },
-      {
-       "field": "ピボット比（%）",
-       "before": -1.73,
-       "after": -1.42
-      },
-      {
-       "field": "株価",
-       "before": 4028.0,
-       "after": 4223.0
-      },
-      {
-       "field": "260日騰落（%）",
-       "before": 33.27,
-       "after": 41.26
-      },
-      {
-       "field": "スコア",
-       "before": 91.6,
-       "after": 95.04
-      },
-      {
-       "field": "参考損切価格",
-       "before": 3688.06,
-       "after": 3736.64
-      },
-      {
-       "field": "損切幅（%）",
-       "before": 10.03,
-       "after": 12.78
-      },
-      {
-       "field": "出来高乾き度",
-       "before": 0.91,
-       "after": 0.99
-      }
-     ]
-    },
-    {
-     "key": "8075",
-     "name": "神鋼商事",
-     "changes": [
-      {
-       "field": "単元金額（万円）",
-       "before": 31.4,
-       "after": 30.2
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 834.7,
-       "after": 801.4
-      },
-      {
-       "field": "ピボット比（%）",
-       "before": -2.94,
-       "after": -6.8
-      },
-      {
-       "field": "株価",
-       "before": 3140.0,
-       "after": 3015.0
-      },
-      {
-       "field": "260日騰落（%）",
-       "before": 38.69,
-       "after": 34.06
-      },
-      {
-       "field": "スコア",
-       "before": 81.6,
-       "after": 65.41
-      },
-      {
-       "field": "参考損切価格",
-       "before": 3053.9,
-       "after": 3085.42
-      },
-      {
-       "field": "損切幅（%）",
-       "before": 5.6,
-       "after": 4.62
-      },
-      {
-       "field": "トレンド条件",
-       "before": 7,
-       "after": 6
-      },
-      {
-       "field": "出来高乾き度",
-       "before": 0.84,
-       "after": 0.97
+       "before": 0.99,
+       "after": 1.01
       }
      ]
     },
@@ -2557,99 +2249,53 @@
      "changes": [
       {
        "field": "単元金額（万円）",
-       "before": 44.8,
-       "after": 44.4
+       "before": 44.4,
+       "after": 44.3
       },
       {
        "field": "時価総額（億円）",
-       "before": 2403.7,
-       "after": 2387.6
+       "before": 2387.6,
+       "after": 2379.5
       },
       {
        "field": "ピボット比（%）",
-       "before": -2.61,
-       "after": -3.26
+       "before": -3.26,
+       "after": -3.59
       },
       {
        "field": "株価",
-       "before": 4475.0,
-       "after": 4445.0
+       "before": 4445.0,
+       "after": 4430.0
       },
       {
        "field": "260日騰落（%）",
-       "before": 28.22,
-       "after": 26.1
+       "before": 26.1,
+       "after": 28.41
       },
       {
        "field": "スコア",
-       "before": 75.8,
-       "after": 71.52
+       "before": 71.52,
+       "after": 72.1
       },
       {
        "field": "参考損切価格",
-       "before": 4336.4,
-       "after": 4381.5
+       "before": 4381.5,
+       "after": 4414.1
       },
       {
        "field": "損切幅（%）",
-       "before": 5.63,
-       "after": 4.65
+       "before": 4.65,
+       "after": 3.94
+      },
+      {
+       "field": "トレンド条件",
+       "before": 7,
+       "after": 8
       },
       {
        "field": "出来高乾き度",
-       "before": 1.03,
-       "after": 0.99
-      }
-     ]
-    },
-    {
-     "key": "8133",
-     "name": "伊藤忠エネクス",
-     "changes": [
-      {
-       "field": "単元金額（万円）",
-       "before": 22.8,
-       "after": 22.6
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 2669.6,
-       "after": 2641.5
-      },
-      {
-       "field": "ピボット比（%）",
-       "before": -4.32,
-       "after": -5.32
-      },
-      {
-       "field": "株価",
-       "before": 2284.0,
-       "after": 2260.0
-      },
-      {
-       "field": "260日騰落（%）",
-       "before": 15.18,
-       "after": 13.0
-      },
-      {
-       "field": "スコア",
-       "before": 65.82,
-       "after": 60.68
-      },
-      {
-       "field": "参考損切価格",
-       "before": 2239.62,
-       "after": 2258.8
-      },
-      {
-       "field": "損切幅（%）",
-       "before": 6.17,
-       "after": 5.37
-      },
-      {
-       "field": "出来高乾き度",
-       "before": 1.0,
-       "after": 1.01
+       "before": 0.99,
+       "after": 0.93
       }
      ]
     },
@@ -2659,53 +2305,99 @@
      "changes": [
       {
        "field": "単元金額（万円）",
-       "before": 24.7,
-       "after": 24.8
+       "before": 24.8,
+       "after": 24.4
       },
       {
        "field": "時価総額（億円）",
-       "before": 3778.0,
-       "after": 3794.8
-      },
-      {
-       "field": "ピボット",
-       "before": 2525.0,
-       "after": 2559.5
+       "before": 3794.8,
+       "after": 3739.7
       },
       {
        "field": "ピボット比（%）",
-       "before": -2.22,
-       "after": -3.11
+       "before": -3.11,
+       "after": -4.51
       },
       {
        "field": "株価",
-       "before": 2469.0,
-       "after": 2480.0
+       "before": 2480.0,
+       "after": 2444.0
       },
       {
        "field": "260日騰落（%）",
-       "before": 36.26,
-       "after": 37.02
+       "before": 37.02,
+       "after": 43.76
       },
       {
        "field": "スコア",
-       "before": 94.19,
-       "after": 92.49
+       "before": 92.49,
+       "after": 87.85
       },
       {
        "field": "参考損切価格",
-       "before": 2224.72,
-       "after": 2272.2
+       "before": 2272.2,
+       "after": 2301.31
       },
       {
        "field": "損切幅（%）",
-       "before": 11.89,
-       "after": 11.22
+       "before": 11.22,
+       "after": 10.09
       },
       {
        "field": "出来高乾き度",
-       "before": 1.09,
-       "after": 0.98
+       "before": 0.98,
+       "after": 0.97
+      }
+     ]
+    },
+    {
+     "key": "9039",
+     "name": "サカイ引越センター",
+     "changes": [
+      {
+       "field": "単元金額（万円）",
+       "before": 30.6,
+       "after": 30.2
+      },
+      {
+       "field": "時価総額（億円）",
+       "before": 1295.1,
+       "after": 1280.3
+      },
+      {
+       "field": "ピボット比（%）",
+       "before": -1.77,
+       "after": -2.89
+      },
+      {
+       "field": "株価",
+       "before": 3060.0,
+       "after": 3025.0
+      },
+      {
+       "field": "260日騰落（%）",
+       "before": 1.49,
+       "after": 4.74
+      },
+      {
+       "field": "スコア",
+       "before": 73.79,
+       "after": 68.97
+      },
+      {
+       "field": "参考損切価格",
+       "before": 2995.88,
+       "after": 3002.22
+      },
+      {
+       "field": "損切幅（%）",
+       "before": 3.82,
+       "after": 3.62
+      },
+      {
+       "field": "出来高乾き度",
+       "before": 0.94,
+       "after": 0.77
       }
      ]
     },
@@ -2715,48 +2407,53 @@
      "changes": [
       {
        "field": "単元金額（万円）",
-       "before": 23.9,
-       "after": 23.6
+       "before": 23.6,
+       "after": 24.3
       },
       {
        "field": "時価総額（億円）",
-       "before": 4200.8,
-       "after": 4152.5
+       "before": 4152.5,
+       "after": 4265.8
+      },
+      {
+       "field": "ピボット",
+       "before": 2422.0,
+       "after": 2428.0
       },
       {
        "field": "ピボット比（%）",
-       "before": -1.28,
-       "after": -2.42
+       "before": -2.42,
+       "after": 0.0
       },
       {
        "field": "株価",
-       "before": 2391.0,
-       "after": 2363.5
+       "before": 2363.5,
+       "after": 2428.0
       },
       {
        "field": "260日騰落（%）",
-       "before": 14.95,
-       "after": 14.4
+       "before": 14.4,
+       "after": 19.9
       },
       {
        "field": "スコア",
-       "before": 86.0,
-       "after": 80.69
+       "before": 80.69,
+       "after": 71.21
       },
       {
        "field": "参考損切価格",
-       "before": 2292.19,
-       "after": 2306.95
+       "before": 2306.95,
+       "after": 2316.53
       },
       {
        "field": "損切幅（%）",
-       "before": 5.36,
-       "after": 4.75
+       "before": 4.75,
+       "after": 4.59
       },
       {
        "field": "出来高乾き度",
-       "before": 0.96,
-       "after": 0.95
+       "before": 0.95,
+       "after": 1.0
       }
      ]
     },
@@ -2766,48 +2463,99 @@
      "changes": [
       {
        "field": "時価総額（億円）",
-       "before": 158010.3,
-       "after": 158282.0
-      },
-      {
-       "field": "ピボット",
-       "before": 180.1,
-       "after": 181.3
+       "before": 158282.0,
+       "after": 156923.7
       },
       {
        "field": "ピボット比（%）",
-       "before": -3.11,
-       "after": -3.59
+       "before": -3.59,
+       "after": -4.41
       },
       {
        "field": "株価",
-       "before": 174.5,
-       "after": 174.8
+       "before": 174.8,
+       "after": 173.3
       },
       {
        "field": "260日騰落（%）",
-       "before": 10.44,
-       "after": 12.48
+       "before": 12.48,
+       "after": 10.95
       },
       {
        "field": "スコア",
-       "before": 66.04,
-       "after": 73.35
+       "before": 73.35,
+       "after": 68.73
       },
       {
        "field": "参考損切価格",
-       "before": 168.85,
-       "after": 171.14
+       "before": 171.14,
+       "after": 172.42
       },
       {
        "field": "損切幅（%）",
-       "before": 6.24,
-       "after": 5.6
+       "before": 5.6,
+       "after": 4.9
+      }
+     ]
+    },
+    {
+     "key": "9536",
+     "name": "西部ガスホールディングス",
+     "changes": [
+      {
+       "field": "単元金額（万円）",
+       "before": 24.6,
+       "after": 27.9
+      },
+      {
+       "field": "時価総額（億円）",
+       "before": 914.4,
+       "after": 1009.6
+      },
+      {
+       "field": "ピボット",
+       "before": 2695.0,
+       "after": 2802.0
+      },
+      {
+       "field": "ピボット比（%）",
+       "before": -8.76,
+       "after": -0.29
+      },
+      {
+       "field": "株価",
+       "before": 2459.0,
+       "after": 2794.0
+      },
+      {
+       "field": "260日騰落（%）",
+       "before": 25.14,
+       "after": 42.77
+      },
+      {
+       "field": "スコア",
+       "before": 56.97,
+       "after": 94.96
+      },
+      {
+       "field": "参考損切価格",
+       "before": 2482.76,
+       "after": 2503.06
+      },
+      {
+       "field": "損切幅（%）",
+       "before": 7.88,
+       "after": 10.67
+      },
+      {
+       "field": "トレンド条件",
+       "before": 6,
+       "after": 7
       },
       {
        "field": "出来高乾き度",
-       "before": 0.86,
-       "after": 0.91
+       "before": 0.99,
+       "after": 0.83
       }
      ]
     },
@@ -2817,104 +2565,48 @@
      "changes": [
       {
        "field": "単元金額（万円）",
-       "before": 32.9,
-       "after": 31.2
+       "before": 31.2,
+       "after": 30.7
       },
       {
        "field": "時価総額（億円）",
-       "before": 987.0,
-       "after": 937.5
+       "before": 937.5,
+       "after": 921.0
       },
       {
        "field": "ピボット比（%）",
-       "before": -1.05,
-       "after": -6.02
+       "before": -6.02,
+       "after": -7.67
       },
       {
        "field": "株価",
-       "before": 3290.0,
-       "after": 3125.0
+       "before": 3125.0,
+       "after": 3070.0
       },
       {
        "field": "260日騰落（%）",
-       "before": 18.05,
-       "after": 12.78
+       "before": 12.78,
+       "after": 13.49
       },
       {
        "field": "スコア",
-       "before": 80.05,
-       "after": 61.21
+       "before": 61.21,
+       "after": 54.76
       },
       {
        "field": "参考損切価格",
-       "before": 3138.3,
-       "after": 3147.6
+       "before": 3147.6,
+       "after": 3149.6
       },
       {
        "field": "損切幅（%）",
-       "before": 5.62,
-       "after": 5.34
-      },
-      {
-       "field": "トレンド条件",
-       "before": 7,
-       "after": 6
+       "before": 5.34,
+       "after": 5.28
       },
       {
        "field": "出来高乾き度",
-       "before": 1.12,
-       "after": 0.96
-      }
-     ]
-    },
-    {
-     "key": "9934",
-     "name": "因幡電機産業",
-     "changes": [
-      {
-       "field": "単元金額（万円）",
-       "before": 31.3,
-       "after": 30.4
-      },
-      {
-       "field": "時価総額（億円）",
-       "before": 3557.5,
-       "after": 3450.7
-      },
-      {
-       "field": "ピボット比（%）",
-       "before": -2.95,
-       "after": -5.86
-      },
-      {
-       "field": "株価",
-       "before": 3130.0,
-       "after": 3036.0
-      },
-      {
-       "field": "260日騰落（%）",
-       "before": 43.84,
-       "after": 42.5
-      },
-      {
-       "field": "スコア",
-       "before": 90.49,
-       "after": 78.26
-      },
-      {
-       "field": "参考損切価格",
-       "before": 3058.1,
-       "after": 3069.57
-      },
-      {
-       "field": "損切幅（%）",
-       "before": 5.18,
-       "after": 4.82
-      },
-      {
-       "field": "トレンド条件",
-       "before": 8,
-       "after": 7
+       "before": 0.96,
+       "after": 0.74
       }
      ]
     }
@@ -2922,13 +2614,123 @@
    "unchanged": 0
   },
   "themes": {
-   "hash": "9a880bf7f0da98a44373fdc7abf89a723ef4fb464250dfcc89e7f502170c6d51",
-   "date": "20261023",
+   "hash": "18c529fadbac7180867bde745bd3dc562520e86f783a87c106e486f397797891",
+   "date": "20261030",
    "count": 4,
    "comparison": true,
-   "previous_date": "20261016",
+   "previous_date": "20261023",
    "previous_label": "前回公開データ",
    "added": [
+    {
+     "key": "サイバーセキュリティ関連株",
+     "name": "サイバーセキュリティ関連株",
+     "fields": {
+      "leaders": [
+       "4493 サイバーセキュリティクラウド",
+       "4498 サイバートラスト",
+       "4704 トレンドマイクロ"
+      ],
+      "earnings": "上方修正比率 4% / 高成長(予想+20%以上)比率 36%",
+      "margin": "買残4週変化 中央値 -4%",
+      "stage": "中期（高値更新が広がり中）（高値圏 7%、200MA上 89%、60日 +65%）",
+      "news": [
+       "29 Oct 2026 (株)サイバーセキュリティクラウド【4493】：企業情報（決算時期・代表者名・大株主情報・IR動画など） - Yahoo!ファイナンス",
+       "21 Oct 2026 サイバーセキュリティクラウド株が20％高、不正アクセス相次ぎ需要拡大期待 - Reuters",
+       "28 Oct 2026 サイバーセキュリティクラウド株は買い？株価急騰の理由と3つの課題 - つばめ投資顧問",
+       "24 Oct 2026 急にテーマ化した｢サイバーセキュリティ株｣に乗るべきか？ - 四季報オンライン",
+       "30 Oct 2026 サイバートラスト(株)【4498】：株価・株式情報（夜間PTS含む） - Yahoo!ファイナンス",
+       "30 Oct 2026 サイバートラスト(株)【4498】：掲示板 - Yahoo!ファイナンス",
+       "19 Oct 2026 サイバートラスト、データ主権確保を実現する PQC 対応可能な鍵管理サービスを提供開始 - サイバートラスト",
+       "30 Oct 2026 サイバートラスト---大幅続落、27年3月期上期は営業利益28.6%増・純利益62.7%増 - 株探"
+      ],
+      "driver": "物語/業績（不正アクセス急増報道で思惑先行、一部は増益決算も伴うが好決算でも急落する銘柄あり）",
+      "summary": "需要拡大期待で急騰も、決算と株価の乖離が目立ち選別が必要な局面",
+      "caution": "好決算のサイバートラストが大幅続落、急騰後に『乗るべきか』との懐疑的見出しも出現"
+     }
+    },
+    {
+     "key": "AI利活用・国内ITコンサル/SIer群",
+     "name": "AI利活用・国内ITコンサル/SIer群",
+     "fields": {
+      "leaders": [
+       "6098 リクルートホールディングス",
+       "6532 ベイカレント",
+       "4307 野村総合研究所"
+      ],
+      "earnings": "上方修正比率 0% / 高成長(予想+20%以上)比率 22%",
+      "margin": "買残4週変化 中央値 -8%",
+      "stage": "中期（高値更新が広がり中）（高値圏 15%、200MA上 96%、60日 +23%）",
+      "news": [
+       "30 Oct 2026 リクルートホールディングス (6098) の株価・株式 - QUICK Money World",
+       "14 Oct 2026 リクルートＨＤ、自社株買い期間を来年3月まで延長 上限は維持 - Reuters",
+       "31 Aug 2026 株価が半年で「166％超」上昇…リクルートHD（6098）に買いが殺到している理由【注目の業種・銘柄一覧】 - トウシル",
+       "16 Oct 2026 リクルート株価、上場来高値 「AI利活用銘柄」で物色 - 日本経済新聞",
+       "29 Oct 2026 【アナリスト予想】ベイカレント、27年2月期経常予想。対前週0.5%上昇。(アイフィス株予報) - Yahoo!ファイナンス",
+       "28 Oct 2026 後場コメント No.3 住友化、ベイカレント、ユアテック、空港ビル、リベロ、トーメンデバ | 個別記事 | ニュース - トレーダーズ・ウェブ",
+       "30 Oct 2026 (株)ベイカレント【6532】：株価・株式情報（夜間PTS含む） - Yahoo!ファイナンス",
+       "30 Oct 2026 (株)ベイカレント【6532】：掲示板 - Yahoo!ファイナンス"
+      ],
+      "driver": "物語/業績（AI活用期待で物色拡大、NRIはIBM好決算連想、業績は一部のみ裏付け）",
+      "summary": "AI物語先行で株価上昇も業績の裏付けは薄く、選別が進む局面",
+      "caution": "買残4週-7.9%減、上方修正比率0%で株価先行の過熱感あり"
+     }
+    },
+    {
+     "key": "資源高・半導体離れで資源/海運/商社に資金シフト",
+     "name": "資源高・半導体離れで資源/海運/商社に資金シフト",
+     "fields": {
+      "leaders": [
+       "8001 伊藤忠商事",
+       "9104 商船三井",
+       "1605 ＩＮＰＥＸ"
+      ],
+      "earnings": "上方修正比率 31% / 高成長(予想+20%以上)比率 31%",
+      "margin": "買残4週変化 中央値 -11%",
+      "stage": "中期（高値更新が広がり中）（高値圏 54%、200MA上 92%、60日 +18%）",
+      "news": [
+       "30 Oct 2026 伊藤忠商事(株)【8001】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
+       "30 Oct 2026 伊藤忠商事(株)【8001】：現物信用売買内訳時系列 - Yahoo!ファイナンス",
+       "23 Oct 2026 伊藤忠商事(株)・西口知邦代表取締役 上席執行役員CAOが竹村彰通学長を表敬訪問 - 滋賀大学",
+       "28 Oct 2026 半導体株から資金シフト鮮明、「日本の商社株」──今買うなら三菱商事か伊藤忠か？ 執筆 - Investing.com - FX | 株式市場 | ファイナンス | 金融ニュース",
+       "30 Oct 2026 (株)商船三井【9104】：掲示板 - Yahoo!ファイナンス",
+       "30 Oct 2026 (株)商船三井【9104】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
+       "03 Oct 2026 商船三井株が高値圏 エネルギー事業の比率高く先高観 - 日本経済新聞",
+       "18 Aug 2026 話題株ピックアップ【昼刊】：インフォＭＴ、商船三井、ＳＢＧ - 株探"
+      ],
+      "driver": "業績/物語（原油高でINPEXやENEOS関連が買われ、半導体株からの資金シフト報道も確認）",
+      "summary": "資源高と脱半導体の物色で商社・海運・資源株が中期的に高値圏推移",
+      "caution": "信用買残は4週で約11%減少、米国関連ETFも弱含みで過熱感はまだ限定的"
+     }
+    },
+    {
+     "key": "精密機器・バイオ医薬複合テーマ(HOYA・オンコリス中心)",
+     "name": "精密機器・バイオ医薬複合テーマ(HOYA・オンコリス中心)",
+     "fields": {
+      "leaders": [
+       "7741 ＨＯＹＡ",
+       "4588 オンコリスバイオファーマ",
+       "7701 島津製作所"
+      ],
+      "earnings": "上方修正比率 0% / 高成長(予想+20%以上)比率 8%",
+      "margin": "買残4週変化 中央値 -3%",
+      "stage": "中期（高値更新が広がり中）（高値圏 17%、200MA上 92%、60日 +54%）",
+      "news": [
+       "30 Oct 2026 ＨＯＹＡ、上期最終が27％増益で着地・7-9月期も28％増益 - 株探",
+       "30 Oct 2026 寄前【板状況】注文ランキング 【買いトップ】ＨＯＹＡ 【売りトップ】キオクシア [08:53](株探ニュース) - Yahoo!ファイナンス",
+       "30 Oct 2026 HOYA、中間連結純利益27．3％増 1365億円(時事通信) - Yahoo!ファイナンス",
+       "30 Oct 2026 ＨＯＹＡ(株)【7741】：現物信用売買内訳時系列 - Yahoo!ファイナンス",
+       "30 Oct 2026 オンコリスバイオファーマ(株)【4588】：現物信用売買内訳時系列 - Yahoo!ファイナンス",
+       "30 Oct 2026 オンコリスバイオファーマ(株)【4588】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
+       "03 Sep 2026 オンコリス株、がんウイルス薬が導いた最高値 ｢新TOPIX｣採用期待も - 日経ヴェリタス - 日本経済新聞",
+       "12 Aug 2026 オンコリス、マイルストーン収入で大幅増収、食道がん治療薬「テロメライシン」を8月21日発売し製品販売売上高の計上開始 - ログミーFinance"
+      ],
+      "driver": "業績/物語（HOYA上期27%増益、オンコリスは新薬テロメライシン発売と最高値更新が材料）",
+      "summary": "HOYA好決算とオンコリス新薬材料で物色続くが銘柄間のばらつき大きい",
+      "caution": "高値圏比率16%と限定的、信用買残は微減、過熱感は不明瞭"
+     }
+    }
+   ],
+   "removed": [
     {
      "key": "食品・小売ディフェンシブ内需株",
      "name": "食品・小売ディフェンシブ内需株",
@@ -3035,116 +2837,6 @@
       "driver": "業績/物語（決算後の急反発や新成長ストーリーが買い材料、ただ上方修正比率は0%）",
       "summary": "決算発表を材料に個別株が物色される展開、米国に先行テーマなく国内独自要因主導",
       "caution": "上方修正比率0%で業績モメンタム弱く、信用買残4週減少は過熱後退のサイン"
-     }
-    }
-   ],
-   "removed": [
-    {
-     "key": "AIエージェント活用・セキュリティDX関連株",
-     "name": "AIエージェント活用・セキュリティDX関連株",
-     "fields": {
-      "leaders": [
-       "6702 富士通",
-       "6701 日本電気",
-       "4307 野村総合研究所"
-      ],
-      "earnings": "上方修正比率 0% / 高成長(予想+20%以上)比率 33%",
-      "margin": "買残4週変化 中央値 -8%",
-      "stage": "中期（高値更新が広がり中）（高値圏 58%、200MA上 100%、60日 +56%）",
-      "news": [
-       "16 Oct 2026 富士通(株)【6702】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
-       "08 Oct 2026 富士通株が戻り歩調 「モナカ」の中身に高まる期待 - 日経ヴェリタス - 日本経済新聞",
-       "16 Oct 2026 富士通株価は6%上昇： AI・量子コンピューター関連の材料と決算に注目 - EBC Financial Group",
-       "16 Aug 2026 Financial Well-being | 富士通 - Fujitsu Global",
-       "16 Oct 2026 新日本電工(株)【5563】：株価・株式情報（夜間PTS含む） - Yahoo!ファイナンス",
-       "17 Sep 2026 インクルージョン＆ダイバーシティ : 企業情報 - NEC",
-       "28 Aug 2026 NEC、多様なサプライチェーン業務を自律実行する「NEC SCM AIエージェント」を販売開始 (2026年8月28日): プレスリリース - NEC",
-       "16 Oct 2026 株式会社dotD、NEC・TOPPANとの3社共催イベント『「AI駆動開発」の現在地 ～プロトタイプからローンチまでのリアル～』開催のお知らせ｜Infoseekニュース - Infoseek"
-      ],
-      "driver": "物語/業績（NEC・NRIのAIエージェント活用やセキュリティ需要報道が先行、業績上方修正は乏しい）",
-      "summary": "AI活用・セキュリティ期待で中期物色拡大中、業績裏付けは薄く過熱注意",
-      "caution": "上方修正比率0%、信用買残4週で約8%減少、米国同業種軟調は過熱後退のサイン"
-     }
-    },
-    {
-     "key": "サイバーセキュリティ関連株急騰",
-     "name": "サイバーセキュリティ関連株急騰",
-     "fields": {
-      "leaders": [
-       "4493 サイバーセキュリティクラウド",
-       "3692 ＦＦＲＩセキュリティ",
-       "338A ＺｅｎｍｕＴｅｃｈ"
-      ],
-      "earnings": "上方修正比率 0% / 高成長(予想+20%以上)比率 31%",
-      "margin": "買残4週変化 中央値 -4%",
-      "stage": "中期（高値更新が広がり中）（高値圏 38%、200MA上 100%、60日 +72%）",
-      "news": [
-       "13 Oct 2026 前週比96%高の急騰！サイバー攻撃から企業を守る「セキュリティ銘柄」が株価上昇率ランキング独占…今週の注目銘柄は？ - トウシル",
-       "13 Oct 2026 ストップ高ラッシュの次に来るのはどこか？サイバーセキュリティ関連、本命から出遅れまで厳選20銘柄【完全保存版】 - note",
-       "08 Oct 2026 サイバーセキュリティクラウド－ストップ高買い気配 不正アクセス被害の拡大止まらず 関連銘柄に買い(トレーダーズ・ウェブ) - Yahoo! JAPAN",
-       "13 Oct 2026 サイバーセキュリティー関連が軒並み急騰、踏み上げ相場で想定外の上昇パフォーマンス相次ぐ - 株探",
-       "14 Oct 2026 FFRIセキュリティ、株価一時12%安 関連銘柄に利益確定売り - 日本経済新聞",
-       "03 Oct 2026 AI時代に活躍必至、「サイバーセキュリティ」株は新たな飛躍ステージへ ＜株探トップ特集＞ - 株探",
-       "08 Oct 2026 FFRIセキュリティの目標株価は?サイバーセキュリティ株急騰で今後はどうなる? - EBC Financial Group",
-       "25 Sep 2026 【新興5％ルール】：ＦＦＲＩセキュリティの1社(フィスコ) - Yahoo!ファイナンス"
-      ],
-      "driver": "物語/供給制約（不正アクセス被害拡大報道と踏み上げ相場が株価急騰を牽引、業績裏付けは薄い）",
-      "summary": "セキュリティ被害拡大を材料に急騰も、業績未達で思惑先行、過熱警戒が必要",
-      "caution": "ストップ高連発後にFFRI急落12%安、利益確定売りと信用買残減少で踏み上げ反動の兆し"
-     }
-    },
-    {
-     "key": "半導体装置・ストレージ関連裾野＋コンテンツ株の相関混成テーマ",
-     "name": "半導体装置・ストレージ関連裾野＋コンテンツ株の相関混成テーマ",
-     "fields": {
-      "leaders": [
-       "7751 キヤノン",
-       "9766 コナミグループ",
-       "6988 日東電工"
-      ],
-      "earnings": "上方修正比率 0% / 高成長(予想+20%以上)比率 12%",
-      "margin": "買残4週変化 中央値 -5%",
-      "stage": "中期（高値更新が広がり中）（高値圏 41%、200MA上 88%、60日 +20%）",
-      "news": [
-       "16 Oct 2026 キヤノン(株)【7751】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
-       "12 Oct 2026 キヤノン、信越化学工業も…「下落が怖い」人向け\"高配当\"半導体・AI株7銘柄の実名 - 現代ビジネス",
-       "04 Jul 2026 キヤノン、読み切れぬメモリー高騰の影響 株主還元には評価 - 日本経済新聞",
-       "30 Jun 2026 開発者ストーリー - ナノインプリントリソグラフィ | キヤノングローバル - Canon Global",
-       "16 Oct 2026 【アナリスト評価】コナミＧ、レーティング強気を継続、目標株価26,000円に引上げ（米系大手証券）(アイフィス株予報) - Yahoo!ファイナンス",
-       "11 Oct 2026 コナミグループ(株)【9766】：企業情報（決算時期・代表者名・大株主情報・IR動画など） - Yahoo!ファイナンス",
-       "27 May 2026 株主状況 2026年3月31日現在 | コナミグループ株式会社 - KONAMI GROUP CORPORATION",
-       "24 Sep 2026 話題株ピックアップ【夕刊】（3）：コナミＧ、住友化、三井金属 - 株探"
-      ],
-      "driver": "物語/供給制約（上方修正比率0%でも株価は高値圏、メモリー高騰・HDD増産報道が買い材料に）",
-      "summary": "業績裏付けは薄いが値動き連動で広く物色されている混成テーマ、選別必要",
-      "caution": "高成長比率11.8%と低く、信用買残4週で減少傾向、材料一巡で失速の恐れ"
-     }
-    },
-    {
-     "key": "高値圏の大型優良株（内需ディフェンシブ+輸出混在）",
-     "name": "高値圏の大型優良株（内需ディフェンシブ+輸出混在）",
-     "fields": {
-      "leaders": [
-       "2914 日本たばこ産業",
-       "4502 武田薬品工業",
-       "7267 本田技研工業"
-      ],
-      "earnings": "上方修正比率 0% / 高成長(予想+20%以上)比率 31%",
-      "margin": "買残4週変化 中央値 -11%",
-      "stage": "末期の可能性（大半が高値圏）（高値圏 69%、200MA上 100%、60日 +14%）",
-      "news": [
-       "15 Oct 2026 ＪＴ【2914】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
-       "16 Oct 2026 JTがoverflowとともに挑む人事部起点の「AX」 - Forbes JAPAN",
-       "16 Oct 2026 JT、Ploom専用の「EVO」などに秋限定のレギュラー3銘柄を追加 - kakaku.com",
-       "15 Oct 2026 Momentiaが展開する目標達成・習慣化アプリ「Habee（ハビー）」が2026年度グッドデザイン賞を受賞 - PR TIMES",
-       "16 Oct 2026 武田薬品工業(株)【4502】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
-       "15 Oct 2026 武田薬品工業株価、8年ぶり高値 睡眠障害治療薬を日中で発売 - 日本経済新聞",
-       "16 Oct 2026 武田薬品工業(株)【TAK】：株価・株式情報 - Yahoo!ファイナンス",
-       "15 Oct 2026 武田薬品工業(株)【4502】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス"
-      ],
-      "driver": "業績（武田は新薬発売で8年ぶり高値、ホンダは増益・上方修正など個別好業績が牽引）",
-      "summary": "個別業績好調な大型株が軒並み高値圏、物色継続も過熱感が意識される局面",
-      "caution": "高値圏比率69%・MA200上100%で信用買残は4週で-11%減、上値の重さに注意"
      }
     }
    ],
@@ -3152,6 +2844,116 @@
    "unchanged": 0,
    "current_topics": [
     {
+     "key": "サイバーセキュリティ関連株",
+     "name": "サイバーセキュリティ関連株",
+     "fields": {
+      "leaders": [
+       "4493 サイバーセキュリティクラウド",
+       "4498 サイバートラスト",
+       "4704 トレンドマイクロ"
+      ],
+      "earnings": "上方修正比率 4% / 高成長(予想+20%以上)比率 36%",
+      "margin": "買残4週変化 中央値 -4%",
+      "stage": "中期（高値更新が広がり中）（高値圏 7%、200MA上 89%、60日 +65%）",
+      "news": [
+       "29 Oct 2026 (株)サイバーセキュリティクラウド【4493】：企業情報（決算時期・代表者名・大株主情報・IR動画など） - Yahoo!ファイナンス",
+       "21 Oct 2026 サイバーセキュリティクラウド株が20％高、不正アクセス相次ぎ需要拡大期待 - Reuters",
+       "28 Oct 2026 サイバーセキュリティクラウド株は買い？株価急騰の理由と3つの課題 - つばめ投資顧問",
+       "24 Oct 2026 急にテーマ化した｢サイバーセキュリティ株｣に乗るべきか？ - 四季報オンライン",
+       "30 Oct 2026 サイバートラスト(株)【4498】：株価・株式情報（夜間PTS含む） - Yahoo!ファイナンス",
+       "30 Oct 2026 サイバートラスト(株)【4498】：掲示板 - Yahoo!ファイナンス",
+       "19 Oct 2026 サイバートラスト、データ主権確保を実現する PQC 対応可能な鍵管理サービスを提供開始 - サイバートラスト",
+       "30 Oct 2026 サイバートラスト---大幅続落、27年3月期上期は営業利益28.6%増・純利益62.7%増 - 株探"
+      ],
+      "driver": "物語/業績（不正アクセス急増報道で思惑先行、一部は増益決算も伴うが好決算でも急落する銘柄あり）",
+      "summary": "需要拡大期待で急騰も、決算と株価の乖離が目立ち選別が必要な局面",
+      "caution": "好決算のサイバートラストが大幅続落、急騰後に『乗るべきか』との懐疑的見出しも出現"
+     }
+    },
+    {
+     "key": "AI利活用・国内ITコンサル/SIer群",
+     "name": "AI利活用・国内ITコンサル/SIer群",
+     "fields": {
+      "leaders": [
+       "6098 リクルートホールディングス",
+       "6532 ベイカレント",
+       "4307 野村総合研究所"
+      ],
+      "earnings": "上方修正比率 0% / 高成長(予想+20%以上)比率 22%",
+      "margin": "買残4週変化 中央値 -8%",
+      "stage": "中期（高値更新が広がり中）（高値圏 15%、200MA上 96%、60日 +23%）",
+      "news": [
+       "30 Oct 2026 リクルートホールディングス (6098) の株価・株式 - QUICK Money World",
+       "14 Oct 2026 リクルートＨＤ、自社株買い期間を来年3月まで延長 上限は維持 - Reuters",
+       "31 Aug 2026 株価が半年で「166％超」上昇…リクルートHD（6098）に買いが殺到している理由【注目の業種・銘柄一覧】 - トウシル",
+       "16 Oct 2026 リクルート株価、上場来高値 「AI利活用銘柄」で物色 - 日本経済新聞",
+       "29 Oct 2026 【アナリスト予想】ベイカレント、27年2月期経常予想。対前週0.5%上昇。(アイフィス株予報) - Yahoo!ファイナンス",
+       "28 Oct 2026 後場コメント No.3 住友化、ベイカレント、ユアテック、空港ビル、リベロ、トーメンデバ | 個別記事 | ニュース - トレーダーズ・ウェブ",
+       "30 Oct 2026 (株)ベイカレント【6532】：株価・株式情報（夜間PTS含む） - Yahoo!ファイナンス",
+       "30 Oct 2026 (株)ベイカレント【6532】：掲示板 - Yahoo!ファイナンス"
+      ],
+      "driver": "物語/業績（AI活用期待で物色拡大、NRIはIBM好決算連想、業績は一部のみ裏付け）",
+      "summary": "AI物語先行で株価上昇も業績の裏付けは薄く、選別が進む局面",
+      "caution": "買残4週-7.9%減、上方修正比率0%で株価先行の過熱感あり"
+     }
+    },
+    {
+     "key": "資源高・半導体離れで資源/海運/商社に資金シフト",
+     "name": "資源高・半導体離れで資源/海運/商社に資金シフト",
+     "fields": {
+      "leaders": [
+       "8001 伊藤忠商事",
+       "9104 商船三井",
+       "1605 ＩＮＰＥＸ"
+      ],
+      "earnings": "上方修正比率 31% / 高成長(予想+20%以上)比率 31%",
+      "margin": "買残4週変化 中央値 -11%",
+      "stage": "中期（高値更新が広がり中）（高値圏 54%、200MA上 92%、60日 +18%）",
+      "news": [
+       "30 Oct 2026 伊藤忠商事(株)【8001】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
+       "30 Oct 2026 伊藤忠商事(株)【8001】：現物信用売買内訳時系列 - Yahoo!ファイナンス",
+       "23 Oct 2026 伊藤忠商事(株)・西口知邦代表取締役 上席執行役員CAOが竹村彰通学長を表敬訪問 - 滋賀大学",
+       "28 Oct 2026 半導体株から資金シフト鮮明、「日本の商社株」──今買うなら三菱商事か伊藤忠か？ 執筆 - Investing.com - FX | 株式市場 | ファイナンス | 金融ニュース",
+       "30 Oct 2026 (株)商船三井【9104】：掲示板 - Yahoo!ファイナンス",
+       "30 Oct 2026 (株)商船三井【9104】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
+       "03 Oct 2026 商船三井株が高値圏 エネルギー事業の比率高く先高観 - 日本経済新聞",
+       "18 Aug 2026 話題株ピックアップ【昼刊】：インフォＭＴ、商船三井、ＳＢＧ - 株探"
+      ],
+      "driver": "業績/物語（原油高でINPEXやENEOS関連が買われ、半導体株からの資金シフト報道も確認）",
+      "summary": "資源高と脱半導体の物色で商社・海運・資源株が中期的に高値圏推移",
+      "caution": "信用買残は4週で約11%減少、米国関連ETFも弱含みで過熱感はまだ限定的"
+     }
+    },
+    {
+     "key": "精密機器・バイオ医薬複合テーマ(HOYA・オンコリス中心)",
+     "name": "精密機器・バイオ医薬複合テーマ(HOYA・オンコリス中心)",
+     "fields": {
+      "leaders": [
+       "7741 ＨＯＹＡ",
+       "4588 オンコリスバイオファーマ",
+       "7701 島津製作所"
+      ],
+      "earnings": "上方修正比率 0% / 高成長(予想+20%以上)比率 8%",
+      "margin": "買残4週変化 中央値 -3%",
+      "stage": "中期（高値更新が広がり中）（高値圏 17%、200MA上 92%、60日 +54%）",
+      "news": [
+       "30 Oct 2026 ＨＯＹＡ、上期最終が27％増益で着地・7-9月期も28％増益 - 株探",
+       "30 Oct 2026 寄前【板状況】注文ランキング 【買いトップ】ＨＯＹＡ 【売りトップ】キオクシア [08:53](株探ニュース) - Yahoo!ファイナンス",
+       "30 Oct 2026 HOYA、中間連結純利益27．3％増 1365億円(時事通信) - Yahoo!ファイナンス",
+       "30 Oct 2026 ＨＯＹＡ(株)【7741】：現物信用売買内訳時系列 - Yahoo!ファイナンス",
+       "30 Oct 2026 オンコリスバイオファーマ(株)【4588】：現物信用売買内訳時系列 - Yahoo!ファイナンス",
+       "30 Oct 2026 オンコリスバイオファーマ(株)【4588】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
+       "03 Sep 2026 オンコリス株、がんウイルス薬が導いた最高値 ｢新TOPIX｣採用期待も - 日経ヴェリタス - 日本経済新聞",
+       "12 Aug 2026 オンコリス、マイルストーン収入で大幅増収、食道がん治療薬「テロメライシン」を8月21日発売し製品販売売上高の計上開始 - ログミーFinance"
+      ],
+      "driver": "業績/物語（HOYA上期27%増益、オンコリスは新薬テロメライシン発売と最高値更新が材料）",
+      "summary": "HOYA好決算とオンコリス新薬材料で物色続くが銘柄間のばらつき大きい",
+      "caution": "高値圏比率16%と限定的、信用買残は微減、過熱感は不明瞭"
+     }
+    }
+   ],
+   "previous_topics": [
+    {
      "key": "食品・小売ディフェンシブ内需株",
      "name": "食品・小売ディフェンシブ内需株",
      "fields": {
@@ -3259,126 +3061,216 @@
       "caution": "上方修正比率0%で業績モメンタム弱く、信用買残4週減少は過熱後退のサイン"
      }
     }
-   ],
-   "previous_topics": [
-    {
-     "key": "AIエージェント活用・セキュリティDX関連株",
-     "name": "AIエージェント活用・セキュリティDX関連株",
-     "fields": {
-      "leaders": [
-       "6702 富士通",
-       "6701 日本電気",
-       "4307 野村総合研究所"
-      ],
-      "earnings": "上方修正比率 0% / 高成長(予想+20%以上)比率 33%",
-      "margin": "買残4週変化 中央値 -8%",
-      "stage": "中期（高値更新が広がり中）（高値圏 58%、200MA上 100%、60日 +56%）",
-      "news": [
-       "16 Oct 2026 富士通(株)【6702】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
-       "08 Oct 2026 富士通株が戻り歩調 「モナカ」の中身に高まる期待 - 日経ヴェリタス - 日本経済新聞",
-       "16 Oct 2026 富士通株価は6%上昇： AI・量子コンピューター関連の材料と決算に注目 - EBC Financial Group",
-       "16 Aug 2026 Financial Well-being | 富士通 - Fujitsu Global",
-       "16 Oct 2026 新日本電工(株)【5563】：株価・株式情報（夜間PTS含む） - Yahoo!ファイナンス",
-       "17 Sep 2026 インクルージョン＆ダイバーシティ : 企業情報 - NEC",
-       "28 Aug 2026 NEC、多様なサプライチェーン業務を自律実行する「NEC SCM AIエージェント」を販売開始 (2026年8月28日): プレスリリース - NEC",
-       "16 Oct 2026 株式会社dotD、NEC・TOPPANとの3社共催イベント『「AI駆動開発」の現在地 ～プロトタイプからローンチまでのリアル～』開催のお知らせ｜Infoseekニュース - Infoseek"
-      ],
-      "driver": "物語/業績（NEC・NRIのAIエージェント活用やセキュリティ需要報道が先行、業績上方修正は乏しい）",
-      "summary": "AI活用・セキュリティ期待で中期物色拡大中、業績裏付けは薄く過熱注意",
-      "caution": "上方修正比率0%、信用買残4週で約8%減少、米国同業種軟調は過熱後退のサイン"
-     }
-    },
-    {
-     "key": "サイバーセキュリティ関連株急騰",
-     "name": "サイバーセキュリティ関連株急騰",
-     "fields": {
-      "leaders": [
-       "4493 サイバーセキュリティクラウド",
-       "3692 ＦＦＲＩセキュリティ",
-       "338A ＺｅｎｍｕＴｅｃｈ"
-      ],
-      "earnings": "上方修正比率 0% / 高成長(予想+20%以上)比率 31%",
-      "margin": "買残4週変化 中央値 -4%",
-      "stage": "中期（高値更新が広がり中）（高値圏 38%、200MA上 100%、60日 +72%）",
-      "news": [
-       "13 Oct 2026 前週比96%高の急騰！サイバー攻撃から企業を守る「セキュリティ銘柄」が株価上昇率ランキング独占…今週の注目銘柄は？ - トウシル",
-       "13 Oct 2026 ストップ高ラッシュの次に来るのはどこか？サイバーセキュリティ関連、本命から出遅れまで厳選20銘柄【完全保存版】 - note",
-       "08 Oct 2026 サイバーセキュリティクラウド－ストップ高買い気配 不正アクセス被害の拡大止まらず 関連銘柄に買い(トレーダーズ・ウェブ) - Yahoo! JAPAN",
-       "13 Oct 2026 サイバーセキュリティー関連が軒並み急騰、踏み上げ相場で想定外の上昇パフォーマンス相次ぐ - 株探",
-       "14 Oct 2026 FFRIセキュリティ、株価一時12%安 関連銘柄に利益確定売り - 日本経済新聞",
-       "03 Oct 2026 AI時代に活躍必至、「サイバーセキュリティ」株は新たな飛躍ステージへ ＜株探トップ特集＞ - 株探",
-       "08 Oct 2026 FFRIセキュリティの目標株価は?サイバーセキュリティ株急騰で今後はどうなる? - EBC Financial Group",
-       "25 Sep 2026 【新興5％ルール】：ＦＦＲＩセキュリティの1社(フィスコ) - Yahoo!ファイナンス"
-      ],
-      "driver": "物語/供給制約（不正アクセス被害拡大報道と踏み上げ相場が株価急騰を牽引、業績裏付けは薄い）",
-      "summary": "セキュリティ被害拡大を材料に急騰も、業績未達で思惑先行、過熱警戒が必要",
-      "caution": "ストップ高連発後にFFRI急落12%安、利益確定売りと信用買残減少で踏み上げ反動の兆し"
-     }
-    },
-    {
-     "key": "半導体装置・ストレージ関連裾野＋コンテンツ株の相関混成テーマ",
-     "name": "半導体装置・ストレージ関連裾野＋コンテンツ株の相関混成テーマ",
-     "fields": {
-      "leaders": [
-       "7751 キヤノン",
-       "9766 コナミグループ",
-       "6988 日東電工"
-      ],
-      "earnings": "上方修正比率 0% / 高成長(予想+20%以上)比率 12%",
-      "margin": "買残4週変化 中央値 -5%",
-      "stage": "中期（高値更新が広がり中）（高値圏 41%、200MA上 88%、60日 +20%）",
-      "news": [
-       "16 Oct 2026 キヤノン(株)【7751】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
-       "12 Oct 2026 キヤノン、信越化学工業も…「下落が怖い」人向け\"高配当\"半導体・AI株7銘柄の実名 - 現代ビジネス",
-       "04 Jul 2026 キヤノン、読み切れぬメモリー高騰の影響 株主還元には評価 - 日本経済新聞",
-       "30 Jun 2026 開発者ストーリー - ナノインプリントリソグラフィ | キヤノングローバル - Canon Global",
-       "16 Oct 2026 【アナリスト評価】コナミＧ、レーティング強気を継続、目標株価26,000円に引上げ（米系大手証券）(アイフィス株予報) - Yahoo!ファイナンス",
-       "11 Oct 2026 コナミグループ(株)【9766】：企業情報（決算時期・代表者名・大株主情報・IR動画など） - Yahoo!ファイナンス",
-       "27 May 2026 株主状況 2026年3月31日現在 | コナミグループ株式会社 - KONAMI GROUP CORPORATION",
-       "24 Sep 2026 話題株ピックアップ【夕刊】（3）：コナミＧ、住友化、三井金属 - 株探"
-      ],
-      "driver": "物語/供給制約（上方修正比率0%でも株価は高値圏、メモリー高騰・HDD増産報道が買い材料に）",
-      "summary": "業績裏付けは薄いが値動き連動で広く物色されている混成テーマ、選別必要",
-      "caution": "高成長比率11.8%と低く、信用買残4週で減少傾向、材料一巡で失速の恐れ"
-     }
-    },
-    {
-     "key": "高値圏の大型優良株（内需ディフェンシブ+輸出混在）",
-     "name": "高値圏の大型優良株（内需ディフェンシブ+輸出混在）",
-     "fields": {
-      "leaders": [
-       "2914 日本たばこ産業",
-       "4502 武田薬品工業",
-       "7267 本田技研工業"
-      ],
-      "earnings": "上方修正比率 0% / 高成長(予想+20%以上)比率 31%",
-      "margin": "買残4週変化 中央値 -11%",
-      "stage": "末期の可能性（大半が高値圏）（高値圏 69%、200MA上 100%、60日 +14%）",
-      "news": [
-       "15 Oct 2026 ＪＴ【2914】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
-       "16 Oct 2026 JTがoverflowとともに挑む人事部起点の「AX」 - Forbes JAPAN",
-       "16 Oct 2026 JT、Ploom専用の「EVO」などに秋限定のレギュラー3銘柄を追加 - kakaku.com",
-       "15 Oct 2026 Momentiaが展開する目標達成・習慣化アプリ「Habee（ハビー）」が2026年度グッドデザイン賞を受賞 - PR TIMES",
-       "16 Oct 2026 武田薬品工業(株)【4502】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス",
-       "15 Oct 2026 武田薬品工業株価、8年ぶり高値 睡眠障害治療薬を日中で発売 - 日本経済新聞",
-       "16 Oct 2026 武田薬品工業(株)【TAK】：株価・株式情報 - Yahoo!ファイナンス",
-       "15 Oct 2026 武田薬品工業(株)【4502】：今の株価の理由は？値動きの背景をAIが解説 - Yahoo!ファイナンス"
-      ],
-      "driver": "業績（武田は新薬発売で8年ぶり高値、ホンダは増益・上方修正など個別好業績が牽引）",
-      "summary": "個別業績好調な大型株が軒並み高値圏、物色継続も過熱感が意識される局面",
-      "caution": "高値圏比率69%・MA200上100%で信用買残は4週で-11%減、上値の重さに注意"
-     }
-    }
    ]
   },
   "radar": {
-   "hash": "a2dbe17146296ba3085872c0a24ac9653d6cd0832d89b7795d17497048c005ba",
-   "date": "2026-10-23",
-   "count": 51,
+   "hash": "466355a404e3e3186bfd7fbf93aef60c6e9dea0991a84a0a19940bc4a13c284b",
+   "date": "2026-10-30",
+   "count": 42,
    "comparison": true,
-   "previous_date": "2026-10-16",
+   "previous_date": "2026-10-23",
    "previous_label": "前回公開データ",
    "added": [
+    {
+     "key": "5246",
+     "name": "ＥＬＥＭＥＮＴＳ",
+     "fields": {
+      "sector": "情報･通信業",
+      "r20": 24.8,
+      "turnover_oku": 63.4
+     }
+    },
+    {
+     "key": "4733",
+     "name": "オービックビジネスコンサルタント",
+     "fields": {
+      "sector": "情報･通信業",
+      "r20": 21.9,
+      "turnover_oku": 21.9
+     }
+    },
+    {
+     "key": "3626",
+     "name": "ＴＩＳＩ",
+     "fields": {
+      "sector": "情報･通信業",
+      "r20": 12.0,
+      "turnover_oku": 35.4
+     }
+    },
+    {
+     "key": "4686",
+     "name": "ジャストシステム",
+     "fields": {
+      "sector": "情報･通信業",
+      "r20": 11.6,
+      "turnover_oku": 4.8
+     }
+    },
+    {
+     "key": "3923",
+     "name": "ラクス",
+     "fields": {
+      "sector": "情報･通信業",
+      "r20": 9.3,
+      "turnover_oku": 17.6
+     }
+    },
+    {
+     "key": "4194",
+     "name": "ビジョナル",
+     "fields": {
+      "sector": "情報･通信業",
+      "r20": 9.2,
+      "turnover_oku": 20.7
+     }
+    },
+    {
+     "key": "4434",
+     "name": "サーバーワークス",
+     "fields": {
+      "sector": "情報･通信業",
+      "r20": 14.9,
+      "turnover_oku": 3.6
+     }
+    },
+    {
+     "key": "9075",
+     "name": "福山通運",
+     "fields": {
+      "sector": "陸運業",
+      "r20": 12.6,
+      "turnover_oku": 8.1
+     }
+    },
+    {
+     "key": "277A",
+     "name": "グロービング",
+     "fields": {
+      "sector": "サービス業",
+      "r20": 11.1,
+      "turnover_oku": 4.8
+     }
+    },
+    {
+     "key": "4403",
+     "name": "日油",
+     "fields": {
+      "sector": "化学",
+      "r20": 9.8,
+      "turnover_oku": 29.7
+     }
+    },
+    {
+     "key": "3491",
+     "name": "ＧＡ　ｔｅｃｈｎｏｌｏｇｉｅｓ",
+     "fields": {
+      "sector": "不動産業",
+      "r20": 8.1,
+      "turnover_oku": 3.7
+     }
+    },
+    {
+     "key": "2531",
+     "name": "宝ホールディングス",
+     "fields": {
+      "sector": "食料品",
+      "r20": 7.5,
+      "turnover_oku": 32.4
+     }
+    },
+    {
+     "key": "219A",
+     "name": "Ｈｅａｒｔｓｅｅｄ",
+     "fields": {
+      "sector": "医薬品",
+      "r20": 15.1,
+      "turnover_oku": 14.2
+     }
+    },
+    {
+     "key": "4894",
+     "name": "クオリプス",
+     "fields": {
+      "sector": "医薬品",
+      "r20": 14.6,
+      "turnover_oku": 13.2
+     }
+    },
+    {
+     "key": "2395",
+     "name": "新日本科学",
+     "fields": {
+      "sector": "サービス業",
+      "r20": 13.8,
+      "turnover_oku": 4.3
+     }
+    },
+    {
+     "key": "1871",
+     "name": "ピーエス・コンストラクション",
+     "fields": {
+      "sector": "建設業",
+      "r20": 9.3,
+      "turnover_oku": 4.2
+     }
+    },
+    {
+     "key": "8012",
+     "name": "長瀬産業",
+     "fields": {
+      "sector": "卸売業",
+      "r20": 8.3,
+      "turnover_oku": 13.7
+     }
+    },
+    {
+     "key": "6613",
+     "name": "ＱＤレーザ",
+     "fields": {
+      "sector": "電気機器",
+      "r20": 7.3,
+      "turnover_oku": 47.7
+     }
+    },
+    {
+     "key": "6744",
+     "name": "能美防災",
+     "fields": {
+      "sector": "電気機器",
+      "r20": 11.5,
+      "turnover_oku": 5.3
+     }
+    },
+    {
+     "key": "8159",
+     "name": "立花エレテック",
+     "fields": {
+      "sector": "卸売業",
+      "r20": 9.8,
+      "turnover_oku": 3.6
+     }
+    },
+    {
+     "key": "166A",
+     "name": "タスキホールディングス",
+     "fields": {
+      "sector": "不動産業",
+      "r20": 6.5,
+      "turnover_oku": 5.6
+     }
+    },
+    {
+     "key": "6745",
+     "name": "ホーチキ",
+     "fields": {
+      "sector": "電気機器",
+      "r20": 6.4,
+      "turnover_oku": 3.3
+     }
+    }
+   ],
+   "removed": [
     {
      "key": "4395",
      "name": "アクリート",
@@ -3389,12 +3281,21 @@
      }
     },
     {
-     "key": "4260",
-     "name": "ハイブリッドテクノロジーズ",
+     "key": "7352",
+     "name": "ＴＷＯＳＴＯＮＥ＆Ｓｏｎｓ",
+     "fields": {
+      "sector": "サービス業",
+      "r20": 42.0,
+      "turnover_oku": 9.5
+     }
+    },
+    {
+     "key": "9889",
+     "name": "ＪＢＣＣホールディングス",
      "fields": {
       "sector": "情報･通信業",
-      "r20": 49.8,
-      "turnover_oku": 4.6
+      "r20": 39.0,
+      "turnover_oku": 6.4
      }
     },
     {
@@ -3407,12 +3308,21 @@
      }
     },
     {
-     "key": "4768",
-     "name": "大塚商会",
+     "key": "3040",
+     "name": "ソリトンシステムズ",
      "fields": {
       "sector": "情報･通信業",
-      "r20": 20.6,
-      "turnover_oku": 61.0
+      "r20": 24.7,
+      "turnover_oku": 14.5
+     }
+    },
+    {
+     "key": "3968",
+     "name": "セグエグループ",
+     "fields": {
+      "sector": "情報･通信業",
+      "r20": 22.4,
+      "turnover_oku": 7.7
      }
     },
     {
@@ -3506,24 +3416,6 @@
      }
     },
     {
-     "key": "3858",
-     "name": "ユビキタスＡＩ",
-     "fields": {
-      "sector": "情報･通信業",
-      "r20": 80.7,
-      "turnover_oku": 7.0
-     }
-    },
-    {
-     "key": "5133",
-     "name": "テリロジーホールディングス",
-     "fields": {
-      "sector": "情報･通信業",
-      "r20": 65.0,
-      "turnover_oku": 17.8
-     }
-    },
-    {
      "key": "4382",
      "name": "ＨＥＲＯＺ",
      "fields": {
@@ -3533,48 +3425,30 @@
      }
     },
     {
+     "key": "4288",
+     "name": "アズジェント",
+     "fields": {
+      "sector": "情報･通信業",
+      "r20": 44.1,
+      "turnover_oku": 13.5
+     }
+    },
+    {
+     "key": "436A",
+     "name": "サイバーソリューションズ",
+     "fields": {
+      "sector": "情報･通信業",
+      "r20": 39.4,
+      "turnover_oku": 32.5
+     }
+    },
+    {
      "key": "9250",
      "name": "ＧＲＣＳ",
      "fields": {
       "sector": "サービス業",
       "r20": 39.0,
       "turnover_oku": 3.6
-     }
-    },
-    {
-     "key": "3697",
-     "name": "ＳＨＩＦＴ",
-     "fields": {
-      "sector": "情報･通信業",
-      "r20": 30.6,
-      "turnover_oku": 67.3
-     }
-    },
-    {
-     "key": "3994",
-     "name": "マネーフォワード",
-     "fields": {
-      "sector": "情報･通信業",
-      "r20": 18.3,
-      "turnover_oku": 41.1
-     }
-    },
-    {
-     "key": "3993",
-     "name": "ＰＫＳＨＡ　Ｔｅｃｈｎｏｌｏｇｙ",
-     "fields": {
-      "sector": "情報･通信業",
-      "r20": 15.4,
-      "turnover_oku": 7.6
-     }
-    },
-    {
-     "key": "1814",
-     "name": "大末建設",
-     "fields": {
-      "sector": "建設業",
-      "r20": 11.6,
-      "turnover_oku": 5.2
      }
     },
     {
@@ -3602,6 +3476,15 @@
       "sector": "小売業",
       "r20": 21.4,
       "turnover_oku": 6.4
+     }
+    },
+    {
+     "key": "6457",
+     "name": "グローリー",
+     "fields": {
+      "sector": "機械",
+      "r20": 13.1,
+      "turnover_oku": 11.3
      }
     },
     {
@@ -3659,248 +3542,12 @@
      }
     },
     {
-     "key": "8032",
-     "name": "日本紙パルプ商事",
-     "fields": {
-      "sector": "卸売業",
-      "r20": 7.0,
-      "turnover_oku": 3.4
-     }
-    },
-    {
      "key": "9336",
      "name": "大栄環境",
      "fields": {
       "sector": "サービス業",
       "r20": 6.7,
       "turnover_oku": 8.6
-     }
-    }
-   ],
-   "removed": [
-    {
-     "key": "4258",
-     "name": "網屋",
-     "fields": {
-      "sector": "情報･通信業",
-      "r20": 26.7,
-      "turnover_oku": 13.4
-     }
-    },
-    {
-     "key": "338A",
-     "name": "ＺｅｎｍｕＴｅｃｈ",
-     "fields": {
-      "sector": "情報･通信業",
-      "r20": 50.9,
-      "turnover_oku": 65.7
-     }
-    },
-    {
-     "key": "3967",
-     "name": "エルテス",
-     "fields": {
-      "sector": "情報･通信業",
-      "r20": 29.2,
-      "turnover_oku": 3.1
-     }
-    },
-    {
-     "key": "3927",
-     "name": "フーバーブレイン",
-     "fields": {
-      "sector": "情報･通信業",
-      "r20": 28.1,
-      "turnover_oku": 10.1
-     }
-    },
-    {
-     "key": "3692",
-     "name": "ＦＦＲＩセキュリティ",
-     "fields": {
-      "sector": "情報･通信業",
-      "r20": 27.2,
-      "turnover_oku": 75.7
-     }
-    },
-    {
-     "key": "4431",
-     "name": "スマレジ",
-     "fields": {
-      "sector": "情報･通信業",
-      "r20": 21.7,
-      "turnover_oku": 3.7
-     }
-    },
-    {
-     "key": "5121",
-     "name": "藤倉コンポジット",
-     "fields": {
-      "sector": "ゴム製品",
-      "r20": 13.1,
-      "turnover_oku": 3.6
-     }
-    },
-    {
-     "key": "6807",
-     "name": "日本航空電子工業",
-     "fields": {
-      "sector": "電気機器",
-      "r20": 11.9,
-      "turnover_oku": 9.4
-     }
-    },
-    {
-     "key": "7839",
-     "name": "ＳＨＯＥＩ",
-     "fields": {
-      "sector": "その他製品",
-      "r20": 11.7,
-      "turnover_oku": 4.4
-     }
-    },
-    {
-     "key": "7806",
-     "name": "ＭＴＧ",
-     "fields": {
-      "sector": "その他製品",
-      "r20": 10.4,
-      "turnover_oku": 19.6
-     }
-    },
-    {
-     "key": "7803",
-     "name": "ブシロード",
-     "fields": {
-      "sector": "その他製品",
-      "r20": 9.8,
-      "turnover_oku": 5.9
-     }
-    },
-    {
-     "key": "3569",
-     "name": "セーレン",
-     "fields": {
-      "sector": "繊維製品",
-      "r20": 9.8,
-      "turnover_oku": 5.5
-     }
-    },
-    {
-     "key": "3399",
-     "name": "丸千代山岡家",
-     "fields": {
-      "sector": "小売業",
-      "r20": 28.5,
-      "turnover_oku": 4.6
-     }
-    },
-    {
-     "key": "8876",
-     "name": "リログループ",
-     "fields": {
-      "sector": "サービス業",
-      "r20": 14.3,
-      "turnover_oku": 13.5
-     }
-    },
-    {
-     "key": "5105",
-     "name": "ＴＯＹＯ　ＴＩＲＥ",
-     "fields": {
-      "sector": "ゴム製品",
-      "r20": 14.0,
-      "turnover_oku": 39.0
-     }
-    },
-    {
-     "key": "8022",
-     "name": "美津濃",
-     "fields": {
-      "sector": "その他製品",
-      "r20": 13.9,
-      "turnover_oku": 9.6
-     }
-    },
-    {
-     "key": "4680",
-     "name": "ラウンドワン",
-     "fields": {
-      "sector": "サービス業",
-      "r20": 13.5,
-      "turnover_oku": 27.7
-     }
-    },
-    {
-     "key": "7780",
-     "name": "メニコン",
-     "fields": {
-      "sector": "精密機器",
-      "r20": 11.2,
-      "turnover_oku": 5.0
-     }
-    },
-    {
-     "key": "7864",
-     "name": "フジシールインターナショナル",
-     "fields": {
-      "sector": "その他製品",
-      "r20": 10.0,
-      "turnover_oku": 5.8
-     }
-    },
-    {
-     "key": "2413",
-     "name": "エムスリー",
-     "fields": {
-      "sector": "サービス業",
-      "r20": 9.3,
-      "turnover_oku": 58.2
-     }
-    },
-    {
-     "key": "4393",
-     "name": "バンク・オブ・イノベーション",
-     "fields": {
-      "sector": "情報･通信業",
-      "r20": 27.5,
-      "turnover_oku": 3.8
-     }
-    },
-    {
-     "key": "6676",
-     "name": "バッファロー",
-     "fields": {
-      "sector": "電気機器",
-      "r20": 18.1,
-      "turnover_oku": 3.1
-     }
-    },
-    {
-     "key": "6814",
-     "name": "古野電気",
-     "fields": {
-      "sector": "電気機器",
-      "r20": 17.5,
-      "turnover_oku": 32.9
-     }
-    },
-    {
-     "key": "3661",
-     "name": "エムアップホールディングス",
-     "fields": {
-      "sector": "情報･通信業",
-      "r20": 9.9,
-      "turnover_oku": 3.3
-     }
-    },
-    {
-     "key": "6016",
-     "name": "ジャパンエンジンコーポレーション",
-     "fields": {
-      "sector": "輸送用機器",
-      "r20": 9.2,
-      "turnover_oku": 14.4
      }
     }
    ],
@@ -3911,13 +3558,13 @@
      "changes": [
       {
        "field": "20日騰落（%）",
-       "before": 261.0,
-       "after": 313.9
+       "before": 313.9,
+       "after": 248.3
       },
       {
        "field": "売買代金（億円）",
-       "before": 7.6,
-       "after": 16.5
+       "before": 16.5,
+       "after": 30.2
       }
      ]
     },
@@ -3927,93 +3574,13 @@
      "changes": [
       {
        "field": "20日騰落（%）",
-       "before": 216.7,
-       "after": 267.7
+       "before": 267.7,
+       "after": 211.1
       },
       {
        "field": "売買代金（億円）",
-       "before": 20.1,
-       "after": 41.7
-      }
-     ]
-    },
-    {
-     "key": "7352",
-     "name": "ＴＷＯＳＴＯＮＥ＆Ｓｏｎｓ",
-     "changes": [
-      {
-       "field": "20日騰落（%）",
-       "before": 55.0,
-       "after": 42.0
-      },
-      {
-       "field": "売買代金（億円）",
-       "before": 4.5,
-       "after": 9.5
-      }
-     ]
-    },
-    {
-     "key": "9889",
-     "name": "ＪＢＣＣホールディングス",
-     "changes": [
-      {
-       "field": "20日騰落（%）",
-       "before": 26.0,
-       "after": 39.0
-      },
-      {
-       "field": "売買代金（億円）",
-       "before": 4.2,
-       "after": 6.4
-      }
-     ]
-    },
-    {
-     "key": "3762",
-     "name": "テクマトリックス",
-     "changes": [
-      {
-       "field": "20日騰落（%）",
-       "before": 39.8,
-       "after": 38.1
-      },
-      {
-       "field": "売買代金（億円）",
-       "before": 13.8,
-       "after": 17.1
-      }
-     ]
-    },
-    {
-     "key": "3040",
-     "name": "ソリトンシステムズ",
-     "changes": [
-      {
-       "field": "20日騰落（%）",
-       "before": 52.8,
-       "after": 24.7
-      },
-      {
-       "field": "売買代金（億円）",
-       "before": 10.1,
-       "after": 14.5
-      }
-     ]
-    },
-    {
-     "key": "3968",
-     "name": "セグエグループ",
-     "changes": [
-      {
-       "field": "20日騰落（%）",
-       "before": 32.0,
-       "after": 22.4
-      },
-      {
-       "field": "売買代金（億円）",
-       "before": 5.9,
-       "after": 7.7
+       "before": 41.7,
+       "after": 66.9
       }
      ]
     },
@@ -4023,13 +3590,13 @@
      "changes": [
       {
        "field": "20日騰落（%）",
-       "before": 94.0,
-       "after": 104.0
+       "before": 104.0,
+       "after": 70.3
       },
       {
        "field": "売買代金（億円）",
-       "before": 12.1,
-       "after": 16.1
+       "before": 16.1,
+       "after": 19.8
       }
      ]
     },
@@ -4039,61 +3606,45 @@
      "changes": [
       {
        "field": "20日騰落（%）",
-       "before": 91.8,
-       "after": 67.4
+       "before": 67.4,
+       "after": 67.5
       },
       {
        "field": "売買代金（億円）",
-       "before": 9.2,
-       "after": 14.4
+       "before": 14.4,
+       "after": 20.7
       }
      ]
     },
     {
-     "key": "153A",
-     "name": "カウリス",
+     "key": "4260",
+     "name": "ハイブリッドテクノロジーズ",
      "changes": [
       {
        "field": "20日騰落（%）",
-       "before": 61.3,
-       "after": 50.0
+       "before": 49.8,
+       "after": 56.4
       },
       {
        "field": "売買代金（億円）",
-       "before": 39.3,
-       "after": 45.7
+       "before": 4.6,
+       "after": 6.7
       }
      ]
     },
     {
-     "key": "4288",
-     "name": "アズジェント",
+     "key": "3858",
+     "name": "ユビキタスＡＩ",
      "changes": [
       {
        "field": "20日騰落（%）",
-       "before": 35.8,
-       "after": 44.1
+       "before": 80.7,
+       "after": 52.3
       },
       {
        "field": "売買代金（億円）",
-       "before": 10.7,
-       "after": 13.5
-      }
-     ]
-    },
-    {
-     "key": "436A",
-     "name": "サイバーソリューションズ",
-     "changes": [
-      {
-       "field": "20日騰落（%）",
-       "before": 43.2,
-       "after": 39.4
-      },
-      {
-       "field": "売買代金（億円）",
-       "before": 24.4,
-       "after": 32.5
+       "before": 7.0,
+       "after": 14.3
       }
      ]
     },
@@ -4103,13 +3654,77 @@
      "changes": [
       {
        "field": "20日騰落（%）",
-       "before": 49.8,
-       "after": 36.6
+       "before": 36.6,
+       "after": 49.9
       },
       {
        "field": "売買代金（億円）",
-       "before": 18.7,
-       "after": 27.1
+       "before": 27.1,
+       "after": 32.5
+      }
+     ]
+    },
+    {
+     "key": "153A",
+     "name": "カウリス",
+     "changes": [
+      {
+       "field": "20日騰落（%）",
+       "before": 50.0,
+       "after": 43.2
+      },
+      {
+       "field": "売買代金（億円）",
+       "before": 45.7,
+       "after": 49.2
+      }
+     ]
+    },
+    {
+     "key": "5133",
+     "name": "テリロジーホールディングス",
+     "changes": [
+      {
+       "field": "20日騰落（%）",
+       "before": 65.0,
+       "after": 33.9
+      },
+      {
+       "field": "売買代金（億円）",
+       "before": 17.8,
+       "after": 19.6
+      }
+     ]
+    },
+    {
+     "key": "3762",
+     "name": "テクマトリックス",
+     "changes": [
+      {
+       "field": "20日騰落（%）",
+       "before": 38.1,
+       "after": 32.6
+      },
+      {
+       "field": "売買代金（億円）",
+       "before": 17.1,
+       "after": 22.6
+      }
+     ]
+    },
+    {
+     "key": "4768",
+     "name": "大塚商会",
+     "changes": [
+      {
+       "field": "20日騰落（%）",
+       "before": 20.6,
+       "after": 18.5
+      },
+      {
+       "field": "売買代金（億円）",
+       "before": 61.0,
+       "after": 74.8
       }
      ]
     },
@@ -4119,45 +3734,45 @@
      "changes": [
       {
        "field": "20日騰落（%）",
-       "before": 18.9,
-       "after": 39.2
+       "before": 39.2,
+       "after": 17.1
       },
       {
        "field": "売買代金（億円）",
-       "before": 21.7,
-       "after": 35.4
+       "before": 35.4,
+       "after": 44.5
       }
      ]
     },
     {
-     "key": "3753",
-     "name": "フライトソリューションズ",
+     "key": "3994",
+     "name": "マネーフォワード",
      "changes": [
       {
        "field": "20日騰落（%）",
-       "before": 36.4,
-       "after": 24.3
+       "before": 18.3,
+       "after": 14.3
       },
       {
        "field": "売買代金（億円）",
-       "before": 3.4,
-       "after": 4.6
+       "before": 41.1,
+       "after": 45.3
       }
      ]
     },
     {
-     "key": "2326",
-     "name": "デジタルアーツ",
+     "key": "3697",
+     "name": "ＳＨＩＦＴ",
      "changes": [
       {
        "field": "20日騰落（%）",
-       "before": 35.8,
-       "after": 22.0
+       "before": 30.6,
+       "after": 30.2
       },
       {
        "field": "売買代金（億円）",
-       "before": 15.6,
-       "after": 20.8
+       "before": 67.3,
+       "after": 74.9
       }
      ]
     },
@@ -4167,55 +3782,107 @@
      "changes": [
       {
        "field": "20日騰落（%）",
-       "before": 33.2,
-       "after": 21.4
-      },
-      {
-       "field": "売買代金（億円）",
-       "before": 16.9,
-       "after": 20.5
+       "before": 21.4,
+       "after": 21.9
       }
      ]
     },
     {
-     "key": "6457",
-     "name": "グローリー",
+     "key": "1814",
+     "name": "大末建設",
      "changes": [
       {
        "field": "20日騰落（%）",
-       "before": 14.5,
-       "after": 13.1
+       "before": 11.6,
+       "after": 12.4
       },
       {
        "field": "売買代金（億円）",
-       "before": 9.7,
-       "after": 11.3
+       "before": 5.2,
+       "after": 4.9
+      }
+     ]
+    },
+    {
+     "key": "3993",
+     "name": "ＰＫＳＨＡ　Ｔｅｃｈｎｏｌｏｇｙ",
+     "changes": [
+      {
+       "field": "20日騰落（%）",
+       "before": 15.4,
+       "after": 10.5
+      },
+      {
+       "field": "売買代金（億円）",
+       "before": 7.6,
+       "after": 8.6
+      }
+     ]
+    },
+    {
+     "key": "2326",
+     "name": "デジタルアーツ",
+     "changes": [
+      {
+       "field": "20日騰落（%）",
+       "before": 22.0,
+       "after": 7.1
+      },
+      {
+       "field": "売買代金（億円）",
+       "before": 20.8,
+       "after": 22.6
+      }
+     ]
+    },
+    {
+     "key": "3753",
+     "name": "フライトソリューションズ",
+     "changes": [
+      {
+       "field": "20日騰落（%）",
+       "before": 24.3,
+       "after": 57.5
+      },
+      {
+       "field": "売買代金（億円）",
+       "before": 4.6,
+       "after": 8.7
+      }
+     ]
+    },
+    {
+     "key": "8032",
+     "name": "日本紙パルプ商事",
+     "changes": [
+      {
+       "field": "20日騰落（%）",
+       "before": 7.0,
+       "after": 11.0
+      },
+      {
+       "field": "売買代金（億円）",
+       "before": 3.4,
+       "after": 4.5
       }
      ]
     }
    ],
    "unchanged": 0,
    "new_words": [
-    "武田薬品工業株価",
-    "小売株",
-    "クラウド株",
-    "不正アクセス相次",
-    "需要拡大期待",
-    "人気沸騰",
-    "上昇期待株",
-    "達人",
-    "SHIFT",
-    "サイゼリヤ",
-    "株安",
-    "逆相関銘柄",
-    "任天堂",
-    "アステラス製薬株価",
-    "サイコロ"
+    "累計",
+    "Sansan",
+    "缶チューハイ",
+    "アクティビスト",
+    "圧力",
+    "神経戦",
+    "Bill",
+    "食道"
    ]
   },
   "macro": {
-   "hash": "d92e03ad025ec4769f716500c3857e608cc8d635ab2defd7c93db30553a3fc32",
-   "date": "2026-11-01T13:40:24+00:00",
+   "hash": "33f6957df84c2e5965c4ad73cbd7ebe08bef9050fc954a0e74240e827a57e165",
+   "date": "2026-11-01T23:36:10+00:00",
    "count": 12,
    "comparison": true,
    "previous_date": "2026-10-29T22:00:28+00:00",
