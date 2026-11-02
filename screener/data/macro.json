@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-01T23:36:10+00:00",
+  "generated_at": "2026-11-02T01:40:41+00:00",
   "items": [
     {
       "id": "DFII10",
@@ -317,10 +317,10 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-01T23:36:08+00:00",
+      "fetched_at": "2026-11-02T01:40:39+00:00",
       "percentile": 97.8,
-      "sample_count": 1248,
-      "sample_start": "2021-11-01"
+      "sample_count": 1247,
+      "sample_start": "2021-11-02"
     },
     {
       "id": "DGS10",
@@ -637,10 +637,10 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-01T23:36:08+00:00",
+      "fetched_at": "2026-11-02T01:40:39+00:00",
       "percentile": 97.8,
-      "sample_count": 1248,
-      "sample_start": "2021-11-01"
+      "sample_count": 1247,
+      "sample_start": "2021-11-02"
     },
     {
       "id": "DGS2",
@@ -957,10 +957,10 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-01T23:36:08+00:00",
+      "fetched_at": "2026-11-02T01:40:39+00:00",
       "percentile": 79.2,
-      "sample_count": 1248,
-      "sample_start": "2021-11-01"
+      "sample_count": 1247,
+      "sample_start": "2021-11-02"
     },
     {
       "id": "T10YIE",
@@ -1277,10 +1277,10 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-01T23:36:08+00:00",
+      "fetched_at": "2026-11-02T01:40:39+00:00",
       "percentile": 55.2,
-      "sample_count": 1249,
-      "sample_start": "2021-11-01"
+      "sample_count": 1248,
+      "sample_start": "2021-11-02"
     },
     {
       "id": "T10Y2Y",
@@ -1597,10 +1597,10 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-01T23:36:08+00:00",
-      "percentile": 65.1,
-      "sample_count": 1249,
-      "sample_start": "2021-11-01"
+      "fetched_at": "2026-11-02T01:40:39+00:00",
+      "percentile": 65.2,
+      "sample_count": 1248,
+      "sample_start": "2021-11-02"
     },
     {
       "id": "BAMLH0A0HYM2",
@@ -1925,7 +1925,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-01T23:36:09+00:00",
+      "fetched_at": "2026-11-02T01:40:39+00:00",
       "percentile": 78.1,
       "sample_count": 786,
       "sample_start": "2023-10-31"
@@ -2253,7 +2253,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-01T23:36:09+00:00",
+      "fetched_at": "2026-11-02T01:40:39+00:00",
       "percentile": 58.5,
       "sample_count": 786,
       "sample_start": "2023-10-31"
@@ -2581,7 +2581,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-01T23:36:09.292557+00:00",
+      "fetched_at": "2026-11-02T01:40:39.905322+00:00",
       "percentile": 63.8,
       "sample_count": 1288,
       "sample_start": "2021-10-30",
@@ -2929,7 +2929,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-01T23:36:09.834996+00:00",
+      "fetched_at": "2026-11-02T01:40:39.866651+00:00",
       "percentile": 94.8,
       "sample_count": 1255,
       "sample_start": "2021-11-01",
@@ -3251,10 +3251,10 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-01T23:36:09+00:00",
-      "percentile": 82.7,
-      "sample_count": 1245,
-      "sample_start": "2021-11-01"
+      "fetched_at": "2026-11-02T01:40:40+00:00",
+      "percentile": 82.6,
+      "sample_count": 1244,
+      "sample_start": "2021-11-02"
     },
     {
       "id": "FEDFUNDS",
@@ -3299,7 +3299,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-01T23:36:09+00:00",
+      "fetched_at": "2026-11-02T01:40:40+00:00",
       "percentile": 36.4,
       "sample_count": 59,
       "sample_start": "2021-11-01"
@@ -3347,7 +3347,7 @@
       ],
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-01T23:36:09+00:00",
+      "fetched_at": "2026-11-02T01:40:40+00:00",
       "percentile": 74.1,
       "sample_count": 58,
       "sample_start": "2021-11-01"
