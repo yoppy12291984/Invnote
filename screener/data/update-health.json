@@ -1,20 +1,20 @@
 {
   "schema": 1,
-  "asOf": "2026-11-02T08:39:07.314840+09:00",
+  "asOf": "2026-11-02T10:40:25.057586+09:00",
   "jobs": {
     "weekly": {
       "label": "週次スクリーニング",
       "period": "2026-10-31",
       "status": "complete",
-      "updatedAt": "2026-11-02T08:39:07.271909+09:00",
+      "updatedAt": "2026-11-02T08:39:09.733326+09:00",
       "step": null
     },
     "monthly": {
       "label": "月次スクリーニング",
       "period": "2026-10-31",
-      "status": "failed",
-      "updatedAt": "2026-10-31T21:01:36.555416+09:00",
-      "step": "fetch"
+      "status": "complete",
+      "updatedAt": "2026-11-02T10:40:24.998132+09:00",
+      "step": null
     },
     "search": {
       "label": "Search補完更新",
