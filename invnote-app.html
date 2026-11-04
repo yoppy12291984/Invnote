@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=6cfbfde52847"><script src="workspace-frame.js?v=6cfbfde52847"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=e6d0862000f5"><script src="workspace-frame.js?v=e6d0862000f5"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -1811,9 +1811,10 @@ function restoreNotice(message,failed=false){
   if(failed){const retry=document.createElement('button');retry.className='btn';retry.textContent='再読み込み';retry.onclick=()=>syncNow(false);box.append(document.createElement('br'),retry);}
   if(parent!==window)parent.postMessage({type:'workspace:restore-status',message,failed},location.origin);
 }
+function reportFreshness(state){if(window.parent!==window)parent.postMessage({type:'workspace:freshness',state,at:state==='success'?S.lastSync:Date.now()},location.origin);}
 async function syncNow(quiet){
   if(!storageReady)return;
-  if(!S.gas||syncing)return;syncing=true;const first=!S.lastSync,st=$("#syncStat");let downloaded=false;
+  if(!S.gas||syncing)return;syncing=true;const first=!S.lastSync,st=$("#syncStat");let downloaded=false;reportFreshness('loading');
   if(first)restoreNotice('登録済みの保存先から、メモ・保有・四季報・Newsを引き継いでいます…');
   if(!quiet)st.textContent="同期中…";$("#syncBtn").classList.add("busy");
   try{
@@ -1827,10 +1828,10 @@ async function syncNow(quiet){
     S.lastSync=Date.now();editingSync=true;try{await saveResearch();}finally{editingSync=false;}
     const ae=document.activeElement;if(!(ae&&(ae.tagName==="TEXTAREA"||ae.tagName==="INPUT")))render();
     st.textContent=`最終同期：${dstr(S.lastSync)} ${tstr(S.lastSync)}`;
-    restoreNotice('');
+    restoreNotice('');reportFreshness('success');
     if(!quiet)toast("同期しました");
   }catch(e){
-    st.textContent="同期に失敗："+(e.message||e);
+    reportFreshness('failed');st.textContent="同期に失敗："+(e.message||e);
     if(first||document.getElementById('invnote-restore-status'))restoreNotice((downloaded?'データを取得しましたが、同期の完了を確認できません。':'引き継ぎは未完です。保存先への送信はしていません。')+'通信を確認して再読み込みしてください。',true);
     if(!quiet)toast("同期に失敗しました");
   }finally{syncing=false;$("#syncBtn").classList.remove("busy");}
@@ -2030,7 +2031,7 @@ function workspacePublish(){
  window.InvnoteMarketCalendar?.setHoldings(calendarAllowed?Object.entries(S.holdings||{}).map(([key,h])=>({code:InvnoteHistory.ticker(key),shares:h.shares})):[],calendarAllowed?bundle?.researchBundle?.notes:{},calendarAllowed);
  if(view==='vCal')renderCal();
  const storageInfo=document.getElementById('researchStorageInfo');if(storageInfo)storageInfo.textContent=bundle?'研究の端末保存：IndexedDB · '+Object.keys(bundle.researchBundle.notes||{}).length+'社。設定・保有・メモは従来の保存先を維持。':'研究データはまだ登録されていません。';
- parent.postMessage({type:'invnote:state',bundle:bundle?.researchBundle||null,researchHash:bundle?.researchHash||'',
+ parent.postMessage({type:'invnote:state',bundle:bundle?.researchBundle||null,researchHash:bundle?.researchHash||'',researchUpdatedAt:bundle?.edited||bundle?.ts||0,
  positions:(!S.restorePending&&!document.documentElement.classList.contains('suite-locked'))?Object.entries(S.holdings||{}).map(([key,h])=>({code:InvnoteHistory.ticker(key),shares:h.shares,price:h.price,priceDate:h.pdate||'',acct:h.acct||'',observedDate:h.observedDate||''})):[],holdingsAsOf:S.holdingsAsOf||'',holdingsComplete:S.holdingsComplete===true,
  stocks:Object.entries(S.stocks).map(([code,s])=>({code,name:s.name||code,status:s.status||''})),companyMemos:S.notes.filter(n=>n.kind==='company-memo-v1'),lastSync:S.lastSync||0,theme:S.theme},location.origin);
 }

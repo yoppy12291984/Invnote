@@ -2,6 +2,18 @@
 'use strict';
 const appRelease=JSON.parse(document.getElementById('app-release').textContent);
 let personalStocks=[],personalPositions=[],positionMeta={},researchHash='',syncTime=0;
+
+// Arrival time and content time are deliberately separate; cached data is not a live success.
+let newsArrival='unconfirmed',newsUpdated=0,newsDate='',marketArrival=null;
+function freshnessTime(value){if(!value)return '未確認';const d=new Date(value);return Number.isFinite(+d)?d.toLocaleString('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}):'未確認';}
+function renderFreshness(){
+ const box=document.getElementById('data-freshness');if(!box)return;
+ const newsLabel=({success:'同期成功',loading:'同期中',failed:'同期失敗・保存分を表示',unconfirmed:'今回の同期は未確認',locked:'未登録'})[newsArrival]||'未確認';
+ const marketLabel=!marketArrival?'確認中':marketArrival.failed?'取得失敗':marketArrival.partial?'一部未取得・保存値あり':marketArrival.stale?'更新が古い':'読込成功';
+ box.innerHTML=`<div><b>News：${esc(newsLabel)}</b><span>最新記事 ${esc(newsDate||'未確認')} · データ更新 ${esc(freshnessTime(newsUpdated))}</span></div><div><b>Market：${esc(marketLabel)}</b><span>データ更新 ${esc(freshnessTime(marketArrival?.updated))}</span></div><details><summary>反映日時の詳細（日本時間）</summary><p>News 最終同期成功：${esc(freshnessTime(syncTime))}<br>Market この端末での読込：${esc(freshnessTime(marketArrival?.received))}</p><p>更新日時は配信データの作成時刻です。各指標の観測日はMarket内に表示します。同期成功だけでは新しい記事の作成や全指標の最新値を保証しません。</p></details>`;
+}
+const freshnessBox=document.createElement('section');freshnessBox.id='data-freshness';freshnessBox.setAttribute('aria-label','情報の更新・同期状況');document.querySelector('header').after(freshnessBox);renderFreshness();
+
 let companyMemos=[],memoDialog=null,memoCode='',memoEditing=null,memoRequest='',memoBusy=false;
 function memoDate(ts){return new Date(ts).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});}
 function renderCompanyMemos(){
@@ -238,6 +250,7 @@ window.addEventListener('message',e=>{
  if(kind==='inv'&&e.data?.type==='workspace:registration-open'){frames.inv.dataset.registering='true';frames.inv.style.height=Math.max(380,window.innerHeight-90)+'px';frames.inv.style.minHeight='380px';frameHost.scrollIntoView({block:'start'});return;}
  if(kind==='inv'&&e.data?.type==='workspace:registration-close'){delete frames.inv.dataset.registering;frames.inv.style.minHeight='540px';frames.inv.contentWindow.postMessage({type:'workspace:measure'},location.origin);return;}
  if(kind==='inv'&&e.data?.type==='workspace:restore-status'){status.textContent=typeof e.data.message==='string'?e.data.message:'';return;}
+ if(kind==='inv'&&e.data?.type==='workspace:freshness'){newsArrival=e.data.state;if(e.data.state==='success')syncTime=e.data.at;renderFreshness();return;}
  if(kind==='inv'&&e.data?.type==='workspace:sync-result'){clearTimeout(syncTimer);document.getElementById('workspace-sync').disabled=false;status.textContent=String(e.data.message||'同期を確認してください。');return;}
  if(kind==='inv'&&e.data?.type==='invnote:navigate'&&e.data.route==='notebook/inv:vStocks'){location.hash=e.data.route;return;}
  if(e.origin===location.origin&&e.source===frames.scr?.contentWindow&&e.data?.type==='screener:company'&&/^[0-9A-Z]{4,5}$/.test(e.data.code)){location.hash='company/'+e.data.code;return;}
@@ -245,7 +258,7 @@ window.addEventListener('message',e=>{
  const m=e.data;
  if(m?.type==='workspace:memo-result'&&m.request===memoRequest){memoBusy=false;memoDialog.querySelectorAll('button').forEach(b=>b.disabled=false);memoDialog.querySelector('[role=status]').textContent=String(m.message||'');if(m.ok){memoEditing=null;memoDialog.querySelector('textarea').value='';}renderCompanyMemos();return;}
  if(m?.type==='invnote:company'&&/^[0-9A-Z]{4,5}$/.test(m.code)){location.hash='company/'+m.code;return;}
- if(m?.type==='invnote:locked'){companyMemos=[];memoDialog?.close();invReady=false;invLocked=true;syncPending=false;clearTimeout(syncTimer);document.getElementById('workspace-sync').disabled=false;replaceResearch(initialData);personalStocks=[];personalPositions=[];positionMeta={};researchHash='';if(!['#settings','#import'].includes(location.hash))route();status.textContent='設定から引き継ぎコードを入力してください。';return;}
+ if(m?.type==='invnote:locked'){newsArrival='locked';newsUpdated=0;newsDate='';syncTime=0;renderFreshness();companyMemos=[];memoDialog?.close();invReady=false;invLocked=true;syncPending=false;clearTimeout(syncTimer);document.getElementById('workspace-sync').disabled=false;replaceResearch(initialData);personalStocks=[];personalPositions=[];positionMeta={};researchHash='';if(!['#settings','#import'].includes(location.hash))route();status.textContent='設定から引き継ぎコードを入力してください。';return;}
  if(m?.type!=='invnote:state')return;
  const previousMemos=JSON.stringify(companyMemos);
  companyMemos=Array.isArray(m.companyMemos)?m.companyMemos.filter(n=>n.kind==='company-memo-v1'&&typeof n.text==='string'&&/^[0-9A-Z]{4,5}$/.test(n.code)&&Number.isFinite(n.ts)):[];if(memoDialog?.open)renderCompanyMemos();
@@ -255,7 +268,7 @@ window.addEventListener('message',e=>{
  const nextMeta={date:typeof m.holdingsAsOf==='string'?m.holdingsAsOf:'',complete:m.holdingsComplete===true};
  const changed=(location.hash==='#today/holdings-plan'&&previousMemos!==JSON.stringify(companyMemos))||m.researchHash!==researchHash||JSON.stringify(nextStocks)!==JSON.stringify(personalStocks)||JSON.stringify(nextPositions)!==JSON.stringify(personalPositions)||JSON.stringify(nextMeta)!==JSON.stringify(positionMeta);
  personalPositions=nextPositions;positionMeta=nextMeta;
- personalStocks=nextStocks;syncTime=m.lastSync||0;
+ personalStocks=nextStocks;syncTime=m.lastSync||0;newsUpdated=validBundle(m.bundle)?m.researchUpdatedAt:0;newsDate=validBundle(m.bundle)?(m.bundle.news?.entries||[]).map(n=>n.date).filter(Boolean).sort().at(-1)||'':'';renderFreshness();
  if(validBundle(m.bundle)){replaceResearch(m.bundle);researchHash=m.researchHash;status.textContent=`四季報 ${all.length}社 · ${syncTime?'Invnote 最終同期 '+new Date(syncTime).toLocaleString('ja-JP'):'端末の保存データ'}`;}
  else {replaceResearch(initialData);researchHash='';status.textContent=m.bundle?'四季報の形式を確認できませんでした。設定・同期を確認してください。':'四季報はまだ同期されていません。設定・同期から読み込めます。';}
  // Keep active search text and personal edits intact when only sync time changed.
@@ -764,6 +777,7 @@ async function renderNewsMacro(){
  const fmt=v=>{const d=new Date(v);return Number.isFinite(+d)?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(d):'未取得';};
  try{
   const [data,engine,configModule,extra,alertFeed,marginFeed,japanFeed]=await Promise.all([fetch('screener/data/macro.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json();}),import('./screener/macro-engine.js?v=2.18'),import('./screener/macro-config.js?v=2.18'),fetch('screener/data/credit-monitor.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json();}).catch(()=>null),fetch('screener/data/credit-alerts.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json();}).catch(()=>null),fetch('screener/data/margin-monitor.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json();}).catch(()=>null),fetch('screener/data/japan-market.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json();}).catch(()=>null)]);
+  marketArrival={updated:data.generated_at,received:Date.now(),partial:!extra||!alertFeed||!marginFeed||!japanFeed||(data.items||[]).some(x=>x.status!=='fresh'),stale:!Number.isFinite(Date.parse(data.generated_at))||Date.now()-Date.parse(data.generated_at)>36*3600000};renderFreshness();
   if(!el.isConnected)return;
   let config=configModule.DEFAULTS;try{const v=localStorage.getItem('screener_macro_config_v2');if(v)config=configModule.validateConfig(JSON.parse(v));}catch{}
   const r=engine.classifyRegime(data.items,Date.now(),config),dates=data.items.filter(x=>x.frequency==='daily'&&x.date).map(x=>x.date).sort(),monthly=data.items.filter(x=>x.frequency==='monthly'&&x.date).map(x=>x.date.slice(0,7)),bad=data.items.filter(x=>x.status!=='fresh');
@@ -779,7 +793,7 @@ async function renderNewsMacro(){
    if(el.id==='news-market-alerts'){el.innerHTML=pulseScoreAlertHTML(score,alertFeed);return;}
    el.innerHTML=`${pulseScoreAlertHTML(score,alertFeed)}<div class="pulse-header"><strong>Market Pulse</strong><span>DAILY DIGEST · 毎朝更新</span></div>${pulseScoreHeadlineHTML(score,metrics,signals,alertFeed)}${japanMarketHTML(japanFeed)}${marginPressureHTML(marginFeed)}${portfolioImpactHTML(personalPositions,notes,ratings,positionMeta)}${pulseConfirmationHTML(score.confirmation,alertFeed)}<section class="pulse-details"><h3>指標・判定の詳細</h3><div class="pulse-metrics" aria-label="主要な市場指標">${metrics.map((x,i)=>`<div><span>${esc(x.label)}</span><strong class="pulse-signal is-${signals[i].color}" title="${esc(signals[i].reason)}">${signals[i].label}</strong><b>${esc(x.value)}${x.value==='—'?'':`<small>${esc(x.unit)}</small>`}</b><em>${esc(x.date)}${x.saved?' · 保存値':''}${x.change===null?'':` · <i class="${x.change>0?'is-wider':x.change<0?'is-narrower':''}">1か月 ${x.change>0?'+':''}${x.change.toFixed(2)}%pt</i>`}</em></div>`).join('')}</div><p class="pulse-legend">緑＝基準内 ／ 黄＝注意 ／ 赤＝警戒 ／ 灰＝未判定。HY・BBBの色は水準のみ。上昇速度は下欄で別判定します。値は国債に対する上乗せ幅（社債利回りではありません）。</p>${pulseScoreHTML(score)}${pulseVixMacdHTML(data.items,speed,context,Date.now(),late)}<div class="pulse-curve"><span>米国イールドカーブ</span><b>${esc(curve.label)}</b><small>${esc(curve.detail)}</small></div>${pulseCreditHTML(context,extra)}${pulseResearchHTML()}<details class="news-story"><summary><span class="news-category">判定の背景</span><span class="news-headline">指標ごとの基準と更新日</span><span class="news-expand">＋</span></summary><div class="news-body"><p>金利・信用スプレッド（企業の資金調達への警戒）・VIX（相場への不安の目安）などを、決めた条件で自動分類しています。社債スプレッドは拡大が警戒、縮小が改善の方向です。個別信号は今回の暫定監視基準で、公式な危機判定や検証済み売買ルールではありません。HY：3%未満緑／3〜5%未満黄／5%以上赤、BBB：1.5%未満緑／1.5〜2.5%未満黄／2.5%以上赤。</p><h4>警戒スコアの加点条件（合計3点）</h4><ul><li><b>HY：最大1点</b><br>水準が3%以上で＋0.5点。<br><b>速度：1か月前より＋0.50ポイント以上で＋0.5点。</b></li><li><b>BBB：最大1点</b><br>水準が1.5%以上で＋0.5点。<br><b>速度：1か月前より＋0.20ポイント以上で＋0.5点。</b></li><li><b>銀行：最大1点</b>。KBE・KREの悪い方を採用します。</li></ul><p><b>速度＝現在のスプレッド − 約1か月前のスプレッド。</b>当日だけの上昇幅や、何％増えたかという変化率ではありません。<br>例：HYが2.70%→3.20%なら＋0.50ポイントで、速度に＋0.5点。BBBが0.90%→1.10%なら＋0.20ポイントで、速度に＋0.5点。</p><p>水準と速度の両方を満たすと、その指標は1点です。合計1.5点以上で早期警戒します。水準色は速度で変更しません。欠測は採点を保留し、前回確定値があれば現在値と区別して示します。</p><h4>その他の指標の色分け</h4><p>VIX：20未満緑／20〜30未満黄／30以上赤。米2年・10年金利：1か月上昇+0.25/+0.50%ptで黄/赤。銀行株（KBE・KRE各々）：1か月−5/−10%以下、または銀行株下落かつS&P500比−3/−7%pt以下で黄/赤。逆イールドは黄。緑も買い信号や安全保証ではありません。金利・VIXは加点せず、補助情報として表示します。カーブ分類は1か月の2年・10年金利の共通日比較です。今日や明日の株価を予言する表示ではありません。</p><p>最終取得処理：${esc(fmt(data.generated_at))} 日本時間 · 毎朝7時</p><p>日次指標：${esc(dates[0]||'未取得')}〜${esc(dates.at(-1)||'未取得')}<br>月次統計：${esc([...new Set(monthly)].join(' / ')||'未取得')}</p><p>${late?'取得処理が古いため、直近の変動を反映していない可能性があります。':''}${bad.length?esc(bad.map(x=>x.name).join('・'))+'は未取得または保存値です。':''}</p><small>取得可能な指標による暫定判定。発表直後のニュース、企業利益、日本市場全体の需給は別途調査します。灰は安全の意味ではありません。</small><p><a href="#review/scr:macro">指標と判定根拠</a> · <a href="#review/history">月次分類の履歴</a></p></div></details></section>`;
 
- }catch{if(el.isConnected)el.innerHTML='<p class="muted">市場環境を取得できません。自動判定は未確認です。</p>';}
+ }catch{marketArrival={...marketArrival,failed:true};renderFreshness();if(el.isConnected)el.innerHTML='<p class="muted">市場環境を取得できません。自動判定は未確認です。</p>';}
 }
 
 function kiyoharaEvaluatedRows(rows,feed,orderPolicy){
