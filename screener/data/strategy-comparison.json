@@ -11,7 +11,7 @@
   "version": 1
  },
  "recorded_at": "2026-09-19T09:39:39+09:00",
- "snapshot_count": 31,
+ "snapshot_count": 32,
  "started": "2026-09-24",
  "last_date": "2026-10-28",
  "status": "blocked",
@@ -5936,7 +5936,7 @@
   {
    "source": "rebound",
    "name": "反転",
-   "date": "2026-11-04",
+   "date": "2026-11-05",
    "count": 5,
    "members": [
     {
@@ -6118,6 +6118,6 @@
    ]
   }
  ],
- "generated_at": "2026-11-05T06:59:07+09:00",
- "latest_snapshot_at": "2026-11-05T06:59:07+09:00"
+ "generated_at": "2026-11-05T19:09:46+09:00",
+ "latest_snapshot_at": "2026-11-05T19:09:46+09:00"
 }
