@@ -1,20 +1,6734 @@
 {
   "schema": 1,
-  "attemptedAt": "2026-11-05T06:59:32+09:00",
-  "windowStart": "2026-11-04",
-  "windowEnd": "2026-11-04",
+  "attemptedAt": "2026-11-06T07:03:12+09:00",
+  "windowStart": "2026-11-05",
+  "windowEnd": "2026-11-05",
   "status": "ok",
-  "lastCompleteAt": "2026-11-05T06:59:32+09:00",
+  "lastCompleteAt": "2026-11-06T07:03:12+09:00",
   "coverage": [
     {
-      "date": "2026-11-04",
+      "date": "2026-11-05",
       "status": "ok",
-      "rows": 369,
-      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261104.html"
+      "rows": 536,
+      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261105.html"
     }
   ],
   "scope": "TDnet公開一覧。IR専用発表・EDINET・Xは網羅しない。見出し分類は方向や割安性の判定ではない。",
   "items": [
+    {
+      "id": "22b4793d11130f721223ceab",
+      "code": "6867",
+      "name": "リーダ電子",
+      "title": "（訂正）「2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）」の一部訂正について",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566545.pdf",
+      "published": "2026-11-05",
+      "time": "19:10",
+      "tags": [
+        "利益改善の手掛かり",
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f6a44cda2e6bc0518e99f526",
+      "code": "3472",
+      "name": "Ｒ－日本ホテル＆レジ",
+      "title": "アパホールディングス株式会社による本投資法人投資口の追加取得完了に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566513.pdf",
+      "published": "2026-11-05",
+      "time": "18:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "952882e7efa4a03362944d27",
+      "code": "485A",
+      "name": "Ｇ－パワーエックス",
+      "title": "米国等での協業に向けたEnergy Vaultグループとの基本合意のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566305.pdf",
+      "published": "2026-11-05",
+      "time": "18:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e8bec7c80e02e6068807bda0",
+      "code": "8524",
+      "name": "北洋銀行",
+      "title": "（訂正・数値データ訂正）「業績予想の修正及び配当予想の修正（増配）に関するお知らせ」の一部訂正について",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564096.pdf",
+      "published": "2026-11-05",
+      "time": "18:00",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり",
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "de5b38c61d5b538d63916d66",
+      "code": "4735",
+      "name": "京進",
+      "title": "上場維持基準への適合に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566386.pdf",
+      "published": "2026-11-05",
+      "time": "18:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "81f398dc8f2d80d176bbd2be",
+      "code": "8783",
+      "name": "ａｂｃ",
+      "title": "（開示事項の経過）株主優待ポイントの利用サービス「優待のいずみ」の提携先でのご利用開始日の変更およびご利用方法の一部変更に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566361.pdf",
+      "published": "2026-11-05",
+      "time": "18:00",
+      "tags": [
+        "成長事業の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "5eb82c557dcd6cc81b16201f",
+      "code": "9778",
+      "name": "昴",
+      "title": "代表取締役の異動（辞任）および社長交代に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566389.pdf",
+      "published": "2026-11-05",
+      "time": "18:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e88a27c9449c6b826653364d",
+      "code": "3034",
+      "name": "クオールＨＤ",
+      "title": "2027年３月期　第２四半期決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565727.pdf",
+      "published": "2026-11-05",
+      "time": "17:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b863802a9ca9d30c021dd258",
+      "code": "2678",
+      "name": "アスクル",
+      "title": "その他の関係会社の決算に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566273.pdf",
+      "published": "2026-11-05",
+      "time": "17:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a2562f232bc612861a7852f0",
+      "code": "6099",
+      "name": "エラン",
+      "title": "株式報酬型ストック・オプションの発行内容の確定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566333.pdf",
+      "published": "2026-11-05",
+      "time": "17:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "656bf9a7f67ad4b3a52ec4c7",
+      "code": "4310",
+      "name": "ＤＩ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261029559186.pdf",
+      "published": "2026-11-05",
+      "time": "17:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "644d373465d6e025b075a24c",
+      "code": "4310",
+      "name": "ＤＩ",
+      "title": "2027年３月期 第２四半期決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261029559204.pdf",
+      "published": "2026-11-05",
+      "time": "17:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2c8f4283bffb64c853b066f2",
+      "code": "8230",
+      "name": "はせがわ",
+      "title": "当社委託先のメール配信サービスへの不正アクセスによる個人情報漏えいに関するお知らせ（第２報）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566324.pdf",
+      "published": "2026-11-05",
+      "time": "17:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d0029aa98cfffa0125d64ea1",
+      "code": "8065",
+      "name": "佐藤商",
+      "title": "自己株式立会外取引（ToSTNeT-3）による自己株式の買付けに関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566238.pdf",
+      "published": "2026-11-05",
+      "time": "17:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "68a912d62e4848915d89c3f3",
+      "code": "2908",
+      "name": "フジッコ",
+      "title": "（訂正・数値データ訂正）「2027年３月期第２四半期（中間期）決算短信〔日本基準〕（連結）」の一部訂正について",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564642.pdf",
+      "published": "2026-11-05",
+      "time": "17:00",
+      "tags": [
+        "利益改善の手掛かり",
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "594435058f5e9db10e66ae7d",
+      "code": "9227",
+      "name": "Ｇ－ＭＷＣＣ",
+      "title": "ファシリティ契約に基づく第８回新株予約権（行使価額修正条項付）の行使許可の取消しに関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566253.pdf",
+      "published": "2026-11-05",
+      "time": "17:00",
+      "tags": [
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2d2f7a29fab34af36f29fa1e",
+      "code": "6995",
+      "name": "東海理電",
+      "title": "代表取締役の異動に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564925.pdf",
+      "published": "2026-11-05",
+      "time": "17:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0e1b87baa115fb0fc0320919",
+      "code": "4220",
+      "name": "リケンテクノス",
+      "title": "自己株式立会外買付取引（ＴｏＳＴＮｅＴ－３）による自己株式の買付けに関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565089.pdf",
+      "published": "2026-11-05",
+      "time": "17:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "64f481935de11aa2916ba09c",
+      "code": "6867",
+      "name": "リーダ電子",
+      "title": "2027年３月期 第２四半期 決算補足説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566241.pdf",
+      "published": "2026-11-05",
+      "time": "16:50",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c6a91a66b1ea2505a7468560",
+      "code": "6867",
+      "name": "リーダ電子",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261028558674.pdf",
+      "published": "2026-11-05",
+      "time": "16:45",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "8eee820548dfdfb354087e84",
+      "code": "6134",
+      "name": "ＦＵＪＩ",
+      "title": "自己株式立会外買付取引（ToSTNeT-3）による自己株式の買付けに関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565533.pdf",
+      "published": "2026-11-05",
+      "time": "16:45",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "647c5456f3c8326d7e21ed51",
+      "code": "6867",
+      "name": "リーダ電子",
+      "title": "2027年3月期第2四半期（中間期）連結業績予想数値と実績数値との差異、営業外収益の計上及び通期予想に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566137.pdf",
+      "published": "2026-11-05",
+      "time": "16:45",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "004293bd25293cfa85ae9c79",
+      "code": "9312",
+      "name": "ケイヒン",
+      "title": "自己株式の取得及び自己株式立会外買付取引(ToSTNeT-3)による自己株式の買付けに関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566143.pdf",
+      "published": "2026-11-05",
+      "time": "16:35",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "fda43ce16c8870fe41227276",
+      "code": "1869",
+      "name": "名工建",
+      "title": "自己株式立会外買付取引（N-NET3）による自己株式の買付けに関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565332.pdf",
+      "published": "2026-11-05",
+      "time": "16:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b58ccf6fbb83ea2737320f47",
+      "code": "4671",
+      "name": "ファルコＨＤ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565158.pdf",
+      "published": "2026-11-05",
+      "time": "16:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9195894f2df3b878c97285da",
+      "code": "3402",
+      "name": "東レ",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564372.pdf",
+      "published": "2026-11-05",
+      "time": "16:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "75baa2440bd433da1a3fdc65",
+      "code": "3955",
+      "name": "イムラ",
+      "title": "自己株式立会外買付取引（ToSTNeT-3）による自己株式の買付に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566069.pdf",
+      "published": "2026-11-05",
+      "time": "16:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4379524975cb5bab26a573bf",
+      "code": "1869",
+      "name": "名工建",
+      "title": "自己株式取得に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565325.pdf",
+      "published": "2026-11-05",
+      "time": "16:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "30a0de763e6819eb23fcd4ea",
+      "code": "1945",
+      "name": "東京エネシス",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563989.pdf",
+      "published": "2026-11-05",
+      "time": "16:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2d5423bbfdc62354a537b393",
+      "code": "8966",
+      "name": "Ｒ－平和ＲＥ",
+      "title": "金利スワップ契約の締結に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565645.pdf",
+      "published": "2026-11-05",
+      "time": "16:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "05841a917bd006a09cfdb1b5",
+      "code": "6349",
+      "name": "小森",
+      "title": "（差替）「2027 年３月期 第２四半期決算説明資料」の一部差替について",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565659.pdf",
+      "published": "2026-11-05",
+      "time": "16:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "fa7feb249904955042b10f8c",
+      "code": "6370",
+      "name": "栗田工",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔ＩＦＲＳ〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564379.pdf",
+      "published": "2026-11-05",
+      "time": "16:20",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bc4a8c9d2d93be698d6918df",
+      "code": "3232",
+      "name": "三重交通ＧＨＤ",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563855.pdf",
+      "published": "2026-11-05",
+      "time": "16:20",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "84a69c201a599b22b2bdcf9c",
+      "code": "6370",
+      "name": "栗田工",
+      "title": "2027年3月期 第2四半期 決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564464.pdf",
+      "published": "2026-11-05",
+      "time": "16:20",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "5991a73d119a32b489e177a0",
+      "code": "5384",
+      "name": "ＦＵＪＩＭＩ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563003.pdf",
+      "published": "2026-11-05",
+      "time": "16:20",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "49a185196ce58e7c2df6aec7",
+      "code": "5384",
+      "name": "ＦＵＪＩＭＩ",
+      "title": "業績予想の修正並びに剰余金の配当（中間配当）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565865.pdf",
+      "published": "2026-11-05",
+      "time": "16:20",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "42c9e8c3a80bd9ad5dcc63d7",
+      "code": "6370",
+      "name": "栗田工",
+      "title": "2027年3月期 第2四半期 決算補足資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564478.pdf",
+      "published": "2026-11-05",
+      "time": "16:20",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7408dec407c926bb01e9a10c",
+      "code": "352A",
+      "name": "Ｇ－ＬＯＩＶＥ",
+      "title": "2027年3月期　10月度店舗数についてのお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566209.pdf",
+      "published": "2026-11-05",
+      "time": "16:10",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "1d24553a2ae017ecca4dff07",
+      "code": "7917",
+      "name": "ＺＡＣＲＯＳ",
+      "title": "2027年３月期第２四半期 決算補足説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563444.pdf",
+      "published": "2026-11-05",
+      "time": "16:10",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ffdd6658fa4bd3db7582a964",
+      "code": "9716",
+      "name": "乃村工芸",
+      "title": "株式の売出しに関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563441.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f9a1b85a41b8b3a20df73c00",
+      "code": "4547",
+      "name": "キッセイ薬",
+      "title": "2027年3月期 第2四半期(中間期)決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565915.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f8f5c4ae83ded19990cbcfa4",
+      "code": "280A",
+      "name": "Ｇ－ＴＭＨ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566030.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f076c1da056d0152a87acd57",
+      "code": "7460",
+      "name": "ヤギ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564689.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ebba300f30c6835389fb631f",
+      "code": "2573",
+      "name": "北海コカ",
+      "title": "2026年12月期第3四半期決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261028557770.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "eadee90e65744c0c806ef1ae",
+      "code": "3326",
+      "name": "ランシステム",
+      "title": "2027年3月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564626.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e9c8372e732779dfceb3e15e",
+      "code": "3551",
+      "name": "ダイニック",
+      "title": "2027年３月期第２四半期(中間期)及び通期業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261027556862.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "dc9df7d0af2aa2c2764b8e79",
+      "code": "9982",
+      "name": "タキヒヨー",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566140.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d8d66e58d39063c7645b2593",
+      "code": "6413",
+      "name": "理想科学",
+      "title": "RISO Copylandia Philippines Corp.の完全子会社化に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566032.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d7dc7c21a65b3b45e25cc938",
+      "code": "9248",
+      "name": "人・夢・技術Ｇ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564828.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d75ef4696bb0e49ef2192c5c",
+      "code": "5185",
+      "name": "フコク",
+      "title": "剰余金の配当（中間配当）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565027.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d663ca484d09498a860767b2",
+      "code": "5185",
+      "name": "フコク",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564954.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d1fc306e976cbbfee07e47e8",
+      "code": "6875",
+      "name": "メガチップス",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564849.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c49a31df2b0476f516b7c7d7",
+      "code": "6413",
+      "name": "理想科学",
+      "title": "2027年3月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565582.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bd59b39c6ffe0b659582f1d9",
+      "code": "2425",
+      "name": "ケアサービス",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔日本基準〕（非連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564530.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bb55c97747456c0ff6e50187",
+      "code": "9413",
+      "name": "テレ東ＨＤ",
+      "title": "2027年3月期（2026年度）第２四半期（中間期）決算補足資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565918.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b8288a8f6c526dadb38541ba",
+      "code": "6322",
+      "name": "タクミナ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261016551953.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b774210ca1dfa691ad08f399",
+      "code": "8894",
+      "name": "ＲＥＶＯＬＵＴＩＯＮ",
+      "title": "第三者委員会の委員の選任及び第三者委員会に対する委嘱事項（調査対象・範囲）並びに第三者委員会の調査結果の開示時期に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565758.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b6f32b115c4d59f261d901b8",
+      "code": "3326",
+      "name": "ランシステム",
+      "title": "特別損失の計上に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564663.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b33bd45188f6885809596db2",
+      "code": "269A",
+      "name": "Ｇ－Ｓａｐｅｅｔ",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566128.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b11185258da9dcbb2684fce0",
+      "code": "3676",
+      "name": "デジハＨＤ",
+      "title": "2027年3月期 第2四半期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564533.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ac28fe9204ed7ec1a24bd4de",
+      "code": "7259",
+      "name": "アイシン",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565013.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "aa6993f3fdfe6eb0a6e71dbc",
+      "code": "1898",
+      "name": "世紀東急",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564518.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "aa595250067f007bbb827d69",
+      "code": "3059",
+      "name": "ヒラキ",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563835.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a75a5f3027fe5f5acc419367",
+      "code": "5185",
+      "name": "フコク",
+      "title": "通期連結業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564713.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a509e537de3905cdc90336c2",
+      "code": "2435",
+      "name": "シダー",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261029558964.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a30089a445fd2dbad3ffc22f",
+      "code": "3958",
+      "name": "笹徳印刷",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564082.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9d5b105ec50454ba35e34e41",
+      "code": "6036",
+      "name": "ＫｅｅＰｅｒ技研",
+      "title": "キーパーラボ運営事業とキーパー製品等関連事業の月次速報（10月）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566135.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9b17eabce2d947dc7da25539",
+      "code": "6413",
+      "name": "理想科学",
+      "title": "自己株式取得に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565867.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "97c81c1c9f795568ab3a80db",
+      "code": "3059",
+      "name": "ヒラキ",
+      "title": "特別損失（減損損失）の計上、第２四半期（中間期）業績予想と実績との差異および通期業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564746.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり",
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "95d0b56011c52c4abf347844",
+      "code": "4674",
+      "name": "クレスコ",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564356.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9578bff538ec3cde41e818f4",
+      "code": "4674",
+      "name": "クレスコ",
+      "title": "「自己株式取得に係る事項の決定及び自己株式の消却に関するお知らせ」の一部変更に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564381.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "92abd6e0d548a389f217e16d",
+      "code": "8025",
+      "name": "ツカモト",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564740.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7f9c10f8806d8722b3033074",
+      "code": "3059",
+      "name": "ヒラキ",
+      "title": "剰余金の配当（無配）および配当予想の修正ならびに役員報酬の減額に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564755.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7e28e00efd46ba2becf725be",
+      "code": "5261",
+      "name": "リソル",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565396.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7da14d685d5fe8436942a2f1",
+      "code": "6413",
+      "name": "理想科学",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261028557703.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7a62bd7d9595a2e3bbe2bbdc",
+      "code": "7917",
+      "name": "ＺＡＣＲＯＳ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563341.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "780060d7c93ee4543a793dbf",
+      "code": "3808",
+      "name": "オーケーウェブ",
+      "title": "投資家向けオンライン説明会開催のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565227.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "763d83a32364cb451d4bc17b",
+      "code": "7917",
+      "name": "ＺＡＣＲＯＳ",
+      "title": "業績予想ならびに剰余金の配当(中間配当)および期末配当予想の修正(増配)に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261029560206.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "742f4881b1318bb0b1bd26ae",
+      "code": "5254",
+      "name": "Ｇ－Ａｒｅｎｔ",
+      "title": "自己株式の取得状況に関するお知らせ （会社法第459条第１項の規定による定款の定めに基づく自己株式の取得）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566165.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "6e8c49687bf0d3811d730eaf",
+      "code": "2425",
+      "name": "ケアサービス",
+      "title": "2027年３月期 第２四半期 決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564577.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "61cb5d5b42c15c02d6ed1b57",
+      "code": "9413",
+      "name": "テレ東ＨＤ",
+      "title": "2027年3月期 通期業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565962.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "5f8fe8b7ea6e962aa8ff1b9b",
+      "code": "5208",
+      "name": "有沢製",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564296.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "53f47db6fe59abb998a3cd27",
+      "code": "4918",
+      "name": "アイビー",
+      "title": "法人税等調整額（益）の計上および業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564638.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "5323bbe00c33f0a9e1d2d1a1",
+      "code": "7278",
+      "name": "エクセディ",
+      "title": "自己株式の取得状況および取得終了に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564797.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "49c9c6313c1dce8b88a26401",
+      "code": "7760",
+      "name": "ＩＭＶ",
+      "title": "業績予想及び配当予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563486.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "40142e6408361a1c4796e394",
+      "code": "3566",
+      "name": "Ｇ－ユニネク",
+      "title": "2026年12月期10月度 月次業績速報",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565420.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "3ccd59ce4600cf77086be877",
+      "code": "7743",
+      "name": "シード",
+      "title": "株式併合、単元株式数の定めの廃止及び定款の一部変更に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565185.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "24c3f0887a00f22f70754127",
+      "code": "4558",
+      "name": "中京医薬",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔日本基準〕（非連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563520.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2202f361a1ce8827afe21181",
+      "code": "3566",
+      "name": "Ｇ－ユニネク",
+      "title": "2026年12月期 第３四半期決算短信［日本基準］（非連結）2026年12月期 第３四半期（中間期）決算短信［日本基準］（非連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565401.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "1e1ed47c36f521b82ab57388",
+      "code": "9788",
+      "name": "ナック",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566038.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "1c1cb8f7aee5267d71ac9fd0",
+      "code": "7743",
+      "name": "シード",
+      "title": "自己株式の消却に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565179.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "152d385e3d2f4c4f10d09176",
+      "code": "5331",
+      "name": "ノリタケ",
+      "title": "従業員持株会向け譲渡制限付株式インセンティブとしての自己株式の処分に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565638.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "14b67086bf73902414552d29",
+      "code": "1721",
+      "name": "コムシスＨＤ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565929.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "13874ef427c61237370083a9",
+      "code": "4923",
+      "name": "ＣＯＴＡ",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕(非連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563941.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0ce1db0b533f362d39e8fdda",
+      "code": "5201",
+      "name": "ＡＧＣ",
+      "title": "組織改正および執行役員の異動等について",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565226.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0cbd3f889bd69b1ae806a549",
+      "code": "7917",
+      "name": "ＺＡＣＲＯＳ",
+      "title": "株主優待制度の一部変更（拡充）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563448.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0c89d574a02622a316ec435c",
+      "code": "8995",
+      "name": "誠建設",
+      "title": "2027年３月期　第２四半期（中間期）業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261030561878.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0c1a512cd2845f2cd1ddfac1",
+      "code": "3676",
+      "name": "デジハＨＤ",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564531.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "066a08a1b1bbe4405b2d7110",
+      "code": "9413",
+      "name": "テレ東ＨＤ",
+      "title": "2027年3月期 第2四半期決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564468.pdf",
+      "published": "2026-11-05",
+      "time": "16:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "fe6626e11d80e1fd9999244e",
+      "code": "6339",
+      "name": "新東工",
+      "title": "2027年3月期第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261019552890.pdf",
+      "published": "2026-11-05",
+      "time": "15:40",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d7b706eb2dd80525551f981a",
+      "code": "6622",
+      "name": "ダイヘン",
+      "title": "2027年３月期 第２四半期(中間期)決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564185.pdf",
+      "published": "2026-11-05",
+      "time": "15:40",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9a9e2b57f9484f4a4555905b",
+      "code": "3712",
+      "name": "情報企画",
+      "title": "剰余金の配当に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565327.pdf",
+      "published": "2026-11-05",
+      "time": "15:40",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "970a3eb85767f5ed92f6f932",
+      "code": "7927",
+      "name": "ムトー精工",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564986.pdf",
+      "published": "2026-11-05",
+      "time": "15:40",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "8dfde0e5d873896c37633193",
+      "code": "9514",
+      "name": "ＥＦ－ＯＮ",
+      "title": "2027年６月期 第１四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565197.pdf",
+      "published": "2026-11-05",
+      "time": "15:40",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7738e8b2568c0ca27c2ae15b",
+      "code": "7991",
+      "name": "マミヤオーピー",
+      "title": "2027年3月期 第２四半期 決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566095.pdf",
+      "published": "2026-11-05",
+      "time": "15:40",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "60876739bf0c7018a348c8ab",
+      "code": "3712",
+      "name": "情報企画",
+      "title": "2026年９月期　決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565280.pdf",
+      "published": "2026-11-05",
+      "time": "15:40",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "34d4d8469a4761bdcda0f058",
+      "code": "9514",
+      "name": "ＥＦ－ＯＮ",
+      "title": "中間配当の実施及び配当予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565216.pdf",
+      "published": "2026-11-05",
+      "time": "15:40",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "1b51d816527148f13a7471b9",
+      "code": "7991",
+      "name": "マミヤオーピー",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566078.pdf",
+      "published": "2026-11-05",
+      "time": "15:40",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "048d91d08e36b067a1935b9c",
+      "code": "6339",
+      "name": "新東工",
+      "title": "2027年3月期 第2四半期 決算資料（概要）",
+      "url": "https://www.release.tdnet.info/inbs/140120261019552893.pdf",
+      "published": "2026-11-05",
+      "time": "15:40",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "5c1232ddd5f968a5b80dbeca",
+      "code": "6644",
+      "name": "大崎電",
+      "title": "2026年度 上期（第2四半期）決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565994.pdf",
+      "published": "2026-11-05",
+      "time": "15:35",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "3fa6dff0df9ebb3513da6bbb",
+      "code": "6644",
+      "name": "大崎電",
+      "title": "2027年3月期第2四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565827.pdf",
+      "published": "2026-11-05",
+      "time": "15:35",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "30c50543956bef28f52151a7",
+      "code": "6644",
+      "name": "大崎電",
+      "title": "自己株式取得に係る事項の決定及び自己株式消却に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565976.pdf",
+      "published": "2026-11-05",
+      "time": "15:35",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0f3dd385c339742eecdd6132",
+      "code": "6644",
+      "name": "大崎電",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564681.pdf",
+      "published": "2026-11-05",
+      "time": "15:35",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "798700916755d9c44a7f2c15",
+      "code": "7177",
+      "name": "ＧＭＯＦＨＤ",
+      "title": "2026年10月の月次開示情報（速報）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565862.pdf",
+      "published": "2026-11-05",
+      "time": "15:31",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "6a4841833e7d3f44a8298b07",
+      "code": "9424",
+      "name": "日本通信",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563532.pdf",
+      "published": "2026-11-05",
+      "time": "15:31",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "feaa51d6fa45dda622ea3939",
+      "code": "3110",
+      "name": "日東紡",
+      "title": "代表執行役および執行役の業務委嘱変更に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564771.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "fd3abb03ec4115744bd7b259",
+      "code": "7164",
+      "name": "全国保証",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565512.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "fcc0a9281e9e8a320a222f93",
+      "code": "7679",
+      "name": "薬王堂ＨＤ",
+      "title": "2026年10月度 月次速報に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563823.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "fc5ef10d692fa506d4254f3d",
+      "code": "6745",
+      "name": "ホーチキ",
+      "title": "2027年3月期 第2四半期（中間期）連結決算に関する補足説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261029560205.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "fc41ba7b663c94e3ef3a88e4",
+      "code": "7974",
+      "name": "任天堂",
+      "title": "剰余金の配当（中間配当）および期末配当予想に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261027557155.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f927917ccebaeca3dc730f21",
+      "code": "7980",
+      "name": "重松製作",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕（非連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261022554717.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f81027b461bc1693a8688082",
+      "code": "7857",
+      "name": "セキ",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564526.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f6e38a668adcf8cfc211423f",
+      "code": "7164",
+      "name": "全国保証",
+      "title": "剰余金の配当（中間配当）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565569.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f34a4274f5bc744b1a460d0c",
+      "code": "7857",
+      "name": "セキ",
+      "title": "2027年3月期第2四半期業績予想と実績値との差異及び通期業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562969.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f30c19fdf49b233643a8e922",
+      "code": "6367",
+      "name": "ダイキン工",
+      "title": "剰余金の配当（増配）および期末配当予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564452.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f30aaf4da4987620598156bf",
+      "code": "4027",
+      "name": "テイカ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562391.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f2fd84f3d6dd90b59e64b138",
+      "code": "9404",
+      "name": "日テレＨＤ",
+      "title": "成長投資の加速と株主還元の充実についてのお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564814.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f1557d3302bd486519beacfe",
+      "code": "6941",
+      "name": "山一電機",
+      "title": "剰余金の配当（中間配当）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564291.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f11ac2ce5cff95aacec1eb5d",
+      "code": "4975",
+      "name": "ＪＣＵ",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565360.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ef9d9e5a0bece52c9ea0b2f9",
+      "code": "6050",
+      "name": "Ｅガーディアン",
+      "title": "株主優待制度の廃止及び株主還元方針の変更に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565499.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ee7b4f4bb5c74cff470f689a",
+      "code": "9849",
+      "name": "共同紙",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565259.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ee6526434f8f51fc6100aae5",
+      "code": "7004",
+      "name": "カナデビア",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564937.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ecfca8ef8bc332fea3373d2d",
+      "code": "7089",
+      "name": "Ｇ－フォースタ",
+      "title": "自己株式取得に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565598.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ecb12bcab7c3410d40bff0a2",
+      "code": "4074",
+      "name": "Ｇ－ラキール",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564406.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ebed431be35b260ee0fa569c",
+      "code": "3002",
+      "name": "グンゼ",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564303.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ebbbb96fb809e78da0abec20",
+      "code": "3433",
+      "name": "トーカロ",
+      "title": "剰余金の配当（中間配当）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565122.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "eb712de7c82096e20c446807",
+      "code": "6758",
+      "name": "ソニーグループ",
+      "title": "2026年度第２四半期連結業績概要（決算説明会資料）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564884.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ea82b89e83226bdd516281e9",
+      "code": "3034",
+      "name": "クオールＨＤ",
+      "title": "剰余金の配当（中間配当・増配）及び2027年3月期配当予想の修正（増配）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565370.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e9f03cf5d7031cbd599d8983",
+      "code": "228A",
+      "name": "Ｇ－オプロ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565947.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e851509057f0cb4ca9ccab3e",
+      "code": "9404",
+      "name": "日テレＨＤ",
+      "title": "2027年３月期　第２四半期(中間期)決算短信［日本基準］（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565639.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e818adc4cd78eac5a129ed32",
+      "code": "6724",
+      "name": "エプソン",
+      "title": "2026年度（2027年3月期）第2四半期 決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565254.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e66216f189726b77225da1cb",
+      "code": "9147",
+      "name": "ＮＸＨＤ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565099.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e5d73e44ba122b56c317d799",
+      "code": "4689",
+      "name": "ＬＩＮＥヤフー",
+      "title": "連結業績予想および期末配当予想の修正（増配）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564373.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e0961977165e6ac166833d7a",
+      "code": "9537",
+      "name": "北陸瓦斯",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261016552400.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "dd62e75cf08f59421db9c991",
+      "code": "4475",
+      "name": "ＨＥＮＮＧＥ",
+      "title": "2026年9月期 通期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562462.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "db6e5e757620c1c1ceb7820e",
+      "code": "2588",
+      "name": "プレミアムウォーター",
+      "title": "自己株式の取得状況及び取得終了に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565303.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "da9db371357cf4d6a513e874",
+      "code": "6976",
+      "name": "太陽誘電",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564970.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d8386bcefa3b704475dada02",
+      "code": "3612",
+      "name": "ワールド",
+      "title": "国内小売事業 2027年2月期　月次売上概況（10月度）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565172.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d82bd8a35ef1e66fdafe6ae2",
+      "code": "7112",
+      "name": "Ｇ－キューブ",
+      "title": "［2026年12月期］2026年10月度 直営店月次売上速報",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565968.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d7e045c95310d15edfda2961",
+      "code": "4483",
+      "name": "ＪＭＤＣ",
+      "title": "2027年３月期 第２四半期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564894.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d64c33bd8ac1be622298f141",
+      "code": "2612",
+      "name": "かどや製油",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563015.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d24a3a7708c5c6233f823564",
+      "code": "7089",
+      "name": "Ｇ－フォースタ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563930.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d23d0973b82b3396c26d1a0f",
+      "code": "3110",
+      "name": "日東紡",
+      "title": "剰余金の配当および配当予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564767.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d1fea2326864e9ede493d1dd",
+      "code": "5401",
+      "name": "日本製鉄",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563155.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d09ce0e12d4175fcbb2718ff",
+      "code": "7506",
+      "name": "ハウスローゼ",
+      "title": "2027年3月期通期業績予想の修正及び期末配当予想の修正（減配）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261013549506.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "cfa185c44ee7a929d411ff12",
+      "code": "9853",
+      "name": "銀座ルノア",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261103563386.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "cd4ab2b3e2466abf3ccf8211",
+      "code": "6963",
+      "name": "ローム",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564594.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "cc7b4f0eb0b612c3bf921202",
+      "code": "9537",
+      "name": "北陸瓦斯",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261103563337.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "cb146432ec8502af57a572c4",
+      "code": "4536",
+      "name": "参天薬",
+      "title": "自己株式取得に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565351.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "cadd89964b73cf677cbdc8f0",
+      "code": "3166",
+      "name": "ＯＣＨＩ・ＨＤ",
+      "title": "2027年3月期　第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120260821524081.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "cacbbcc9228705f73df8180c",
+      "code": "3082",
+      "name": "きちりＨＤ",
+      "title": "2026年10月度 月次売上高等前年同月比についてのお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565823.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c8fbc8c31e27e08f1f9f3eb4",
+      "code": "5851",
+      "name": "リョービ",
+      "title": "2026年12月期 第3四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261103563347.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c75f9f484c0712d9f19cf7c3",
+      "code": "6785",
+      "name": "鈴木",
+      "title": "譲渡制限付株式報酬としての自己株式の処分の払込完了に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564971.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c3184e0ea7470cc2e2be0e1d",
+      "code": "6367",
+      "name": "ダイキン工",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564375.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c258b8ae044ed10c38ff9d9a",
+      "code": "3690",
+      "name": "イルグルム",
+      "title": "2026年9月期　通期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564807.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c0a344202f135dbfbc1077b9",
+      "code": "8359",
+      "name": "八十二長野銀行",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564427.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bea4d71fecf39cdd4527d857",
+      "code": "3252",
+      "name": "地主",
+      "title": "2026年12月期 連結業績予想及び配当予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565106.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "be131d84a6cc20b9b2974fc2",
+      "code": "9021",
+      "name": "ＪＲ西",
+      "title": "2026年度 第２四半期（中間期）決算について",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565926.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bd0431a608c3b169603a81a2",
+      "code": "1803",
+      "name": "清水建",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566050.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bd00506ce40dd1655a564632",
+      "code": "4208",
+      "name": "ＵＢＥ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565137.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b9e36db95ee706b9557e2cb5",
+      "code": "6941",
+      "name": "山一電機",
+      "title": "2027年３月期 通期連結業績予想及び配当予想（創立70周年記念配当の実施）の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564284.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b7d5325461e8189989197145",
+      "code": "5401",
+      "name": "日本製鉄",
+      "title": "2027年３月期第２四半期(中間期)連結業績予想値と決算値との差異に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563154.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b7a6a2af4494a64ea944eb97",
+      "code": "4475",
+      "name": "ＨＥＮＮＧＥ",
+      "title": "剰余金の配当に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562473.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b734fb4949702461db06b46f",
+      "code": "8591",
+      "name": "オリックス",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565927.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b5531996b55e47f5fdd1da7c",
+      "code": "2676",
+      "name": "高千穂交",
+      "title": "2027年３月期 第２四半期決算補足説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565407.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b447cdb1854a8307dc850996",
+      "code": "7459",
+      "name": "メディパル",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565489.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b3ffcc5b5a610f5fddbe4415",
+      "code": "9849",
+      "name": "共同紙",
+      "title": "投資有価証券売却益（特別利益）の計上見込みに関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565305.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b18dc2c7870e2d7bc8b97176",
+      "code": "3556",
+      "name": "Ｇ－リネットジャパン",
+      "title": "第三者割当による新株式の発行に係る払込の一部完了ならびに第25回新株予約権の取得および消却の完了に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565133.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "af439bac7891abd0434aedb4",
+      "code": "8150",
+      "name": "三信電気",
+      "title": "2027年3月期第2四半期（中間期）決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563176.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ada1017adab7a0aed7444582",
+      "code": "9021",
+      "name": "ＪＲ西",
+      "title": "2027年３月期通期業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565981.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ab72edcde653eac848a6e1fe",
+      "code": "4678",
+      "name": "秀英",
+      "title": "2027年３月期　第２四半期(中間期)決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261026555979.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "aa1811f1b2a39c7c99b4a5d9",
+      "code": "9837",
+      "name": "モリト",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565799.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "aa0ebd2b5be80f05df473a16",
+      "code": "8252",
+      "name": "丸井Ｇ",
+      "title": "（訂正）「2026 年３月期 決算説明会資料」および「2027 年３月期 第１四半期 決算概要」の一部訂正について",
+      "url": "https://www.release.tdnet.info/inbs/140120261103563393.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり",
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a785204a88b478c8ca003cec",
+      "code": "5401",
+      "name": "日本製鉄",
+      "title": "2029年満期ユーロ円建転換社債型新株予約権付社債及び2031年満期ユーロ円建転換社債型新株予約権付社債の転換価額の調整に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261015550958.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a56a2093198e0076575b5bee",
+      "code": "4972",
+      "name": "綜研化学",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563821.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a48427da361894982386a36e",
+      "code": "4475",
+      "name": "ＨＥＮＮＧＥ",
+      "title": "2026年9月期 決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562428.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a306c6d5774ca0fd9a0cfc13",
+      "code": "4926",
+      "name": "シーボン",
+      "title": "2027年３月期 第２四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565710.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a2f3f7b437efd11fce309249",
+      "code": "7554",
+      "name": "幸楽苑",
+      "title": "2027年３月期10月度売上推移速報に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261103563338.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a09a1f88a562b380e8bc3cdb",
+      "code": "4689",
+      "name": "ＬＩＮＥヤフー",
+      "title": "2027年3月期第2四半期(中間期)決算短信〔IFRS〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564264.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9fbf8b7ae1ada7e391a6c9c8",
+      "code": "4293",
+      "name": "セプテーニＨＤ",
+      "title": "持分法適用関連会社の異動（株式譲渡）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565222.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9de55b6f8fe8ca0fc4fe7bbb",
+      "code": "411A",
+      "name": "Ｐ－マリタイムバンク",
+      "title": "（訂正）「第三者割当による募集株式発行の内容の決定に関するお知らせ」の一部訂正について",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566041.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9bd64aa412e744f83ebfc6f8",
+      "code": "3698",
+      "name": "ＣＲＩ・ＭＷ",
+      "title": "2026年９月期決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565473.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9ae9ec7c721866bd92e6c223",
+      "code": "6328",
+      "name": "荏原実業",
+      "title": "2026年12月期第3四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120260917537846.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "990abd00f92fb153c1527ffd",
+      "code": "5401",
+      "name": "日本製鉄",
+      "title": "2026年度第２四半期決算について",
+      "url": "https://www.release.tdnet.info/inbs/140120261028558368.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "98f25a87092e5be1951ec4c6",
+      "code": "7164",
+      "name": "全国保証",
+      "title": "2027年３月期第２四半期（中間期）　決算短信補足資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565556.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9882f684d53af65404750f5f",
+      "code": "4477",
+      "name": "Ｇ－ＢＡＳＥ",
+      "title": "2026年12月期第3四半期決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565711.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "973bbe25c20f998bf650d59e",
+      "code": "4902",
+      "name": "コニカミノルタ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔ＩＦＲＳ〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564230.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "95a6c2347066749f5bf3fcb7",
+      "code": "4452",
+      "name": "花王",
+      "title": "2026年12月期　第３四半期決算短信〔ＩＦＲＳ会計基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565753.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "941501822f6107f720dbee07",
+      "code": "9885",
+      "name": "シャルレ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565675.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "93645b8272d04155d1a0af18",
+      "code": "9225",
+      "name": "Ｇ－ブリッジコンサル",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565385.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "91826cfa776af9b765706490",
+      "code": "7506",
+      "name": "ハウスローゼ",
+      "title": "2027年3月期第2四半期（中間期）決算短信 ［日本基準] （非連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562593.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9017e6324359822d0a955e1f",
+      "code": "6954",
+      "name": "ファナック",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564976.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "8fe8d182795d3e33eecb530e",
+      "code": "2337",
+      "name": "いちご",
+      "title": "いちご太陽光および風力発電所 月次発電実績（2026年10月）のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565752.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "8f0b5a6da2ade5753ebc6c6f",
+      "code": "3433",
+      "name": "トーカロ",
+      "title": "連結業績予想の修正及び配当予想の修正(増配)に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565100.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "8dfad178d950a1279b349bcb",
+      "code": "6134",
+      "name": "ＦＵＪＩ",
+      "title": "自己株式の取得および自己株式立会外買付取引（ToSTNeT-3）による自己株式の買付けならびに自己株式消却に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565247.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "8b78962db9a04b36483fa285",
+      "code": "3837",
+      "name": "アドソル日進",
+      "title": "2027年３月期　第２四半期（中間期）決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565416.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "8b621ebc91cf0e3896473b57",
+      "code": "6724",
+      "name": "エプソン",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔ＩＦＲＳ〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261028557619.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "8b577d5dde85eb7fc0cd865d",
+      "code": "7212",
+      "name": "エフテック",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564847.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "8a9af38880ef2f10d037de47",
+      "code": "4251",
+      "name": "恵和",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565156.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "895a42047422e6435ab605b9",
+      "code": "7740",
+      "name": "タムロン",
+      "title": "2026年12月期 第３四半期決算短信 〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261029560021.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "8921aa0bd8920da4799aad62",
+      "code": "9619",
+      "name": "イチネンＨＤ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261029559259.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "887f432827bb1c8a41c195e1",
+      "code": "6134",
+      "name": "ＦＵＪＩ",
+      "title": "2027年3月期第2四半期（中間期） 決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565177.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "83b9a53fe480de15092bacb6",
+      "code": "3815",
+      "name": "Ｇ－メディア",
+      "title": "第３回新株予約権の取得及び消却の完了並びに追加行使による調達資金の使途に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565762.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "83447b9baf430ab63481500c",
+      "code": "7018",
+      "name": "内海造",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564098.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "830937eca58e5bcd958ff8d3",
+      "code": "7951",
+      "name": "ヤマハ",
+      "title": "2027年3月期 第2四半期(中間期)決算短信〔IFRS〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564850.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "81fcab6140f0928d4dae54ab",
+      "code": "6941",
+      "name": "山一電機",
+      "title": "2027年3月期 中間期決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564251.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "81f0010ab5800256d58b1c2c",
+      "code": "6769",
+      "name": "ザイン",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564503.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7f622932af2bc3cfa9c158ff",
+      "code": "4120",
+      "name": "スガイ化学工業",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（非連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261030561649.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7e7438f3500aa752222b1a6a",
+      "code": "7134",
+      "name": "アップガレージＧ",
+      "title": "2027年３月期 10月度月次売上状況（速報）等について",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565128.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7d43f9a4cf4a5594671d1b26",
+      "code": "3252",
+      "name": "地主",
+      "title": "「地主プライベートリート投資法人」への販売用不動産及び固定資産の売却に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565114.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7d27bd245a52fc84b8739195",
+      "code": "2148",
+      "name": "ＩＴＭ",
+      "title": "2027年３月期 第２四半期（中間期）決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564819.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7c5b3c2aa725d44fc87f4fa9",
+      "code": "3908",
+      "name": "コラボス",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（非連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565492.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7c196e67dacd98f32b997b46",
+      "code": "3110",
+      "name": "日東紡",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564750.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7a8e409d8cff3cc8bc580ae8",
+      "code": "6769",
+      "name": "ザイン",
+      "title": "2026年12月期 第３四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564226.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "78ca0666643a3b07dab5d3ef",
+      "code": "2503",
+      "name": "キリンＨＤ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261030561674.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "78bf41ed9ad3c3ada933817f",
+      "code": "8056",
+      "name": "ＢＩＰＲＯＧＹ",
+      "title": "2027年3月期第2四半期（中間期）連結決算補足資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565018.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "78b9b0455c1272a30344987c",
+      "code": "3028",
+      "name": "アルペン",
+      "title": "2027年６月期　第１四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564749.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "74836bb4d90f52ee4b8c84d8",
+      "code": "3690",
+      "name": "イルグルム",
+      "title": "個別業績の前期実績との差異に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564806.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7462f7bfced798e60b62f049",
+      "code": "9913",
+      "name": "日邦産業",
+      "title": "連結業績予想及び期末配当予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565632.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "73791ed734decc5489b87f08",
+      "code": "3837",
+      "name": "アドソル日進",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563972.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "735966283e8e85183112af38",
+      "code": "2705",
+      "name": "大戸屋ＨＤ",
+      "title": "2026年10月度の月次売上高等に係る昨年対比増減率について",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565797.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "718edd7343e5d86ec9ae045b",
+      "code": "4678",
+      "name": "秀英",
+      "title": "2027年３月期第２四半期（中間期）連結業績予想値と実績値との差異に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565394.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7176898d50edda417bea37ec",
+      "code": "6287",
+      "name": "サトー",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565656.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "70f251ef25f54599117f45a8",
+      "code": "9001",
+      "name": "東武",
+      "title": "2027年３月期　第２四半期（中間期）決算補足説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564494.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "6f0655889221e06cb8021099",
+      "code": "6745",
+      "name": "ホーチキ",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261029560207.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "6efef026740073ce06c98301",
+      "code": "9722",
+      "name": "藤田観",
+      "title": "2026年12月期　第３四半期決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562722.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "6dd3d1bd6e6683c001685bca",
+      "code": "9876",
+      "name": "コックス",
+      "title": "2027年２月期 10月度 月次売上高前年比速報のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565806.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "6d7cbd1fc9cf7e07d3b21aaf",
+      "code": "9399",
+      "name": "ビート",
+      "title": "リボルビング・クレジット・ファシリティーからの借入れについて",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565324.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "6bdb055a4ea62125dba93343",
+      "code": "6769",
+      "name": "ザイン",
+      "title": "2026年12月期第３四半期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565320.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "6bbd91ea02fd0712980aba80",
+      "code": "2267",
+      "name": "ヤクルト",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565791.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "6acf1ed6c2ec23fcff8523a9",
+      "code": "3252",
+      "name": "地主",
+      "title": "2026年12月期 第3四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564675.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "6a6156e3f8e16205805d57fa",
+      "code": "4598",
+      "name": "Ｇ－ＤＥＬＴＡ－Ｐ",
+      "title": "ASH 2026におけるDFP-10917の臨床試験2演題の発表採択に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565875.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "6864ea7031086b7438dd97f9",
+      "code": "3690",
+      "name": "イルグルム",
+      "title": "2026年9月期　決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564739.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "68632282d291fd6adb4702b5",
+      "code": "9619",
+      "name": "イチネンＨＤ",
+      "title": "2026年11月版会社説明会用資料（決算補足説明資料）",
+      "url": "https://www.release.tdnet.info/inbs/140120261029559302.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "61454e3821af44afa69fa966",
+      "code": "6963",
+      "name": "ローム",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562256.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "5c2465f0a3157464e577e599",
+      "code": "7857",
+      "name": "セキ",
+      "title": "連結子会社の吸収合併（簡易合併・略式合併）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562938.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "5967df6105a9a370b9011bbf",
+      "code": "6050",
+      "name": "Ｅガーディアン",
+      "title": "2026年９月期 決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565593.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "58316c7861f586a2e836e808",
+      "code": "6594",
+      "name": "ニデック",
+      "title": "コミットメントライン契約更新に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105566008.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "56148a2bdbfb92622a5d5ade",
+      "code": "7951",
+      "name": "ヤマハ",
+      "title": "2027年3月期 第2四半期（中間期）業績の概要と通期業績予想について[IFRS]",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565047.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "55e0ca4773e06b62766490b4",
+      "code": "7974",
+      "name": "任天堂",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261027557139.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "554a3b85f909ae35160bdba2",
+      "code": "6758",
+      "name": "ソニーグループ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔IFRS〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564860.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "53df214774b31950361d163a",
+      "code": "7731",
+      "name": "ニコン",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔ＩＦＲＳ〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564790.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "5199f325ae894834014fbfe7",
+      "code": "6963",
+      "name": "ローム",
+      "title": "連結子会社からの受取配当金及び貸倒引当金戻入額の計上に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564643.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "50053e9c832b988a69c7406b",
+      "code": "4477",
+      "name": "Ｇ－ＢＡＳＥ",
+      "title": "2026年12月期第3四半期決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565787.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4f795f7e43a25a0fa4e17919",
+      "code": "9533",
+      "name": "東邦瓦斯",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564666.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4e9708000da654c2a17429d7",
+      "code": "7459",
+      "name": "メディパル",
+      "title": "中長期的な企業価値向上に向けた取り組みについて",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565736.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4d5f3b8248ccdc5ea2096e16",
+      "code": "7951",
+      "name": "ヤマハ",
+      "title": "2027年3月期第2四半期決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564708.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "496cb87db021b42d4120cfd3",
+      "code": "1414",
+      "name": "ショーボンド",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565077.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "461591a4ba35f32e5e18ef30",
+      "code": "4120",
+      "name": "スガイ化学工業",
+      "title": "2027年３月期　第２四半期（中間期）業績と前期実績との差異に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563114.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "43859c4d9f5be6afba471795",
+      "code": "2148",
+      "name": "ＩＴＭ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔ＩＦＲＳ〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564802.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "431c6cdfa2fea626047818a9",
+      "code": "4587",
+      "name": "ペプチドリーム",
+      "title": "MSD社による第一相臨床試験開始のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565440.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "420a58dc44d1e3efed9ca302",
+      "code": "6869",
+      "name": "シスメックス",
+      "title": "減損損失（連結決算）の計上および2027年３月期第２四半期（中間期）連結業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565458.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり",
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "415a9384d1a9fed79b7b8fd1",
+      "code": "6963",
+      "name": "ローム",
+      "title": "剰余金の配当（中間配当）及び期末配当予想に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564599.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "408966bb9677059f33dab1bd",
+      "code": "6976",
+      "name": "太陽誘電",
+      "title": "2027年３月期　第２四半期　決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564982.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "3ea421f2f5546bceb83fa385",
+      "code": "7089",
+      "name": "Ｇ－フォースタ",
+      "title": "2027年3月期 第2四半期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565563.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "3e82bf7e996e7981f7a6cb14",
+      "code": "7212",
+      "name": "エフテック",
+      "title": "第16次中期経営計画の策定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565348.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "成長事業の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "393d00f7bd2e96fdf7f2d21f",
+      "code": "6505",
+      "name": "東洋電",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565531.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "37c78669ba5ae098469745e9",
+      "code": "9913",
+      "name": "日邦産業",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564426.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "373ef6604f1860f18ec966c0",
+      "code": "9279",
+      "name": "ギフトＨＤ",
+      "title": "2026年10月期10月度 直営店売上速報についてのお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565571.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "37376335b55e228893894150",
+      "code": "6976",
+      "name": "太陽誘電",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261023555108.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "37024a6570037b4fa61eb04f",
+      "code": "7506",
+      "name": "ハウスローゼ",
+      "title": "剰余金の配当（中間配当・減配）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261013549504.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "349f0cce7a51c4a68d7f17b9",
+      "code": "5401",
+      "name": "日本製鉄",
+      "title": "2027年3月期第2四半期（中間期）決算短信〔ＩＦＲＳ〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261028558367.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "346aa0404c2d948406dc98fb",
+      "code": "7164",
+      "name": "全国保証",
+      "title": "自己株式取得に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565494.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "3449e1b8e833ea8c9f948a43",
+      "code": "6294",
+      "name": "オカダアイヨン",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565520.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "33a17cc8a0d3715aac405b5d",
+      "code": "7740",
+      "name": "タムロン",
+      "title": "2026年12月期 第３四半期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261030561676.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "33656fcde6efc812cac5c76e",
+      "code": "9021",
+      "name": "ＪＲ西",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565861.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "3300246e88d828941fc1a568",
+      "code": "6963",
+      "name": "ローム",
+      "title": "Fact Book FY2026 Q2",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564651.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "327b07befc671286f8d39d68",
+      "code": "2676",
+      "name": "高千穂交",
+      "title": "2027年３月期  第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564586.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "3236373a1af8d8580567d708",
+      "code": "6050",
+      "name": "Ｅガーディアン",
+      "title": "2026年９月期　決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565689.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "31755a7325c67a447d4a2898",
+      "code": "9404",
+      "name": "日テレＨＤ",
+      "title": "株主還元方針の変更に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564124.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "30f70d7665ff6f8d2137d019",
+      "code": "3549",
+      "name": "クスリのアオキＨＤ",
+      "title": "2026年10月度 月次営業速報に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565349.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2f884f2ae94e700504124db3",
+      "code": "6941",
+      "name": "山一電機",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565155.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2db4d8c56eebe39b7adc4fdc",
+      "code": "6745",
+      "name": "ホーチキ",
+      "title": "剰余金の配当（中間配当）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261029560177.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2dac0286f45c23621f3c4e03",
+      "code": "3698",
+      "name": "ＣＲＩ・ＭＷ",
+      "title": "2026年９月期決算補足説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565504.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2d620b93b7401b9fb3db2695",
+      "code": "4452",
+      "name": "花王",
+      "title": "2026年12月期　第３四半期累計連結決算の概要",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565766.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2d0e156f4848deab89b3ccb5",
+      "code": "9021",
+      "name": "ＪＲ西",
+      "title": "2027年3月期第2四半期決算説明会",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565991.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2bcb7aa21b074963675a63bd",
+      "code": "3034",
+      "name": "クオールＨＤ",
+      "title": "2027年３月期　第２四半期(中間期)決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565356.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "29902f081df1bca3112ac869",
+      "code": "8150",
+      "name": "三信電気",
+      "title": "業績予想の修正並びに配当予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563244.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "292ebdc9261534fa314a49f1",
+      "code": "3433",
+      "name": "トーカロ",
+      "title": "2027年 3 月期 第 2 四半期（上期）決算補足説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565165.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "282def5804aeff6e5608ee9f",
+      "code": "4689",
+      "name": "ＬＩＮＥヤフー",
+      "title": "株主優待制度の導入に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565141.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "27abf00d1928fd9f373ceb87",
+      "code": "6134",
+      "name": "ＦＵＪＩ",
+      "title": "2027年3月期　第2四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564997.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "265dacb173958e733a72de18",
+      "code": "8056",
+      "name": "ＢＩＰＲＯＧＹ",
+      "title": "2027年3月期第2四半期（中間期）決算短信〔ＩＦＲＳ〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564995.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "25055c990bd6219efe0a1fff",
+      "code": "5301",
+      "name": "東海カーボン",
+      "title": "2026年12月期第３四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565437.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "22b368f6e942c202ca200045",
+      "code": "8016",
+      "name": "オンワードＨＤ",
+      "title": "2026年度10月度月次売上概況",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565091.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "21dcc89ebadffbc86219de2c",
+      "code": "2307",
+      "name": "クロスキャット",
+      "title": "2027年３月期 第２四半期（中間期）決算短信補足資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565292.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "21115e29f049d1151358690e",
+      "code": "3002",
+      "name": "グンゼ",
+      "title": "自己株式取得に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564311.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "1fce0d8e06b91646238dfdd1",
+      "code": "4536",
+      "name": "参天薬",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔IFRS〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564969.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "1b7dd310535e9d892ad8c9f7",
+      "code": "3002",
+      "name": "グンゼ",
+      "title": "2027年３月期（131期）第２四半期（中間期）決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564318.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "1a691707ca749c44d81ab727",
+      "code": "2307",
+      "name": "クロスキャット",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565219.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "19eabc4fdbbb1e98ab6afa7a",
+      "code": "9282",
+      "name": "Ｉ－いちごグリーン",
+      "title": "太陽光発電所月次発電実績（2026年10月）のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564998.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "1968ae0fa7aec0d975a30cf1",
+      "code": "3252",
+      "name": "地主",
+      "title": "2026年12月期 第3四半期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565075.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "186e979c4820b4167ba3ccd5",
+      "code": "7841",
+      "name": "遠藤製作",
+      "title": "2026年12月期第3四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564953.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "1769a7457cc0231b94e630d5",
+      "code": "9001",
+      "name": "東武",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564432.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "13de2f73476c2dfcf009e3bf",
+      "code": "7956",
+      "name": "ピジョン",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565154.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "115f6bc4ac8c2aa090cc2a97",
+      "code": "3433",
+      "name": "トーカロ",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565086.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "107f9dc98d7a75a876dc1c2d",
+      "code": "7956",
+      "name": "ピジョン",
+      "title": "2026年12月期  第３四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565104.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "106b7c2dad0562c6db156b51",
+      "code": "9202",
+      "name": "ＡＮＡ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565366.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0f64738ddaa4996cd830a7a8",
+      "code": "7459",
+      "name": "メディパル",
+      "title": "臨時株主総会の開催及び株主提案に対する当社取締役会意見に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565702.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0e205b8d06068badb91e1b90",
+      "code": "6367",
+      "name": "ダイキン工",
+      "title": "2027年3月期第2四半期（累計）連結業績予想と実績の差異に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564450.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0de1f32fa5cf3b47b9cc8a53",
+      "code": "8150",
+      "name": "三信電気",
+      "title": "2027年３月期  第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563166.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0c51fb7c806b7db31fc49185",
+      "code": "2782",
+      "name": "セリア",
+      "title": "2026年10月度の月次売上高前年比及び店舗数",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565002.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0a0f5c885847ca52153e8abd",
+      "code": "6050",
+      "name": "Ｅガーディアン",
+      "title": "2026年９月期通期連結業績予想と実績値との差異に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565721.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "06036d9a0ca85362dc18fbfd",
+      "code": "4483",
+      "name": "ＪＭＤＣ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔ＩＦＲＳ〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564892.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "04d6ea0f88f70efac1d40c25",
+      "code": "6328",
+      "name": "荏原実業",
+      "title": "2026年12月期 第3四半期 決算補足説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563491.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "03da8657ec58c7e22695514b",
+      "code": "1911",
+      "name": "住友林",
+      "title": "2026年12月期第３四半期決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564317.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "03cfc3af877d19055f0c7bb0",
+      "code": "7459",
+      "name": "メディパル",
+      "title": "定款の一部変更に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565743.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "02fbaaf1adcff742ec7c1795",
+      "code": "2588",
+      "name": "プレミアムウォーター",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565229.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "02d8b6fe60af569b00ba2acb",
+      "code": "7731",
+      "name": "ニコン",
+      "title": "2027年3月期 第2四半期（中間期）決算関係データ〔IFRS〕",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564792.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "02845e021e5c8e70ba545dae",
+      "code": "9722",
+      "name": "藤田観",
+      "title": "2026年12月期　第３四半期　決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562732.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "016df3b785ed9e3c66107711",
+      "code": "4208",
+      "name": "ＵＢＥ",
+      "title": "2027年３月期 第２四半期（中間期）決算 説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565985.pdf",
+      "published": "2026-11-05",
+      "time": "15:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "07212d580cddbfc6c7d4edc8",
+      "code": "4642",
+      "name": "オリジナル設",
+      "title": "2026年12月期 第３四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261027556995.pdf",
+      "published": "2026-11-05",
+      "time": "15:10",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "fd98556d0d2ef9c2f722321e",
+      "code": "3167",
+      "name": "ＴＯＫＡＩ　ＨＤ",
+      "title": "中期経営計画2028達成に向けた「成長戦略におけるM&A取組方針」の公表について",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564674.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "成長事業の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f56c7ca509945291e972c7f0",
+      "code": "3167",
+      "name": "ＴＯＫＡＩ　ＨＤ",
+      "title": "2027年3月期 第2四半期（中間期）決算について",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564520.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e89d1c0849fec9420caea99c",
+      "code": "8584",
+      "name": "ジャックス",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564387.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e4cbccd185b913a18ca883fd",
+      "code": "9324",
+      "name": "安田倉",
+      "title": "2027年３月期通期連結業績予想の修正並びに剰余金の配当（中間配当）及び期末配当予想の修正（増配）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565872.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d0dd0fedfc032ceb976de276",
+      "code": "8584",
+      "name": "ジャックス",
+      "title": "2027年３月期第２四半期（中間期）業績予想と実績値との差異及び通期業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564447.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c919ef0479cf6d72bb26e2c7",
+      "code": "5391",
+      "name": "Ａ＆Ａマテリアル",
+      "title": "剰余金の配当（中間配当）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564834.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c3b442fdf72069a271ec9a7b",
+      "code": "8416",
+      "name": "高知銀行",
+      "title": "業績予想の再修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565794.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bff521953e253eb3d5d49db1",
+      "code": "1814",
+      "name": "大末建",
+      "title": "2027年３月期  第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563861.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "becbc94745a396d1f6f2c2d5",
+      "code": "6590",
+      "name": "芝浦",
+      "title": "2027年3月期 第2四半期決算短信[日本基準]（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564472.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bdebf53bed9c3f9062f4ffb1",
+      "code": "9324",
+      "name": "安田倉",
+      "title": "役員の異動に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565974.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b394245d428b78b84c7e5a45",
+      "code": "4968",
+      "name": "荒川化学",
+      "title": "2027年３月期第２四半期（中間期）決算　DATABOOK",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565835.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ac0be5d817a6344418365fa7",
+      "code": "7494",
+      "name": "コナカ",
+      "title": "連結子会社のメール配信サービス提供元への不正アクセスによるメールアドレスの漏えいに関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565832.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "aac892f6bb4e3ff3bf14fdd3",
+      "code": "4968",
+      "name": "荒川化学",
+      "title": "第三者割当による自己株式処分に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565868.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "資本効率の手掛かり",
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a434c7a7238833264ffcde51",
+      "code": "7538",
+      "name": "大水",
+      "title": "2027年３月期　第２四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261016552254.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9dcbdb6fbeae1a1abb68d6f4",
+      "code": "9639",
+      "name": "三協フロンテ",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565403.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9ac89259d1e64a6474e0ea27",
+      "code": "7979",
+      "name": "松風",
+      "title": "2027年3月期第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564629.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "98a771dc0fb89ab6dadec289",
+      "code": "6379",
+      "name": "レイズネクスト",
+      "title": "自己株式の取得状況および取得終了に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565772.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9626d862704f1411d9a406b8",
+      "code": "1869",
+      "name": "名工建",
+      "title": "剰余金の配当（中間配当）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564198.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9356be5364a2c3ee883ed452",
+      "code": "3167",
+      "name": "ＴＯＫＡＩ　ＨＤ",
+      "title": "2027年３月期  第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261022554794.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "90097bbf99e3a7372d0168f1",
+      "code": "9639",
+      "name": "三協フロンテ",
+      "title": "2027年3月期　第2四半期（中間期）決算短信　〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565302.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "8fbdeca4c7ba98a115216ed3",
+      "code": "1869",
+      "name": "名工建",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564146.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "69fd520ed952312c3e69756e",
+      "code": "8747",
+      "name": "豊トラスティ証券",
+      "title": "2027年３月期第2四半期（中間期）の連結及び個別業績見通しに関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564924.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "5a5bc4503df3e8f692aa44c9",
+      "code": "6590",
+      "name": "芝浦",
+      "title": "2027年3月期 通期連結業績予想及び配当予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564476.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "545d3f13e3afe14439e27444",
+      "code": "9991",
+      "name": "ジェコス",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565255.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "50aebb51a3e4f4f50e853eb0",
+      "code": "4968",
+      "name": "荒川化学",
+      "title": "従業員向け株式交付制度導入に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565851.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4bfd29be6f11b13c59825d50",
+      "code": "3418",
+      "name": "Ｇ－バルニバービ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261022554479.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4be1211aef55d13fe41ea864",
+      "code": "7979",
+      "name": "松風",
+      "title": "2027年3月期第2四半期　決算発表参考資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564664.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "464ed0271610c8370c93632e",
+      "code": "8416",
+      "name": "高知銀行",
+      "title": "債権の取立不能または取立遅延のおそれに関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565784.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4604019c6f0d3362271a3763",
+      "code": "4968",
+      "name": "荒川化学",
+      "title": "個別決算における特別損失の計上に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565845.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり",
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "3d9d097184ee08ee182b8520",
+      "code": "1869",
+      "name": "名工建",
+      "title": "2027年３月期 第２四半期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564191.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "34edbc564fcb9e2009eb6585",
+      "code": "4491",
+      "name": "Ｃマネージメント",
+      "title": "令和９年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565873.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "3425b5b3ca7b3518c0bc24e3",
+      "code": "9324",
+      "name": "安田倉",
+      "title": "株式分割、配当予想の修正（増配）及び株主優待品贈呈基準の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565945.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "340041f63a6db4527990a997",
+      "code": "7711",
+      "name": "助川電気",
+      "title": "2026年9月期決算短信〔日本基準〕（非連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261023555593.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2dc338187968be749b86ceba",
+      "code": "2997",
+      "name": "Ｇ－ストレージ王",
+      "title": "2026年10月月次実績",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565237.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "255ba7569739dc45e486df57",
+      "code": "6590",
+      "name": "芝浦",
+      "title": "2027年3月期 第2四半期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564495.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2434ca432413e0eb14c3912b",
+      "code": "7611",
+      "name": "ハイデ日高",
+      "title": "2027年２月期10月度売上高速報についてのお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565076.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "1e872baf4a50617f9e58f882",
+      "code": "1814",
+      "name": "大末建",
+      "title": "2027年3月期 第２四半期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565347.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "1e37471faaed26d04426746a",
+      "code": "5391",
+      "name": "Ａ＆Ａマテリアル",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564833.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "198dd288d49625fe94232f71",
+      "code": "7461",
+      "name": "キムラ",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565307.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "1810e5f5334cfe71f59fbc12",
+      "code": "6590",
+      "name": "芝浦",
+      "title": "業績連動型株式報酬制度の継続に伴う追加出資及び自己株式の処分に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564521.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "16f25c6fd7a71afb6f6243df",
+      "code": "9324",
+      "name": "安田倉",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565923.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0fdd6b648a9d5fed001049b8",
+      "code": "4968",
+      "name": "荒川化学",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565815.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0d01c0f57c42248c45670bb0",
+      "code": "9991",
+      "name": "ジェコス",
+      "title": "2027年3月期通期連結業績予想の修正並びに剰余金の配当（中間配当）及び期末配当予想の修正（増配）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565323.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "06e93e8d7a469af0ab7901cd",
+      "code": "1814",
+      "name": "大末建",
+      "title": "剰余金の配当（中間配当）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562273.pdf",
+      "published": "2026-11-05",
+      "time": "15:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9b1da3c8199ad0b242298b05",
+      "code": "7130",
+      "name": "ヤマエグループＨＤ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564176.pdf",
+      "published": "2026-11-05",
+      "time": "14:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9a5f916547066e606115e65b",
+      "code": "7130",
+      "name": "ヤマエグループＨＤ",
+      "title": "2027年３月期 第２四半期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564269.pdf",
+      "published": "2026-11-05",
+      "time": "14:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9928763f0a4b13aacc761564",
+      "code": "8200",
+      "name": "リンガーハット",
+      "title": "2026年10月度　月次情報",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565393.pdf",
+      "published": "2026-11-05",
+      "time": "14:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "87e20a820afd789068510dfb",
+      "code": "9310",
+      "name": "トランスシティ",
+      "title": "自己株式の取得状況および取得終了に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565663.pdf",
+      "published": "2026-11-05",
+      "time": "14:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b973e372123286db58b9ef49",
+      "code": "8158",
+      "name": "ソーダニッカ",
+      "title": "自己株式の取得に係る事項の決定に関するお知らせ（会社法第165条第2項の規定による定款の定めに基づく自己株式の取得）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565605.pdf",
+      "published": "2026-11-05",
+      "time": "14:20",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7c17ccc92cac1a69fcd5fd7c",
+      "code": "8158",
+      "name": "ソーダニッカ",
+      "title": "2027年３月期　第２四半期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565402.pdf",
+      "published": "2026-11-05",
+      "time": "14:20",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "70452d38412e0cd7c1b0cc6f",
+      "code": "8158",
+      "name": "ソーダニッカ",
+      "title": "2027年３月期　第２四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565164.pdf",
+      "published": "2026-11-05",
+      "time": "14:20",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "61d36d9dec5251fd1a5bbd2e",
+      "code": "8158",
+      "name": "ソーダニッカ",
+      "title": "剰余金の配当（中間配当）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565572.pdf",
+      "published": "2026-11-05",
+      "time": "14:20",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "240b8165f39ba2b183f129e8",
+      "code": "8158",
+      "name": "ソーダニッカ",
+      "title": "2027年３月期 中間期連結業績予想と実績との差異に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565855.pdf",
+      "published": "2026-11-05",
+      "time": "14:20",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0a230776314568e5d12f7236",
+      "code": "8158",
+      "name": "ソーダニッカ",
+      "title": "通期業績予想の修正及び配当予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565535.pdf",
+      "published": "2026-11-05",
+      "time": "14:20",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "fdbe7551c064376ca6c39b8b",
+      "code": "5803",
+      "name": "フジクラ",
+      "title": "連結子会社の異動（株式譲渡）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565331.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "fb11c34e5fe2216659f577f1",
+      "code": "6472",
+      "name": "ＮＴＮ",
+      "title": "2027年3月期 第2四半期 決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562681.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "edd33facf9adfbb52892923c",
+      "code": "5331",
+      "name": "ノリタケ",
+      "title": "2027年３月期 連結業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261103563359.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ec7da8f9a49cbb90a2fed83f",
+      "code": "4189",
+      "name": "ＫＨネオケム",
+      "title": "自己株式取得に係る事項の決定及び自己株式消却に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565485.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ea8965b42c078b45b5116d37",
+      "code": "9312",
+      "name": "ケイヒン",
+      "title": "2027年３月期中間連結会計期間業績予想との差異および通期業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563086.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ea7acafce83cbda9a59af7c1",
+      "code": "3058",
+      "name": "三洋堂ＨＤ",
+      "title": "2027年3月期10月度の月次売上高前年比及び店舗数について",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564956.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e6a760e56709fe4560afbf10",
+      "code": "4403",
+      "name": "日油",
+      "title": "2027年3月期通期の連結業績予想修正並びに剰余金の配当（中間配当）及び期末配当予想修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564705.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e2a18874b69dc840de847053",
+      "code": "4403",
+      "name": "日油",
+      "title": "自己株式取得に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564701.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "da9e8990c1df5fee5ca50bd4",
+      "code": "4403",
+      "name": "日油",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564706.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c77561aee33c4c31fb35b207",
+      "code": "5940",
+      "name": "不二サッシ",
+      "title": "2027年３月期 第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261028557974.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c633b49bfe0e5286f68ee199",
+      "code": "8098",
+      "name": "稲畑産",
+      "title": "2027年3月期 第2四半期（中間期）の連結業績予想と実績値との差異及び通期連結業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565186.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bd6cdbd7b0ce4caf75f81ebf",
+      "code": "8020",
+      "name": "兼松",
+      "title": "剰余金の配当(中間配当)および期末配当予想の修正（増配）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565441.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b68e0003db7013546747eef7",
+      "code": "5940",
+      "name": "不二サッシ",
+      "title": "2026年度第２四半期　不二サッシグループ　決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564123.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b224fc4a2b7644eb3f3d1a08",
+      "code": "8098",
+      "name": "稲畑産",
+      "title": "自己株式取得に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565210.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a6da64c0c525b23739bc019a",
+      "code": "9312",
+      "name": "ケイヒン",
+      "title": "2027年３月期 第２四半期(中間期)決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562797.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a0f969c65198903872f43026",
+      "code": "5930",
+      "name": "文化シヤター",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261024555626.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9f495f3fe2aef11feab4cddc",
+      "code": "8020",
+      "name": "兼松",
+      "title": "2027年３月期 第２四半期 決算補足説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564361.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "87fa0fc7effd322f7221adf3",
+      "code": "6464",
+      "name": "ツバキ・ナカシマ",
+      "title": "人員削減等の合理化を含む生産拠点の再編について",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565699.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7ed28306011c21404d22d652",
+      "code": "8020",
+      "name": "兼松",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔ＩＦＲＳ〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565886.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7bfcd08e5b65b6d3305085c9",
+      "code": "9119",
+      "name": "飯野海",
+      "title": "2027年３月期第２四半期（中間期）連結の業績予想と実績の差異、通期連結業績予想の修正、剰余金の配当（中間配当）及び期末配当予想の修正",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565646.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "703dd45b9c6c821620860e89",
+      "code": "9119",
+      "name": "飯野海",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562227.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4e2244de58d0bd83d0f3defb",
+      "code": "5331",
+      "name": "ノリタケ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261103563357.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4bf7fcc1bc5e159f8bf4a329",
+      "code": "5199",
+      "name": "不二ラテ",
+      "title": "2027年3月期第2四半期（中間期）業績予想数値と実績値との差異に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261022554828.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "3476c7913e52b9bd7a0ae539",
+      "code": "5930",
+      "name": "文化シヤター",
+      "title": "2027年3月期第2四半期 決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564612.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2e3008f8a24d19e5b7f84324",
+      "code": "9003",
+      "name": "相鉄ＨＤ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564660.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2b16c676c1771a8d1a161723",
+      "code": "4189",
+      "name": "ＫＨネオケム",
+      "title": "2026年12月期　第３四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261016552392.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "29f98f1031847911c9da8557",
+      "code": "8098",
+      "name": "稲畑産",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565264.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "29cde9d69391561c9529209d",
+      "code": "9003",
+      "name": "相鉄ＨＤ",
+      "title": "2027年３月期 第２四半期（中間期） 決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564690.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "16fc0d2e851ef8dd6a7489a0",
+      "code": "4189",
+      "name": "ＫＨネオケム",
+      "title": "従業員持株会向け譲渡制限付株式インセンティブとしての自己株式の処分に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565544.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "104970d70407ed1192a502d0",
+      "code": "9558",
+      "name": "Ｇ－ジャパニアス",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565545.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0bf6a5a22ec5392c8080e0e8",
+      "code": "9347",
+      "name": "日本管財ＨＤ",
+      "title": "2027年3月期第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565362.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "077ad151882acb8f3aad28d0",
+      "code": "5199",
+      "name": "不二ラテ",
+      "title": "2027年3月期　第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261022554824.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "015f077317bc7a2bb10367f8",
+      "code": "6326",
+      "name": "クボタ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564938.pdf",
+      "published": "2026-11-05",
+      "time": "14:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "88da0b615be163bb3020d275",
+      "code": "7203",
+      "name": "トヨタ自",
+      "title": "自己株式の取得に係る事項の一部変更、自己株式の取得及び自己株式の公開買付け並びに自己株式の消却に係る事項の一部変更に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565338.pdf",
+      "published": "2026-11-05",
+      "time": "13:55",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "17e49d46b0227154f0c32921",
+      "code": "7203",
+      "name": "トヨタ自",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔IFRS〕（連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261030561115.pdf",
+      "published": "2026-11-05",
+      "time": "13:55",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0c28cd409c5e1aeb58e343e6",
+      "code": "7203",
+      "name": "トヨタ自",
+      "title": "2027年3月期第２四半期決算報告プレゼンテーション資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563510.pdf",
+      "published": "2026-11-05",
+      "time": "13:55",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f83c34d7782e8c6cfdc8dfba",
+      "code": "4188",
+      "name": "三菱ケミカルグループ",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔ＩＦＲＳ〕",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565258.pdf",
+      "published": "2026-11-05",
+      "time": "13:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d5d659e4d572cd735a66e521",
+      "code": "4188",
+      "name": "三菱ケミカルグループ",
+      "title": "2027 年３月期通期業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565291.pdf",
+      "published": "2026-11-05",
+      "time": "13:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "cbb9654199361fbde76f04d2",
+      "code": "6392",
+      "name": "ヤマダコーポ",
+      "title": "業績予想及び配当予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563862.pdf",
+      "published": "2026-11-05",
+      "time": "13:30",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ca4d76976c44a211e77a2421",
+      "code": "4188",
+      "name": "三菱ケミカルグループ",
+      "title": "2027年3月期 第2四半期（中間期） 決算説明",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565282.pdf",
+      "published": "2026-11-05",
+      "time": "13:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bef0beec01ea909f0fff0414",
+      "code": "4188",
+      "name": "三菱ケミカルグループ",
+      "title": "（開示事項の変更）炭素材事業の継続に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565364.pdf",
+      "published": "2026-11-05",
+      "time": "13:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b02992829f6a696061d37686",
+      "code": "8065",
+      "name": "佐藤商",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564823.pdf",
+      "published": "2026-11-05",
+      "time": "13:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "6dc710679126b7ef1795de01",
+      "code": "8065",
+      "name": "佐藤商",
+      "title": "自己株式の取得に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564810.pdf",
+      "published": "2026-11-05",
+      "time": "13:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "381bd2c6ca545456002dfe25",
+      "code": "7203",
+      "name": "トヨタ自",
+      "title": "組織改正、および役員・幹部職人事について",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563543.pdf",
+      "published": "2026-11-05",
+      "time": "13:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d4ba2c4acb392f2ffa33dc2e",
+      "code": "4202",
+      "name": "ダイセル",
+      "title": "2027年3月期 第2四半期(中間期)決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565046.pdf",
+      "published": "2026-11-05",
+      "time": "13:20",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "cc7238dbc7f33b4e736a401b",
+      "code": "4202",
+      "name": "ダイセル",
+      "title": "2027年3月期 第2四半期(中間期)決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565073.pdf",
+      "published": "2026-11-05",
+      "time": "13:20",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "cbfe32703567770471b672ae",
+      "code": "4202",
+      "name": "ダイセル",
+      "title": "期末配当予想の修正に関するお知らせ（増配）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565220.pdf",
+      "published": "2026-11-05",
+      "time": "13:20",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b3bf12f42eebf3a5f2d2caf1",
+      "code": "4202",
+      "name": "ダイセル",
+      "title": "2027年３月期第２四半期（中間期）の業績予想値と実績値との差異および通期業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565190.pdf",
+      "published": "2026-11-05",
+      "time": "13:20",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "6354958c0bf2495b0104c8e3",
+      "code": "9303",
+      "name": "住友倉",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564950.pdf",
+      "published": "2026-11-05",
+      "time": "13:20",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "5c7aef9100e0d9ee788f2df4",
+      "code": "4202",
+      "name": "ダイセル",
+      "title": "自己株式取得に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565232.pdf",
+      "published": "2026-11-05",
+      "time": "13:20",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4635fa5c0065fbb450949972",
+      "code": "4202",
+      "name": "ダイセル",
+      "title": "中期戦略 Accelerate 2030（一部数値目標修正版）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565248.pdf",
+      "published": "2026-11-05",
+      "time": "13:20",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "229779bcec2a6fe239098cd7",
+      "code": "4202",
+      "name": "ダイセル",
+      "title": "中期戦略「Accelerate 2030」の一部数値目標修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565241.pdf",
+      "published": "2026-11-05",
+      "time": "13:20",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "043e6a6699ea9c3f66613ce6",
+      "code": "9057",
+      "name": "遠州トラック",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261026555838.pdf",
+      "published": "2026-11-05",
+      "time": "13:20",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "fd14d04cb942dd42390eb877",
+      "code": "4042",
+      "name": "東ソー",
+      "title": "2027年３月期　第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564869.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "edc56c80f6b1a395a1853eb0",
+      "code": "2852",
+      "name": "ｉＳグリーンＪリート",
+      "title": "ＥＴＦの収益分配金見込額のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565681.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e62cba69a8fe760f99b5633b",
+      "code": "6703",
+      "name": "ＯＫＩ",
+      "title": "2027年３月期通期連結業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565199.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e2b0f32f0d055b2333f153e9",
+      "code": "9983",
+      "name": "ファーストリテ",
+      "title": "投資単位の引き下げに対する考え方及び方針について",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564990.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e224ada2805370baaf3197db",
+      "code": "1476",
+      "name": "ｉＳＪリート",
+      "title": "ＥＴＦの収益分配金見込額のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565677.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "dae388725cf589fbfc1d68b7",
+      "code": "5201",
+      "name": "ＡＧＣ",
+      "title": "2026年12月期 第3四半期決算短信〔ＩＦＲＳ〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563928.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d8d39f00fcf7a8f2ed72791e",
+      "code": "6994",
+      "name": "指月電",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261027556463.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d77251a193e4a08c7bdf4d06",
+      "code": "3941",
+      "name": "レンゴー",
+      "title": "完全子会社の吸収合併（簡易合併・略式合併）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564830.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c2ca712b5827d7921b210881",
+      "code": "6994",
+      "name": "指月電",
+      "title": "2027年3月期通期連結業績予想及び配当予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563788.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bc22858bccae32449d1400d9",
+      "code": "9902",
+      "name": "日伝",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565064.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bb9e129536c75da74cb38588",
+      "code": "190A",
+      "name": "Ｇ－Ｃｈｏｒｄｉａ",
+      "title": "（訂正・数値データ訂正）「2026年8月期 決算短信〔日本基準〕（非連結）」の一部訂正について",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565425.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり",
+        "反証・リスクも確認"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b7b2823bd050a39c47b918a4",
+      "code": "5201",
+      "name": "ＡＧＣ",
+      "title": "2026年12月期　第3四半期業績　説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563967.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b7a0f0ace569186e2c838495",
+      "code": "4042",
+      "name": "東ソー",
+      "title": "連結業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563961.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "afb5262529b26cf556e99ec0",
+      "code": "6703",
+      "name": "ＯＫＩ",
+      "title": "2026年度 第２四半期 決算概要",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565191.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ae537af92903baee80b2bffd",
+      "code": "4042",
+      "name": "東ソー",
+      "title": "2026年度第2四半期　決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565564.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a354f804903a48da71990270",
+      "code": "9983",
+      "name": "ファーストリテ",
+      "title": "剰余金の配当に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564968.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9a3c29d30b878fcf9b4d55b0",
+      "code": "5201",
+      "name": "ＡＧＣ",
+      "title": "通期連結業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563931.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "79e4502f8e723f6f491a92f3",
+      "code": "2013",
+      "name": "ｉＳ米国高配当株",
+      "title": "ＥＴＦの収益分配金見込額のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565679.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "71096d24f430aa4146291f90",
+      "code": "5408",
+      "name": "中山鋼",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564967.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "687a7dbe7c7a7295c27925d0",
+      "code": "8349",
+      "name": "東北銀",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261023554969.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "5b7cea9832c5efcd415a0f29",
+      "code": "9362",
+      "name": "兵機海運",
+      "title": "2027年3月期 第2四半期 決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565483.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "5438b2d9de6973e91b757232",
+      "code": "8630",
+      "name": "ＳＯＭＰＯＨＤ",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562988.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "5157a8f21d3ee12d1092249b",
+      "code": "6994",
+      "name": "指月電",
+      "title": "2027年３月期（2026年度） 第２四半期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563792.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4d210debae8453da43e09ff4",
+      "code": "3420",
+      "name": "ケー・エフ・シー",
+      "title": "2027年３月期　第２四半期（中間期）決算短信［日本基準］（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565066.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "46518a40f891af5dea85d1e1",
+      "code": "3420",
+      "name": "ケー・エフ・シー",
+      "title": "2027年３月期第２四半期（中間期）業績予想と実績値との差異に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565111.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "37aff3ae11470f949cdce414",
+      "code": "1659",
+      "name": "ｉＳ米国リート",
+      "title": "ＥＴＦの収益分配金見込額のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565678.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "364107382b60e922ab76d5bd",
+      "code": "6703",
+      "name": "ＯＫＩ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565173.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "3306f9477ec80904b3fc12ad",
+      "code": "5201",
+      "name": "ＡＧＣ",
+      "title": "代表取締役の異動について",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565202.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2fe70d48017a2dfbbfb9eaff",
+      "code": "2014",
+      "name": "ｉＳ米国連続増配株",
+      "title": "ＥＴＦの収益分配金見込額のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565680.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "24463aa052ecaf2d8f9c5d00",
+      "code": "3941",
+      "name": "レンゴー",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564827.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "123f2337735ecae36ccf6610",
+      "code": "1780",
+      "name": "ヤマウラ",
+      "title": "自己株式の所得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564781.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "107119d7306eaf7c836a9888",
+      "code": "4042",
+      "name": "東ソー",
+      "title": "自己株式取得に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563794.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0c7cf3fb838c8812c09e97ca",
+      "code": "5408",
+      "name": "中山鋼",
+      "title": "2026年度上期決算補足資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564972.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0697495cf3876672f6279e65",
+      "code": "8166",
+      "name": "タカキュー",
+      "title": "月次売上高前年比情報（速報）のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565319.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "03286f05110b5b08de943033",
+      "code": "9902",
+      "name": "日伝",
+      "title": "2027年３月期第２四半期（中間期）連結業績予想と実績値との差異 および通期連結業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565132.pdf",
+      "published": "2026-11-05",
+      "time": "13:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ec0a43b6829b1c36d05a6d88",
+      "code": "6073",
+      "name": "アサンテ",
+      "title": "剰余金の配当（中間配当）に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261003545602.pdf",
+      "published": "2026-11-05",
+      "time": "12:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d73cd0946ca5c1c25512dcf1",
+      "code": "6073",
+      "name": "アサンテ",
+      "title": "2027年３月期　第２四半期（中間期）決算補足資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261003545600.pdf",
+      "published": "2026-11-05",
+      "time": "12:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d34dd20eac735430081aa481",
+      "code": "6073",
+      "name": "アサンテ",
+      "title": "2027年３月期第２四半期連結業績予想と実績との差異及び通期連結業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261030561228.pdf",
+      "published": "2026-11-05",
+      "time": "12:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ba9deaa7771a6bf6223115c5",
+      "code": "2970",
+      "name": "ＧＬＣ　ＧＲＯＵＰ",
+      "title": "2026年12月期月次概況（10月度速報）のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565044.pdf",
+      "published": "2026-11-05",
+      "time": "12:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ab324817c18d626820f0e6b3",
+      "code": "3407",
+      "name": "旭化成",
+      "title": "2026年度第２四半期決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565032.pdf",
+      "published": "2026-11-05",
+      "time": "12:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "940722fe647ee7c6cd2e70e8",
+      "code": "2068",
+      "name": "高ベータ３０ＥＴＮ",
+      "title": "「NEXT NOTES 高ベータ30（ネットリターン）ETN」一証券あたりの償還価額と市場価格の重要な乖離に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565560.pdf",
+      "published": "2026-11-05",
+      "time": "12:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "213ce3e7457369788e5d1936",
+      "code": "6073",
+      "name": "アサンテ",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261003545598.pdf",
+      "published": "2026-11-05",
+      "time": "12:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "19058720a8c9fc3b084c49fe",
+      "code": "4792",
+      "name": "山田コンサル",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565375.pdf",
+      "published": "2026-11-05",
+      "time": "12:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "111086c90e7f11d2239d41ac",
+      "code": "3407",
+      "name": "旭化成",
+      "title": "剰余金の配当（中間配当の増配）および期末配当予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565056.pdf",
+      "published": "2026-11-05",
+      "time": "12:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "04b8d8b0a8bf7de24465f320",
+      "code": "3407",
+      "name": "旭化成",
+      "title": "2027年３月期第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563247.pdf",
+      "published": "2026-11-05",
+      "time": "12:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4e7377fd7f97273ad0b31c30",
+      "code": "2972",
+      "name": "Ｒ－サンケイＲＥ",
+      "title": "（変更）「シティインデックスフィフスによるサンケイリアルエステート投資法人（2972）投資口に対する公開買付に関する賛同及び応募中立の意見表明」の一部変更",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565134.pdf",
+      "published": "2026-11-05",
+      "time": "12:05",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f200e3ec240022ea0e15c678",
+      "code": "3962",
+      "name": "チェンジＨＤ",
+      "title": "当社連結子会社における不正アクセスによる個人情報の外部流出に関するお知らせ（第５報）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565152.pdf",
+      "published": "2026-11-05",
+      "time": "12:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "d0c649f192dda0756e679832",
+      "code": "386A",
+      "name": "みのや",
+      "title": "2026年10月度 月次情報のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565188.pdf",
+      "published": "2026-11-05",
+      "time": "12:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "cc23cb661aff1d2fa534e430",
+      "code": "2222",
+      "name": "寿スピリッツ",
+      "title": "2027年3月期第2四半期（中間期）決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564536.pdf",
+      "published": "2026-11-05",
+      "time": "12:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "ac77b22410fdbac363a48e38",
+      "code": "428A",
+      "name": "サイプレスＨＤ",
+      "title": "2027年8月期10月度売上速報についてのお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565151.pdf",
+      "published": "2026-11-05",
+      "time": "12:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "abb08170e5a677a5af364c84",
+      "code": "4177",
+      "name": "Ｇ－ｉ－ｐｌｕｇ",
+      "title": "2026年10月度　主要ＫＰＩ（速報）の推移に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565359.pdf",
+      "published": "2026-11-05",
+      "time": "12:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "878b9e21450b069c5c1f7cd9",
+      "code": "4012",
+      "name": "アクシス",
+      "title": "2026年12月期第３四半期決算短信〔日本基準〕(非連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562838.pdf",
+      "published": "2026-11-05",
+      "time": "12:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "768744da6961d479b6c45725",
+      "code": "5031",
+      "name": "Ｇ－モイ",
+      "title": "（経過報告）当社サーバーへの不正アクセスに関するお知らせ（第３報）およびサービスの再開について",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565350.pdf",
+      "published": "2026-11-05",
+      "time": "12:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4315a803b2090f5d4d00e1b2",
+      "code": "2222",
+      "name": "寿スピリッツ",
+      "title": "2027年3月期第2四半期（中間期）決算説明会補足資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564540.pdf",
+      "published": "2026-11-05",
+      "time": "12:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "27873818073798d90c565984",
+      "code": "9101",
+      "name": "郵船",
+      "title": "2027年3月期　第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563983.pdf",
+      "published": "2026-11-05",
+      "time": "12:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2664553ee51670b2a3c34014",
+      "code": "5355",
+      "name": "日坩堝",
+      "title": "2027年3月期第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261101562004.pdf",
+      "published": "2026-11-05",
+      "time": "12:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "249e90f96050c26d5c18368a",
+      "code": "3825",
+      "name": "ＲＥＭＩＸ",
+      "title": "（開示事項の経過）暗号資産の運用実績、保有状況及び評価損益に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564729.pdf",
+      "published": "2026-11-05",
+      "time": "12:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "192329448bba931232650cde",
+      "code": "9101",
+      "name": "郵船",
+      "title": "2027年３月期 剰余金の配当（中間配当）及び配当予想（期末配当）の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564979.pdf",
+      "published": "2026-11-05",
+      "time": "12:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0f338b8f88937e61808ad850",
+      "code": "4012",
+      "name": "アクシス",
+      "title": "2026年12月期第３四半期決算補足説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565322.pdf",
+      "published": "2026-11-05",
+      "time": "12:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c52f517a02aa625e5132dc23",
+      "code": "3401",
+      "name": "帝人",
+      "title": "2027年3月期 第2四半期（中間期）決算短信〔ＩＦＲＳ〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564276.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c462747525532040564a2740",
+      "code": "150A",
+      "name": "Ｇ－ＪＳＨ",
+      "title": "当社事業の主要月次数値の開示",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563803.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bd83ea8dffdc65b89ad9f82a",
+      "code": "3287",
+      "name": "Ｒ－星野",
+      "title": "ポートフォリオの運営実績に関するお知らせ（2026年9月度）",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562044.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b820f8873930863eb91e2aec",
+      "code": "4212",
+      "name": "積水樹脂",
+      "title": "持分法適用関連会社の異動に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565171.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b6cc47aa48554167746f10bd",
+      "code": "2730",
+      "name": "エディオン",
+      "title": "自己株式立会外買付取引（ToSTNeT-3）による自己株式の買付に関するお知らせ（一括取得型自己株式取得（ASR）による自己株式取得）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565051.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b09ab609d857eabe575c3bb4",
+      "code": "6758",
+      "name": "ソニーグループ",
+      "title": "自己株式の取得状況に関するお知らせ（会社法第459条第1項の規定による定款の定めに基づく自己株式の取得）",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564929.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a338c4514c719bf2d9cc0969",
+      "code": "2730",
+      "name": "エディオン",
+      "title": "自己株式取得に係る事項の決定に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565041.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "98373d5459ed1220a1da1f20",
+      "code": "3401",
+      "name": "帝人",
+      "title": "2026年度第2四半期決算 および 2026年度業績見通し",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564385.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "8f7f3aa0d1ae3b0527003368",
+      "code": "1897",
+      "name": "金下建設",
+      "title": "2026年12月期 第３四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562422.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7e9aeaad056db1b810c0baf7",
+      "code": "6417",
+      "name": "ＳＡＮＫＹＯ",
+      "title": "2027年３月期 第２四半期（中間期）決算説明資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564335.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7d3f774197af502ee0fb0c05",
+      "code": "6417",
+      "name": "ＳＡＮＫＹＯ",
+      "title": "2027年３月期 第２四半期（中間期）決算短信〔日本基準〕(連結)",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562828.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7265ff81eed310848ad09444",
+      "code": "3401",
+      "name": "帝人",
+      "title": "特別退職金の計上に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564382.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "57290d42eeecf6272432cb00",
+      "code": "8282",
+      "name": "ケーズＨＤ",
+      "title": "2027年３月期  第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563255.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "472bec0948e109ae3341704c",
+      "code": "2730",
+      "name": "エディオン",
+      "title": "2027年３月期　第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562907.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "26125c0d194c25f2392141cc",
+      "code": "2730",
+      "name": "エディオン",
+      "title": "2027年３月期第２四半期（中間期）連結業績予想と実績との差異、通期業績予想の修正、剰余金の配当（中間配当）及び期末配当予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562642.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [
+        "利益改善の手掛かり",
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "0e255847d207c0570c30e5f1",
+      "code": "8282",
+      "name": "ケーズＨＤ",
+      "title": "剰余金の配当に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565043.pdf",
+      "published": "2026-11-05",
+      "time": "11:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "7d8caaeaabefb89bbbfcc746",
+      "code": "6902",
+      "name": "デンソー",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564141.pdf",
+      "published": "2026-11-05",
+      "time": "11:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "4f88c1e687b0820434fc2949",
+      "code": "1921",
+      "name": "巴",
+      "title": "業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563110.pdf",
+      "published": "2026-11-05",
+      "time": "11:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "cf47d2121b430a22a20b4fd4",
+      "code": "5947",
+      "name": "リンナイ",
+      "title": "2027年3月期　第2四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261102563229.pdf",
+      "published": "2026-11-05",
+      "time": "10:40",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "321c46fed8b8c2e3a0a80534",
+      "code": "5279",
+      "name": "日本興業",
+      "title": "自己株式立会外買付取引（(ToSTNeT-3）による自己株式の取得結果ならびにその他の関係会社及び主要株主の異動に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564948.pdf",
+      "published": "2026-11-05",
+      "time": "10:40",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "b6607aeb612f2d50026b2ec8",
+      "code": "9142",
+      "name": "ＪＲ九州",
+      "title": "2027年３月期　第２四半期決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564927.pdf",
+      "published": "2026-11-05",
+      "time": "10:30",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "9e1468bdae6a806b592c3d6b",
+      "code": "4547",
+      "name": "キッセイ薬",
+      "title": "自己株式立会外買付取引（ToSTNeT-3）による自己株式の取得結果に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565021.pdf",
+      "published": "2026-11-05",
+      "time": "10:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "8edd44e26108f8deb0d94452",
+      "code": "7971",
+      "name": "東リ",
+      "title": "自己株式立会外買付取引（ToSTNeT-3）による自己株式の取得結果に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565081.pdf",
+      "published": "2026-11-05",
+      "time": "10:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e2fbbcc2c8a4f8454d0285e2",
+      "code": "273A",
+      "name": "ＳＢＩサウジ上場投信",
+      "title": "2026年9月期（2026年3月25日～2026年9月24日）決算短信",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565159.pdf",
+      "published": "2026-11-05",
+      "time": "10:15",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "f2cacdc7a6ce03ca4f559455",
+      "code": "3941",
+      "name": "レンゴー",
+      "title": "自己株式の取得状況に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564364.pdf",
+      "published": "2026-11-05",
+      "time": "10:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "e372a530718e2e3f96eda532",
+      "code": "8111",
+      "name": "ゴルドウイン",
+      "title": "2027年３月期  第２四半期（中間期）決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564094.pdf",
+      "published": "2026-11-05",
+      "time": "10:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "c2d73332556553b5dc383b5e",
+      "code": "8255",
+      "name": "アクシアル",
+      "title": "10月度月次業績推移（前年比）",
+      "url": "https://www.release.tdnet.info/inbs/140120261029559408.pdf",
+      "published": "2026-11-05",
+      "time": "10:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bb0db3959e1a866b4f97f439",
+      "code": "3317",
+      "name": "フライングＧ",
+      "title": "2027年３月期10月度　月次業績のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261102562453.pdf",
+      "published": "2026-11-05",
+      "time": "10:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "75aa02ef48690d2ef2a0a57c",
+      "code": "5857",
+      "name": "ＡＲＥＨＤ",
+      "title": "自己株式立会外買付取引（ToSTNeT-3）による自己株式の取得結果および取得終了に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564188.pdf",
+      "published": "2026-11-05",
+      "time": "10:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "47d45ecc4400d9226f9592ce",
+      "code": "6806",
+      "name": "ヒロセ電",
+      "title": "2027年3月期第2四半期決算説明会",
+      "url": "https://www.release.tdnet.info/inbs/140120261105564945.pdf",
+      "published": "2026-11-05",
+      "time": "10:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "38ee0ed5ea0d39a6444c8a55",
+      "code": "8111",
+      "name": "ゴルドウイン",
+      "title": "第２四半期（中間期）業績予想値と決算値との差異及び通期業績予想の修正に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564416.pdf",
+      "published": "2026-11-05",
+      "time": "10:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "34af0d187317a94e52f3ff0d",
+      "code": "9832",
+      "name": "オートバックス",
+      "title": "自己株式立会外買付取引（ToSTNeT-３）による自己株式の取得結果に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564581.pdf",
+      "published": "2026-11-05",
+      "time": "10:00",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2cb7345ad0c3c4a39744a7c3",
+      "code": "9698",
+      "name": "クレオ",
+      "title": "2027年３月期 第2四半期 決算説明会資料",
+      "url": "https://www.release.tdnet.info/inbs/140120261105565035.pdf",
+      "published": "2026-11-05",
+      "time": "10:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "027908a2bc9f8a457d72e548",
+      "code": "4430",
+      "name": "東海ソフト",
+      "title": "自己株式立会外買付取引（ToSTNeT-3）による自己株式の取得結果および取得終了に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564151.pdf",
+      "published": "2026-11-05",
+      "time": "09:30",
+      "tags": [
+        "資本効率の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "bbbfd64c8628f4be396d82e7",
+      "code": "366A",
+      "name": "Ｇ－ウェルネスＣ",
+      "title": "当社子会社が販売するサービスの提供元における不正アクセス及び情報漏えいに関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104564889.pdf",
+      "published": "2026-11-05",
+      "time": "08:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "a7fad79a5e03c84e135c3f32",
+      "code": "655A",
+      "name": "ＬＴＶ－Ｘ",
+      "title": "事業計画及び成長可能性に関する書類",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563762.pdf",
+      "published": "2026-11-05",
+      "time": "08:00",
+      "tags": [
+        "成長事業の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "24db0193eafb2408cc7410f5",
+      "code": "655A",
+      "name": "ＬＴＶ－Ｘ",
+      "title": "名古屋証券取引所ネクスト市場への上場に伴う当社決算情報等のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563735.pdf",
+      "published": "2026-11-05",
+      "time": "08:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "042804bc71c4564126122c37",
+      "code": "655A",
+      "name": "ＬＴＶ－Ｘ",
+      "title": "親会社以外の支配株主及び主要株主の異動のお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261104563767.pdf",
+      "published": "2026-11-05",
+      "time": "08:00",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
     {
       "id": "264f09c0fe2d17aa99912dd7",
       "code": "6407",
