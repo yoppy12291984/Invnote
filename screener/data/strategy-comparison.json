@@ -11,7 +11,7 @@
   "version": 1
  },
  "recorded_at": "2026-09-19T09:39:39+09:00",
- "snapshot_count": 32,
+ "snapshot_count": 33,
  "started": "2026-09-24",
  "last_date": "2026-10-28",
  "status": "blocked",
@@ -5936,8 +5936,8 @@
   {
    "source": "rebound",
    "name": "反転",
-   "date": "2026-11-05",
-   "count": 5,
+   "date": "2026-11-06",
+   "count": 7,
    "members": [
     {
      "code": "1911",
@@ -5948,8 +5948,16 @@
      "name": "第一三共"
     },
     {
-     "code": "6269",
-     "name": "三井海洋開発"
+     "code": "5706",
+     "name": "三井金属"
+    },
+    {
+     "code": "5803",
+     "name": "フジクラ"
+    },
+    {
+     "code": "6594",
+     "name": "ニデック"
     },
     {
      "code": "7201",
@@ -6118,6 +6126,6 @@
    ]
   }
  ],
- "generated_at": "2026-11-05T19:09:46+09:00",
- "latest_snapshot_at": "2026-11-05T19:09:46+09:00"
+ "generated_at": "2026-11-06T19:05:57+09:00",
+ "latest_snapshot_at": "2026-11-06T19:05:57+09:00"
 }
