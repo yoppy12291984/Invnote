@@ -21,20 +21,26 @@
     "toDate": "2026-10-30",
     "buy1wPct": -0.43130857663119526,
     "buy4wPct": -0.2707880614732594,
-    "topix4wPct": null,
-    "topixStatus": "missing",
+    "topix4wPct": -3.0782204839892358,
+    "topixStatus": "matched",
     "reportedPnl": {
-      "value": null,
-      "status": "not_acquired",
-      "note": "信用評価損益率の公表値は未取得。JPX信用残高から算出できない。"
+      "date": "2026-10-30",
+      "value": -12.54,
+      "status": "fresh",
+      "change4wPp": -6.9799999999999995,
+      "fromDate": "2026-10-02",
+      "source": "https://www.traders.co.jp/margin_derivatives/margin_transition/1",
+      "published": null,
+      "note": "トレーダーズ・ウェブ掲載値。対象週と取得日時を表示。原推計方法と正確な公表時刻は未確認。JPX公式値や当アプリ独自推計ではない。",
+      "fetchedAt": "2026-11-08T21:59:57.979178+00:00"
     },
     "estimatedPnl": {
       "value": null,
       "status": "not_estimated",
       "note": "取得単価・銘柄構成・売買入替が不明のため推計しない。"
     },
-    "errorType": "ModuleNotFoundError"
+    "topixSource": "J-Quants TOPIX日次終値"
   },
-  "generated_at": "2026-11-07T21:58:52+00:00",
-  "fetched_at": "2026-11-07T21:58:52+00:00"
+  "generated_at": "2026-11-08T21:59:55+00:00",
+  "fetched_at": "2026-11-08T21:59:55+00:00"
 }
