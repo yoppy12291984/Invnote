@@ -390,6 +390,7 @@ route=function(){
  renderUpdateHealth();
  window.InvnoteMarketCalendar?.setHoldings(personalPositions,notes,invReady&&!invLocked);
  renderNewsMacro();
+ renderMarketRisk();
  window.scrollTo(0,0);
 };
 // Replace the original event listener; otherwise an old route can overwrite settings.
@@ -772,6 +773,23 @@ function japanMarketHTML(d, now=Date.now()) {
  const age=now-Date.parse(d.asOf+'T15:30:00+09:00'),old=!Number.isFinite(age)||age>96*3600000;
  return `<section class="japan-market"><strong>日本株の広がり・売られ方 <small>補助情報・加点なし</small></strong><p>下落 ${num(d.downPct)}%の銘柄 ／ 売買代金 ${num(d.turnoverRatio20,2)}倍<span>（直前20営業日平均比）</span></p><small>${esc(d.asOf)} 終値 · ${esc(d.evaluated)}/${esc(d.universe)}社${old?' · 保存値が古いため最新状況は未確認':''}</small><details><summary>広がり・売買の内訳を見る</summary><p>上昇 ${esc(d.up)}社 ／ 下落 ${esc(d.down)}社 ／ 横ばい ${esc(d.unchanged)}社。騰落率中央値 ${num(d.medianReturnPct,2)}%。3%以上下落 ${esc(d.sharpDown)}社。</p><p>下落銘柄の売買代金は集計全体の ${num(d.downTurnoverPct)}%（${esc(d.turnoverEvaluated)}社）。これは売り注文の割合ではありません。</p><p>売買代金 ${num(d.turnoverYen===null?null:d.turnoverYen/1e12,2)}兆円、直前20日平均比 ${num(d.turnoverRatio20,2)}倍。比較期間 ${esc(d.baselineFrom)}〜${esc(d.baselineTo)}、全21日を揃えた ${esc(d.turnoverCohort)}社で比較。</p><p>値動きの内訳：2%以上の下窓 ${d.priceAction?esc(d.priceAction.gapDown2)+'社':'未取得'} ／ 日中値幅5%以上 ${d.priceAction?esc(d.priceAction.wideRange5)+'社':'未取得'}（OHLC判定 ${d.priceAction?esc(d.priceAction.evaluated):'未取得'}社）。始値の前日比中央値 ${num(d.priceAction?.medianGapPct,2)}%、日中値幅中央値 ${num(d.priceAction?.medianRangePct,2)}%。分割補正前日終値で比較。2%/5%は表示用の区切りです。</p><p>売買代金・窓・値幅は売られ方の観測です。板の厚さやスプレッドの直接測定ではなく、投げ売り・買い手不在の原因は確定できません。</p><p>対象は全市場の国内普通株。ETF・REITを除外し、前日比は株式分割を補正。価格欠測・権利等で ${esc(d.excluded)}社を除外。売買代金の比較には追加の履歴・正値条件があり、対象数は異なります。終値ベースで平日夜に更新、場中の情報ではありません。</p><p>下落の広がりと商いの増減を観測する欄です。低商いでも下落は続き得ます。これだけで投げ売り・底打ち・今後の下落確率は判定しません。</p><small>${esc(d.source)}</small></details></section>`;
 }
+function marketRiskHTML(d,now=Date.now()){
+ const n=d?.items?.nikkei,v=d?.items?.vix,a=d?.items?.nasdaq;
+ const age=now-Date.parse(d?.generatedAt),usable=x=>x?.status==='fresh'&&!x.stale&&Number.isFinite(age)&&age>=0&&age<36*3600000;
+ const pct=x=>Number.isFinite(x)?(x>0?'+':'')+x.toFixed(2)+'%':'未取得';
+ if(!usable(n))return '<h2>株価の下落速度 · 判定保留</h2><p>最新の終値を確認できません。補助警告の解除や安全の意味ではありません。</p>';
+ const active=n.active,cor=d.corroborated;
+ const title=n.raw?'下落速度に注意':active?'速度は鈍化・警告は継続':'下落速度は基準未満';
+ const label=x=>x===true?'該当':x===false?'基準未満':'未確認';
+ const prior=n.previous;const change=!prior?'前日比較未確認':n.raw!==prior.raw?(n.raw?'下落速度が基準に到達':'下落速度が基準未満へ'):n.active!==prior.active?'5日間の改善条件を満たし補助警告を解除':'前の取引日から警告区分の変化なし';
+ return `<div class="pulse-header"><strong>市場の読み方</strong><span>3点スコアに加点しない補助情報</span></div><h2>${esc(title)}</h2><p><b>${esc(change)}</b></p><p>日経平均：5営業日 ${pct(n.return5)} · 20営業日 ${pct(n.return20)}<br><small>${esc(n.date)} 終値基準 · 前の取引日 ${esc(prior?.date||'未確認')}</small></p><p>信用の3点スコアは資金調達不安を見ます。株価の急落とは別軸なので、低い点数でも株式市場の下落リスクは残ります。</p><p><b>追加の裏付け：${cor===true?'VIXまたは米国株の悪化あり':cor===false?'今回の基準には該当せず':'一部未確認'}</b>。${active?'警告継続中は、信用建玉・余力と同じ需要に依存する保有の重なりを先に点検。買い増しは業績の悪化有無と許容損失を確認し、段階的に判断します。':'基準未満は底打ちの確認ではありません。重要イベントの結果と保有理由の変化を確認します。'}</p><details><summary>判定根拠・警告を弱める条件</summary><ul><li>日経平均：5営業日で−3%以下、または20営業日で−7%以下で注意。</li><li>VIX水準20以上：${label(usable(v)?d.flags.vixLevel:null)}（${usable(v)?esc(v.value):'未確認'}、${esc(v?.date||'未取得')}）</li><li>VIXの5米営業日変化＋30%以上：${label(usable(v)?d.flags.vixSpeed:null)}（${pct(v?.return5)}）</li><li>NASDAQの5米営業日変化−3%以下：${label(usable(a)?d.flags.nasdaqSpeed:null)}（${pct(a?.return5)}、${esc(a?.date||'未取得')}）</li></ul><p>速度が基準未満、かつ終値が20日平均より上の状態が5営業日続いたときだけ、この補助警告を解除します。現在の連続改善 ${esc(n.recoveryDays)}日。信用スコアの警告解除とは別です。</p><p>過去の終値から再計算した試行表示で、当時配信した警告履歴ではありません。長く警告が続きやすい方式です。回避率・上昇確率・売買指示ではなく、需給だけが原因とも断定しません。日本と米国の観測日は異なります。</p><p>取得処理 ${esc(d.generatedAt)}<br>${[n,v,a].filter(x=>/^https:\/\//.test(x?.source||'')).map(x=>`<a href="${esc(x.source)}" target="_blank" rel="noopener">${esc(x.date)} データ出典</a>`).join(' · ')}</p></details>`;
+}
+async function renderMarketRisk(){
+ const el=document.getElementById('market-risk');if(!el)return;
+ try{const r=await fetch('screener/data/market-risk.json',{cache:'no-store'});if(!r.ok)throw Error();const d=await r.json();if(el.isConnected)el.innerHTML=marketRiskHTML(d);}
+ catch{if(el.isConnected)el.innerHTML='<h2>下落速度 · 取得待ち</h2><p>補助情報を取得できませんでした。3点スコアとは別に確認が必要です。</p>';}
+}
+
 async function renderNewsMacro(){
  const el=document.getElementById('news-macro')||document.getElementById('news-market-alerts');if(!el)return;
  const fmt=v=>{const d=new Date(v);return Number.isFinite(+d)?new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(d):'未取得';};

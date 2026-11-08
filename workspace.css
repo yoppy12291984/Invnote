@@ -319,3 +319,5 @@ html[data-theme="dark"] .price-accent-technical{color:#f3cd83;background:#433622
 html[data-theme="dark"] .price-accent.price-accent-bear{color:#ffb5bc;background:#482a32}
 
 #data-freshness{max-width:1000px;box-sizing:border-box;margin:0 auto;padding:6px 22px 10px;font-size:12px;color:var(--sub);overflow-wrap:anywhere}#data-freshness>div{display:flex;flex-wrap:wrap;gap:4px 12px;margin:3px 0}#data-freshness b{color:var(--ink);font-weight:600}#data-freshness details{padding:4px 0;border:0}#data-freshness summary{font-size:11px;min-height:24px}#data-freshness p{font-size:12px}@media(max-width:600px){#data-freshness{padding-left:16px;padding-right:16px}}
+
+.market-briefing,#market-risk{margin:20px 0;padding:20px;border:1px solid #64748b55;border-radius:14px;overflow-wrap:anywhere;line-height:1.8}#market-risk h2,.market-briefing h2{font-size:20px}#market-risk small{opacity:.75}#market-risk summary,.market-briefing summary{cursor:pointer}
