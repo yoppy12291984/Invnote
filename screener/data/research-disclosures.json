@@ -1,11 +1,23 @@
 {
   "schema": 1,
-  "attemptedAt": "2026-11-07T07:22:51+09:00",
-  "windowStart": "2026-10-31",
-  "windowEnd": "2026-11-06",
+  "attemptedAt": "2026-11-09T07:00:46+09:00",
+  "windowStart": "2026-11-02",
+  "windowEnd": "2026-11-08",
   "status": "partial",
   "lastCompleteAt": "2026-11-06T07:03:12+09:00",
   "coverage": [
+    {
+      "date": "2026-11-08",
+      "status": "ok",
+      "rows": 0,
+      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261108.html"
+    },
+    {
+      "date": "2026-11-07",
+      "status": "ok",
+      "rows": 0,
+      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261107.html"
+    },
     {
       "date": "2026-11-06",
       "status": "ok",
@@ -35,18 +47,6 @@
       "status": "ok",
       "rows": 441,
       "source": "https://www.release.tdnet.info/inbs/I_list_001_20261102.html"
-    },
-    {
-      "date": "2026-11-01",
-      "status": "ok",
-      "rows": 0,
-      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261101.html"
-    },
-    {
-      "date": "2026-10-31",
-      "status": "ok",
-      "rows": 2,
-      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261031.html"
     }
   ],
   "scope": "TDnet公開一覧。IR専用発表・EDINET・Xは網羅しない。見出し分類は方向や割安性の判定ではない。",
