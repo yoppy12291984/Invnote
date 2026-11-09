@@ -2946,11 +2946,11 @@
    ]
   },
   "macro": {
-   "hash": "836aa463b135adcfc3ca8a3e5c251398279e87eb22f374872f7eb05ab15957e1",
-   "date": "2026-11-08T21:59:49+00:00",
+   "hash": "46ca874c5448980ef6cb64f6588fa2152a22480dbd743e31bb7d79bc67dc029d",
+   "date": "2026-11-09T22:00:39+00:00",
    "count": 12,
    "comparison": true,
-   "previous_date": "2026-11-05T22:01:30+00:00",
+   "previous_date": "2026-11-08T21:59:49+00:00",
    "previous_label": "前回公開データ",
    "added": [],
    "removed": [],
@@ -2961,13 +2961,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-04",
-       "after": "2026-11-05"
+       "before": "2026-11-05",
+       "after": "2026-11-06"
       },
       {
        "field": "観測値",
-       "before": 2.64,
-       "after": 2.6
+       "before": 2.6,
+       "after": 2.63
       }
      ]
     },
@@ -2977,13 +2977,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-04",
-       "after": "2026-11-05"
+       "before": "2026-11-05",
+       "after": "2026-11-06"
       },
       {
        "field": "観測値",
-       "before": 4.9,
-       "after": 4.84
+       "before": 4.84,
+       "after": 4.86
       }
      ]
     },
@@ -2993,45 +2993,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-04",
-       "after": "2026-11-05"
-      },
-      {
-       "field": "観測値",
-       "before": 4.58,
-       "after": 4.46
-      }
-     ]
-    },
-    {
-     "key": "T10YIE",
-     "name": "米10年期待インフレ（BEI）",
-     "changes": [
-      {
-       "field": "観測日",
-       "before": "2026-11-04",
+       "before": "2026-11-05",
        "after": "2026-11-06"
       },
       {
        "field": "観測値",
-       "before": 2.26,
-       "after": 2.23
-      }
-     ]
-    },
-    {
-     "key": "T10Y2Y",
-     "name": "米10年−2年金利差",
-     "changes": [
-      {
-       "field": "観測日",
-       "before": "2026-11-04",
-       "after": "2026-11-06"
-      },
-      {
-       "field": "観測値",
-       "before": 0.32,
-       "after": 0.35
+       "before": 4.46,
+       "after": 4.51
       }
      ]
     },
@@ -3041,13 +3009,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-04",
-       "after": "2026-11-05"
+       "before": "2026-11-05",
+       "after": "2026-11-06"
       },
       {
        "field": "観測値",
-       "before": 3.32,
-       "after": 3.48
+       "before": 3.48,
+       "after": 3.42
       }
      ]
     },
@@ -3057,13 +3025,8 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-04",
-       "after": "2026-11-05"
-      },
-      {
-       "field": "観測値",
-       "before": 1.13,
-       "after": 1.16
+       "before": "2026-11-05",
+       "after": "2026-11-06"
       }
      ]
     },
@@ -3073,13 +3036,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-05",
-       "after": "2026-11-06"
+       "before": "2026-11-06",
+       "after": "2026-11-09"
       },
       {
        "field": "観測値",
-       "before": 28.18,
-       "after": 25.64
+       "before": 25.64,
+       "after": 19.92
       }
      ]
     },
@@ -3089,34 +3052,34 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-05",
-       "after": "2026-11-06"
+       "before": "2026-11-06",
+       "after": "2026-11-09"
       },
       {
        "field": "観測値",
-       "before": 7353.73,
-       "after": 7376.8599
+       "before": 7376.8599,
+       "after": 7549.9399
       }
      ]
     },
     {
-     "key": "UNRATE",
-     "name": "米失業率（月次）",
+     "key": "DEXJPUS",
+     "name": "ドル円",
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-09-01",
-       "after": "2026-10-01"
+       "before": "2026-10-30",
+       "after": "2026-11-06"
       },
       {
        "field": "観測値",
-       "before": 4.2,
-       "after": 4.1
+       "before": 157.47,
+       "after": 158.23
       }
      ]
     }
    ],
-   "unchanged": 2
+   "unchanged": 4
   },
   "catalysts": {
    "hash": "5102fe525872239a2cdca27cd7be6b3e15741a6eefb8ae5f008d2486b04f8ea0",
