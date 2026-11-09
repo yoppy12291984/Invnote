@@ -32,7 +32,7 @@
       "source": "https://www.traders.co.jp/margin_derivatives/margin_transition/1",
       "published": null,
       "note": "トレーダーズ・ウェブ掲載値。対象週と取得日時を表示。原推計方法と正確な公表時刻は未確認。JPX公式値や当アプリ独自推計ではない。",
-      "fetchedAt": "2026-11-08T21:59:57.979178+00:00"
+      "fetchedAt": "2026-11-09T22:00:46.822456+00:00"
     },
     "estimatedPnl": {
       "value": null,
@@ -41,6 +41,6 @@
     },
     "topixSource": "J-Quants TOPIX日次終値"
   },
-  "generated_at": "2026-11-08T21:59:55+00:00",
-  "fetched_at": "2026-11-08T21:59:55+00:00"
+  "generated_at": "2026-11-09T22:00:43+00:00",
+  "fetched_at": "2026-11-09T22:00:43+00:00"
 }
