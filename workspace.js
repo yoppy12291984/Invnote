@@ -4,13 +4,13 @@ const appRelease=JSON.parse(document.getElementById('app-release').textContent);
 let personalStocks=[],personalPositions=[],positionMeta={},researchHash='',syncTime=0;
 
 // Arrival time and content time are deliberately separate; cached data is not a live success.
-let newsArrival='unconfirmed',newsUpdated=0,newsDate='',marketArrival=null;
+let newsArrival='unconfirmed',newsUpdated=0,newsDate='',marketArrival=null,briefingDate='',briefingUpdated=0;
 function freshnessTime(value){if(!value)return '未確認';const d=new Date(value);return Number.isFinite(+d)?d.toLocaleString('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}):'未確認';}
 function renderFreshness(){
  const box=document.getElementById('data-freshness');if(!box)return;
  const newsLabel=({success:'同期成功',loading:'同期中',failed:'同期失敗・保存分を表示',unconfirmed:'今回の同期は未確認',locked:'未登録'})[newsArrival]||'未確認';
  const marketLabel=!marketArrival?'確認中':marketArrival.failed?'取得失敗':marketArrival.partial?'一部未取得・保存値あり':marketArrival.stale?'更新が古い':'読込成功';
- box.innerHTML=`<div><b>News：${esc(newsLabel)}</b><span>最新記事 ${esc(newsDate||'未確認')} · データ更新 ${esc(freshnessTime(newsUpdated))}</span></div><div><b>Market：${esc(marketLabel)}</b><span>データ更新 ${esc(freshnessTime(marketArrival?.updated))}</span></div><details><summary>反映日時の詳細（日本時間）</summary><p>News 最終同期成功：${esc(freshnessTime(syncTime))}<br>Market この端末での読込：${esc(freshnessTime(marketArrival?.received))}</p><p>更新日時は配信データの作成時刻です。各指標の観測日はMarket内に表示します。同期成功だけでは新しい記事の作成や全指標の最新値を保証しません。</p></details>`;
+ box.innerHTML=`<div><b>News：${esc(newsLabel)}</b><span>最新記事 ${esc(newsDate||'未確認')} · データ更新 ${esc(freshnessTime(newsUpdated))}</span></div><div><b>市場解説：${esc(briefingDate||'未受信')}</b><span>記事作成 ${esc(freshnessTime(briefingUpdated))} · 指標更新とは別</span></div><div><b>Market指標：${esc(marketLabel)}</b><span>データ更新 ${esc(freshnessTime(marketArrival?.updated))}</span></div><details><summary>反映日時の詳細（日本時間）</summary><p>News 最終同期成功：${esc(freshnessTime(syncTime))}<br>Market この端末での読込：${esc(freshnessTime(marketArrival?.received))}</p><p>更新日時は配信データの作成時刻です。各指標の観測日はMarket内に表示します。同期成功だけでは新しい記事の作成や全指標の最新値を保証しません。</p></details>`;
 }
 const freshnessBox=document.createElement('section');freshnessBox.id='data-freshness';freshnessBox.setAttribute('aria-label','情報の更新・同期状況');document.querySelector('header').after(freshnessBox);renderFreshness();
 
@@ -258,7 +258,7 @@ window.addEventListener('message',e=>{
  const m=e.data;
  if(m?.type==='workspace:memo-result'&&m.request===memoRequest){memoBusy=false;memoDialog.querySelectorAll('button').forEach(b=>b.disabled=false);memoDialog.querySelector('[role=status]').textContent=String(m.message||'');if(m.ok){memoEditing=null;memoDialog.querySelector('textarea').value='';}renderCompanyMemos();return;}
  if(m?.type==='invnote:company'&&/^[0-9A-Z]{4,5}$/.test(m.code)){location.hash='company/'+m.code;return;}
- if(m?.type==='invnote:locked'){newsArrival='locked';newsUpdated=0;newsDate='';syncTime=0;renderFreshness();companyMemos=[];memoDialog?.close();invReady=false;invLocked=true;syncPending=false;clearTimeout(syncTimer);document.getElementById('workspace-sync').disabled=false;replaceResearch(initialData);personalStocks=[];personalPositions=[];positionMeta={};researchHash='';if(!['#settings','#import'].includes(location.hash))route();status.textContent='設定から引き継ぎコードを入力してください。';return;}
+ if(m?.type==='invnote:locked'){newsArrival='locked';newsUpdated=0;newsDate='';briefingDate='';briefingUpdated=0;syncTime=0;renderFreshness();companyMemos=[];memoDialog?.close();invReady=false;invLocked=true;syncPending=false;clearTimeout(syncTimer);document.getElementById('workspace-sync').disabled=false;replaceResearch(initialData);personalStocks=[];personalPositions=[];positionMeta={};researchHash='';if(!['#settings','#import'].includes(location.hash))route();status.textContent='設定から引き継ぎコードを入力してください。';return;}
  if(m?.type!=='invnote:state')return;
  const previousMemos=JSON.stringify(companyMemos);
  companyMemos=Array.isArray(m.companyMemos)?m.companyMemos.filter(n=>n.kind==='company-memo-v1'&&typeof n.text==='string'&&/^[0-9A-Z]{4,5}$/.test(n.code)&&Number.isFinite(n.ts)):[];if(memoDialog?.open)renderCompanyMemos();
@@ -268,7 +268,7 @@ window.addEventListener('message',e=>{
  const nextMeta={date:typeof m.holdingsAsOf==='string'?m.holdingsAsOf:'',complete:m.holdingsComplete===true};
  const changed=(location.hash==='#today/holdings-plan'&&previousMemos!==JSON.stringify(companyMemos))||m.researchHash!==researchHash||JSON.stringify(nextStocks)!==JSON.stringify(personalStocks)||JSON.stringify(nextPositions)!==JSON.stringify(personalPositions)||JSON.stringify(nextMeta)!==JSON.stringify(positionMeta);
  personalPositions=nextPositions;positionMeta=nextMeta;
- personalStocks=nextStocks;syncTime=m.lastSync||0;newsUpdated=validBundle(m.bundle)?m.researchUpdatedAt:0;newsDate=validBundle(m.bundle)?(m.bundle.news?.entries||[]).map(n=>n.date).filter(Boolean).sort().at(-1)||'':'';renderFreshness();
+ personalStocks=nextStocks;syncTime=m.lastSync||0;newsUpdated=validBundle(m.bundle)?m.researchUpdatedAt:0;newsDate=validBundle(m.bundle)?(m.bundle.news?.entries||[]).map(n=>n.date).filter(Boolean).sort().at(-1)||'':'';const newestBriefing=validBundle(m.bundle)?(m.bundle.news?.entries||[]).filter(n=>n.category==='MARKET BRIEFING').sort((a,b)=>(b.updatedAt||b.date).localeCompare(a.updatedAt||a.date))[0]:null;briefingDate=newestBriefing?.date||'';briefingUpdated=newestBriefing?.updatedAt||0;renderFreshness();
  if(validBundle(m.bundle)){replaceResearch(m.bundle);researchHash=m.researchHash;status.textContent=`四季報 ${all.length}社 · ${syncTime?'Invnote 最終同期 '+new Date(syncTime).toLocaleString('ja-JP'):'端末の保存データ'}`;}
  else {replaceResearch(initialData);researchHash='';status.textContent=m.bundle?'四季報の形式を確認できませんでした。設定・同期を確認してください。':'四季報はまだ同期されていません。設定・同期から読み込めます。';}
  // Keep active search text and personal edits intact when only sync time changed.
