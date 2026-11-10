@@ -11,7 +11,7 @@
   "version": 1
  },
  "recorded_at": "2026-09-19T09:39:39+09:00",
- "snapshot_count": 35,
+ "snapshot_count": 36,
  "started": "2026-09-24",
  "last_date": "2026-10-28",
  "status": "blocked",
@@ -5940,12 +5940,12 @@
   {
    "source": "rebound",
    "name": "反転",
-   "date": "2026-11-09",
+   "date": "2026-11-10",
    "count": 7,
    "members": [
     {
-     "code": "1911",
-     "name": "住友林業"
+     "code": "6269",
+     "name": "三井海洋開発"
     },
     {
      "code": "4568",
@@ -6029,6 +6029,6 @@
    "members": []
   }
  ],
- "generated_at": "2026-11-09T19:02:12+09:00",
- "latest_snapshot_at": "2026-11-09T19:02:12+09:00"
+ "generated_at": "2026-11-10T19:07:32+09:00",
+ "latest_snapshot_at": "2026-11-10T19:07:32+09:00"
 }
