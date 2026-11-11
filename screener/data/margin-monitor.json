@@ -6,11 +6,11 @@
   "buyMillion": 5880994.0,
   "sellShares": 332419.0,
   "buyShares": 3460691.0,
-  "normalized": 0.5953421490793149,
+  "normalized": 0.574992338430995,
   "normMedian156": 0.7018384278998335,
   "baselineCount": 156,
-  "turnoverDate": "2026-09-30",
-  "turnoverAvailable": "2026-10-08",
+  "turnoverDate": "2026-10-31",
+  "turnoverAvailable": "2026-11-10",
   "buy4wPct": -12.329397320267255,
   "source": "https://www.jpx.co.jp/markets/statistics-equities/margin/tvdivq0000001rk9-att/20261106_mtcurrent.xlsx",
   "turnoverSource": "https://www.jpx.co.jp/markets/statistics-equities/misc/tvdivq0000000vzk-att/historical-genbutsu.xlsx",
@@ -32,7 +32,7 @@
       "source": "https://www.traders.co.jp/margin_derivatives/margin_transition/1",
       "published": null,
       "note": "トレーダーズ・ウェブ掲載値。対象週と取得日時を表示。原推計方法と正確な公表時刻は未確認。JPX公式値や当アプリ独自推計ではない。",
-      "fetchedAt": "2026-11-10T21:57:51.253071+00:00"
+      "fetchedAt": "2026-11-11T23:14:47.618639+00:00"
     },
     "estimatedPnl": {
       "value": null,
@@ -41,6 +41,6 @@
     },
     "topixSource": "J-Quants TOPIX日次終値"
   },
-  "generated_at": "2026-11-10T21:57:46+00:00",
-  "fetched_at": "2026-11-10T21:57:46+00:00"
+  "generated_at": "2026-11-11T23:14:43+00:00",
+  "fetched_at": "2026-11-11T23:14:43+00:00"
 }
