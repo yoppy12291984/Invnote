@@ -2955,18 +2955,18 @@
    ]
   },
   "macro": {
-   "hash": "e8aec9b6b41b594d1e4f02dd087a26e5048575336063f851b282256b39b1b86a",
-   "date": "2026-11-11T23:14:36+00:00",
+   "hash": "a1bc30cfd5801e66cedd0683820ab85cd511bb7560206188ec4869111ab9ba96",
+   "date": "2026-11-12T22:02:54+00:00",
    "count": 12,
    "comparison": true,
-   "previous_date": "2026-11-10T21:57:43+00:00",
+   "previous_date": "2026-11-11T23:14:36+00:00",
    "previous_label": "前回公開データ",
    "added": [],
    "removed": [],
    "changed": [
     {
-     "key": "T10YIE",
-     "name": "米10年期待インフレ（BEI）",
+     "key": "DFII10",
+     "name": "米10年実質金利",
      "changes": [
       {
        "field": "観測日",
@@ -2975,14 +2975,14 @@
       },
       {
        "field": "観測値",
-       "before": 2.22,
-       "after": 2.2
+       "before": 2.66,
+       "after": 2.78
       }
      ]
     },
     {
-     "key": "T10Y2Y",
-     "name": "米10年−2年金利差",
+     "key": "DGS10",
+     "name": "米10年国債利回り",
      "changes": [
       {
        "field": "観測日",
@@ -2991,8 +2991,56 @@
       },
       {
        "field": "観測値",
-       "before": 0.32,
-       "after": 0.25
+       "before": 4.88,
+       "after": 4.98
+      }
+     ]
+    },
+    {
+     "key": "DGS2",
+     "name": "米2年国債利回り",
+     "changes": [
+      {
+       "field": "観測日",
+       "before": "2026-11-09",
+       "after": "2026-11-10"
+      },
+      {
+       "field": "観測値",
+       "before": 4.56,
+       "after": 4.73
+      }
+     ]
+    },
+    {
+     "key": "BAMLH0A0HYM2",
+     "name": "米HY信用スプレッド",
+     "changes": [
+      {
+       "field": "観測日",
+       "before": "2026-11-09",
+       "after": "2026-11-11"
+      },
+      {
+       "field": "観測値",
+       "before": 3.34,
+       "after": 3.3
+      }
+     ]
+    },
+    {
+     "key": "BAMLC0A4CBBB",
+     "name": "米BBB信用スプレッド",
+     "changes": [
+      {
+       "field": "観測日",
+       "before": "2026-11-09",
+       "after": "2026-11-11"
+      },
+      {
+       "field": "観測値",
+       "before": 1.13,
+       "after": 1.12
       }
      ]
     },
@@ -3002,13 +3050,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-10",
-       "after": "2026-11-11"
+       "before": "2026-11-11",
+       "after": "2026-11-12"
       },
       {
        "field": "観測値",
-       "before": 19.46,
-       "after": 17.49
+       "before": 17.49,
+       "after": 18.7
       }
      ]
     },
@@ -3018,18 +3066,18 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-10",
-       "after": "2026-11-11"
+       "before": "2026-11-11",
+       "after": "2026-11-12"
       },
       {
        "field": "観測値",
-       "before": 7520.9302,
-       "after": 7619.3799
+       "before": 7619.3799,
+       "after": 7592.3999
       }
      ]
     }
    ],
-   "unchanged": 8
+   "unchanged": 5
   },
   "catalysts": {
    "hash": "5102fe525872239a2cdca27cd7be6b3e15741a6eefb8ae5f008d2486b04f8ea0",
