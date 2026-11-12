@@ -1,20 +1,33 @@
 {
   "schema": 1,
-  "attemptedAt": "2026-11-12T19:00:19+09:00",
+  "attemptedAt": "2026-11-13T07:03:55+09:00",
   "windowStart": "2026-11-12",
   "windowEnd": "2026-11-12",
   "status": "ok",
-  "lastCompleteAt": "2026-11-12T19:00:19+09:00",
+  "lastCompleteAt": "2026-11-13T07:03:55+09:00",
   "coverage": [
     {
       "date": "2026-11-12",
       "status": "ok",
-      "rows": 1179,
+      "rows": 1180,
       "source": "https://www.release.tdnet.info/inbs/I_list_001_20261112.html"
     }
   ],
   "scope": "TDnet公開一覧。IR専用発表・EDINET・Xは網羅しない。見出し分類は方向や割安性の判定ではない。",
   "items": [
+    {
+      "id": "62602d19e8c2d28f5ad3d68a",
+      "code": "7717",
+      "name": "Ｖテク",
+      "title": "DI露光装置「LAMBDI」海外パッケージメーカーより量産機を受注",
+      "url": "https://www.release.tdnet.info/inbs/140120261112577311.pdf",
+      "published": "2026-11-12",
+      "time": "20:40",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
     {
       "id": "da0cb22843cd03de9544383a",
       "code": "1435",
