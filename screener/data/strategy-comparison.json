@@ -11,7 +11,7 @@
   "version": 1
  },
  "recorded_at": "2026-09-19T09:39:39+09:00",
- "snapshot_count": 38,
+ "snapshot_count": 39,
  "started": "2026-09-24",
  "last_date": "2026-10-28",
  "status": "blocked",
@@ -5940,8 +5940,8 @@
   {
    "source": "rebound",
    "name": "反転",
-   "date": "2026-11-12",
-   "count": 7,
+   "date": "2026-11-13",
+   "count": 8,
    "members": [
     {
      "code": "6269",
@@ -5962,6 +5962,10 @@
     {
      "code": "6594",
      "name": "ニデック"
+    },
+    {
+     "code": "7012",
+     "name": "川崎重工業"
     },
     {
      "code": "7201",
@@ -6029,6 +6033,6 @@
    "members": []
   }
  ],
- "generated_at": "2026-11-12T19:02:53+09:00",
- "latest_snapshot_at": "2026-11-12T19:02:53+09:00"
+ "generated_at": "2026-11-13T19:07:50+09:00",
+ "latest_snapshot_at": "2026-11-13T19:07:50+09:00"
 }
