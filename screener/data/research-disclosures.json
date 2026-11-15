@@ -1,20 +1,80 @@
 {
   "schema": 1,
-  "attemptedAt": "2026-11-14T07:29:14+09:00",
-  "windowStart": "2026-11-13",
-  "windowEnd": "2026-11-13",
+  "attemptedAt": "2026-11-16T06:58:10+09:00",
+  "windowStart": "2026-11-09",
+  "windowEnd": "2026-11-15",
   "status": "partial",
   "lastCompleteAt": "2026-11-13T07:03:55+09:00",
   "coverage": [
+    {
+      "date": "2026-11-15",
+      "status": "ok",
+      "rows": 1,
+      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261115.html"
+    },
+    {
+      "date": "2026-11-14",
+      "status": "ok",
+      "rows": 1,
+      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261114.html"
+    },
     {
       "date": "2026-11-13",
       "status": "failed",
       "reason": "ValueError",
       "source": "https://www.release.tdnet.info/inbs/I_list_001_20261113.html"
+    },
+    {
+      "date": "2026-11-12",
+      "status": "ok",
+      "rows": 1180,
+      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261112.html"
+    },
+    {
+      "date": "2026-11-11",
+      "status": "failed",
+      "reason": "ValueError",
+      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261111.html"
+    },
+    {
+      "date": "2026-11-10",
+      "status": "ok",
+      "rows": 768,
+      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261110.html"
+    },
+    {
+      "date": "2026-11-09",
+      "status": "ok",
+      "rows": 592,
+      "source": "https://www.release.tdnet.info/inbs/I_list_001_20261109.html"
     }
   ],
   "scope": "TDnet公開一覧。IR専用発表・EDINET・Xは網羅しない。見出し分類は方向や割安性の判定ではない。",
   "items": [
+    {
+      "id": "850605879fc27fcdac86288c",
+      "code": "7790",
+      "name": "バルコス",
+      "title": "2026年12月期第3四半期決算短信〔日本基準〕（連結）",
+      "url": "https://www.release.tdnet.info/inbs/140120261115580504.pdf",
+      "published": "2026-11-15",
+      "time": "17:00",
+      "tags": [
+        "利益改善の手掛かり"
+      ],
+      "status": "見出し収集・本文未精査"
+    },
+    {
+      "id": "2cd4d70c1b6a8c98ec6be09b",
+      "code": "6594",
+      "name": "ニデック",
+      "title": "第54期（2027年３月期）半期報告書の提出期限延長に係る承認申請の検討に関するお知らせ",
+      "url": "https://www.release.tdnet.info/inbs/140120261113579464.pdf",
+      "published": "2026-11-14",
+      "time": "09:30",
+      "tags": [],
+      "status": "見出し収集・本文未精査"
+    },
     {
       "id": "62602d19e8c2d28f5ad3d68a",
       "code": "7717",
