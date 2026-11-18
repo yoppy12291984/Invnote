@@ -11,7 +11,7 @@
   "version": 1
  },
  "recorded_at": "2026-09-19T09:39:39+09:00",
- "snapshot_count": 42,
+ "snapshot_count": 43,
  "started": "2026-09-24",
  "last_date": "2026-10-28",
  "status": "blocked",
@@ -5828,8 +5828,8 @@
   {
    "source": "rebound",
    "name": "反転",
-   "date": "2026-11-17",
-   "count": 8,
+   "date": "2026-11-18",
+   "count": 10,
    "members": [
     {
      "code": "6269",
@@ -5844,8 +5844,16 @@
      "name": "三井金属"
     },
     {
+     "code": "5713",
+     "name": "住友金属鉱山"
+    },
+    {
      "code": "5803",
      "name": "フジクラ"
+    },
+    {
+     "code": "5838",
+     "name": "楽天銀行"
     },
     {
      "code": "6594",
@@ -6050,6 +6058,6 @@
    ]
   }
  ],
- "generated_at": "2026-11-17T19:08:19+09:00",
- "latest_snapshot_at": "2026-11-17T19:08:19+09:00"
+ "generated_at": "2026-11-18T19:08:03+09:00",
+ "latest_snapshot_at": "2026-11-18T19:08:03+09:00"
 }
