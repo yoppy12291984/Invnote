@@ -1,7 +1,7 @@
 {
   "version": 3,
   "model": "credit-bank-v3",
-  "generated_at": "2026-11-16T22:02:49.901Z",
+  "generated_at": "2026-11-19T03:58:36.673Z",
   "current": {
     "model": "credit-bank-v3",
     "score": 0.5,
@@ -13,9 +13,9 @@
         "label": "HY",
         "threshold": 3,
         "speedThreshold": 0.5,
-        "value": 3.23,
-        "change": -0.02,
-        "date": "2026-11-13",
+        "value": 3.43,
+        "change": 0.12,
+        "date": "2026-11-17",
         "levelPoint": 0.5,
         "speedPoint": 0,
         "known": true,
@@ -26,9 +26,9 @@
         "label": "BBB",
         "threshold": 1.5,
         "speedThreshold": 0.2,
-        "value": 1.11,
-        "change": 0.07,
-        "date": "2026-11-13",
+        "value": 1.15,
+        "change": 0.09,
+        "date": "2026-11-17",
         "levelPoint": 0,
         "speedPoint": 0,
         "known": true,
@@ -47,18 +47,18 @@
       {
         "label": "KBE",
         "level": 1,
-        "value": 3.6780887131188713,
-        "relative": 6.848687345104665,
-        "from": "2026-10-16",
-        "to": "2026-11-16"
+        "value": 2.059567525346252,
+        "relative": 6.832847811252549,
+        "from": "2026-10-19",
+        "to": "2026-11-18"
       },
       {
         "label": "KRE",
         "level": 1,
-        "value": 3.4092609701101715,
-        "relative": 6.579859602095965,
-        "from": "2026-10-16",
-        "to": "2026-11-16"
+        "value": 1.8192246045873082,
+        "relative": 6.592504890493605,
+        "from": "2026-10-19",
+        "to": "2026-11-18"
       }
     ],
     "confirmation": {
@@ -69,15 +69,15 @@
       "buy": false,
       "ratioJoint": false,
       "buyJoint": false,
-      "vixValue": 22.90999984741211,
-      "vixDate": "2026-11-16",
-      "ratioValue": 10.410629356324398,
-      "buyNormalized": 0.574992338430995,
-      "buyMedian": 0.7018384278998335,
-      "marginDate": "2026-11-06",
-      "published": "2026-11-10",
+      "vixValue": 24.56,
+      "vixDate": "2026-11-18",
+      "ratioValue": 9.517382264093841,
+      "buyNormalized": 0.5639603155268973,
+      "buyMedian": 0.7003768998162134,
+      "marginDate": "2026-11-13",
+      "published": "2026-11-17",
       "turnoverDate": "2026-10-31",
-      "buyMillion": 5880994
+      "buyMillion": 5768159
     }
   },
   "lastConfirmed": {
@@ -91,9 +91,9 @@
         "label": "HY",
         "threshold": 3,
         "speedThreshold": 0.5,
-        "value": 3.23,
-        "change": -0.02,
-        "date": "2026-11-13",
+        "value": 3.43,
+        "change": 0.12,
+        "date": "2026-11-17",
         "levelPoint": 0.5,
         "speedPoint": 0,
         "known": true,
@@ -104,9 +104,9 @@
         "label": "BBB",
         "threshold": 1.5,
         "speedThreshold": 0.2,
-        "value": 1.11,
-        "change": 0.07,
-        "date": "2026-11-13",
+        "value": 1.15,
+        "change": 0.09,
+        "date": "2026-11-17",
         "levelPoint": 0,
         "speedPoint": 0,
         "known": true,
@@ -125,18 +125,18 @@
       {
         "label": "KBE",
         "level": 1,
-        "value": 3.6780887131188713,
-        "relative": 6.848687345104665,
-        "from": "2026-10-16",
-        "to": "2026-11-16"
+        "value": 2.059567525346252,
+        "relative": 6.832847811252549,
+        "from": "2026-10-19",
+        "to": "2026-11-18"
       },
       {
         "label": "KRE",
         "level": 1,
-        "value": 3.4092609701101715,
-        "relative": 6.579859602095965,
-        "from": "2026-10-16",
-        "to": "2026-11-16"
+        "value": 1.8192246045873082,
+        "relative": 6.592504890493605,
+        "from": "2026-10-19",
+        "to": "2026-11-18"
       }
     ],
     "confirmation": {
@@ -147,15 +147,15 @@
       "buy": false,
       "ratioJoint": false,
       "buyJoint": false,
-      "vixValue": 22.90999984741211,
-      "vixDate": "2026-11-16",
-      "ratioValue": 10.410629356324398,
-      "buyNormalized": 0.574992338430995,
-      "buyMedian": 0.7018384278998335,
-      "marginDate": "2026-11-06",
-      "published": "2026-11-10",
+      "vixValue": 24.56,
+      "vixDate": "2026-11-18",
+      "ratioValue": 9.517382264093841,
+      "buyNormalized": 0.5639603155268973,
+      "buyMedian": 0.7003768998162134,
+      "marginDate": "2026-11-13",
+      "published": "2026-11-17",
       "turnoverDate": "2026-10-31",
-      "buyMillion": 5880994
+      "buyMillion": 5768159
     }
   },
   "events": [
@@ -656,15 +656,15 @@
     "buy": false,
     "ratioJoint": false,
     "buyJoint": false,
-    "vixValue": 22.90999984741211,
-    "vixDate": "2026-11-16",
-    "ratioValue": 10.410629356324398,
-    "buyNormalized": 0.574992338430995,
-    "buyMedian": 0.7018384278998335,
-    "marginDate": "2026-11-06",
-    "published": "2026-11-10",
+    "vixValue": 24.56,
+    "vixDate": "2026-11-18",
+    "ratioValue": 9.517382264093841,
+    "buyNormalized": 0.5639603155268973,
+    "buyMedian": 0.7003768998162134,
+    "marginDate": "2026-11-13",
+    "published": "2026-11-17",
     "turnoverDate": "2026-10-31",
-    "buyMillion": 5880994
+    "buyMillion": 5768159
   },
   "confirmationEvents": [
     {
