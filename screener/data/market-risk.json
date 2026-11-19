@@ -1,28 +1,28 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-19T03:58:36.746830+00:00",
+  "generatedAt": "2026-11-19T21:33:50.961387+00:00",
   "items": {
     "nikkei": {
-      "date": "2026-11-13",
-      "value": 61142.3515625,
-      "status": "cached",
-      "stale": true,
+      "date": "2026-11-18",
+      "value": 59024.28125,
+      "status": "fresh",
+      "stale": false,
       "source": "https://finance.yahoo.com/quote/^N225/history/",
-      "fetchedAt": "2026-11-16T22:02:49.992447+00:00",
-      "return5": 6.45529191029961,
-      "close": 61142.3515625,
-      "return20": -5.096700469403981,
-      "ma20": 62406.4486328125,
-      "raw": false,
+      "fetchedAt": "2026-11-19T21:33:50.962375+00:00",
+      "return5": -3.631607845053064,
+      "close": 59024.28125,
+      "return20": -7.8831172346455975,
+      "ma20": 61567.9646484375,
+      "raw": true,
       "active": true,
       "recoveryDays": 0,
       "entry": "2026-10-13",
       "previous": {
-        "date": "2026-11-12",
-        "close": 60819.359375,
-        "return5": -0.4232939723107232,
-        "return20": -10.22216010136463,
-        "ma20": 62570.628515625,
+        "date": "2026-11-17",
+        "close": 58860.4296875,
+        "return5": -2.6449877539564737,
+        "return20": -9.329293701212638,
+        "ma20": 61820.5216796875,
         "raw": true,
         "active": true,
         "recoveryDays": 0,
@@ -30,22 +30,22 @@
       }
     },
     "vix": {
-      "date": "2026-11-18",
-      "value": 24.56,
+      "date": "2026-11-19",
+      "value": 28.440000534057617,
       "status": "fresh",
       "stale": false,
-      "source": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv",
-      "fetchedAt": "2026-11-19T03:58:36.886541+00:00",
-      "return5": 40.42309891366496
+      "source": "https://finance.yahoo.com/quote/^VIX/history/",
+      "fetchedAt": "2026-11-19T21:33:51.172414+00:00",
+      "return5": 52.08555814832563
     },
     "nasdaq": {
-      "date": "2026-11-18",
-      "value": 24429.884765625,
+      "date": "2026-11-19",
+      "value": 23879.19921875,
       "status": "fresh",
       "stale": false,
       "source": "https://finance.yahoo.com/quote/^IXIC/history/",
-      "fetchedAt": "2026-11-19T03:58:37.913830+00:00",
-      "return5": -4.06933549837718
+      "fetchedAt": "2026-11-19T21:33:51.990099+00:00",
+      "return5": -5.861725769162474
     }
   },
   "flags": {
@@ -54,7 +54,7 @@
     "nasdaqSpeed": true
   },
   "corroborated": true,
-  "status": "partial",
+  "status": "fresh",
   "method": "price-speed-v1",
   "experimental": true,
   "scoreContribution": 0
