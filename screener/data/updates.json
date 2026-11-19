@@ -2700,11 +2700,11 @@
    ]
   },
   "macro": {
-   "hash": "cbb91541e0f2431a1e4a631f8ad20bd88bb35819a1f243ea6eac0c9b5d9d3d5f",
-   "date": "2026-11-16T22:02:36+00:00",
+   "hash": "ba39d8fd3f7f340dbdcf360f0f21e326a181bed659a19f328c0c7dbac8d58908",
+   "date": "2026-11-19T03:58:27+00:00",
    "count": 12,
    "comparison": true,
-   "previous_date": "2026-11-15T21:57:14+00:00",
+   "previous_date": "2026-11-16T22:02:36+00:00",
    "previous_label": "前回公開データ",
    "added": [],
    "removed": [],
@@ -2715,13 +2715,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-12",
-       "after": "2026-11-13"
+       "before": "2026-11-13",
+       "after": "2026-11-17"
       },
       {
        "field": "観測値",
-       "before": 2.86,
-       "after": 2.91
+       "before": 2.91,
+       "after": 2.89
       }
      ]
     },
@@ -2731,13 +2731,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-12",
-       "after": "2026-11-13"
+       "before": "2026-11-13",
+       "after": "2026-11-17"
       },
       {
        "field": "観測値",
-       "before": 5.1,
-       "after": 5.15
+       "before": 5.15,
+       "after": 5.1
       }
      ]
     },
@@ -2747,13 +2747,40 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-12",
-       "after": "2026-11-13"
+       "before": "2026-11-13",
+       "after": "2026-11-17"
       },
       {
        "field": "観測値",
-       "before": 4.86,
-       "after": 4.88
+       "before": 4.88,
+       "after": 4.8
+      }
+     ]
+    },
+    {
+     "key": "T10YIE",
+     "name": "米10年期待インフレ（BEI）",
+     "changes": [
+      {
+       "field": "観測日",
+       "before": "2026-11-13",
+       "after": "2026-11-18"
+      },
+      {
+       "field": "観測値",
+       "before": 2.24,
+       "after": 2.19
+      }
+     ]
+    },
+    {
+     "key": "T10Y2Y",
+     "name": "米10年−2年金利差",
+     "changes": [
+      {
+       "field": "観測日",
+       "before": "2026-11-13",
+       "after": "2026-11-18"
       }
      ]
     },
@@ -2763,13 +2790,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-12",
-       "after": "2026-11-13"
+       "before": "2026-11-13",
+       "after": "2026-11-17"
       },
       {
        "field": "観測値",
-       "before": 3.2,
-       "after": 3.23
+       "before": 3.23,
+       "after": 3.43
       }
      ]
     },
@@ -2779,8 +2806,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-12",
-       "after": "2026-11-13"
+       "before": "2026-11-13",
+       "after": "2026-11-17"
+      },
+      {
+       "field": "観測値",
+       "before": 1.11,
+       "after": 1.15
       }
      ]
     },
@@ -2790,13 +2822,13 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-13",
-       "after": "2026-11-16"
+       "before": "2026-11-16",
+       "after": "2026-11-18"
       },
       {
        "field": "観測値",
-       "before": 19.3,
-       "after": 22.91
+       "before": 22.91,
+       "after": 24.56
       }
      ]
     },
@@ -2806,34 +2838,18 @@
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-13",
-       "after": "2026-11-16"
+       "before": "2026-11-16",
+       "after": "2026-11-18"
       },
       {
        "field": "観測値",
-       "before": 7561.6699,
-       "after": 7416.5898
-      }
-     ]
-    },
-    {
-     "key": "DEXJPUS",
-     "name": "ドル円",
-     "changes": [
-      {
-       "field": "観測日",
-       "before": "2026-11-06",
-       "after": "2026-11-13"
-      },
-      {
-       "field": "観測値",
-       "before": 158.23,
-       "after": 159.93
+       "before": 7416.5898,
+       "after": 7323.6299
       }
      ]
     }
    ],
-   "unchanged": 4
+   "unchanged": 3
   },
   "catalysts": {
    "hash": "5102fe525872239a2cdca27cd7be6b3e15741a6eefb8ae5f008d2486b04f8ea0",
