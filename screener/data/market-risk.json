@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-16T22:02:49.992442+00:00",
+  "generatedAt": "2026-11-19T03:58:36.746830+00:00",
   "items": {
     "nikkei": {
       "date": "2026-11-13",
       "value": 61142.3515625,
-      "status": "fresh",
-      "stale": false,
+      "status": "cached",
+      "stale": true,
       "source": "https://finance.yahoo.com/quote/^N225/history/",
       "fetchedAt": "2026-11-16T22:02:49.992447+00:00",
       "return5": 6.45529191029961,
@@ -30,31 +30,31 @@
       }
     },
     "vix": {
-      "date": "2026-11-16",
-      "value": 22.90999984741211,
+      "date": "2026-11-18",
+      "value": 24.56,
       "status": "fresh",
       "stale": false,
-      "source": "https://finance.yahoo.com/quote/^VIX/history/",
-      "fetchedAt": "2026-11-16T22:02:50.238531+00:00",
-      "return5": 15.010038954148651
+      "source": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv",
+      "fetchedAt": "2026-11-19T03:58:36.886541+00:00",
+      "return5": 40.42309891366496
     },
     "nasdaq": {
-      "date": "2026-11-16",
-      "value": 24509.7578125,
+      "date": "2026-11-18",
+      "value": 24429.884765625,
       "status": "fresh",
       "stale": false,
       "source": "https://finance.yahoo.com/quote/^IXIC/history/",
-      "fetchedAt": "2026-11-16T22:02:51.587143+00:00",
-      "return5": -2.9437242026208343
+      "fetchedAt": "2026-11-19T03:58:37.913830+00:00",
+      "return5": -4.06933549837718
     }
   },
   "flags": {
     "vixLevel": true,
-    "vixSpeed": false,
-    "nasdaqSpeed": false
+    "vixSpeed": true,
+    "nasdaqSpeed": true
   },
   "corroborated": true,
-  "status": "fresh",
+  "status": "partial",
   "method": "price-speed-v1",
   "experimental": true,
   "scoreContribution": 0
