@@ -1,28 +1,28 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-20T21:31:10.796701+00:00",
+  "generatedAt": "2026-11-21T21:28:29.742724+00:00",
   "items": {
     "nikkei": {
-      "date": "2026-11-19",
-      "value": 59444.2109375,
+      "date": "2026-11-20",
+      "value": 56436.6484375,
       "status": "fresh",
       "stale": false,
       "source": "https://finance.yahoo.com/quote/^N225/history/",
-      "fetchedAt": "2026-11-20T21:31:10.796701+00:00",
-      "return5": -2.261037359866136,
-      "close": 59444.2109375,
-      "return20": -8.011340360297813,
-      "ma20": 61309.11328125,
+      "fetchedAt": "2026-11-21T21:28:29.742724+00:00",
+      "return5": -7.696307068251718,
+      "close": 56436.6484375,
+      "return20": -10.286780506727133,
+      "ma20": 60985.5537109375,
       "raw": true,
       "active": true,
       "recoveryDays": 0,
       "entry": "2026-10-13",
       "previous": {
-        "date": "2026-11-18",
-        "close": 59024.28125,
-        "return5": -3.631607845053064,
-        "return20": -7.8831172346455975,
-        "ma20": 61567.9646484375,
+        "date": "2026-11-19",
+        "close": 59444.2109375,
+        "return5": -2.261037359866136,
+        "return20": -8.011340360297813,
+        "ma20": 61309.11328125,
         "raw": true,
         "active": true,
         "recoveryDays": 0,
@@ -31,21 +31,21 @@
     },
     "vix": {
       "date": "2026-11-20",
-      "value": 35.88999938964844,
+      "value": 35.89,
       "status": "fresh",
       "stale": false,
-      "source": "https://finance.yahoo.com/quote/^VIX/history/",
-      "fetchedAt": "2026-11-20T21:31:11.011640+00:00",
-      "return5": 85.95855341139693
+      "source": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv",
+      "fetchedAt": "2026-11-21T21:28:30.022396+00:00",
+      "return5": 85.95854922279793
     },
     "nasdaq": {
       "date": "2026-11-20",
-      "value": 22617.732421875,
+      "value": 22617.73046875,
       "status": "fresh",
       "stale": false,
       "source": "https://finance.yahoo.com/quote/^IXIC/history/",
-      "fetchedAt": "2026-11-20T21:31:12.034613+00:00",
-      "return5": -10.019534148628917
+      "fetchedAt": "2026-11-21T21:28:30.841325+00:00",
+      "return5": -10.019541918775554
     }
   },
   "flags": {
