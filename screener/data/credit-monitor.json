@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-20T21:31:02+00:00",
+  "generated_at": "2026-11-21T21:28:22+00:00",
   "items": [
     {
       "id": "NASDAQBANK",
@@ -12,7 +12,7 @@
       "date": "2026-11-19",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-20T21:31:01+00:00",
+      "fetched_at": "2026-11-21T21:28:21+00:00",
       "changes": {
         "1w": {
           "value": -242.3,
@@ -321,8 +321,8 @@
         }
       ],
       "percentile": 76.1,
-      "sample_count": 501,
-      "sample_start": "2024-11-20"
+      "sample_count": 500,
+      "sample_start": "2024-11-21"
     },
     {
       "id": "BAMLH0A0HYM2EY",
@@ -334,7 +334,7 @@
       "date": "2026-11-19",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-20T21:31:01+00:00",
+      "fetched_at": "2026-11-21T21:28:21+00:00",
       "changes": {
         "1w": {
           "value": 0.19,
@@ -646,9 +646,9 @@
           "value": 8.35
         }
       ],
-      "percentile": 99.0,
-      "sample_count": 524,
-      "sample_start": "2024-11-20"
+      "percentile": 98.9,
+      "sample_count": 523,
+      "sample_start": "2024-11-21"
     },
     {
       "id": "BAMLC0A4CBBBEY",
@@ -660,7 +660,7 @@
       "date": "2026-11-19",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-20T21:31:01+00:00",
+      "fetched_at": "2026-11-21T21:28:21+00:00",
       "changes": {
         "1w": {
           "value": -0.04,
@@ -973,8 +973,8 @@
         }
       ],
       "percentile": 96.7,
-      "sample_count": 524,
-      "sample_start": "2024-11-20"
+      "sample_count": 523,
+      "sample_start": "2024-11-21"
     },
     {
       "id": "DRTSCIS",
@@ -986,7 +986,7 @@
       "date": "2026-10-01",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-20T21:31:01+00:00",
+      "fetched_at": "2026-11-21T21:28:21+00:00",
       "changes": {
         "1w": null,
         "1m": null,
@@ -1041,7 +1041,7 @@
       "date": "2026-10-01",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-20T21:31:01+00:00",
+      "fetched_at": "2026-11-21T21:28:21+00:00",
       "changes": {
         "1w": null,
         "1m": null,
@@ -1096,7 +1096,7 @@
       "date": "2026-11-20",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-20T21:31:01.913557+00:00",
+      "fetched_at": "2026-11-21T21:28:21.646453+00:00",
       "changes": {
         "1w": {
           "value": -4.119995,
@@ -1419,7 +1419,7 @@
       "date": "2026-11-20",
       "stale": false,
       "status": "fresh",
-      "fetched_at": "2026-11-20T21:31:01.913557+00:00",
+      "fetched_at": "2026-11-21T21:28:21.646453+00:00",
       "changes": {
         "1w": {
           "value": -4.419998,
