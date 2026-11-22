@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-21T21:28:29.742724+00:00",
+  "generatedAt": "2026-11-22T21:32:21.017640+00:00",
   "items": {
     "nikkei": {
       "date": "2026-11-20",
@@ -8,7 +8,7 @@
       "status": "fresh",
       "stale": false,
       "source": "https://finance.yahoo.com/quote/^N225/history/",
-      "fetchedAt": "2026-11-21T21:28:29.742724+00:00",
+      "fetchedAt": "2026-11-22T21:32:21.017640+00:00",
       "return5": -7.696307068251718,
       "close": 56436.6484375,
       "return20": -10.286780506727133,
@@ -35,7 +35,7 @@
       "status": "fresh",
       "stale": false,
       "source": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv",
-      "fetchedAt": "2026-11-21T21:28:30.022396+00:00",
+      "fetchedAt": "2026-11-22T21:32:21.462187+00:00",
       "return5": 85.95854922279793
     },
     "nasdaq": {
@@ -44,7 +44,7 @@
       "status": "fresh",
       "stale": false,
       "source": "https://finance.yahoo.com/quote/^IXIC/history/",
-      "fetchedAt": "2026-11-21T21:28:30.841325+00:00",
+      "fetchedAt": "2026-11-22T21:32:22.170763+00:00",
       "return5": -10.019541918775554
     }
   },
