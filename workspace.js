@@ -63,7 +63,7 @@ function holdingsPlanPage(){
  if(!rows.length){app.innerHTML+='<p class="empty">保存されている保有情報に、株数がプラスの銘柄はありません。</p><a class="action" href="#today/inv:vPf">ポートフォリオを確認</a>';return;}
  app.innerHTML+='<div class="grid">'+rows.map(p=>{
   const code=p.code,n=notes[code],r=ratings[code];
-  return `<article class="card"><h2><button class="open" data-company="${esc(code)}">${esc(n?.name||p.name)}（${esc(code)}）</button></h2>${pullbackSummary(code)}<p>保有 ${p.shares.toLocaleString('ja-JP')}株${p.accounts.length?' · '+p.accounts.map(esc).join(' / '):''}</p><p class="holding-current-price">最新の保有株価：${p.price!=null?`<strong class="price-accent">${p.price.toLocaleString('ja-JP')}円</strong><br><small>価格日 ${esc(p.priceDate)} · ポートフォリオの更新・同期に連動</small>`:'未取得・未同期'}</p>${companyMemos.some(m=>m.code===code&&!m.memoDeleted)?holdingMemoHTML(code):''}${r?`<div class="rating-pair"><div><span>3か月</span><b>${esc(r.short_3m)}</b> / 10</div><div><span>12か月</span><b>${esc(r.long_12m)}</b> / 10</div></div><small>採点 ${esc(r.assessment_date||R.assessment_date)} · 採点時の株価 ${Number(r.baseline_close).toLocaleString('ja-JP')}円（${esc(r.baseline_price_date)}）</small>`:'<p>投資妙味：未採点・未同期</p>'}${n?earningsDates(n):'<p>研究本文は未収録です。</p>'}${rankingPriceDetails(code)}<details><summary>次の確認・見立てが変わる条件</summary><p>${esc(n?.next||'未記録')}</p><p>${esc(r?.change_conditions||n?.counter||'未記録')}</p></details></article>`;
+  return `<article class="card"><h2><button class="open" data-company="${esc(code)}">${esc(n?.name||p.name)}（${esc(code)}）</button></h2>${priceOverview(code)}<p>保有 ${p.shares.toLocaleString('ja-JP')}株${p.accounts.length?' · '+p.accounts.map(esc).join(' / '):''}</p><p class="holding-current-price">最新の保有株価：${p.price!=null?`<strong class="price-accent">${p.price.toLocaleString('ja-JP')}円</strong><br><small>価格日 ${esc(p.priceDate)} · ポートフォリオの更新・同期に連動</small>`:'未取得・未同期'}</p>${companyMemos.some(m=>m.code===code&&!m.memoDeleted)?holdingMemoHTML(code):''}${r?`<div class="rating-pair"><div><span>3か月</span><b>${esc(r.short_3m)}</b> / 10</div><div><span>12か月</span><b>${esc(r.long_12m)}</b> / 10</div></div><small>採点 ${esc(r.assessment_date||R.assessment_date)} · 採点時の株価 ${Number(r.baseline_close).toLocaleString('ja-JP')}円（${esc(r.baseline_price_date)}）</small>`:'<p>投資妙味：未採点・未同期</p>'}${n?earningsDates(n):'<p>研究本文は未収録です。</p>'}${rankingPriceDetails(code)}<details><summary>次の確認・見立てが変わる条件</summary><p>${esc(n?.next||'未記録')}</p><p>${esc(r?.change_conditions||n?.counter||'未記録')}</p></details></article>`;
  }).join('')+'</div>';
 
 }
@@ -194,6 +194,8 @@ function validBundle(d){
  }
  if(d?.purchasePriority!==undefined){
   const p=d.purchasePriority, day=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x);
+  const band=x=>Array.isArray(x)&&x.length===2&&x.every(n=>Number.isFinite(n)&&n>0)&&x[0]<=x[1];
+  const priceCases=v=>v&&['JPY','USD','EUR','GBP','CHF','SEK'].includes(v.currency)&&band(v.normal)&&band(v.weak);
   if(!p||!day(p.priceDate)||!p.rows||typeof p.rows!=='object'||Array.isArray(p.rows))return false;
   for(const [code,r] of Object.entries(p.rows)){
    if(!/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(code)||!r||!['buy','price','evidence'].includes(r.status))return false;
@@ -201,6 +203,29 @@ function validBundle(d){
    if(!['downside','upside','check'].every(k=>typeof r[k]==='string'&&r[k].trim()))return false;
    if(r.technical!==undefined&&(!r.technical||
     !['primary','secondary','confirmation','detail'].every(k=>typeof r.technical[k]==='string'&&r.technical[k].trim())))return false;
+   if(r.priceCases!==undefined){
+    if(!priceCases(r.priceCases))return false;
+   }
+  }
+  if(p.referenceCases!==undefined){
+   if(!p.referenceCases||typeof p.referenceCases!=='object'||Array.isArray(p.referenceCases))return false;
+   for(const [code,r] of Object.entries(p.referenceCases)){
+    if(!/^[0-9A-Z]{4,5}$/.test(code)||!priceCases(r)||!day(r.date)||
+     !['normalDetail','weakDetail'].every(k=>typeof r[k]==='string'&&r[k].trim()))return false;
+   }
+  }
+  if(p.valuationGaps!==undefined){
+   if(!p.valuationGaps||typeof p.valuationGaps!=='object'||Array.isArray(p.valuationGaps))return false;
+   for(const [code,reason] of Object.entries(p.valuationGaps)){
+    if(!/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(code)||typeof reason!=='string'||!reason.trim())return false;
+   }
+  }
+  if(p.technicals!==undefined){
+   if(!p.technicals||typeof p.technicals!=='object'||Array.isArray(p.technicals))return false;
+   for(const [code,t] of Object.entries(p.technicals)){
+    if(!/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(code)||!t||!Number.isFinite(t.close)||t.close<=0||
+     !['primary','secondary','confirmation','detail'].every(k=>typeof t[k]==='string'&&t[k].trim()))return false;
+   }
   }
  }
  if(d?.companyProfiles!==undefined){
@@ -317,7 +342,11 @@ const tabSettingsKey='invnote-workspace-tabs-v1';
 let tabSettings={};
 try{const value=JSON.parse(localStorage.getItem(tabSettingsKey)||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))tabSettings=value;}catch{}
 if(tabSettings['discover/inv:vHot']&&!tabSettings['notebook/inv:vHot'])tabSettings['notebook/inv:vHot']=tabSettings['discover/inv:vHot'];
-function tabOption(key,label){const value=tabSettings[key];return {label:typeof value?.label==='string'&&value.label.trim()?value.label.trim().slice(0,30):label,hidden:typeof value?.hidden==='boolean'?value.hidden:key==='today/inv:vTodos'};}
+function tabOption(key,label){
+ const value=tabSettings[key],name=typeof value?.label==='string'?value.label.trim().slice(0,30):'';
+ const legacyPortfolio=key==='today/inv:vPf'&&name==='ポートフォリオ';
+ return {label:!name||legacyPortfolio?label:name,hidden:typeof value?.hidden==='boolean'?value.hidden:key==='today/inv:vTodos'};
+}
 function applyTabSettings(){
  for(const [area,items] of Object.entries(defaultSections)){
   sections[area]=items.filter(([id])=>!tabOption(area+'/'+id,'').hidden).map(([id,label])=>[id,tabOption(area+'/'+id,label).label]);
