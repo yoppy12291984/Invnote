@@ -199,6 +199,8 @@ function validBundle(d){
    if(!/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(code)||!r||!['buy','price','evidence'].includes(r.status))return false;
    if(!Number.isFinite(r.close)||r.close<=0||![r.short,r.long].every(n=>Number.isFinite(n)&&n>=1&&n<=10))return false;
    if(!['downside','upside','check'].every(k=>typeof r[k]==='string'&&r[k].trim()))return false;
+   if(r.technical!==undefined&&(!r.technical||
+    !['primary','secondary','confirmation','detail'].every(k=>typeof r.technical[k]==='string'&&r.technical[k].trim())))return false;
   }
  }
  if(d?.companyProfiles!==undefined){
