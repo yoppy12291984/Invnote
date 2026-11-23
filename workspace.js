@@ -192,6 +192,15 @@ function validBundle(d){
    codes.add(row.code);
   }
  }
+ if(d?.purchasePriority!==undefined){
+  const p=d.purchasePriority, day=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x);
+  if(!p||!day(p.priceDate)||!p.rows||typeof p.rows!=='object'||Array.isArray(p.rows))return false;
+  for(const [code,r] of Object.entries(p.rows)){
+   if(!/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(code)||!r||!['buy','price','evidence'].includes(r.status))return false;
+   if(!Number.isFinite(r.close)||r.close<=0||![r.short,r.long].every(n=>Number.isFinite(n)&&n>=1&&n<=10))return false;
+   if(!['downside','upside','check'].every(k=>typeof r[k]==='string'&&r[k].trim()))return false;
+  }
+ }
  if(d?.companyProfiles!==undefined){
   const ps=d.companyProfiles,day=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x),url=x=>typeof x==='string'&&/^https:\/\//.test(x);
   if(!ps||typeof ps!=='object'||Array.isArray(ps))return false;
@@ -211,6 +220,9 @@ function validBundle(d){
    if(r.stars===5&&(r.blocking_work.length||typeof r.completion_basis!=='string'||!r.completion_basis.trim()))return false;
    if(!r.documents.every(x=>x&&typeof x.id==='string'&&typeof x.status==='string'&&(x.evidence===undefined||(Array.isArray(x.evidence)&&x.evidence.every(s=>typeof s==='string')))))return false;
    if(!r.records.every(x=>x&&typeof x.path==='string'&&Array.isArray(x.coverage)&&x.coverage.every(z=>z&&typeof z.field==='string'&&typeof z.scope==='string')))return false;
+   if(!r.records.every((x,i)=>x.excerpt_ref===undefined||
+    (Number.isInteger(x.excerpt_ref)&&x.excerpt_ref>=0&&x.excerpt_ref<i&&x.excerpt===undefined&&
+     typeof r.records[x.excerpt_ref]?.excerpt==='string'&&r.records[x.excerpt_ref].excerpt.length>0)))return false;
   }
  }
  if(d?.news!==undefined){
