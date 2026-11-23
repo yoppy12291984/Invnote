@@ -2795,18 +2795,18 @@
    ]
   },
   "macro": {
-   "hash": "1def02ac5fb173e4d2ff6d05b3068d659e967058fd93013f3068fa39f259dd67",
-   "date": "2026-11-22T21:32:11+00:00",
+   "hash": "e321247be770c69a782cd49929dcec760665b18ee0441fe70d27e6e71011d926",
+   "date": "2026-11-23T21:31:06+00:00",
    "count": 12,
    "comparison": true,
-   "previous_date": "2026-11-20T21:31:00+00:00",
+   "previous_date": "2026-11-22T21:32:11+00:00",
    "previous_label": "前回公開データ",
    "added": [],
    "removed": [],
    "changed": [
     {
-     "key": "T10YIE",
-     "name": "米10年期待インフレ（BEI）",
+     "key": "BAMLH0A0HYM2",
+     "name": "米HY信用スプレッド",
      "changes": [
       {
        "field": "観測日",
@@ -2815,14 +2815,14 @@
       },
       {
        "field": "観測値",
-       "before": 2.16,
-       "after": 2.15
+       "before": 3.52,
+       "after": 3.76
       }
      ]
     },
     {
-     "key": "T10Y2Y",
-     "name": "米10年−2年金利差",
+     "key": "BAMLC0A4CBBB",
+     "name": "米BBB信用スプレッド",
      "changes": [
       {
        "field": "観測日",
@@ -2831,13 +2831,61 @@
       },
       {
        "field": "観測値",
-       "before": 0.28,
-       "after": 0.29
+       "before": 1.17,
+       "after": 1.22
+      }
+     ]
+    },
+    {
+     "key": "VIXCLS",
+     "name": "VIX",
+     "changes": [
+      {
+       "field": "観測日",
+       "before": "2026-11-20",
+       "after": "2026-11-23"
+      },
+      {
+       "field": "観測値",
+       "before": 35.89,
+       "after": 26.62
+      }
+     ]
+    },
+    {
+     "key": "SP500",
+     "name": "S&P 500指数",
+     "changes": [
+      {
+       "field": "観測日",
+       "before": "2026-11-20",
+       "after": "2026-11-23"
+      },
+      {
+       "field": "観測値",
+       "before": 6910.3901,
+       "after": 7237.1699
+      }
+     ]
+    },
+    {
+     "key": "DEXJPUS",
+     "name": "ドル円",
+     "changes": [
+      {
+       "field": "観測日",
+       "before": "2026-11-13",
+       "after": "2026-11-20"
+      },
+      {
+       "field": "観測値",
+       "before": 159.93,
+       "after": 158.76
       }
      ]
     }
    ],
-   "unchanged": 10
+   "unchanged": 7
   },
   "catalysts": {
    "hash": "5102fe525872239a2cdca27cd7be6b3e15741a6eefb8ae5f008d2486b04f8ea0",
