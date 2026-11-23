@@ -48,7 +48,12 @@ html[data-workspace] #suite-access{background:var(--bg)!important;color:var(--in
 @media(max-width:600px){body>header{padding:14px 16px 8px}.workspace-frame-host{padding:0 16px}.workspace-setting{padding:16px}html[data-workspace] .set,html[data-workspace] .card,html[data-workspace] .panel,html[data-workspace] .box{padding:15px}}
 
 .action{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;min-height:44px}
-#app .ranking-markets{margin-block:12px}
+#app .ranking-controls{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin-block:12px}
+#app .ranking-controls .chips{margin:0;padding-block:0}
+.ranking-compact{list-style:none;margin:0;padding:0}
+.ranking-compact li{display:grid;grid-template-columns:5.5ch minmax(0,1fr);align-items:center;gap:12px;margin:0;border-bottom:1px solid var(--line)}
+.ranking-position{white-space:nowrap;text-align:right;color:var(--sub);font-variant-numeric:tabular-nums}
+.ranking-compact .ranking-name{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:8px 0;border:0;background:transparent;color:var(--ink);font:inherit;text-align:left}
 .workspace-back{margin-bottom:18px}
 .workspace-setting-actions{display:flex;gap:8px;flex-wrap:wrap}
 nav[aria-label="メインナビゲーション"] a{display:flex;align-items:center;justify-content:center;min-height:44px;font-size:15px;font-weight:600;letter-spacing:.01em}
