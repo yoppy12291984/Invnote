@@ -180,6 +180,18 @@ function validBundle(d){
   if(!p||typeof p.date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(p.date)||!['scope','caution'].every(k=>typeof p[k]==='string')||!Array.isArray(p.rows))return false;
   const codes=new Set();for(const row of p.rows){if(!row||!/^[0-9A-Z]{4,5}$/.test(row.code)||typeof row.reason!=='string'||codes.has(row.code))return false;codes.add(row.code);}
  }
+ if(d?.crossMarketRanking!=null){
+  const p=d.crossMarketRanking, day=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x);
+  if(!p||!day(p.date)||!day(p.priceDate)||!['scope','allocation'].every(k=>typeof p[k]==='string')||!Array.isArray(p.rows))return false;
+  const codes=new Set();
+  for(const row of p.rows){
+   if(!row||typeof row.code!=='string'||!/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(row.code)||codes.has(row.code))return false;
+   if(!['name','reason','valuation'].every(k=>typeof row[k]==='string')||!['JPY','USD','EUR','GBP','CHF','SEK'].includes(row.currency))return false;
+   if(!Number.isFinite(row.close)||row.close<=0||![row.short,row.long].every(v=>Number.isInteger(v)&&v>=1&&v<=10))return false;
+   if(row.priorRank!=null&&(!Number.isInteger(row.priorRank)||row.priorRank<1))return false;
+   codes.add(row.code);
+  }
+ }
  if(d?.companyProfiles!==undefined){
   const ps=d.companyProfiles,day=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x),url=x=>typeof x==='string'&&/^https:\/\//.test(x);
   if(!ps||typeof ps!=='object'||Array.isArray(ps))return false;

@@ -48,6 +48,21 @@ html[data-workspace] #suite-access{background:var(--bg)!important;color:var(--in
 @media(max-width:600px){body>header{padding:14px 16px 8px}.workspace-frame-host{padding:0 16px}.workspace-setting{padding:16px}html[data-workspace] .set,html[data-workspace] .card,html[data-workspace] .panel,html[data-workspace] .box{padding:15px}}
 
 .action{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;min-height:44px}
+#app .ranking-markets{margin-block:12px}
+.ranking-list{display:grid;gap:6px}
+.ranking-row{margin:0;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.ranking-row>summary{display:grid;grid-template-columns:3rem minmax(0,1fr) auto 1rem;align-items:center;gap:8px;padding:8px 12px;min-height:54px;cursor:pointer;list-style:none}
+.ranking-row>summary::-webkit-details-marker{display:none}
+.ranking-row>summary::after{content:'▸';color:var(--sub);text-align:center}
+.ranking-row[open]>summary::after{content:'▾'}
+.ranking-company{min-width:0;overflow-wrap:anywhere;line-height:1.35}
+.ranking-company small{display:block;margin-top:3px}
+.ranking-row small{color:var(--sub)}
+.ranking-rank,.ranking-scores{font-variant-numeric:tabular-nums;white-space:nowrap}
+.ranking-rank small{margin-left:2px}
+.ranking-scores{font-weight:650;color:var(--green)}
+.ranking-detail{border-top:1px solid var(--line);padding:10px 12px 14px;overflow-wrap:anywhere}
+.ranking-detail>.open{margin:0 0 0 8px}
 .workspace-back{margin-bottom:18px}
 .workspace-setting-actions{display:flex;gap:8px;flex-wrap:wrap}
 nav[aria-label="メインナビゲーション"] a{display:flex;align-items:center;justify-content:center;min-height:44px;font-size:15px;font-weight:600;letter-spacing:.01em}
