@@ -276,7 +276,7 @@ function replaceResearch(d){
 function companyTools(code,mode){
  if(!/^[0-9A-Z]{4,5}$/.test(code||''))return;
  const p=personalStocks.find(s=>s.code===code);
- if(!notes[code])app.innerHTML=title(esc(code),esc(p?.name||code),'この会社の調査本文はまだありません。既存の個人メモを確認・編集できます。');
+ if(!notes[code]&&!app.querySelector('[data-ranked-company-prices]'))app.innerHTML=title(esc(code),esc(p?.name||code),'この会社の調査本文はまだありません。既存の個人メモを確認・編集できます。');
  if(mode==='personal'){app.innerHTML=title(esc(code),esc(notes[code]?.name||p?.name||code),'個人メモ・登録情報');app.style.paddingBottom='12px';embedded('inv','stock/'+code);}
  else if(notes[code]){const b=document.createElement('button');b.type='button';b.className='action';b.style.marginLeft='8px';b.textContent='メモ';b.onclick=()=>openCompanyMemo(code);document.getElementById('watch-toggle')?.after(b);}
 }
