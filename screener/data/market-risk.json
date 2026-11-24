@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-23T21:31:16.357531+00:00",
+  "generatedAt": "2026-11-24T23:46:48.014829+00:00",
   "items": {
     "nikkei": {
       "date": "2026-11-20",
@@ -8,7 +8,7 @@
       "status": "fresh",
       "stale": false,
       "source": "https://finance.yahoo.com/quote/^N225/history/",
-      "fetchedAt": "2026-11-23T21:31:16.357531+00:00",
+      "fetchedAt": "2026-11-24T23:46:48.014829+00:00",
       "return5": -7.696307068251718,
       "close": 56436.6484375,
       "return20": -10.286780506727133,
@@ -30,22 +30,22 @@
       }
     },
     "vix": {
-      "date": "2026-11-23",
-      "value": 26.6200008392334,
+      "date": "2026-11-24",
+      "value": 26.360000610351562,
       "status": "fresh",
       "stale": false,
       "source": "https://finance.yahoo.com/quote/^VIX/history/",
-      "fetchedAt": "2026-11-23T21:31:16.807348+00:00",
-      "return5": 16.193806270323343
+      "fetchedAt": "2026-11-24T23:46:48.262899+00:00",
+      "return5": 3.5349629153277995
     },
     "nasdaq": {
-      "date": "2026-11-23",
-      "value": 24089.55859375,
+      "date": "2026-11-24",
+      "value": 23733.53515625,
       "status": "fresh",
       "stale": false,
       "source": "https://finance.yahoo.com/quote/^IXIC/history/",
-      "fetchedAt": "2026-11-23T21:31:17.683237+00:00",
-      "return5": -1.7144238698917569
+      "fetchedAt": "2026-11-24T23:46:49.155180+00:00",
+      "return5": -2.445069018622237
     }
   },
   "flags": {
