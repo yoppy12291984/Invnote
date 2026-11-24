@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=c0a950ca7a55"><script src="workspace-frame.js?v=c0a950ca7a55"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=b0f529868aec"><script src="workspace-frame.js?v=b0f529868aec"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -1823,6 +1823,7 @@ async function syncNow(quiet){
     mergeIn(d);downloaded=true;S.restorePending=false;
     // Persist the fetched records before any upload. A failed upload must not discard restoration.
     editingSync=true;try{await saveResearch();}finally{editingSync=false;}
+    document.dispatchEvent(new Event('invnote:sync-persisted'));
     const p=await fetch(S.gas,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:payload()});if(!p.ok)throw Error('同期先への保存に失敗しました');
     const res=await p.json();if(!res.ok)throw new Error(res.error||"save failed");
     S.lastSync=Date.now();editingSync=true;try{await saveResearch();}finally{editingSync=false;}
@@ -1949,8 +1950,9 @@ function applyCompanyMemo(state,m,stamp,newId){
  return [...state.notes.filter(x=>x.id!==n.id),n];
 }
 // Research-only import: no file-picker dependency and no portfolio/settings mutation.
+const RESEARCH_IMPORT_MAX_BYTES=20_000_000;
 function researchImportRecord(text,state,validate){
- if(text.length>12000000)throw Error('研究データが大きすぎます。');
+ if(new Blob([text]).size>RESEARCH_IMPORT_MAX_BYTES)throw Error('研究データが大きすぎます。');
  const d=JSON.parse(text),id='investment-research-bundle-v1';
  if(!d||Object.keys(d).some(k=>k!=='notes')||!Array.isArray(d.notes)||d.notes.length!==1)throw Error('研究専用JSONを貼り付けてください。');
  const n=d.notes[0];
@@ -1997,7 +1999,7 @@ function installResearchFile(host){
   try{
    if(S.restorePending||document.documentElement.classList.contains('suite-locked'))throw Error('端末の登録・復元を完了してください。');
    if(file){
-    if(file.size>12000000)throw Error('研究ファイルが大きすぎます。');
+    if(file.size>RESEARCH_IMPORT_MAX_BYTES)throw Error('研究ファイルが大きすぎます。');
     const raw=JSON.parse(await file.text());
     // General backup files may contain holdings/settings: never silently discard them.
     if(Object.keys(raw).some(k=>k!=='notes'&&k!=='version'&&k!=='exportedAt'))throw Error('研究専用の private-research-paste.json を選んでください。');
@@ -2043,6 +2045,7 @@ function workspaceGo(){
 }
 if(workspaceMode){
  installResearchPaste();
+ document.addEventListener('invnote:sync-persisted',workspacePublish);
  const css=document.createElement('style');css.textContent='#tabs,header .wm{display:none!important}.app{max-width:none!important}';document.head.append(css);
  window.addEventListener('hashchange',workspaceGo);
  window.addEventListener('message',async e=>{
