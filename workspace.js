@@ -344,7 +344,7 @@ try{const value=JSON.parse(localStorage.getItem(tabSettingsKey)||'{}');if(value&
 if(tabSettings['discover/inv:vHot']&&!tabSettings['notebook/inv:vHot'])tabSettings['notebook/inv:vHot']=tabSettings['discover/inv:vHot'];
 function tabOption(key,label){
  const value=tabSettings[key],name=typeof value?.label==='string'?value.label.trim().slice(0,30):'';
- const legacyPortfolio=key==='today/inv:vPf'&&name==='ポートフォリオ';
+ const legacyPortfolio=key==='today/inv:vPf'&&['ポートフォリオ','PF','P/F'].includes(name.normalize('NFKC'));
  return {label:!name||legacyPortfolio?label:name,hidden:typeof value?.hidden==='boolean'?value.hidden:key==='today/inv:vTodos'};
 }
 function applyTabSettings(){
