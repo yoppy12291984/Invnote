@@ -117,7 +117,7 @@ root.addEventListener('hashchange',mount);document.addEventListener('visibilityc
 <header><b>Invnote</b><span class="private">private workspace</span></header>
 <div id="status" role="status"></div><main id="app"></main>
 <nav aria-label="メインナビゲーション"><a href="#today" data-view="today"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4m8-4v4M4 10h16m-11 5h6"/></svg><span>Today</span></a><a href="#discover" data-view="discover"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><span>Search</span></a><a href="#notebook" data-view="notebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12a2 2 0 0 1 2 2v16H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm2 0v18m4-12h4m-4 4h4"/></svg><span>Note</span></a><a href="#review" data-view="review"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16h16M8 15l4-4 4 2 4-7"/></svg><span>Review</span></a></nav>
-<script id="app-release" type="application/json">{"version": "1.128", "date": "2026-11-25", "changes": ["通常価値・押し目候補・弱気時の価値をカードと価格つき一覧に常時表示。銘柄だけの1行一覧も選べます", "順位をカード40px・一覧30pxに拡大。ポートフォリオのタブはP/F"], "build": "ed56bdaee3a6"}</script><script id="data" type="application/json">{"notes": {}, "coverage": {"body_notes": 0, "registered": 0, "legacy_references": 0}, "ratings": {"rows": [], "assessment_date": "未同期", "price_date": "未同期", "horizons": {"3m": {"target_date": "未設定"}, "12m": {"target_date": "未設定"}}, "evaluation_rules": []}}</script><script>
+<script id="app-release" type="application/json">{"version": "1.128.1", "date": "2026-11-25", "changes": ["日本株・日米欧のランキングに、評価済みの銘柄を各最大400社まで表示", "通常価値・押し目候補・弱気時の価値と1行一覧を利用できます"], "build": "fa6bd3564e23"}</script><script id="data" type="application/json">{"notes": {}, "coverage": {"body_notes": 0, "registered": 0, "legacy_references": 0}, "ratings": {"rows": [], "assessment_date": "未同期", "price_date": "未同期", "horizons": {"3m": {"target_date": "未設定"}, "12m": {"target_date": "未設定"}}, "evaluation_rules": []}}</script><script>
 'use strict';
 let D=JSON.parse(document.getElementById('data').textContent), notes=D.notes, R=D.ratings, ratings=Object.fromEntries(R.rows.map(x=>[x.code,x]));
 const app=document.getElementById('app'), status=document.getElementById('status'), KEY='private-investment-preview-watch-v1';
@@ -337,7 +337,7 @@ function priceOverview(code, ranked=false){
 }
 
 function rankedCompanyPrices(code){
- const item=D.crossMarketRanking?.rows?.find(row=>row.code===code)||D.purchaseRanking?.rows?.find(row=>row.code===code);
+ const item=D.crossMarketRanking?.rows?.find(row=>row.code===code)||purchaseRankingSource(false)?.rows.find(row=>row.code===code);
  if(!item)return false;
  const name=item.name||item.assessment?.name||code;
  app.innerHTML=`<a class="action" href="#${priorView}">← 一覧へ戻る</a>`+
@@ -374,8 +374,21 @@ function rankingPriceDetails(code){
 }
 let rankingMarket='domestic';
 let rankingLayout='card';
-const rankingLimit=100;
+const rankingLimit=400;
 const rankingNumber=new Intl.NumberFormat('ja-JP',{maximumFractionDigits:2});
+
+function purchaseRankingSource(cross){
+ if(cross)return D.crossMarketRanking;
+ const ranking=D.purchaseRanking;
+ if(!ranking||ranking.rows.length>=rankingLimit)return ranking;
+ const saved=new Set(ranking.rows.map(({code})=>code));
+ const additions=(D.ratings?.rows||[]).filter(r=>!saved.has(r.code)&&
+  [r.short_3m,r.long_12m].every(n=>Number.isInteger(n)&&n>=1&&n<=10));
+ additions.sort((a,b)=>b.long_12m-a.long_12m||b.short_3m-a.short_3m||a.code.localeCompare(b.code,'en'));
+ const rows=ranking.rows.concat(additions.slice(0,rankingLimit-ranking.rows.length)
+  .map(assessment=>({code:assessment.code,reason:assessment.long_reason||'',assessment})));
+ return {...ranking,rows};
+}
 
 function rankingName(item, cross){
  return esc(cross?item.name:(notes[item.code]?.name||item.assessment?.name||ratings[item.code]?.name||item.code));
@@ -440,7 +453,7 @@ function rankedPurchaseGroups(ranking,cross){
 
 function purchaseRanking(){
  priorView='today/ranking';
- const cross=rankingMarket==='cross', ranking=cross?D.crossMarketRanking:D.purchaseRanking;
+ const cross=rankingMarket==='cross', ranking=purchaseRankingSource(cross);
  const list=rankingLayout!=='card', showPrices=rankingLayout==='prices';
  app.innerHTML=title('RANKING','新規購入・買い増し候補','評価日と基準株価も確認してください。');
  const controls=(label,attribute,value,choices)=>`<div class="chips" role="group" aria-label="${label}">${choices.map(([key,name])=>
