@@ -55,17 +55,39 @@ function holdingMemoHTML(code){
  const list=companyMemos.filter(n=>n.code===code&&!n.memoDeleted).sort((a,b)=>(b.edited||b.ts)-(a.edited||a.ts));
  return list.length?list.map(n=>`<details><summary>自分のメモ · ${esc(memoDate(n.edited||n.ts))}</summary><p class="detail-body">${esc(n.text)}</p></details>`).join(''):'<p class="muted">買い増しのタイミング・条件はまだ記録されていません。</p>';
 }
+let holdingsLayout='line';
+function holdingsLineTable(rows){
+ return `<div class="line-table-scroll" role="region" aria-label="保有銘柄の1行一覧" tabindex="0"><table class="line-table holdings-line-table"><thead><tr><th scope="col">コード</th><th scope="col">銘柄名</th><th scope="col">3か月</th><th scope="col">12か月</th><th scope="col">保有株数</th><th scope="col">登録株価</th><th scope="col">価格日</th><th scope="col">口座</th></tr></thead><tbody>${rows.map(p=>{const r=ratings[p.code];return `<tr><td>${esc(p.code)}</td><td><button class="open" data-company="${esc(p.code)}" title="${esc(notes[p.code]?.name||p.name)}">${esc(notes[p.code]?.name||p.name)}</button></td><td class="line-number">${esc(r?.short_3m??'—')}</td><td class="line-number">${esc(r?.long_12m??'—')}</td><td class="line-number">${esc(p.shares.toLocaleString('ja-JP'))}株</td><td class="line-number">${p.price==null?'未取得':esc(p.price.toLocaleString('ja-JP'))+'円'}</td><td>${esc(p.priceDate||'未記録')}</td><td>${esc(p.accounts.join(' / ')||'未記録')}</td></tr>`}).join('')}</tbody></table></div>`;
+}
+function watchedCompanyRows(stocks,positions,localWatch){
+ const held=new Set(heldCompanyRows(positions,stocks).map(p=>p.code)),rows=new Map();
+ for(const s of stocks){if(['監視','候補','打診','気になる'].includes(s.status)&&!held.has(s.code))rows.set(s.code,{code:s.code,name:s.name,status:s.status,source:'登録銘柄'});}
+ for(const code of localWatch){if(!notes[code])continue;const old=rows.get(code);rows.set(code,{code,name:notes[code].name,status:old?.status||'監視',source:old?'登録銘柄・この端末':'この端末'});}
+ return [...rows.values()].sort((a,b)=>a.code.localeCompare(b.code,'en',{numeric:true}));
+}
+function watchlistPage(){
+ priorView='today/watchlist';
+ const rows=watchedCompanyRows(personalStocks,personalPositions,watch);
+ app.innerHTML=title('WATCHLIST','監視銘柄','登録銘柄の監視リストと、四季報で「監視に追加」した銘柄をまとめています。')+`<p class="muted">${rows.length}銘柄 · 四季報から追加した監視はこの端末のみ。登録銘柄は既存の同期対象です。</p>`;
+ if(!invReady||invLocked)app.innerHTML+='<p class="muted">登録銘柄は同期後に表示します。</p>';
+ if(!rows.length){app.innerHTML+='<p class="empty">監視銘柄はありません。四季報の会社ページから追加できます。</p><a class="action" href="#notebook/companies">四季報を開く</a>';return;}
+ app.innerHTML+=`<div class="line-table-scroll" role="region" aria-label="監視銘柄の1行一覧" tabindex="0"><table class="line-table"><thead><tr><th scope="col">コード</th><th scope="col">銘柄名</th><th scope="col">3か月</th><th scope="col">12か月</th><th scope="col">登録状態</th><th scope="col">保存先</th></tr></thead><tbody>${rows.map(s=>{const r=ratings[s.code];return `<tr><td>${esc(s.code)}</td><td><a class="line-company-link" href="#company/${esc(s.code)}${notes[s.code]?'':'/personal'}" title="${esc(s.name)}">${esc(s.name)}</a></td><td class="line-number">${esc(r?.short_3m??'—')}</td><td class="line-number">${esc(r?.long_12m??'—')}</td><td>${esc(s.status)}</td><td>${esc(s.source)}</td></tr>`}).join('')}</tbody></table></div>`;
+}
 function holdingsPlanPage(){
+ priorView='today/holdings-plan';
  app.innerHTML=title('MY HOLDINGS','保有銘柄','保有中の銘柄だけを表示。買い増しの価格・タイミング・見送る条件を確認できます。');
  if(!invReady||invLocked){app.innerHTML+='<p class="empty">保有情報の読み込み・同期後に表示します。</p>';return;}
  const rows=heldCompanyRows(personalPositions,personalStocks);
  app.innerHTML+=`<p>${rows.length}銘柄 · 同じ銘柄の複数口座はまとめて表示</p><p class="muted">保有記録 ${esc(positionMeta.date||'基準日未記録')} · ${positionMeta.complete?'全保有として登録されたデータ':'一部の保有情報の可能性があります'}。売買後はポートフォリオを更新してください。</p>`;
  if(!rows.length){app.innerHTML+='<p class="empty">保存されている保有情報に、株数がプラスの銘柄はありません。</p><a class="action" href="#today/inv:vPf">ポートフォリオを確認</a>';return;}
+ app.innerHTML+=`<div class="rb-segment holding-layout" role="group" aria-label="保有銘柄の表示形式"><button data-holdings-layout="line" aria-pressed="${holdingsLayout==='line'}">1行一覧</button><button data-holdings-layout="cards" aria-pressed="${holdingsLayout==='cards'}">カード</button></div>`;
+ const bindLayout=()=>app.querySelectorAll('[data-holdings-layout]').forEach(b=>b.onclick=()=>{holdingsLayout=b.dataset.holdingsLayout;route();});
+ if(holdingsLayout==='line'){app.innerHTML+=holdingsLineTable(rows);bindLayout();return;}
  app.innerHTML+='<div class="grid">'+rows.map(p=>{
   const code=p.code,n=notes[code],r=ratings[code];
   return `<article class="card"><h2><button class="open" data-company="${esc(code)}">${esc(n?.name||p.name)}（${esc(code)}）</button></h2>${priceOverview(code)}<p>保有 ${p.shares.toLocaleString('ja-JP')}株${p.accounts.length?' · '+p.accounts.map(esc).join(' / '):''}</p><p class="holding-current-price">最新の保有株価：${p.price!=null?`<strong class="price-accent">${p.price.toLocaleString('ja-JP')}円</strong><br><small>価格日 ${esc(p.priceDate)} · ポートフォリオの更新・同期に連動</small>`:'未取得・未同期'}</p>${companyMemos.some(m=>m.code===code&&!m.memoDeleted)?holdingMemoHTML(code):''}${r?`<div class="rating-pair"><div><span>3か月</span><b>${esc(r.short_3m)}</b> / 10</div><div><span>12か月</span><b>${esc(r.long_12m)}</b> / 10</div></div><small>採点 ${esc(r.assessment_date||R.assessment_date)} · 採点時の株価 ${Number(r.baseline_close).toLocaleString('ja-JP')}円（${esc(r.baseline_price_date)}）</small>`:'<p>投資妙味：未採点・未同期</p>'}${n?earningsDates(n):'<p>研究本文は未収録です。</p>'}${rankingPriceDetails(code)}<details><summary>次の確認・見立てが変わる条件</summary><p>${esc(n?.next||'未記録')}</p><p>${esc(r?.change_conditions||n?.counter||'未記録')}</p></details></article>`;
  }).join('')+'</div>';
-
+ bindLayout();
 }
 function sendCompanyMemo(action,n){
  if(memoBusy)return;
@@ -347,10 +369,11 @@ document.getElementById('workspace-theme').onclick=()=>setAppearance(effectiveAp
 frameHost.className='workspace-frame-host';frameHost.removeAttribute('style');
 sections.notebook=sections.notebook.filter(([id])=>!['inv:vSet','inv:vImport'].includes(id));
 const defaultSections=JSON.parse(JSON.stringify(sections));
-const defaultAreaLabels={today:'Today',discover:'Search',notebook:'Note',review:'Review'};
+const defaultAreaLabels={today:'Today',ranking:'Ranking',discover:'Search',notebook:'Note',review:'Review'};
 const tabSettingsKey='invnote-workspace-tabs-v1';
 let tabSettings={};
 try{const value=JSON.parse(localStorage.getItem(tabSettingsKey)||'{}');if(value&&typeof value==='object'&&!Array.isArray(value))tabSettings=value;}catch{}
+for(const id of ['ranking','method-ranking']){const old='today/'+id,next='ranking/'+id;if(tabSettings[old]&&!tabSettings[next])tabSettings[next]={...tabSettings[old]};}
 if(tabSettings['discover/inv:vHot']&&!tabSettings['notebook/inv:vHot'])tabSettings['notebook/inv:vHot']=tabSettings['discover/inv:vHot'];
 function tabOption(key,label){
  const value=tabSettings[key],name=typeof value?.label==='string'?value.label.trim().slice(0,30):'';
@@ -422,6 +445,7 @@ route=function(){
  document.getElementById('feature-reload-help')?.remove();
  const oldBar=app.querySelector('.workspace-tabs');if(oldBar)tabPositions.set(oldBar.dataset.area,oldBar.scrollLeft);
  const h=location.hash.slice(1);
+ if(['today/ranking','today/method-ranking'].includes(h)){location.replace('#ranking/'+h.split('/')[1]);return;}
  if(h==='today/inv:vCal'){location.replace('#today/market');return;}
  if(h==='discover/scr:catalyst'||h==='discover/scr:macro'){location.replace('#review/'+h.split('/')[1]);return;}
  if(h==='discover/inv:vHot'){location.replace('#notebook/inv:vHot');return;}
@@ -432,7 +456,7 @@ route=function(){
   app.innerHTML=`<div class="workspace-back"><a class="action" href="#${priorView}">← 戻る</a></div>`+title(h==='settings'?'SETTINGS':'IMPORT',h==='settings'?'設定':'取り込み',h==='settings'?'表示とデータの管理':'メモ・銘柄・保有情報を取り込む');
   if(h==='settings'){
    app.insertAdjacentHTML('beforeend',`<section class="workspace-setting workspace-release"><h2>アプリのバージョン</h2><p><b>ver${esc(appRelease.version)}</b></p><small>更新日 ${esc(appRelease.date)} · ビルド ${esc(appRelease.build)}</small><ul>${appRelease.changes.map(change=>`<li>${esc(change)}</li>`).join('')}</ul><p class="muted">この端末で読み込んでいる画面のバージョンです。決算データや同期の日時とは別です。</p></section>`);
-   app.insertAdjacentHTML('beforeend','<section class="workspace-setting"><h2>アプリの表示</h2><div class="appearance-options"><button class="action" data-appearance="light">ライト</button><button class="action" data-appearance="dark">ダーク</button><button class="action" data-appearance="system">端末に合わせる</button></div><p class="muted">Today・Search・Note・Review 共通の配色です。</p></section><section class="workspace-setting"><h2>同期</h2><p class="muted">登録済みの端末と、メモ・日記・四季報を同期します。</p><div class="workspace-setting-actions"><button class="action" id="settings-sync">今すぐ同期</button><a class="action" href="#import">取り込み</a></div></section>');
+   app.insertAdjacentHTML('beforeend','<section class="workspace-setting"><h2>アプリの表示</h2><div class="appearance-options"><button class="action" data-appearance="light">ライト</button><button class="action" data-appearance="dark">ダーク</button><button class="action" data-appearance="system">端末に合わせる</button></div><p class="muted">Today・Ranking・Search・Note・Review 共通の配色です。</p></section><section class="workspace-setting"><h2>同期</h2><p class="muted">登録済みの端末と、メモ・日記・四季報を同期します。</p><div class="workspace-setting-actions"><button class="action" id="settings-sync">今すぐ同期</button><a class="action" href="#import">取り込み</a></div></section>');
    app.querySelectorAll('[data-appearance]').forEach(b=>b.onclick=()=>setAppearance(b.dataset.appearance));document.getElementById('settings-sync').onclick=syncWorkspace;
    const transfer=document.createElement('section');transfer.className='workspace-setting';transfer.innerHTML='<h2>ホーム画面への引き継ぎ</h2><p>この端末で同期してから、Safariの共有メニューでホーム画面に追加してください。</p><p class="muted">追加したアイコンを開き、端末登録が表示されたら同じ保存先の登録コードで登録します。同期済みのメモ・保有・四季報・Newsを自動で読み込みます。完了まで旧アイコンは残してください。</p><button class="action" id="transfer-sync">引き継ぎ前に同期</button><p class="muted">未同期の変更は、旧アプリ側で同期が必要です。配色・監視リストなど端末内だけの設定は別管理です。</p>';app.append(transfer);document.getElementById('transfer-sync').onclick=syncWorkspace;
    const enterTransfer=document.createElement('button');enterTransfer.className='action';enterTransfer.textContent='引き継ぎコードを入力';enterTransfer.onclick=openTransferDialog;transfer.append(enterTransfer);

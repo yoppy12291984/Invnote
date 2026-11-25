@@ -1,5 +1,5 @@
 /* Price-based assessment board. Rendering only: never writes scores or entry rules. */
-let ratingViewMode='groups', ratingHorizon='long', ratingBoardLayout='cards', ratingQuery='', ratingFilter='all';
+let ratingViewMode='groups', ratingHorizon='long', ratingBoardLayout='compact', ratingQuery='', ratingFilter='all';
 const ratingAnchors={10:'例外的に条件が揃う',9:'最有力',8:'明確に魅力',7:'魅力・懸念あり',6:'やや魅力',5:'中立',4:'やや見送り',3:'見送り',2:'強く見送り',1:'避けたい'};
 function boardAssessment(item,cross,ranking){
  const a=item.assessment||ratings[item.code];
@@ -74,6 +74,9 @@ function boardCard(row){
  </details>
  <footer class="rb-date">採点 ${esc(row.assessed||'未記録')} · 保存評価</footer></article>`;
 }
+function boardLineTable(rows,label){
+ return `<div class="line-table-scroll" role="region" aria-label="${esc(label)}の1行一覧" tabindex="0"><table class="line-table rating-line-table"><thead><tr><th scope="col">コード</th><th scope="col">銘柄名</th><th scope="col">3か月</th><th scope="col">12か月</th><th scope="col">基準株価</th><th scope="col">価格日</th><th scope="col">採点日</th><th scope="col">評価状態</th></tr></thead><tbody>${rows.map(row=>`<tr data-rating-code="${esc(row.code)}"><td>${esc(row.code)}</td><td><button class="open" data-company="${esc(row.code)}" title="${esc(row.name)}">${esc(row.name)}</button></td><td class="line-number${ratingHorizon==='short'?' line-selected':''}">${esc(row.short??'—')}</td><td class="line-number${ratingHorizon==='long'?' line-selected':''}">${esc(row.long??'—')}</td><td class="line-number">${esc(boardMoney(row.close,row.currency))}</td><td>${esc(row.priceDate||'未記録')}</td><td>${esc(row.assessed||'未記録')}</td><td>${boardReview(row)?'<span class="line-review">旧評価・点検中</span>':'保存評価'}</td></tr>`).join('')}</tbody></table></div>`;
+}
 function renderBoardResults(){
  const root=document.getElementById('rb-results');if(!root)return;
  const cross=rankingMarket==='cross',allRows=boardRows(cross),q=ratingQuery.normalize('NFKC').toLowerCase().trim();
@@ -81,19 +84,19 @@ function renderBoardResults(){
   (ratingFilter==='all'||(ratingFilter==='review'?!!boardReview(row):!boardReview(row)&&String(row[ratingHorizon])===ratingFilter)));
  const {groups,review}=boardGroups(rows,ratingHorizon),period=ratingHorizon==='long'?'12か月':'3か月';
  document.getElementById('rb-result-count').textContent=`${rows.length} / ${allRows.length}社`;
- const section=(label,list,score)=>`<section class="rb-group" aria-label="${esc(label)}"><div class="rb-group-heading"><h2>${esc(label)}</h2><span>${list.length}社${score!=null?' · '+esc(ratingAnchors[score]||''):''}</span></div><div class="rb-grid${ratingBoardLayout==='compact'?' rb-compact':''}">${list.map(boardCard).join('')}</div></section>`;
+ const section=(label,list,score)=>`<section class="rb-group" aria-label="${esc(label)}"><div class="rb-group-heading"><h2>${esc(label)}</h2><span>${list.length}社${score!=null?' · '+esc(ratingAnchors[score]||''):''}</span></div>${ratingBoardLayout==='compact'?boardLineTable(list,label):`<div class="rb-grid">${list.map(boardCard).join('')}</div>`}</section>`;
  root.innerHTML=(review.length?section('評価を点検している銘柄',review,null):'')+groups.map(g=>section(g.score==null?'未採点':`${period} ${g.score}点`,g.rows,g.score)).join('')||'<p class="empty">条件に合う銘柄がありません。検索や絞り込みを変更してください。</p>';
 }
 function purchaseRanking(){
  if(ratingViewMode==='legacy'){legacyPurchaseRanking();return;}
- priorView='today/ranking';
+ priorView='ranking/ranking';
  const rows=boardRows(rankingMarket==='cross'),groups=boardGroups(rows,ratingHorizon);
  const controls=(label,attr,current,choices)=>`<div class="rb-segment" role="group" aria-label="${label}">${choices.map(([key,text])=>`<button type="button" ${attr}="${key}" aria-pressed="${key===current}">${text}</button>`).join('')}</div>`;
  const scored=groups.groups.filter(g=>g.score!=null),profiles=rows.filter(row=>boardProfile(row)).length;
  app.innerHTML=`<section class="rb-board" aria-label="投資妙味の評価グループ">
  <div class="rb-heading"><div><div class="rb-kicker">INVESTMENT VIEW <span>試用版</span></div><h1>価格から、投資妙味を見る。</h1><p>評価とリスクを並べて、納得できる銘柄を探す。</p></div><button type="button" class="rb-legacy" id="rb-legacy">従来の順位</button></div>
  <div class="rb-intro"><p>点数は各銘柄の基準株価での評価です。購入待ちによる並べ替えは行いません。</p><details><summary>評価の読み方</summary><p>同点内はコード順で、優劣はありません。保存済みの点数を使う表示の試用であり、今日の株価で全社を再採点したものではありません。各カードの価格日を確認してください。</p><p>需要の安定と株価の安全性は別です。相場局面は利益と評価倍率を点検するために使い、一律に点数を加減しません。現在の局面判定は未実施です。特性の試分類は${profiles}社、残りは未分類です。</p></details></div>
- <div class="rb-toolbar"><div class="rb-controls">${controls('対象市場','data-rb-market',rankingMarket,[['domestic','日本株'],['cross','日米欧']])}${controls('評価の期間','data-rb-horizon',ratingHorizon,[['long','12か月'],['short','3か月']])}${controls('表示形式','data-rb-layout',ratingBoardLayout,[['cards','カード'],['compact','一覧']])}</div>
+ <div class="rb-toolbar"><div class="rb-controls">${controls('対象市場','data-rb-market',rankingMarket,[['domestic','日本株'],['cross','日米欧']])}${controls('評価の期間','data-rb-horizon',ratingHorizon,[['long','12か月'],['short','3か月']])}${controls('表示形式','data-rb-layout',ratingBoardLayout,[['cards','カード'],['compact','1行一覧']])}</div>
  <div class="rb-search-row"><label class="rb-search"><span>銘柄を探す</span><input id="rb-search" type="search" placeholder="会社名・コード" value="${esc(ratingQuery)}" autocomplete="off"></label><label class="rb-filter"><span>評価で絞る</span><select id="rb-filter"><option value="all">すべての評価</option>${scored.map(g=>`<option value="${g.score}" ${ratingFilter===String(g.score)?'selected':''}>${g.score}点 · ${g.rows.length}社</option>`).join('')}<option value="review" ${ratingFilter==='review'?'selected':''}>評価点検中</option></select></label></div></div>
  <div class="rb-results-heading"><span>同点は同じ評価グループ</span><span id="rb-result-count" role="status" aria-live="polite"></span></div><div id="rb-results"></div></section>`;
  document.getElementById('rb-legacy').onclick=()=>{ratingViewMode='legacy';route();};

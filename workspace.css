@@ -119,6 +119,17 @@ html[data-workspace] #suite-access{background:var(--bg)!important;color:var(--in
 .rb-detail p{font-size:.9375rem}.rb-card .rb-date{font-size:.75rem;color:var(--sub);margin-top:12px}
 .rb-under-review{border-top:3px solid var(--amber)}.rb-under-review .rb-score{color:var(--sub)}.rb-review-label{color:var(--amber);font-size:.875rem;font-weight:650;margin:-3px 0 12px}
 .rb-compact{grid-template-columns:1fr}.rb-compact .rb-card{padding:18px 22px}.rb-compact .rb-company-line{margin:6px 0 10px}.rb-compact .rb-score strong{font-size:2rem}
+.line-table-scroll{width:100%;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;border:1px solid var(--line);border-radius:12px;background:var(--paper);margin:12px 0 22px}
+.line-table{width:100%;min-width:740px;border-collapse:collapse;font-size:14px;line-height:1.4}
+.line-table th,.line-table td{height:46px;padding:0 14px;white-space:nowrap;border-bottom:1px solid var(--line);vertical-align:middle}
+.line-table th{color:var(--sub);font-size:12px;font-weight:600;background:var(--bg);text-align:left}
+.line-table tbody tr:last-child td{border-bottom:0}.line-table tbody tr:hover{background:var(--soft)}
+.line-table td:first-child{font-variant-numeric:tabular-nums;color:var(--sub);width:76px}
+.line-table .open,.line-company-link{display:block;max-width:260px;min-width:170px;min-height:44px;line-height:44px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px!important;text-decoration:none;color:var(--ink);font-weight:650}
+.line-table .line-number{font-variant-numeric:tabular-nums;text-align:right}.line-table .line-selected{font-weight:750;color:var(--green)}
+.line-review{font-size:12px;color:var(--amber)}.holding-layout{display:inline-flex;margin:8px 0}
+nav[aria-label="メインナビゲーション"] a{width:min(20%,180px);min-width:0}
+@media(max-width:400px){nav[aria-label="メインナビゲーション"] a{font-size:11px;padding-inline:2px}.line-table th,.line-table td{padding-inline:10px}.line-table .open,.line-company-link{min-width:150px;max-width:210px}}
 @media(max-width:650px){.rb-grid{grid-template-columns:1fr}.rb-heading{flex-direction:column;gap:4px}.rb-heading .rb-legacy{align-self:flex-end;margin-top:-4px}.rb-toolbar{padding:14px}.rb-controls{gap:10px}.rb-segment button{padding:7px 12px}.rb-search-row{grid-template-columns:minmax(0,1fr) minmax(115px,.6fr);gap:10px}.rb-card,.rb-compact .rb-card{padding:18px}.rb-results-heading{font-size:.8125rem}.rb-company-line{gap:10px}}
 @media(prefers-reduced-motion:no-preference){.rb-segment button{transition:background .15s,color .15s}.rb-company-line .open:hover{color:var(--rb-accent)}}
 .workspace-back{margin-bottom:18px}

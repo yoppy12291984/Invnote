@@ -370,7 +370,7 @@ textarea.aiin{width:100%;min-height:90px;border:1px solid var(--line);background
 .investment-date{flex:none;color:var(--mut);font-size:12px}
 .investment-title{flex:1;overflow-wrap:anywhere;min-width:0}
 .investment-when{color:#5fb3a3;font-size:12px;white-space:nowrap}
-</style><link rel="stylesheet" href="workspace.css?v=b9eac97708c9"><script src="workspace-frame.js?v=b9eac97708c9"></script><script>(function(root){
+</style><link rel="stylesheet" href="workspace.css?v=7bb4a4484a00"><script src="workspace-frame.js?v=7bb4a4484a00"></script><script>(function(root){
 'use strict';
 const sources={cpi:'https://www.bls.gov/schedule/news_release/cpi.htm',jobs:'https://www.bls.gov/schedule/news_release/empsit.htm',fed:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',boj:'https://www.boj.or.jp/mopo/mpmsche_minu/m_ref/mref250731a.pdf',sq:'https://www.jpx.co.jp/derivatives/products/domestic/225futures/'};
 const raw=[
@@ -531,7 +531,7 @@ root.addEventListener('hashchange',mount);document.addEventListener('visibilityc
   <div class="sub" style="display:flex;align-items:center;gap:10px">履歴<span style="flex:1"></span><button class="chip" id="pfSnap">今の状態を記録</button></div><div id="pfHist" class="set"></div>
   <div class="evadd" style="margin-top:8px"><input id="pfCode" placeholder="コード" style="width:76px"><input id="pfShares" placeholder="株数" inputmode="numeric" style="width:80px"><input id="pfAvg" placeholder="取得単価" inputmode="decimal" style="width:96px"><input id="pfPrice" placeholder="現在値" inputmode="decimal" style="width:90px"><select id="pfAcct" aria-label="保有の口座区分"><option>現物</option><option>信用買</option><option>信用売</option><option>NISA</option><option>現物（特定）</option><option>現物（一般）</option></select><button class="btn" id="pfAdd">追加</button></div>
   <p class="hint">証券アプリのスクショを共通プロンプトと一緒にChatGPTまたはClaudeに見せると、保有一覧のJSONが返ります（インポートタブに貼る）。</p>
-  <div class="sub" style="margin-top:18px">監視・候補</div><div id="pfWatch"></div>
+  <!-- Watch entries are shown in Today / 監視銘柄 by the workspace. -->
 </section>
 
 <section id="vDiary" class="hide">
@@ -1534,10 +1534,8 @@ function renderPf(){
     const weight=r.val!==null&&group.val>0?(r.val/group.val*100).toFixed(0)+'%'+(valuation.groups.length>1?'（'+(r.kind==='cash'?'現物内':r.kind==='credit'?'信用内':'未設定内')+'）':''):'';
     return '<div class="pf" data-kind="'+r.kind+'" data-a="'+esc(r.h.acct||'')+'"><span class="nm" data-open="'+esc(r.code)+'"><b>'+esc(r.code)+'</b>'+esc(r.st.name||'—')+'<span class="acct" data-a="'+esc(r.h.acct||'')+'">'+esc(r.h.acct||'口座未設定')+'</span><small>'+(r.shares===null?'株数未登録':fmt(r.shares)+'株')+' ／ 取得 '+(r.avg>0?fmt(r.avg):'未登録')+' ／ 現在 '+(r.price>0?fmt(r.price):'未登録')+'</small></span><span class="val">'+amount(r.val)+'<small class="pl '+(r.profit===null?'':r.profit>=0?'up':'dn')+'">'+gain(r.profit)+pct+'</small><small>'+weight+'</small>'+(r.kind==='credit'?'<select data-credit-side="'+esc(r.id)+'" aria-label="'+esc(r.code)+'の信用売買区分" style="max-width:125px;font-size:16px;background:var(--sur);color:var(--ink)"><option value="" '+(!r.side?'selected':'')+'>買建仮定</option><option value="buy" '+(r.side==='buy'?'selected':'')+'>買建</option><option value="sell" '+(r.side==='sell'?'selected':'')+'>売建</option></select>':'')+'</span><button class="x" data-hdel="'+esc(r.id)+'">×</button></div>';
   }).join('');
-  const watch=stockRows().filter(r=>["監視","候補","打診","気になる"].includes(r.st.status)&&!Object.keys(S.holdings).some(k=>InvnoteHistory.ticker(k)===r.code)).sort((a,b)=>(STATUS.indexOf(a.st.status)-STATUS.indexOf(b.st.status))||((b.st.rank||0)-(a.st.rank||0)));
   const priced=rows.filter(r=>r.val!==null),total=priced.reduce((n,r)=>n+r.val,0);
   if(total>0){renderAlloc(priced,{val:total});$('#pfAlloc').insertAdjacentHTML('afterbegin','<p class="hint">現物・NISA＋信用建玉の時価による配分（純資産の比率ではありません）。'+(priced.length<rows.length?'価格・株数不足の'+(rows.length-priced.length)+'銘柄は集計対象外。':'')+'</p>');}else $('#pfAlloc').textContent='配分を計算できる価格・株数がありません。';renderHist();
-  $("#pfWatch").innerHTML=watch.length?watch.map(r=>`<div class="pf"><span class="nm" data-open="${r.code}"><b>${r.code}</b>${esc(r.st.name)||"—"}<small>${r.st.status}${r.st.sector?" ／ "+esc(r.st.sector):""}${r.ns[0]?" ／ "+esc(r.ns[0].text.split("\n")[0]):""}</small></span>${r.st.rank?stars(r.st.rank):""}</div>`).join(""):`<div class="hint" style="padding:6px 4px">監視・候補の銘柄はありません</div>`;
 }
 $('#pfList').addEventListener('change',e=>{
  const id=e.target.dataset.creditSide;if(!id||!S.holdings[id])return;
