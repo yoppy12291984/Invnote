@@ -98,6 +98,7 @@ html[data-workspace] #suite-access{background:var(--bg)!important;color:var(--in
 .rb-group-heading h2{margin:0;padding:0;border:0;color:var(--ink);font-size:1.125rem;font-weight:650}.rb-group-heading>span{color:var(--sub);font-size:.875rem}
 .rb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
 .rb-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:22px;min-width:0;overflow-wrap:anywhere;box-shadow:0 3px 12px #00000003}
+.rb-card:only-child{grid-column:1/-1}
 .rb-card-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;color:var(--sub);font-size:.8125rem}
 .rb-code{font-variant-numeric:tabular-nums;letter-spacing:.06em}.rb-type{text-align:right}
 .rb-company-line{display:flex;justify-content:space-between;gap:16px;align-items:center;margin:10px 0 16px}
