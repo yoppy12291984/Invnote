@@ -170,6 +170,16 @@ function syncWorkspace(){
 }
 const initialData=JSON.parse(JSON.stringify(D));
 function validBundle(d){
+ if(d?.ratingContext!==undefined){
+  const c=d.ratingContext;
+  if(!c||c.schema!==1||!/^\d{4}-\d{2}-\d{2}$/.test(c.date)||!c.companies||typeof c.companies!=='object'||Array.isArray(c.companies))return false;
+  for(const [code,p] of Object.entries(c.companies)){
+   if(!/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(code)||!p||!['type','risk','regime','next'].every(k=>typeof p[k]==='string')||!Array.isArray(p.sources)||!p.sources.every(s=>typeof s==='string'))return false;
+   if(p.review!==undefined){const r=p.review,b=r?.basis;
+    if(!r||!['reason','resolve'].every(k=>typeof r[k]==='string')||!b||!['assessmentDate','priceDate','longReason'].every(k=>typeof b[k]==='string')||!Number.isFinite(b.close)||!['short','long'].every(k=>Number.isInteger(b[k])&&b[k]>=1&&b[k]<=10))return false;
+   }
+  }
+ }
  if(d?.kiyoharaRanking!=null){
   const p=d.kiyoharaRanking;
   if(!p||!['date','priceDate','scope','caution'].every(k=>typeof p[k]==='string')||!Array.isArray(p.rows)||p.rows.length>6)return false;
