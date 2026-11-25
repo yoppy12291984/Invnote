@@ -49,24 +49,28 @@ html[data-workspace] #suite-access{background:var(--bg)!important;color:var(--in
 
 .action{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;min-height:44px}
 #app .ranking-controls{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin-block:12px}
-#app .ranking-controls .chips{margin:0;padding-block:0}
+#app .ranking-controls .chips{margin:0;padding-block:0;max-width:100%;flex-wrap:wrap;overflow:visible}
 .ranking-compact{list-style:none;margin:0;padding:0}
 .ranking-compact li{margin:0;border-bottom:1px solid var(--line)}
 .ranking-position,.ranking-card-position{white-space:nowrap;color:var(--ink);font-variant-numeric:tabular-nums;font-weight:700}
-.ranking-position{text-align:right;font-size:1.75rem}
-.ranking-card-position{font-size:2.25rem;line-height:1.2}
+.ranking-position{font-size:1.875rem;line-height:1.2}
+.ranking-card-position{font-size:2.5rem;line-height:1.2}
 .price-overview{margin:0.75rem 0;padding:0.65rem 0.75rem;border:1px solid var(--line);border-radius:10px}
 .price-overview dl{display:grid;grid-template-columns:minmax(0,max-content) minmax(0,1fr);align-items:baseline;gap:.35rem .65rem;margin:0}
 .price-overview dt{font-size:.875rem;font-weight:650}
 .price-overview dd{margin:0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.ranking-list-prices{margin:0}
-.ranking-list-prices > summary{display:grid;grid-template-columns:5rem minmax(0,1fr) auto;align-items:center;gap:8px;min-height:44px;padding:5px 0;list-style:none;cursor:pointer}
-.ranking-list-prices > summary::-webkit-details-marker{display:none}
-.ranking-list-prices > button{margin-bottom:.75rem}
-.ranking-list-company{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ranking-list-disclosure{color:var(--green);font-size:.875rem;font-weight:650;white-space:nowrap}
-.ranking-list-disclosure::after{content:' ▾'}
-.ranking-list-prices[open] > summary .ranking-list-disclosure::after{content:' ▴'}
+.ranking-list-item{display:grid;align-items:baseline;gap:.25rem 1rem;padding:.5rem 0}
+.ranking-list-heading{display:flex;align-items:center;gap:.625rem;min-width:0}
+.ranking-list-heading .open{min-width:0;min-height:44px;text-align:left;overflow-wrap:anywhere}
+.ranking-list-names .open{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ranking-list-item .price-overview{min-width:0;margin:0;padding:.5rem}
+.ranking-list-item .price-overview dl{grid-template-columns:repeat(3,minmax(0,1fr));gap:.2rem .4rem;align-items:baseline}
+.ranking-list-item .price-overview dt{grid-row:1;font-size:.75rem}
+.ranking-list-item .price-overview dd{grid-row:2;font-size:.875rem}
+.ranking-list-item .price-overview :is(small,summary){font-size:.75rem}
+@media(min-width:700px){
+ .ranking-list-item:not(.ranking-list-names){grid-template-columns:minmax(12rem,2fr) minmax(0,3fr)}
+}
 .ranking-sync{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin-block:12px}
 .ranking-sync p{margin:0}
 .workspace-back{margin-bottom:18px}
