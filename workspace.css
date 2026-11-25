@@ -130,6 +130,20 @@ html[data-workspace] #suite-access{background:var(--bg)!important;color:var(--in
 .line-review{font-size:12px;color:var(--amber)}.holding-layout{display:inline-flex;margin:8px 0}
 .rating-line-table{table-layout:fixed;min-width:900px}.rating-col-code{width:64px}.rating-col-name{width:auto}.rating-col-score{width:64px}.rating-col-price{width:110px}.rating-col-date{width:104px}.rating-col-state{width:110px}
 .line-table.rating-line-table .open{width:100%;min-width:0;max-width:100%}
+.personal-line-table{table-layout:fixed}.holdings-line-table{min-width:900px}
+.personal-col-code{width:64px}.personal-col-name{width:auto}.personal-col-score{width:64px}
+.personal-col-shares{width:100px}.personal-col-price{width:110px}.personal-col-date{width:100px}.personal-col-account{width:140px}.personal-col-status{width:110px}.personal-col-source{width:180px}
+.line-table.personal-line-table .open,.line-table.personal-line-table .line-company-link{width:100%;min-width:0;max-width:100%}
+.personal-line-table th:nth-child(3),.personal-line-table th:nth-child(4){text-align:right}
+@media(max-width:650px){
+ .personal-line-scroll{container-type:inline-size}
+ .personal-line-table.holdings-line-table{width:calc(100cqw + 450px);min-width:0}
+ .personal-line-table.watchlist-line-table{width:calc(100cqw + 290px);min-width:0}
+ .personal-line-table .personal-col-code{width:54px}
+ .personal-line-table .personal-col-score{width:50px}
+ .personal-line-table .personal-col-name{width:calc(100cqw - 154px)}
+ .line-table.personal-line-table th,.line-table.personal-line-table td{padding-inline:6px}
+}
 /* Keep code, name and the selected period inside each group's visible width.
    Other columns remain available by scrolling; names never size the table. */
 @media(max-width:650px){
