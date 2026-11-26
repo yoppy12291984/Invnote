@@ -79,15 +79,55 @@ function boardLineTable(rows,label){
  return `<div class="line-table-scroll rating-line-scroll" role="region" aria-label="${esc(label)}の1行一覧" tabindex="0"><table class="line-table rating-line-table"><colgroup><col class="rating-col-code"><col class="rating-col-name"><col class="rating-col-score"><col class="rating-col-score"><col class="rating-col-price"><col class="rating-col-date"><col class="rating-col-date"><col class="rating-col-state"></colgroup><thead><tr><th scope="col">コード</th><th scope="col">銘柄名</th>${periods.map(([,name])=>`<th scope="col">${name}</th>`).join('')}<th scope="col">基準株価</th><th scope="col">価格日</th><th scope="col">採点日</th><th scope="col">評価状態</th></tr></thead><tbody>${rows.map(row=>`<tr data-rating-code="${esc(row.code)}"><td>${esc(row.code)}</td><td><button class="open" data-company="${esc(row.code)}" title="${esc(row.name)}">${esc(row.name)}</button></td>${periods.map(([key],i)=>`<td class="line-number${i===0?' line-selected':''}">${esc(row[key]??'—')}</td>`).join('')}<td class="line-number">${esc(boardMoney(row.close,row.currency))}</td><td>${esc(row.priceDate||'未記録')}</td><td>${esc(row.assessed||'未記録')}</td><td>${boardReview(row)?'<span class="line-review">旧評価・点検中</span>':'保存評価'}</td></tr>`).join('')}</tbody></table></div>`;
 }
 
+function boardValidComparison(c){
+ const day=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x),text=x=>typeof x==='string'&&!!x.trim();
+ const list=x=>Array.isArray(x)&&x.length>0&&x.every(text),code=x=>typeof x==='string'&&/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(x);
+ if(!c||!['id','title','scope','summary'].every(k=>text(c[k]))||!day(c.date)||!day(c.priceDate)||c.priceDate>c.date||!['reasons','reviewConditions','caveats'].every(k=>list(c[k])))return false;
+ if(!Array.isArray(c.companies)||c.companies.length!==2||new Set(c.companies.map(x=>x?.code)).size!==2)return false;
+ if(!c.companies.every(x=>x&&code(x.code)&&text(x.name)&&Number.isFinite(x.close)&&x.close>0&&['JPY','USD','EUR','GBP','CHF','SEK'].includes(x.currency)&&x.priceDate===c.priceDate&&text(x.companyPeriod)&&(x.companyEps===null||Number.isFinite(x.companyEps))&&(x.annualDividend===null||(Number.isFinite(x.annualDividend)&&x.annualDividend>=0))&&x.basis&&day(x.basis.assessmentDate)&&x.basis.assessmentDate<=c.date&&['short','long'].every(k=>Number.isInteger(x.basis[k])&&x.basis[k]>=1&&x.basis[k]<=10)))return false;
+ if(!c.companies.some(x=>x.code===c.preferredCode)||!Array.isArray(c.sources)||!c.sources.length)return false;
+ return c.sources.every(s=>s&&text(s.title)&&typeof s.url==='string'&&/^https:\/\/[^\s/@]+(?:[/:?#]|$)/.test(s.url)&&!/^https:\/\/[^/]*@/.test(s.url));
+}
+function boardSavedComparisons(codes){
+ const wanted=[...new Set(codes)],records=Array.isArray(D.ratingContext?.comparisons)?D.ratingContext.comparisons:[];
+ if(!wanted.length||wanted.length>2)return [];
+ const matching=records.filter(c=>boardValidComparison(c)&&wanted.every(code=>c.companies.some(x=>x.code===code))).slice().sort((a,b)=>b.date.localeCompare(a.date));
+ const pairs=new Set();return matching.filter(c=>{const key=c.companies.map(x=>x.code).sort().join('|');if(pairs.has(key))return false;pairs.add(key);return true;});
+}
+function boardComparisonCard(c){
+ if(!boardValidComparison(c))return '';
+ const stale=c.companies.some(x=>{const r=ratings[x.code],b=x.basis;return !r||r.assessment_date!==b.assessmentDate||r.short_3m!==b.short||r.long_12m!==b.long;});
+ const preferred=c.companies.find(x=>x.code===c.preferredCode),items=values=>`<ul>${values.map(value=>`<li>${esc(value)}</li>`).join('')}</ul>`;
+ const decimal=value=>Number.isFinite(value)?value.toLocaleString('ja-JP',{minimumFractionDigits:2,maximumFractionDigits:2}):'未取得';
+ const metric=(label,fn)=>`<tr><th scope="row">${label}</th>${c.companies.map(x=>`<td>${fn(x)}</td>`).join('')}</tr>`;
+ return `<section class="rb-saved-comparison" aria-label="共通価格日での2社比較" data-saved-comparison="${esc(c.id)}">
+ <div class="rb-saved-kicker">共通価格日での2社比較${stale?' · 過去の判断':''}</div><h3>${esc(c.title)}</h3>
+ <p class="rb-date">判断日 ${esc(c.date)} · 共通価格日 ${esc(c.priceDate)} 終値</p><p class="rb-comparison-scope">${esc(c.scope)}</p>
+ ${stale?'<p class="rb-compare-notice" role="status">保存後に採点が更新、または現在の採点を確認できないため、再比較待ちです。以下は判断日時点の記録です。</p>':''}
+ <p class="rb-comparison-preference"><b>${stale?'判断時の優先候補':'この2社の優先候補'}：${esc(preferred.name)}</b></p><p>${esc(c.summary)}</p>
+ <div class="rb-compare-scroll" role="region" aria-label="共通価格日で計算した指標" tabindex="0"><table class="rb-compare-table rb-saved-metrics"><thead><tr><th scope="col">比較項目</th>${c.companies.map(x=>`<th scope="col"><a href="#company/${encodeURIComponent(x.code)}">${esc(x.name)}</a><small>${esc(x.code)} · ${esc(x.currency)}</small></th>`).join('')}</tr></thead><tbody>
+ ${metric('共通日終値',x=>esc(boardMoney(x.close,x.currency)))}
+ ${metric('会社予想の対象期',x=>esc(x.companyPeriod))}
+ ${metric('会社予想EPS',x=>x.companyEps===null?'未取得':esc(boardMoney(x.companyEps,x.currency)))}
+ ${metric('会社予想PER',x=>x.companyEps>0?esc(decimal(x.close/x.companyEps))+'倍':'算出不可')}
+ ${metric('年間予想配当',x=>x.annualDividend===null?'未取得':esc(boardMoney(x.annualDividend,x.currency)))}
+ ${metric('年間配当利回り',x=>x.annualDividend===null?'算出不可':esc(decimal(x.annualDividend/x.close*100))+'％')}
+ ${metric('比較時の保存採点',x=>`3か月 ${esc(x.basis.short)} / 12か月 ${esc(x.basis.long)}<small>採点日 ${esc(x.basis.assessmentDate)}</small>`)}
+ </tbody></table></div><p class="rb-compare-foot">PERは共通日終値÷会社予想EPS、利回りは年間予想配当÷共通日終値です。将来の値上がり率や残りの受取配当とは異なります。</p>
+ <h4>優先する理由</h4>${items(c.reasons)}<h4>優先順位を見直す条件</h4>${items(c.reviewConditions)}
+ <details class="rb-comparison-caveats"><summary>比較の前提・注意点と出典</summary>${items(c.caveats)}<ul>${c.sources.map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)}</a></li>`).join('')}</ul></details>
+ </section>`;
+}
+function boardCompanyComparisons(code){return boardSavedComparisons([code]).map(boardComparisonCard).join('');}
 function boardCompareBody(rows){
  if(rows.length!==2||rows[0].code===rows[1].code)return '<p role="status">異なる2社を選んでください。</p>';
  const period=ratingHorizon==='long'?'12か月':'3か月';
  if(rows.some(r=>boardReview(r))||!Number.isInteger(rows[0][ratingHorizon])||rows[0][ratingHorizon]!==rows[1][ratingHorizon])return '<p role="status">同じ期間・同じ点数の採点済み銘柄を選んでください。</p>';
- const sameDate=rows.every(r=>r.priceDate)&&rows[0].priceDate===rows[1].priceDate;
+ const sameDate=rows.every(r=>r.priceDate)&&rows[0].priceDate===rows[1].priceDate,comparisons=boardSavedComparisons(rows.map(r=>r.code));
  const textCell=value=>{const text=typeof value==='string'?value.trim():'';return !text?'<span class="rb-unknown">未記録・比較未判定</span>':text.length>180?`<p>${esc(text.slice(0,180))}…</p><details><summary>根拠の全文</summary><p>${esc(text)}</p></details>`:`<p>${esc(text)}</p>`;};
  const field=(label,fn)=>`<tr><th scope="row">${label}</th>${rows.map(r=>`<td>${fn(r)}</td>`).join('')}</tr>`;
  const profile=r=>boardProfile(r)||{};
- return `<p class="rb-compare-notice" role="status">${sameDate?'価格日は一致しています。資料と採点日は下欄で確認してください。':'価格日が異なる、または未記録です。同条件の比較には価格の確認が必要です。'}</p>
+ return `${comparisons.map(boardComparisonCard).join('')}<h3 class="rb-saved-assessment-title">採点時に保存した評価の比較</h3><p class="rb-compare-notice" role="status">${sameDate?'採点時の価格日は一致しています。資料と採点日は下欄で確認してください。':comparisons.length?'以下の価格日と株価は各社を採点した時点の保存値です。上の2社比較は、別に記載した共通価格日の終値で計算しています。':'採点時の価格日が異なる、または未記録です。同条件の比較には価格の確認が必要です。'}</p>
  <p class="rb-compare-guide">利益の伸びを選ぶなら「利益・倍率の前提」、損失への耐性なら「リスク」、分散なら「需要・相場との関係」を比べてください。根拠が未記録の項目では優劣を判定できません。</p>
  <div class="rb-compare-scroll" role="region" aria-label="同点2社の比較表" tabindex="0"><table class="rb-compare-table"><thead><tr><th scope="col">選び分ける視点</th>${rows.map(r=>`<th scope="col"><a href="#company/${encodeURIComponent(r.code)}">${esc(r.name)}</a><small>${esc(r.code)} · ${period} ${esc(r[ratingHorizon])}点</small></th>`).join('')}</tr></thead><tbody>
  ${field('優先候補にする根拠<br><small>保存評価の理由</small>',r=>textCell(ratingHorizon==='long'?r.reason:r.shortReason))}
@@ -96,7 +136,7 @@ function boardCompareBody(rows){
  ${field('優先しにくい理由・リスク',r=>textCell(profile(r).risk||r.counter))}
  ${field('需要・相場との関係',r=>textCell([profile(r).type,profile(r).regime].filter(Boolean).join('。')))}
  ${field('次に確認する条件',r=>textCell(profile(r).next||r.counter))}
- ${field('比較の基準',r=>`<p>${esc(boardMoney(r.close,r.currency))}<br>価格日 ${esc(r.priceDate||'未記録')}<br>採点日 ${esc(r.assessed||'未記録')}<br>研究更新 ${esc(notes[r.code]?.updated||'未記録')}</p>`)}
+ ${field('採点時の基準',r=>`<p>${esc(boardMoney(r.close,r.currency))}<br>採点時の価格日 ${esc(r.priceDate||'未記録')}<br>採点日 ${esc(r.assessed||'未記録')}<br>研究更新 ${esc(notes[r.code]?.updated||'未記録')}</p>`)}
  ${field('原文・出典',r=>`<a href="#company/${encodeURIComponent(r.code)}">会社の調査・出典を読む</a>`)}
  </tbody></table></div><p class="rb-compare-foot">左右の順番は優先順位ではありません。保有との重なりは、現在の保有比率と共通の需要を別途確認してください。この表だけで購入配分は決まりません。</p>`;
 }

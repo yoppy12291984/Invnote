@@ -201,6 +201,18 @@ function validBundle(d){
     if(!r||!['reason','resolve'].every(k=>typeof r[k]==='string')||!b||!['assessmentDate','priceDate','longReason'].every(k=>typeof b[k]==='string')||!Number.isFinite(b.close)||!['short','long'].every(k=>Number.isInteger(b[k])&&b[k]>=1&&b[k]<=10))return false;
    }
   }
+  if(c.comparisons!==undefined){
+   const day=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x),text=x=>typeof x==='string'&&!!x.trim();
+   const list=x=>Array.isArray(x)&&x.length>0&&x.every(text),code=x=>typeof x==='string'&&/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(x),ids=new Set();
+   if(!Array.isArray(c.comparisons))return false;
+   for(const p of c.comparisons){
+    if(!p||!['id','title','scope','summary'].every(k=>text(p[k]))||ids.has(p.id)||!day(p.date)||!day(p.priceDate)||p.priceDate>p.date||!['reasons','reviewConditions','caveats'].every(k=>list(p[k])))return false;
+    if(!Array.isArray(p.companies)||p.companies.length!==2||new Set(p.companies.map(x=>x?.code)).size!==2)return false;
+    if(!p.companies.every(x=>x&&code(x.code)&&text(x.name)&&Number.isFinite(x.close)&&x.close>0&&['JPY','USD','EUR','GBP','CHF','SEK'].includes(x.currency)&&x.priceDate===p.priceDate&&text(x.companyPeriod)&&(x.companyEps===null||Number.isFinite(x.companyEps))&&(x.annualDividend===null||(Number.isFinite(x.annualDividend)&&x.annualDividend>=0))&&x.basis&&day(x.basis.assessmentDate)&&x.basis.assessmentDate<=p.date&&['short','long'].every(k=>Number.isInteger(x.basis[k])&&x.basis[k]>=1&&x.basis[k]<=10)))return false;
+    if(!p.companies.some(x=>x.code===p.preferredCode)||!Array.isArray(p.sources)||!p.sources.length||!p.sources.every(s=>s&&text(s.title)&&typeof s.url==='string'&&/^https:\/\/[^\s/@]+(?:[/:?#]|$)/.test(s.url)&&!/^https:\/\/[^/]*@/.test(s.url)))return false;
+    ids.add(p.id);
+   }
+  }
  }
  if(d?.kiyoharaRanking!=null){
   const p=d.kiyoharaRanking;
