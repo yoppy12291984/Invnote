@@ -2795,88 +2795,29 @@
    ]
   },
   "macro": {
-   "hash": "8a59391390c9bca92e1113eb7659b6fea62711a4ba94cc4420f420c78fea62bd",
-   "date": "2026-11-25T21:31:26+00:00",
+   "hash": "bc33b358fb94ce16b1a07e62061bd02f62fe8af6e6d51e5aef9a99762b9b85fd",
+   "date": "2026-11-26T21:29:43+00:00",
    "count": 12,
    "comparison": true,
-   "previous_date": "2026-11-24T23:46:40+00:00",
+   "previous_date": "2026-11-25T21:31:26+00:00",
    "previous_label": "前回公開データ",
    "added": [],
    "removed": [],
    "changed": [
     {
-     "key": "DFII10",
-     "name": "米10年実質金利",
+     "key": "T10YIE",
+     "name": "米10年期待インフレ（BEI）",
      "changes": [
       {
        "field": "観測日",
-       "before": "2026-11-23",
-       "after": "2026-11-24"
+       "before": "2026-11-24",
+       "after": "2026-11-25"
       }
      ]
     },
     {
-     "key": "DGS10",
-     "name": "米10年国債利回り",
-     "changes": [
-      {
-       "field": "観測日",
-       "before": "2026-11-23",
-       "after": "2026-11-24"
-      },
-      {
-       "field": "観測値",
-       "before": 4.92,
-       "after": 4.91
-      }
-     ]
-    },
-    {
-     "key": "DGS2",
-     "name": "米2年国債利回り",
-     "changes": [
-      {
-       "field": "観測日",
-       "before": "2026-11-23",
-       "after": "2026-11-24"
-      }
-     ]
-    },
-    {
-     "key": "BAMLH0A0HYM2",
-     "name": "米HY信用スプレッド",
-     "changes": [
-      {
-       "field": "観測日",
-       "before": "2026-11-23",
-       "after": "2026-11-24"
-      },
-      {
-       "field": "観測値",
-       "before": 3.63,
-       "after": 3.72
-      }
-     ]
-    },
-    {
-     "key": "BAMLC0A4CBBB",
-     "name": "米BBB信用スプレッド",
-     "changes": [
-      {
-       "field": "観測日",
-       "before": "2026-11-23",
-       "after": "2026-11-24"
-      },
-      {
-       "field": "観測値",
-       "before": 1.2,
-       "after": 1.22
-      }
-     ]
-    },
-    {
-     "key": "VIXCLS",
-     "name": "VIX",
+     "key": "T10Y2Y",
+     "name": "米10年−2年金利差",
      "changes": [
       {
        "field": "観測日",
@@ -2885,29 +2826,13 @@
       },
       {
        "field": "観測値",
-       "before": 26.36,
-       "after": 28.29
-      }
-     ]
-    },
-    {
-     "key": "SP500",
-     "name": "S&P 500指数",
-     "changes": [
-      {
-       "field": "観測日",
-       "before": "2026-11-24",
-       "after": "2026-11-25"
-      },
-      {
-       "field": "観測値",
-       "before": 7201.0898,
-       "after": 7182.7798
+       "before": 0.28,
+       "after": 0.24
       }
      ]
     }
    ],
-   "unchanged": 5
+   "unchanged": 10
   },
   "catalysts": {
    "hash": "5102fe525872239a2cdca27cd7be6b3e15741a6eefb8ae5f008d2486b04f8ea0",
