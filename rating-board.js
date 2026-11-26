@@ -78,6 +78,34 @@ function boardLineTable(rows,label){
  const periods=ratingHorizon==='short'?[['short','3か月'],['long','12か月']]:[['long','12か月'],['short','3か月']];
  return `<div class="line-table-scroll rating-line-scroll" role="region" aria-label="${esc(label)}の1行一覧" tabindex="0"><table class="line-table rating-line-table"><colgroup><col class="rating-col-code"><col class="rating-col-name"><col class="rating-col-score"><col class="rating-col-score"><col class="rating-col-price"><col class="rating-col-date"><col class="rating-col-date"><col class="rating-col-state"></colgroup><thead><tr><th scope="col">コード</th><th scope="col">銘柄名</th>${periods.map(([,name])=>`<th scope="col">${name}</th>`).join('')}<th scope="col">基準株価</th><th scope="col">価格日</th><th scope="col">採点日</th><th scope="col">評価状態</th></tr></thead><tbody>${rows.map(row=>`<tr data-rating-code="${esc(row.code)}"><td>${esc(row.code)}</td><td><button class="open" data-company="${esc(row.code)}" title="${esc(row.name)}">${esc(row.name)}</button></td>${periods.map(([key],i)=>`<td class="line-number${i===0?' line-selected':''}">${esc(row[key]??'—')}</td>`).join('')}<td class="line-number">${esc(boardMoney(row.close,row.currency))}</td><td>${esc(row.priceDate||'未記録')}</td><td>${esc(row.assessed||'未記録')}</td><td>${boardReview(row)?'<span class="line-review">旧評価・点検中</span>':'保存評価'}</td></tr>`).join('')}</tbody></table></div>`;
 }
+
+function boardCompareBody(rows){
+ if(rows.length!==2||rows[0].code===rows[1].code)return '<p role="status">異なる2社を選んでください。</p>';
+ const period=ratingHorizon==='long'?'12か月':'3か月';
+ if(rows.some(r=>boardReview(r))||!Number.isInteger(rows[0][ratingHorizon])||rows[0][ratingHorizon]!==rows[1][ratingHorizon])return '<p role="status">同じ期間・同じ点数の採点済み銘柄を選んでください。</p>';
+ const sameDate=rows.every(r=>r.priceDate)&&rows[0].priceDate===rows[1].priceDate;
+ const textCell=value=>{const text=typeof value==='string'?value.trim():'';return !text?'<span class="rb-unknown">未記録・比較未判定</span>':text.length>180?`<p>${esc(text.slice(0,180))}…</p><details><summary>根拠の全文</summary><p>${esc(text)}</p></details>`:`<p>${esc(text)}</p>`;};
+ const field=(label,fn)=>`<tr><th scope="row">${label}</th>${rows.map(r=>`<td>${fn(r)}</td>`).join('')}</tr>`;
+ const profile=r=>boardProfile(r)||{};
+ return `<p class="rb-compare-notice" role="status">${sameDate?'価格日は一致しています。資料と採点日は下欄で確認してください。':'価格日が異なる、または未記録です。同条件の比較には価格の確認が必要です。'}</p>
+ <p class="rb-compare-guide">利益の伸びを選ぶなら「利益・倍率の前提」、損失への耐性なら「リスク」、分散なら「需要・相場との関係」を比べてください。根拠が未記録の項目では優劣を判定できません。</p>
+ <div class="rb-compare-scroll" role="region" aria-label="同点2社の比較表" tabindex="0"><table class="rb-compare-table"><thead><tr><th scope="col">選び分ける視点</th>${rows.map(r=>`<th scope="col"><a href="#company/${encodeURIComponent(r.code)}">${esc(r.name)}</a><small>${esc(r.code)} · ${period} ${esc(r[ratingHorizon])}点</small></th>`).join('')}</tr></thead><tbody>
+ ${field('優先候補にする根拠<br><small>保存評価の理由</small>',r=>textCell(ratingHorizon==='long'?r.reason:r.shortReason))}
+ ${field('利益・倍率の前提',r=>textCell(notes[r.code]?.valuation))}
+ ${field('根拠の確かさ',r=>textCell(r.confidence))}
+ ${field('優先しにくい理由・リスク',r=>textCell(profile(r).risk||r.counter))}
+ ${field('需要・相場との関係',r=>textCell([profile(r).type,profile(r).regime].filter(Boolean).join('。')))}
+ ${field('次に確認する条件',r=>textCell(profile(r).next||r.counter))}
+ ${field('比較の基準',r=>`<p>${esc(boardMoney(r.close,r.currency))}<br>価格日 ${esc(r.priceDate||'未記録')}<br>採点日 ${esc(r.assessed||'未記録')}<br>研究更新 ${esc(notes[r.code]?.updated||'未記録')}</p>`)}
+ ${field('原文・出典',r=>`<a href="#company/${encodeURIComponent(r.code)}">会社の調査・出典を読む</a>`)}
+ </tbody></table></div><p class="rb-compare-foot">左右の順番は優先順位ではありません。保有との重なりは、現在の保有比率と共通の需要を別途確認してください。この表だけで購入配分は決まりません。</p>`;
+}
+function boardComparePanel(rows,score){
+ if(score==null||rows.length<2)return '';
+ const option=(row,selected)=>`<option value="${esc(row.code)}" ${selected?'selected':''}>${esc(row.code)} ${esc(row.name)}</option>`;
+ return `<details class="rb-compare" data-compare-score="${score}"><summary>同点の2社を比較する<span>違いと優先する根拠</span></summary><div class="rb-compare-pickers">${[0,1].map(i=>`<label>銘柄${i===0?'A':'B'}<select data-compare-slot="${i}" aria-label="比較する銘柄${i===0?'A':'B'}">${rows.map((r,j)=>option(r,j===i)).join('')}</select></label>`).join('')}</div><div class="rb-compare-body">${boardCompareBody(rows.slice(0,2))}</div></details>`;
+}
+
 function renderBoardResults(){
  const root=document.getElementById('rb-results');if(!root)return;
  const cross=rankingMarket==='cross',allRows=boardRows(cross),q=ratingQuery.normalize('NFKC').toLowerCase().trim();
@@ -85,8 +113,14 @@ function renderBoardResults(){
   (ratingFilter==='all'||(ratingFilter==='review'?!!boardReview(row):!boardReview(row)&&String(row[ratingHorizon])===ratingFilter)));
  const {groups,review}=boardGroups(rows,ratingHorizon),period=ratingHorizon==='long'?'12か月':'3か月';
  document.getElementById('rb-result-count').textContent=`${rows.length} / ${allRows.length}社`;
- const section=(label,list,score)=>`<section class="rb-group" aria-label="${esc(label)}"><div class="rb-group-heading"><h2>${esc(label)}</h2><span>${list.length}社${score!=null?' · '+esc(ratingAnchors[score]||''):''}</span></div>${ratingBoardLayout==='compact'?boardLineTable(list,label):`<div class="rb-grid">${list.map(boardCard).join('')}</div>`}</section>`;
+ const section=(label,list,score)=>`<section class="rb-group" aria-label="${esc(label)}"><div class="rb-group-heading"><h2>${esc(label)}</h2><span>${list.length}社${score!=null?' · '+esc(ratingAnchors[score]||''):''}</span></div>${boardComparePanel(list,score)}${ratingBoardLayout==='compact'?boardLineTable(list,label):`<div class="rb-grid">${list.map(boardCard).join('')}</div>`}</section>`;
  root.innerHTML=(review.length?section('評価を点検している銘柄',review,null):'')+groups.map(g=>section(g.score==null?'未採点':`${period} ${g.score}点`,g.rows,g.score)).join('')||'<p class="empty">条件に合う銘柄がありません。検索や絞り込みを変更してください。</p>';
+ for(const panel of root.querySelectorAll('[data-compare-score]')){
+  panel.addEventListener('change',()=>{
+   const selected=[...panel.querySelectorAll('[data-compare-slot]')].map(el=>rows.find(r=>r.code===el.value)).filter(Boolean);
+   panel.querySelector('.rb-compare-body').innerHTML=boardCompareBody(selected);
+  });
+ }
 }
 function purchaseRanking(){
  if(ratingViewMode==='legacy'){legacyPurchaseRanking();return;}
