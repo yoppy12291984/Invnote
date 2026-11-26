@@ -201,6 +201,17 @@ function validBundle(d){
     if(!r||!['reason','resolve'].every(k=>typeof r[k]==='string')||!b||!['assessmentDate','priceDate','longReason'].every(k=>typeof b[k]==='string')||!Number.isFinite(b.close)||!['short','long'].every(k=>Number.isInteger(b[k])&&b[k]>=1&&b[k]<=10))return false;
    }
   }
+  function validPriorityComparison(c){
+   const day=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x),text=x=>typeof x==='string'&&!!x.trim();
+   const list=x=>Array.isArray(x)&&x.length>0&&x.every(text),code=x=>typeof x==='string'&&/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(x);
+   const source=s=>s&&text(s.title)&&typeof s.url==='string'&&/^https:\/\/[^\s/@]+(?:[/:?#]|$)/.test(s.url)&&!/^https:\/\/[^/]*@/.test(s.url);
+   if(!c||!['id','title','scope','summary','ratingSource'].every(k=>text(c[k]))||!day(c.date)||!day(c.priceDate)||c.priceDate>c.date||c.horizon!=='long'||!Number.isInteger(c.score)||c.score<1||c.score>10||!['method','reviewConditions','caveats'].every(k=>list(c[k])))return false;
+   if(!Array.isArray(c.rows)||c.rows.length<2||c.rows.length>500||!Array.isArray(c.cohortCodes)||c.cohortCodes.length!==c.rows.length||!c.cohortCodes.every(code)||new Set(c.cohortCodes).size!==c.rows.length||new Set(c.rows.map(x=>x?.code)).size!==c.rows.length)return false;
+   return c.rows.every((x,i)=>x&&x.rank===i+1&&code(x.code)&&c.cohortCodes.includes(x.code)&&['name','companyPeriod','profitBasis','valuation','rationale','tradeoff','evidenceLimit'].every(k=>text(x[k]))&&Number.isFinite(x.close)&&x.close>0&&x.currency==='JPY'&&x.priceDate===c.priceDate&&(x.companyEps===null||Number.isFinite(x.companyEps))&&(x.annualDividend===null||(Number.isFinite(x.annualDividend)&&x.annualDividend>=0))&&list(x.reviewConditions)&&Array.isArray(x.sources)&&x.sources.length>0&&x.sources.every(source)&&x.basis&&day(x.basis.assessmentDate)&&x.basis.assessmentDate<=c.date&&x.basis.long===c.score&&Number.isInteger(x.basis.short)&&x.basis.short>=1&&x.basis.short<=10);
+  }
+  if(c.priorityComparisons!==undefined){
+   if(!Array.isArray(c.priorityComparisons)||new Set(c.priorityComparisons.map(x=>x?.id)).size!==c.priorityComparisons.length||!c.priorityComparisons.every(validPriorityComparison))return false;
+  }
   if(c.comparisons!==undefined){
    const day=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x),text=x=>typeof x==='string'&&!!x.trim();
    const list=x=>Array.isArray(x)&&x.length>0&&x.every(text),code=x=>typeof x==='string'&&/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(x),ids=new Set();

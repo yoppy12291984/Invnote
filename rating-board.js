@@ -88,6 +88,42 @@ function boardValidComparison(c){
  if(!c.companies.some(x=>x.code===c.preferredCode)||!Array.isArray(c.sources)||!c.sources.length)return false;
  return c.sources.every(s=>s&&text(s.title)&&typeof s.url==='string'&&/^https:\/\/[^\s/@]+(?:[/:?#]|$)/.test(s.url)&&!/^https:\/\/[^/]*@/.test(s.url));
 }
+function boardValidPriorityComparison(c){
+ const day=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x),text=x=>typeof x==='string'&&!!x.trim();
+ const list=x=>Array.isArray(x)&&x.length>0&&x.every(text),code=x=>typeof x==='string'&&/^[A-Z0-9][A-Z0-9.-]{0,11}$/.test(x);
+ const source=s=>s&&text(s.title)&&typeof s.url==='string'&&/^https:\/\/[^\s/@]+(?:[/:?#]|$)/.test(s.url)&&!/^https:\/\/[^/]*@/.test(s.url);
+ if(!c||!['id','title','scope','summary','ratingSource'].every(k=>text(c[k]))||!day(c.date)||!day(c.priceDate)||c.priceDate>c.date||c.horizon!=='long'||!Number.isInteger(c.score)||c.score<1||c.score>10||!['method','reviewConditions','caveats'].every(k=>list(c[k])))return false;
+ if(!Array.isArray(c.rows)||c.rows.length<2||c.rows.length>500||!Array.isArray(c.cohortCodes)||c.cohortCodes.length!==c.rows.length||!c.cohortCodes.every(code)||new Set(c.cohortCodes).size!==c.rows.length||new Set(c.rows.map(x=>x?.code)).size!==c.rows.length)return false;
+ return c.rows.every((x,i)=>x&&x.rank===i+1&&code(x.code)&&c.cohortCodes.includes(x.code)&&['name','companyPeriod','profitBasis','valuation','rationale','tradeoff','evidenceLimit'].every(k=>text(x[k]))&&Number.isFinite(x.close)&&x.close>0&&x.currency==='JPY'&&x.priceDate===c.priceDate&&(x.companyEps===null||Number.isFinite(x.companyEps))&&(x.annualDividend===null||(Number.isFinite(x.annualDividend)&&x.annualDividend>=0))&&list(x.reviewConditions)&&Array.isArray(x.sources)&&x.sources.length>0&&x.sources.every(source)&&x.basis&&day(x.basis.assessmentDate)&&x.basis.assessmentDate<=c.date&&x.basis.long===c.score&&Number.isInteger(x.basis.short)&&x.basis.short>=1&&x.basis.short<=10);
+}
+function boardPriorityComparisons(codes=[],score=null){
+ const records=Array.isArray(D.ratingContext?.priorityComparisons)?D.ratingContext.priorityComparisons:[];
+ const seen=new Set();return records.filter(c=>boardValidPriorityComparison(c)&&(score===null||c.score===score)&&codes.every(code=>c.cohortCodes.includes(code))).slice().sort((a,b)=>b.date.localeCompare(a.date)).filter(c=>{const key=c.horizon+'|'+c.score;if(seen.has(key))return false;seen.add(key);return true;});
+}
+function boardPriorityStale(c){
+ const current=Object.entries(ratings).filter(([,r])=>r.long_12m===c.score).map(([code])=>String(code)).sort();
+ return current.join('|')!==c.cohortCodes.slice().sort().join('|')||c.rows.some(x=>{const r=ratings[x.code],b=x.basis;return !r||r.assessment_date!==b.assessmentDate||r.short_3m!==b.short||r.long_12m!==b.long;});
+}
+function boardPriorityCard(c,codes=[]){
+ if(!boardValidPriorityComparison(c))return '';
+ const rows=c.rows.filter(x=>!codes.length||codes.includes(x.code));if(!rows.length)return '';
+ const stale=boardPriorityStale(c),items=values=>`<ul>${values.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;
+ const decimal=v=>v.toLocaleString('ja-JP',{minimumFractionDigits:2,maximumFractionDigits:2});
+ return `<section class="rb-priority-comparison" data-priority-comparison="${esc(c.id)}" aria-label="共通価格日での新規購入優先順位">
+ <div class="rb-saved-kicker">12か月 ${esc(c.score)}点 · ${c.rows.length}社の新規購入比較${stale?' · 過去の判断':''}</div><h3>${esc(c.title)}</h3>
+ <p class="rb-date">判断日 ${esc(c.date)} · 共通価格日 ${esc(c.priceDate)} 確定終値</p><p>${esc(c.scope)}</p>
+ ${stale?'<p class="rb-compare-notice" role="status">対象銘柄または採点が保存後に変わっています。再比較待ちのため、以下は判断日時点の順位です。</p>':''}
+ <p class="rb-priority-summary">${esc(c.summary)}</p>
+ <details class="rb-detail"><summary>順位の付け方と全体の見直し条件</summary>${items(c.method)}<h4>全体の見直し条件</h4>${items(c.reviewConditions)}${items(c.caveats)}</details>
+ ${codes.length?`<p class="rb-date">比較対象${c.rows.length}社のうち${rows.length}社を表示。<a href="#ranking/ranking">ランキングへ</a></p>`:''}
+ <p class="rb-date">各行を開くと、優先理由・利益の前提・見直し条件を読めます。</p><div class="rb-priority-columns"><span>順位</span><span>銘柄</span><span>終値</span><span>会社PER</span></div><div class="rb-priority-rows">${rows.map(x=>`<details class="rb-priority-row" data-priority-code="${esc(x.code)}" data-priority-rank="${x.rank}">
+ <summary class="rb-priority-row-head" title="${esc(x.name)}の理由・見直し条件"><span class="rb-priority-rank">${x.rank}</span><span class="rb-priority-name">${esc(x.name)}<small>${esc(x.code)}</small></span><b class="rb-priority-close">${esc(boardMoney(x.close,x.currency))}</b><span class="rb-priority-per">${x.companyEps>0?decimal(x.close/x.companyEps)+'倍':'算出不可'}</span></summary><div class="rb-priority-expanded"><p class="rb-date">${esc(x.companyPeriod)} · <a href="#company/${encodeURIComponent(x.code)}">個社の研究を読む</a></p>
+ <p class="rb-priority-reason">${esc(x.rationale)}</p>
+ <div class="rb-priority-detail"><div class="rb-priority-metrics"><p><span>会社予想PER</span><b>${x.companyEps>0?decimal(x.close/x.companyEps)+'倍':'算出不可'}</b></p><p><span>会社予想EPS</span><b>${x.companyEps===null?'未取得・未定':esc(boardMoney(x.companyEps,x.currency))}</b></p><p><span>年間予想配当</span><b>${x.annualDividend===null?'未取得・未定':esc(boardMoney(x.annualDividend,x.currency))}</b></p><p><span>年間配当利回り</span><b>${x.annualDividend===null?'算出不可':decimal(x.annualDividend/x.close*100)+'％'}</b></p></div>
+ <p><b>利益の前提</b> ${esc(x.profitBasis)}</p><p><b>価格との関係</b> ${esc(x.valuation)}</p><p><b>優先度を抑える理由</b> ${esc(x.tradeoff)}</p><h4>この銘柄の順位を見直す条件</h4>${items(x.reviewConditions)}<p><b>確認範囲と残る課題</b> ${esc(x.evidenceLimit)}</p>
+ <p class="rb-date">保存採点：3か月 ${x.basis.short} / 12か月 ${x.basis.long} · 採点日 ${esc(x.basis.assessmentDate)}</p><ul class="rb-priority-sources">${x.sources.map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)}</a></li>`).join('')}</ul></div></div></details>`).join('')}</div>
+ <p class="rb-compare-foot">PERは同日終値÷各社の会社予想EPSです。対象決算期・会計基準・一時利益は各社で異なります。順位は判断日の新規購入比較であり、自動売買や保有の売却順ではありません。</p></section>`;
+}
 function boardSavedComparisons(codes){
  const wanted=[...new Set(codes)],records=Array.isArray(D.ratingContext?.comparisons)?D.ratingContext.comparisons:[];
  if(!wanted.length||wanted.length>2)return [];
@@ -118,7 +154,7 @@ function boardComparisonCard(c){
  <details class="rb-comparison-caveats"><summary>比較の前提・注意点と出典</summary>${items(c.caveats)}<ul>${c.sources.map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)}</a></li>`).join('')}</ul></details>
  </section>`;
 }
-function boardCompanyComparisons(code){return boardSavedComparisons([code]).map(boardComparisonCard).join('');}
+function boardCompanyComparisons(code){return boardPriorityComparisons([code]).map(c=>boardPriorityCard(c,[code])).join('')+boardSavedComparisons([code]).map(boardComparisonCard).join('');}
 function boardCompareBody(rows){
  if(rows.length!==2||rows[0].code===rows[1].code)return '<p role="status">異なる2社を選んでください。</p>';
  const period=ratingHorizon==='long'?'12か月':'3か月';
@@ -153,7 +189,10 @@ function renderBoardResults(){
   (ratingFilter==='all'||(ratingFilter==='review'?!!boardReview(row):!boardReview(row)&&String(row[ratingHorizon])===ratingFilter)));
  const {groups,review}=boardGroups(rows,ratingHorizon),period=ratingHorizon==='long'?'12か月':'3か月';
  document.getElementById('rb-result-count').textContent=`${rows.length} / ${allRows.length}社`;
- const section=(label,list,score)=>`<section class="rb-group" aria-label="${esc(label)}"><div class="rb-group-heading"><h2>${esc(label)}</h2><span>${list.length}社${score!=null?' · '+esc(ratingAnchors[score]||''):''}</span></div>${boardComparePanel(list,score)}${ratingBoardLayout==='compact'?boardLineTable(list,label):`<div class="rb-grid">${list.map(boardCard).join('')}</div>`}</section>`;
+ const section=(label,list,score)=>{
+  const priority=!cross&&score!=null&&ratingHorizon==='long'?boardPriorityComparisons([],score).map(c=>boardPriorityCard(c,q?list.map(r=>r.code):[])).join(''):'';
+  return `<section class="rb-group" aria-label="${esc(label)}"><div class="rb-group-heading"><h2>${esc(label)}</h2><span>${list.length}社${score!=null?' · '+esc(ratingAnchors[score]||''):''}</span></div>${priority}${boardComparePanel(list,score)}${priority?'<h3 class="rb-saved-assessment-title">採点時の保存評価一覧（コード順）</h3>':''}${ratingBoardLayout==='compact'?boardLineTable(list,label):`<div class="rb-grid">${list.map(boardCard).join('')}</div>`}</section>`;
+ };
  root.innerHTML=(review.length?section('評価を点検している銘柄',review,null):'')+groups.map(g=>section(g.score==null?'未採点':`${period} ${g.score}点`,g.rows,g.score)).join('')||'<p class="empty">条件に合う銘柄がありません。検索や絞り込みを変更してください。</p>';
  for(const panel of root.querySelectorAll('[data-compare-score]')){
   panel.addEventListener('change',()=>{
@@ -170,7 +209,7 @@ function purchaseRanking(){
  const scored=groups.groups.filter(g=>g.score!=null),profiles=rows.filter(row=>boardProfile(row)).length;
  app.innerHTML=`<section class="rb-board" aria-label="投資妙味の評価グループ">
  <div class="rb-heading"><div><div class="rb-kicker">INVESTMENT VIEW <span>試用版</span></div><h1>価格から、投資妙味を見る。</h1><p>評価とリスクを並べて、納得できる銘柄を探す。</p></div><button type="button" class="rb-legacy" id="rb-legacy">従来の順位</button></div>
- <div class="rb-intro"><p>点数は各銘柄の基準株価での評価です。購入待ちによる並べ替えは行いません。</p><details><summary>評価の読み方</summary><p>同点内はコード順で、優劣はありません。保存済みの点数を使う表示の試用であり、今日の株価で全社を再採点したものではありません。各カードの価格日を確認してください。</p><p>需要の安定と株価の安全性は別です。相場局面は利益と評価倍率を点検するために使い、一律に点数を加減しません。現在の局面判定は未実施です。特性の試分類は${profiles}社、残りは未分類です。</p></details></div>
+ <div class="rb-intro"><p>点数は各銘柄の基準株価での評価です。同じ価格日で比較した購入優先順位がある場合は、評価一覧の前に表示します。</p><details><summary>評価の読み方</summary><p>保存評価の一覧はコード順です。購入優先の比較には別に判断日・共通価格日を表示します。保存済みの点数を使う表示の試用であり、今日の株価で全社を再採点したものではありません。各カードの価格日を確認してください。</p><p>需要の安定と株価の安全性は別です。相場局面は利益と評価倍率を点検するために使い、一律に点数を加減しません。現在の局面判定は未実施です。特性の試分類は${profiles}社、残りは未分類です。</p></details></div>
  <div class="rb-toolbar"><div class="rb-controls">${controls('対象市場','data-rb-market',rankingMarket,[['domestic','日本株'],['cross','日米欧']])}${controls('評価の期間','data-rb-horizon',ratingHorizon,[['long','12か月'],['short','3か月']])}${controls('表示形式','data-rb-layout',ratingBoardLayout,[['cards','カード'],['compact','1行一覧']])}</div>
  <div class="rb-search-row"><label class="rb-search"><span>銘柄を探す</span><input id="rb-search" type="search" placeholder="会社名・コード" value="${esc(ratingQuery)}" autocomplete="off"></label><label class="rb-filter"><span>評価で絞る</span><select id="rb-filter"><option value="all">すべての評価</option>${scored.map(g=>`<option value="${g.score}" ${ratingFilter===String(g.score)?'selected':''}>${g.score}点 · ${g.rows.length}社</option>`).join('')}<option value="review" ${ratingFilter==='review'?'selected':''}>評価点検中</option></select></label></div></div>
  <div class="rb-results-heading"><span>同点は同じ評価グループ</span><span id="rb-result-count" role="status" aria-live="polite"></span></div><div id="rb-results"></div></section>`;
